@@ -8,3 +8,12 @@
 			<button class="delete-button" (click)="deleteTransaction(transaction, $event)">Delete</button>
 	</li>
 </ul>
+<div class="error" *ngIf="error">{{error}}</div>
+<button (click)="addTransaction()">Add a transaction</button>
+<div *ngIf="addingTransaction">
+	<transaction-detail (close)="close($event)"></transaction-detail>
+</div>
+<div *ngIf="selectedTransaction">
+	<h2>Edit - {{ selectedTransaction.name | uppercase }}</h2>
+	<button (click)="gotoDetail()">View Details</button>
+</div>
