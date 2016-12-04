@@ -1,0 +1,28 @@
+<h1>{{title}}</h1>
+<nav>
+	<a [routerLink]="['/home']">Home</a>
+	<span>|</span>
+	
+	<a [routerLink]="['/about']">About</a>
+	<span *ngIf="!jwt">|</span>
+	
+	<a [routerLink]="['/login']" *ngIf="!jwt">Login</a>
+	<span *ngIf="!jwt">|</span>
+	
+	<a [routerLink]="['/signup']" *ngIf="!jwt">Signup</a>
+	<span *ngIf="jwt">|</span>
+	
+	<a (click)="account()" *ngIf="jwt">Account</a>
+	<span *ngIf="jwt">|</span>
+	
+	<a (click)="logout()" *ngIf="jwt">Logout</a>
+</nav>
+
+<main>
+	<router-outlet></router-outlet>
+	<maint-acct></maint-acct>
+</main>
+
+<footer>
+	© 2016 eastgate.in
+</footer>

@@ -7,7 +7,12 @@
     "test": "karma start",
     "build": "rimraf dist && webpack --config config/webpack.prod.js --progress --profile --bail"
   },
-  "keywords": ["Apartment", "Maintenance", "Angular", "Angular2"],
+  "keywords": [
+    "Apartment",
+    "Maintenance",
+    "Angular",
+    "Angular2"
+  ],
   "author": "Mohankumar Anna <armk100@gmail.com>",
   "license": "MIT",
   "dependencies": {
@@ -19,8 +24,10 @@
     "@angular/platform-browser": "~2.2.1",
     "@angular/platform-browser-dynamic": "~2.2.1",
     "@angular/router": "~3.2.1",
+    "angular2-jwt": "^0.1.25",
     "bootstrap": "^3.3.7",
     "core-js": "^2.4.1",
+    "jwt-decode": "^2.1.0",
     "rxjs": "5.0.0-beta.12",
     "zone.js": "^0.6.26"
   },
@@ -34,7 +41,7 @@
     "file-loader": "^0.9.0",
     "html-loader": "^0.4.3",
     "html-webpack-plugin": "^2.15.0",
-    "jasmine-core": "~2.4.1",    
+    "jasmine-core": "~2.4.1",
     "karma": "^1.3.0",
     "karma-chrome-launcher": "^2.0.0",
     "karma-jasmine": "^1.0.2",
@@ -52,6 +59,6 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/mohankumaranna/apt-maintenance-accounts.git"    
+    "url": "git+https://github.com/mohankumaranna/apt-maintenance-accounts.git"
   }
 }
