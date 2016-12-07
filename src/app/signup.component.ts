@@ -29,7 +29,7 @@ export class SignupComponent {
 
 	active = true;
 
-	user = new User(null, 'MohAnna', 'Moh', 'Anna', 'moh@test.com', 'secret');
+	user = new User(null, '', '', '', '', '');
 
 	saveNewUser() {
 		console.log('Submitting Signup form...');
