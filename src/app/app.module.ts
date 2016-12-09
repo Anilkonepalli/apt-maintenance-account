@@ -11,10 +11,10 @@ import { AboutComponent } from './about.component';
 import { AuthGuardService } from './auth-guard.service';
 import { routing }		from './app.routing';
 
-import { MaintAcctModule } from '../maint-acct/maint-acct.module';
+import { MaintenanceAccountModule } from '../maint-acct/maint-acct.module';
 
 @NgModule({
-  imports:      [ BrowserModule, HttpModule, FormsModule, routing, MaintAcctModule ],
+  imports:      [ BrowserModule, HttpModule, FormsModule, routing, MaintenanceAccountModule ],
   declarations: [ AppComponent, LoginComponent, SignupComponent, HomeComponent, AboutComponent ],
   providers: [ AuthGuardService ],
   bootstrap:    [ AppComponent ]

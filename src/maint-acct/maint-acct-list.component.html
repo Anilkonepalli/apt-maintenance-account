@@ -1,0 +1,17 @@
+<ul class="maintenance-accounts">
+	<li *ngFor="let record of records"
+		[class.selected]="record === selectedRecord"
+		(click)="onSelect(record)">
+			<span class="badge">{{record.id}}</span> {{record.name}}
+			<button class="delete-button" (click)="deleteRecord(record, $event)">Delete</button>
+	</li>
+</ul>
+<div class="error" *ngIf="error">{{error}}</div>
+<button (click)="addRecord()">Add a Record</button>
+<div *ngIf="addingRecord">
+	<maint-acct-detail (close)="close($event)"></maint-acct-detail>
+</div>
+<div *ngIf="selectedRecord">
+	<h2>Edit - {{ selectedRecord.name | uppercase }}</h2>
+	<button (click)="gotoDetail()">View Details</button>
+</div>

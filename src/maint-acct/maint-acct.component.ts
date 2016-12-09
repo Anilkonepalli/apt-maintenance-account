@@ -4,7 +4,7 @@ import { Component } from '@angular/core';
 	selector: 'maint-acct',
 	template: `
 		<h2>Maintenance Account Tracking Application</h2>
-		<transaction-list></transaction-list>
+		<maint-acct-list></maint-acct-list>
 	`
 })
-export class MaintAcctComponent {}
+export class MaintenanceAccountComponent {}

@@ -7,8 +7,8 @@ import { LoginComponent } from './login.component';
 import { SignupComponent } from './signup.component';
 import { AuthGuardService } from './auth-guard.service';
 
-import { maintAcctRoutes } from '../maint-acct/maint-acct.routing';
-import { MaintAcctComponent } from '../maint-acct/maint-acct.component';
+import { maintenanceAccountRoutes } from '../maint-acct/maint-acct.routing';
+import { MaintenanceAccountComponent } from '../maint-acct/maint-acct.component';
 
 const appRoutes: Routes = [
 	{ path: '',			component: LoginComponent },
@@ -16,13 +16,13 @@ const appRoutes: Routes = [
 	{ path: 'signup',	component: SignupComponent },
 	{ path: 'home', 	component: HomeComponent, canActivate: [AuthGuardService] },
 	{ path: 'about', 	component: AboutComponent, canActivate: [AuthGuardService] },
-	{ path: 'account', 	component: MaintAcctComponent, canActivate: [AuthGuardService] },
+	{ path: 'account', 	component: MaintenanceAccountComponent, canActivate: [AuthGuardService] },
 	{ path: '**',		component: LoginComponent }
 ];
 
 const allRoutes: Routes = [
 	...appRoutes,
-	...maintAcctRoutes
+	...maintenanceAccountRoutes
 ];
 
 export const routing: ModuleWithProviders = RouterModule.forRoot(allRoutes);

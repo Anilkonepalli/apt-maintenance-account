@@ -1,14 +1,14 @@
 import { Component, EventEmitter, OnInit, OnDestroy, Input, Output } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
-import { Transaction } from './transaction';
+import { MaintenanceAccount } from './maint-acct';
 
 @Component({
-	selector: 'transaction-detail',
-	templateUrl: './transaction-detail.component.html'
+	selector: 'maint-acct-detail',
+	templateUrl: './maint-acct-detail.component.html'
 })
-export class TransactionDetailComponent implements OnInit, OnDestroy {
-	@Input() transaction: Transaction;
+export class MaintenanceAccountDetailComponent implements OnInit, OnDestroy {
+	@Input() record: MaintenanceAccount;
 	@Output() close = new EventEmitter();
 	error: any;  
 	sub: any;
@@ -21,10 +21,10 @@ export class TransactionDetailComponent implements OnInit, OnDestroy {
 			if( params['id'] !== undefined){
 				let id = +params['id'];
 				this.navigated = true;
-				//this.transactionService.getTransaction(id).then(transaction => this.transaction = transaction);
+				//this.maintenanceAccountService.getrecord(id).then(record => this.record = record);
 			} else {
 				this.navigated = false;
-				this.transaction = new Transaction();
+				this.record = new MaintenanceAccount();
 			}
 		});
 	}
@@ -33,8 +33,8 @@ export class TransactionDetailComponent implements OnInit, OnDestroy {
 		this.sub.unsubscribe();
 	}
 	
-	goBack(savedTransaction: Transaction = null) {
-		this.close.emit(savedTransaction);
+	goBack(savedRecord: MaintenanceAccount = null) {
+		this.close.emit(savedRecord);
 		if(this.navigated) { window.history.back(); }
 	}
 

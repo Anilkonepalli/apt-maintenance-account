@@ -1,9 +1,9 @@
 import { Routes } from '@angular/router';
 
-import { TransactionListComponent } from './transaction-list.component';
-import { TransactionDetailComponent } from './transaction-detail.component';
+import { MaintenanceAccountListComponent } from './maint-acct-list.component';
+import { MaintenanceAccountDetailComponent } from './maint-acct-detail.component';
 
-export const maintAcctRoutes: Routes = [
-	{ path: 'transaction-list', component: TransactionListComponent },
-	{ path: 'transaction-detail', component: TransactionDetailComponent }
+export const maintenanceAccountRoutes: Routes = [
+	{ path: 'maint-acct-list', component: MaintenanceAccountListComponent },
+	{ path: 'maint-acct-detail', component: MaintenanceAccountDetailComponent }
 ]
