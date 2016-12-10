@@ -7,6 +7,7 @@
 	</li>
 </ul>
 <div class="error" *ngIf="error">{{error}}</div>
+<a routerLink="['/maint-acct-detail']" *ngIf="jwt">Add a Record-0</a>
 <button (click)="addRecord()">Add a Record</button>
 <div *ngIf="addingRecord">
 	<maint-acct-detail (close)="close($event)"></maint-acct-detail>

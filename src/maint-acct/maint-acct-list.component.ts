@@ -30,7 +30,7 @@ export class MaintenanceAccountListComponent implements OnInit {
 	getRecords() {
 		console.log('maint-acct-list.component >>> getRecords()...');
 		this.maintenanceAccountService.getRecords().then(records => {
-			this.records = records;
+				this.records = records;
 		})
 	}
 /*

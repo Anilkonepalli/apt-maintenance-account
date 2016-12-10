@@ -15,7 +15,7 @@ export class MaintenanceAccountService {
 		console.log('Get the account records from: '+this.url());
 		return this.http.get(this.url())
 			.toPromise()
-			.then(response => response.json().data as MaintenanceAccount[])
+			.then(response => response.json() as MaintenanceAccount[])
 			.catch(this.handleError)
 	}
 
