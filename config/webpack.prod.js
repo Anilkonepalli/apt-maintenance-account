@@ -11,7 +11,7 @@ module.exports = webpackMerge(commonConfig, {
 
   output: {
     path: helpers.root('dist'),
-    publicPath: '/ng2-comment-demo/',
+    publicPath: '/apt-maint-acct/',
     filename: '[name].[hash].js',
     chunkFilename: '[id].[hash].chunk.js'
   },

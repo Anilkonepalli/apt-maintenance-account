@@ -7,11 +7,14 @@ import { MaintenanceAccountListComponent } from './maint-acct-list.component';
 import { MaintenanceAccountDetailComponent } from './maint-acct-detail.component';
 import { MaintenanceAccountService } from './maint-acct.service';
 
+import { MaintenanceAccountRoutingModule } from './maint-acct-routing.module';
+
 
 @NgModule({
 	imports: [ 
 		CommonModule, 
-		FormsModule 
+		FormsModule,
+		MaintenanceAccountRoutingModule
 	],
 	declarations: [ 
 		MaintenanceAccountComponent, 

@@ -6,13 +6,14 @@ import { MaintenanceAccountService } from './maint-acct.service';
 
 var list_css = require('./maint-acct-list.component.css');
 var list_css_string = list_css.toString();
+var template_html = require('./maint-acct-list.component.html');
+var template_string = template_html.toString();
 
 @Component({
 	selector: 'maint-acct-list',
-	templateUrl: './maint-acct-list.component.html',
+	template: template_html,
 	styles: [list_css_string]
 })
-
 export class MaintenanceAccountListComponent implements OnInit {
 	records: MaintenanceAccount[];
 	selectedRecord: MaintenanceAccount;
@@ -51,8 +52,10 @@ export class MaintenanceAccountListComponent implements OnInit {
 		this.router.navigate(['/maint-acct-detail', this.selectedRecord.id]);
 	}
 	addRecord() {
-		this.addingRecord = true;
-		this.selectedRecord = null;
+console.log('add maint record...');
+		//this.addingRecord = true;
+		//this.selectedRecord = null;
+		this.router.navigate(['/maint-acct-detail', 0]); // 0 as id for new maint-acct-detail
 	}
 	close(savedRecord: MaintenanceAccount) {
 		this.addingRecord = false;

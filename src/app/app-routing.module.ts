@@ -1,5 +1,5 @@
-import { ModuleWithProviders } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
+import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
 
 import { HomeComponent } from './home.component';
 import { AboutComponent } from './about.component';
@@ -7,7 +7,7 @@ import { LoginComponent } from './login.component';
 import { SignupComponent } from './signup.component';
 import { AuthGuardService } from './auth-guard.service';
 
-import { maintenanceAccountRoutes } from './maint-acct/maint-acct.routing';
+//import { maintenanceAccountRoutes } from './maint-acct/maint-acct.routing';
 import { MaintenanceAccountComponent } from './maint-acct/maint-acct.component';
 
 const appRoutes: Routes = [
@@ -20,9 +20,12 @@ const appRoutes: Routes = [
 	{ path: '**',		component: LoginComponent }
 ];
 
-const allRoutes: Routes = [
-	...appRoutes,
-	...maintenanceAccountRoutes
-];
-
-export const routing: ModuleWithProviders = RouterModule.forRoot(allRoutes);
+@NgModule({
+	imports: [
+		RouterModule.forRoot(appRoutes)
+	],
+	exports: [
+		RouterModule
+	]
+})
+export class AppRoutingModule {}

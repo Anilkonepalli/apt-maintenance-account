@@ -19,6 +19,13 @@ export class MaintenanceAccountService {
 			.catch(this.handleError)
 	}
 
+// ToDo: refactor to fetch record from database
+	getRecord(id: number | string) {
+		console.log('Get an account from: '+this.url());
+		return this.getRecords()
+			.then(records => records.find(record => record.id === id));
+	}
+
 	private handleError(error: any) {
 		console.log('An error occured in Maint Acct Service...');
 		console.log(error);

@@ -1,7 +1,9 @@
+import 'rxjs/add/operator/switchMap';
 import { Component, EventEmitter, OnInit, OnDestroy, Input, Output } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute, Params } from '@angular/router';
 
 import { MaintenanceAccount } from './maint-acct';
+import { MaintenanceAccountService } from './maint-acct.service';
 
 @Component({
 	selector: 'maint-acct-detail',
@@ -14,10 +16,13 @@ export class MaintenanceAccountDetailComponent implements OnInit, OnDestroy {
 	sub: any;
 	navigated = false; // true if navigated here
 
-	constructor(private route: ActivatedRoute) {}
+	constructor(
+		private route: ActivatedRoute,
+		private router: Router,
+		private service: MaintenanceAccountService ) {}
 
 	ngOnInit() {
-		this.sub = this.route.params.subscribe(params => {
+/*		this.sub = this.route.params.subscribe(params => {
 			if( params['id'] !== undefined){
 				let id = +params['id'];
 				this.navigated = true;
@@ -26,7 +31,16 @@ export class MaintenanceAccountDetailComponent implements OnInit, OnDestroy {
 				this.navigated = false;
 				this.record = new MaintenanceAccount();
 			}
-		});
+		}); */
+
+/*		this.sub = this.route.params
+			.switchMap((params: Params) => this.service.getRecord(+params['id']))
+			.subscribe((record: MaintenanceAccount) => this.record = record); */
+
+		this.sub = this.route.params
+			.switchMap((params: Params) => this.service.getRecord(+params['id']))
+			.subscribe((record: MaintenanceAccount) => this.record = record);
+		
 	}
 
 	ngOnDestroy() {
