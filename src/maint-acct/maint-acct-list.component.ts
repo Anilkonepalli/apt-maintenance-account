@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute, Params } from '@angular/router';
+
+import 'rxjs/add/operator/switchMap';
+import { Observable } from 'rxjs/Observable';
 
 import { MaintenanceAccount } from './maint-acct';
 import { MaintenanceAccountService } from './maint-acct.service';
@@ -10,19 +13,25 @@ var template_html = require('./maint-acct-list.component.html');
 var template_string = template_html.toString();
 
 @Component({
+	moduleId: module.id,
 	selector: 'maint-acct-list',
 	template: template_html,
 	styles: [list_css_string]
 })
 export class MaintenanceAccountListComponent implements OnInit {
-	records: MaintenanceAccount[];
-	selectedRecord: MaintenanceAccount;
+	records: Observable<MaintenanceAccount[]>;
+	//selectedRecord: MaintenanceAccount;
+	private selectedId: number;
+
 	addingRecord: boolean = false;
 	error: any;
 
 //	constructor(private router: Router){};
-	constructor(private router: Router, 
-				private maintenanceAccountService: MaintenanceAccountService) {}
+	constructor(
+		private router: Router, 
+		private route: ActivatedRoute,
+		private service: MaintenanceAccountService
+	) {}
 
 	ngOnInit() {
 		this.getRecords();
@@ -30,9 +39,15 @@ export class MaintenanceAccountListComponent implements OnInit {
 
 	getRecords() {
 		console.log('maint-acct-list.component >>> getRecords()...');
-		this.maintenanceAccountService.getRecords().then(records => {
+/*		this.maintenanceAccountService.getRecords().then(records => {
 				this.records = records;
-		})
+		})  */
+		this.records = this.route.params
+			.switchMap( (params: Params) => {
+				this.selectedId = +params['id'];
+				return this.service.getRecords();
+			})
+
 	}
 /*
 	getRecords(){
@@ -46,10 +61,11 @@ export class MaintenanceAccountListComponent implements OnInit {
 	}
 */
 	onSelect(record: MaintenanceAccount){
-		this.selectedRecord = record;
+		//this.selectedRecord = record;
+		this.router.navigate(['/maint-acct-detail', record.id]);
 	}
 	gotoDetail() {
-		this.router.navigate(['/maint-acct-detail', this.selectedRecord.id]);
+		this.router.navigate(['/maint-acct-detail', this.selectedId]);
 	}
 	addRecord() {
 console.log('add maint record...');

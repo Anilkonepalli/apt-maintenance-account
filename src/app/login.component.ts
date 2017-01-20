@@ -66,7 +66,7 @@ export class LoginComponent {
 					preserveQueryParams: true,
 					preserveFragment: true
 				};
-
+console.log('Redirect to ...'+redirect);
 				// Redirect the user
 				this.router.navigate([redirect], navigationExtras);
 			} else {

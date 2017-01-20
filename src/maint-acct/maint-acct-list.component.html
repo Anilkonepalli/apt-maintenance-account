@@ -8,13 +8,7 @@
 </ul>
 <div class="error" *ngIf="error">{{error}}</div>
 <button (click)="addRecord()">Add a Record</button>
-<div *ngIf="addingRecord">
-	<maint-acct-detail (close)="close($event)"></maint-acct-detail>
-</div>
-<!--div *ngIf="selectedRecord">
-	<h2>Edit - {{ selectedRecord.name | uppercase }}</h2>
-	<button (click)="gotoDetail()">View Details</button>
-</div-->
 <div *ngIf="selectedRecord">
-	<maint-acct-detail></maint-acct-detail>
+	<h2>{{selectedRecord.name}} is a maintenance record</h2>
+	<button (click)="gotoDetail()">View Details</button>
 </div>

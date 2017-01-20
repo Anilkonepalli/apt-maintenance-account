@@ -6,22 +6,34 @@ import { FormsModule } from '@angular/forms';
 import { AppComponent }  from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 
+import { LoginRoutingModule }   from './login-routing.module';
+import { AccountsModule }      from './accounts/accounts.module';
+
 import { LoginComponent } 		from './login.component';
 import { SignupComponent } 	from './signup.component';
-import { LoginRoutingModule } 	from './login-routing.module';
+import { PageNotFoundComponent } from './not-found.component';
 
 import { HomeComponent } from './home.component';
 import { AboutComponent } from './about.component';
-//import { AuthGuardService } from './auth-guard.service';
-//import { routing }		from './app.routing';
 
-
-import { MaintenanceAccountModule } from './maint-acct/maint-acct.module';
 
 @NgModule({
-  imports:      [ BrowserModule, HttpModule, FormsModule, AppRoutingModule, MaintenanceAccountModule, LoginRoutingModule ],
-  declarations: [ AppComponent, LoginComponent, SignupComponent, HomeComponent, AboutComponent ],
-  //providers: [ AuthGuardService ],
+  imports:      [ 
+  	BrowserModule, 
+  	HttpModule, 
+  	FormsModule, 
+  	AppRoutingModule,
+  	LoginRoutingModule,
+    AccountsModule
+  ],
+  declarations: [ 
+  	AppComponent, 
+  	LoginComponent, 
+  	SignupComponent, 
+  	HomeComponent, 
+  	AboutComponent,
+    PageNotFoundComponent
+  ],
   bootstrap:    [ AppComponent ]
 })
 export class AppModule { }

@@ -18,4 +18,5 @@ export class AppComponent  {
 		this.jwt = '';
 		this.router.navigate(['/login']);
 	}
+
 }

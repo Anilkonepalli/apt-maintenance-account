@@ -6,6 +6,7 @@ import { MaintenanceAccount } from './maint-acct';
 import { MaintenanceAccountService } from './maint-acct.service';
 
 @Component({
+	moduleId: module.id,
 	selector: 'maint-acct-detail',
 	templateUrl: './maint-acct-detail.component.html'
 })
