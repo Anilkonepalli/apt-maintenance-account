@@ -8,6 +8,9 @@ import { Account } from './account';
 export class AccountService {
 
 	public config: any = { server_ip_addr: "http://localhost:3002"};
+	
+	private accountUrl = this.config.server_ip_addr+'/api/maintenance-accounts';
+	private headers = new Headers( {'Content-Type': 'application/json'} );
 
 	constructor(private http: Http) {}
 
@@ -25,6 +28,24 @@ export class AccountService {
 		return this.http.get(url)
 			.toPromise()
 			.then(response => response.json() as Account)
+			.catch(this.handleError);
+	}
+
+	update(account: Account): Promise<Account> {
+		const url = `${this.accountUrl}/${account.id}`;
+		console.log('Update account at url: '+url);
+		return this.http
+			.put(url, JSON.stringify(account), {headers: this.headers})
+			.toPromise()
+			.then( () => account )
+			.catch(this.handleError);
+	}
+
+	create(account: Account): Promise<Account> {
+		return this.http
+			.post(this.accountUrl, JSON.stringify(account), {headers: this.headers})
+			.toPromise()
+			.then(res => res.json().data)
 			.catch(this.handleError);
 	}
 

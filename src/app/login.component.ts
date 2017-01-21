@@ -25,7 +25,6 @@ export class LoginComponent {
 
 	message: string;
 
-	//constructor( private http: Http, private router: Router ) {}
 	constructor( public authService: AuthService, public router: Router ) {
 		this.setMessage();
 	}
@@ -33,21 +32,6 @@ export class LoginComponent {
 	setMessage() {
 		this.message = 'Logged '+ (this.authService.isLoggedIn ? 'in' : 'out');
 	}
-/*	login( event: String, email: String, password: String ) {
-		let data = JSON.stringify({ email, password });
-		let url = 'http://localhost:3002/api/sessions/create';
-		this.http.post(url, data, {headers: contentHeaders})
-			.subscribe(
-				response => {
-					localStorage.setItem('id_token', response.json().id_token);
-					this.router.navigate(['/home']);
-				},
-				error => {
-					alert( error.text() );
-					console.log( error.text() );
-				}
-			);
-	}  */
 
 	login( event: String, email: String, password: String ) {
 		this.message = 'Trying to log in ...';

@@ -1,8 +1,5 @@
 <h2>Account List</h2>
-<div>
-	<label>Account Name: </label> <input #accountName />
-	<button (click)="add(accountName.value); accountName.value=''">Add</button>
-</div>
+<button (click)="add(); accountName.value=''">Add</button>
 <ul class="items">
 	<li *ngFor="let account of accounts | async"
 		[class.selected] = "isSelected(Account)"
@@ -12,7 +9,7 @@
 		<button class="delete" (click)="delete(account); $event.stopPropagation()">x</button>
 	</li>
 </ul>
-<div *ngIf="selectedAccount">
+<!--div *ngIf="selectedAccount">
 	<h2>{{ selectedAccount.name | uppercase }} is selected account</h2>
 	<button (click)="gotoDetail()">View Details</button>
-</div>
+</div-->

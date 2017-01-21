@@ -50,4 +50,8 @@ console.log("AccountListComponent >> ngOnInit()");
 	isSelected(account: Account) {
 		return account ? account.id === this.selectedId : false;
 	}
+
+	add(): void {
+		this.router.navigate(['/accounts', 0]);
+	}
 }

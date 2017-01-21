@@ -17,6 +17,7 @@ var detail_css_string = detail_css.toString();
 })
 export class AccountDetailComponent implements OnInit {
 	@Input() account: Account;
+	editMode: boolean = true;
 
 	constructor(
 		private service: AccountService,
@@ -29,7 +30,11 @@ export class AccountDetailComponent implements OnInit {
 		console.log(" AccountDetailComponent >> ngOnInit() ....");
 		this.route.params
 			.switchMap((params: Params) => this.service.getAccount(+params['id']))
-			.subscribe((account: Account) => this.account = account);
+			.subscribe((account: Account) => {
+				this.account = account;
+				if(account.id) this.editMode = true; 
+				else this.editMode = false;
+			});
 	}
 
 	goBack(): void {
@@ -39,5 +44,17 @@ export class AccountDetailComponent implements OnInit {
 	gotoAccounts() {
 		let accountId = this.account ? this.account.id : null;
 		this.router.navigate(['/accounts', { id: accountId, foo: 'foo'}]);
+	}
+
+	save(): void {
+		if(!this.editMode){  // new account to be saved
+			console.log('Creating an account...');
+			console.log(this.account);
+			this.service.create(this.account)
+				.then( (acct) => { this.account = acct; this.gotoAccounts(); });
+		} else { // changes in existing account to be saved
+			this.service.update(this.account)
+				.then( () => this.goBack() );
+		}
 	}
 }

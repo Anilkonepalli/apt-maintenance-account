@@ -15,12 +15,6 @@ export class AuthGuardService implements CanActivate {
 
 	constructor(private authService: AuthService, private router: Router) {}
 
-/*	canActivate() {
-		if( tokenNotExpired() ) return true;
-		this.router.navigate(['/login']);
-		return false;
-	} */
-
 	canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
 		let url: string = state.url;
 

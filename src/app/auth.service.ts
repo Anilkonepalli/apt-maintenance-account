@@ -21,10 +21,6 @@ export class AuthService {
 
 	constructor(private http: Http) {}
 
-//	login(): Observable<boolean> {
-//		return Observable.of(true).delay(1000).do(val => this.isLoggedIn = true);
-//	}
-
 	login( event: String, email: String, password: String ): Observable<boolean> {
 		let data = JSON.stringify({ email, password });
 		let url = 'http://localhost:3002/api/sessions/create';
@@ -53,26 +49,6 @@ console.log('Inside error function...');
 				}
 			);
 		return Observable.of(this.isLoggedIn).delay(1000);
-
-/*		let data = JSON.stringify({ email, password });
-		let url = 'http://localhost:3002/api/sessions/create';
-console.log('auth.service >> login(...)');
-		return this.http.post(url, data, {headers: contentHeaders})
-						.map(this.extractData)
-						.catch(this.handleError); */
-/*		this.http.post(url, data, {headers: contentHeaders})						
-			.subscribe(
-				response => {
-					localStorage.setItem('id_token', response.json().id_token);
-					//this.router.navigate(['/home']);
-					return Observable.of(true).delay(1000).do(val => this.isLoggedIn = true);
-				},
-				error => {
-					alert( error.text() );
-					console.log( error.text() );
-					return Observable.of(true).delay(1000).do(val => this.isLoggedIn = false);
-				}
-			); */
 	}
 
 	private extractData(res: Response) {
@@ -80,7 +56,6 @@ console.log('auth.service >> extractData(...)');
 		let body = res.json();
 		localStorage.setItem('id_token', body.id_token);
 		this.isLoggedIn = true;
-		//return Observable.of(true).delay(1000).do(val => this.isLoggedIn = true);
 	}
 
 	private handleError(error: Response | any) {
