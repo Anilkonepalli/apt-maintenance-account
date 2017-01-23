@@ -47,14 +47,26 @@ export class AccountDetailComponent implements OnInit {
 	}
 
 	save(): void {
-		if(!this.editMode){  // new account to be saved
-			console.log('Creating an account...');
-			console.log(this.account);
+/*		if(!this.editMode){  // new account to be saved
 			this.service.create(this.account)
 				.then( (acct) => { this.account = acct; this.gotoAccounts(); });
 		} else { // changes in existing account to be saved
 			this.service.update(this.account)
 				.then( () => this.goBack() );
-		}
+		} */
+		this.editMode ? this.update() : this.add();
+	}
+
+	private add(): void {
+		this.service.create(this.account)
+			.then( (acct) => { 
+				this.account = acct; this.gotoAccounts(); 
+			});		
+	}
+
+	private update(): void {
+		this.service.update(this.account)
+			.then( () => this.goBack() );
+
 	}
 }

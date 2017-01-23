@@ -40,7 +40,8 @@ console.log("AccountListComponent >> ngOnInit()");
 				this.selectedId = +params['id'];
 				console.log("calling service to getAccounts()...");
 				return this.service.getAccounts();
-			})
+			});
+
 	}
 
 	onSelect(account: Account): void {
@@ -52,6 +53,18 @@ console.log("AccountListComponent >> ngOnInit()");
 	}
 
 	add(): void {
-		this.router.navigate(['/accounts', 0]);
+		console.log('adding an account...');
+		console.log(this.accounts);
+		this.router.navigate(['/accounts', 0]); // 0 represent new account
+	}
+
+	delete(account: Account): void {
+		this.service
+			.delete(account.id)
+			.then( () => { // filter out the deleted account from accounts
+				this.accounts = this.accounts.filter( (acct, i) => {
+					return acct[i] !== account; 
+				});
+			});
 	}
 }
