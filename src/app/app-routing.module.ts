@@ -16,7 +16,7 @@ const appRoutes: Routes = [
 	{ path: 'home', 	component: HomeComponent, canActivate: [AuthGuardService] },
 	{ path: 'about', 	component: AboutComponent, canActivate: [AuthGuardService] },
 	{ path: 'accounts', loadChildren: './accounts/accounts.module#AccountsModule', canActivate: [AuthGuardService] },
-
+	{ path: 'users',    loadChildren: './users/users.module#UsersModule', canActivate: [AuthGuardService] },
 	{ path: '**',		component: PageNotFoundComponent }
 ];
 

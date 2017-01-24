@@ -2,9 +2,6 @@ import { NgModule }				from '@angular/core';
 import { CommonModule }			from '@angular/common';
 import { FormsModule }			from '@angular/forms';
 
-import { AccountComponent } 	from './account.component';
-import { AccountHomeComponent } from './account-home.component';
-
 import { AccountListComponent }	from './account-list.component';
 import { AccountDetailComponent } 	from './account-detail.component';
 
@@ -18,8 +15,6 @@ import { AccountsRoutingModule }		from './accounts-routing.module';
 		AccountsRoutingModule
 	],
 	declarations: [
-		AccountComponent,
-		AccountHomeComponent,
 		AccountListComponent,
 		AccountDetailComponent
 	],

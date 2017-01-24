@@ -15,6 +15,9 @@
 	<a [routerLink]="['/accounts']" *ngIf="jwt">Accounts</a>
 
 	<span *ngIf="jwt">|</span>
+	<a [routerLink]="['/users']" *ngIf="jwt">Users</a>
+
+	<span *ngIf="jwt">|</span>
 	<a (click)="logout()" *ngIf="jwt">Logout</a>
 
 </nav>
