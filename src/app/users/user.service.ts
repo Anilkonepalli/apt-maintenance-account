@@ -10,13 +10,17 @@ export class UserService {
 	public config: any = { server_ip_addr: "http://localhost:3002"};
 	
 	private userUrl = this.config.server_ip_addr+'/api/users';
-	private headers = new Headers( {'Content-Type': 'application/json'} );
+	private id_token = localStorage.getItem('id_token');
+	private headers = new Headers({
+		'Content-Type': 'application/json',
+		'x-access-token': this.id_token
+	});
 
 	constructor(private http: Http) {}
 
 	getUsers(): Promise<User[]> {
 		console.log('Get the users from: '+this.userUrl);
-		return this.http.get(this.userUrl)
+		return this.http.get(this.userUrl, {headers: this.headers})
 			.toPromise()
 			.then(response => response.json() as User[])
 			.catch(this.handleError)
@@ -25,7 +29,7 @@ export class UserService {
 	getUser(id: number): Promise<User> {
 		console.log('Get an user from: '+this.userUrl+'/'+id);
 		const url = this.userUrl+'/'+id;
-		return this.http.get(url)
+		return this.http.get(url, {headers: this.headers})
 			.toPromise()
 			.then(response => response.json() as User)
 			.catch(this.handleError);

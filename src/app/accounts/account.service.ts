@@ -10,22 +10,26 @@ export class AccountService {
 	public config: any = { server_ip_addr: "http://localhost:3002"};
 	
 	private accountUrl = this.config.server_ip_addr+'/api/maintenance-accounts';
-	private headers = new Headers( {'Content-Type': 'application/json'} );
+	private id_token = localStorage.getItem('id_token');
+	private headers = new Headers({
+		'Content-Type': 'application/json',
+		'x-access-token': this.id_token
+	});
 
 	constructor(private http: Http) {}
 
 	getAccounts(): Promise<Account[]> {
-		console.log('Get the accounts from: '+this.url());
-		return this.http.get(this.url())
+		console.log('Get the accounts from: '+this.accountUrl);
+		return this.http.get(this.accountUrl, {headers: this.headers})
 			.toPromise()
 			.then(response => response.json() as Account[])
 			.catch(this.handleError)
 	}
 
 	getAccount(id: number): Promise<Account> {
-		console.log('Get an account from: '+this.url()+'/'+id);
-		const url = this.url()+'/'+id;
-		return this.http.get(url)
+		console.log('Get an account from: '+this.accountUrl+'/'+id);
+		const url = this.accountUrl+'/'+id;
+		return this.http.get(url, {headers: this.headers})
 			.toPromise()
 			.then(response => response.json() as Account)
 			.catch(this.handleError);
@@ -63,11 +67,12 @@ export class AccountService {
 		return Promise.reject(error.message || error);
 	}
 
+/*
 	private apiUrl() {
 		return this.config.server_ip_addr+'/api';
 	}
 
 	private url() {
 		return this.apiUrl()+'/maintenance-accounts';
-	}
+	}  */
 }

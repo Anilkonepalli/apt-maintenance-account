@@ -28,7 +28,7 @@ console.log('auth.service >> login(...)');
 		this.http.post(url, data, {headers: contentHeaders})
 			.subscribe(
 				response => { 
-console.log('Inside Response function...');					
+console.log('Token stored locally ...');					
 					localStorage.setItem('id_token', response.json().id_token);
 					this.isLoggedIn = true;
 				},
@@ -51,6 +51,7 @@ console.log('Inside error function...');
 		return Observable.of(this.isLoggedIn).delay(1000);
 	}
 
+/*
 	private extractData(res: Response) {
 console.log('auth.service >> extractData(...)');
 		let body = res.json();
@@ -71,7 +72,7 @@ console.log('auth.service >> extractData(...)');
 		console.error(errMsg);
 		return Observable.throw(errMsg);
 	}
-
+*/
 	logout(): void {
 		this.isLoggedIn = false;
 	}
