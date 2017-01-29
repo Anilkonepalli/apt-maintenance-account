@@ -1,0 +1,11 @@
+<h2>Roles</h2>
+<button (click)="add()">Add</button>
+<ul class="items">
+	<li *ngFor="let role of roles | async"
+		[class.selected] = "isSelected(role)"
+		(click)="onSelect(role)">
+		<span class="badge">{{role.id}}</span>
+		<span>{{role.name}}</span>
+		<button class="delete" (click)="delete(role); $event.stopPropagation()">x</button>
+	</li>
+</ul>
