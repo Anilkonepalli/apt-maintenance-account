@@ -28,7 +28,6 @@ export class AccountDetailComponent implements OnInit {
 	) {}
 
 	ngOnInit(): void {
-		console.log(" AccountDetailComponent >> ngOnInit() ....");
 		this.route.params
 			.switchMap((params: Params) => this.service.get(+params['id']))
 			.subscribe((model: Account) => {

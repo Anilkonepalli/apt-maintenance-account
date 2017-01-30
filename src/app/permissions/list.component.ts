@@ -23,9 +23,6 @@ export class PermissionListComponent implements OnInit {
 	models: Observable<Permission[]>;
 
 	private selectedId: number;
-
-	//addingAccount: boolean = false;
-	//error: any;
 	
 	constructor(
 		private service: PermissionService,
@@ -34,11 +31,9 @@ export class PermissionListComponent implements OnInit {
 	) {}
 
 	ngOnInit(): void {
-console.log("PermissionListComponent >> ngOnInit()");
 		this.models = this.route.params
 			.switchMap((params: Params) => {
 				this.selectedId = +params['id'];
-				console.log("calling service to getList()...");
 				return this.service.getList();
 			});
 
@@ -53,8 +48,6 @@ console.log("PermissionListComponent >> ngOnInit()");
 	}
 
 	add(): void {
-		console.log('adding an permission...');
-		console.log(this.models);
 		this.router.navigate(['/permissions', 0]); // 0 represent new permission
 	}
 

@@ -23,9 +23,6 @@ export class RoleListComponent implements OnInit {
 	models: Observable<Role[]>;
 
 	private selectedId: number;
-
-	//addingAccount: boolean = false;
-	//error: any;
 	
 	constructor(
 		private service: RoleService,
@@ -34,11 +31,9 @@ export class RoleListComponent implements OnInit {
 	) {}
 
 	ngOnInit(): void {
-console.log("RoleListComponent >> ngOnInit()");
 		this.models = this.route.params
 			.switchMap((params: Params) => {
 				this.selectedId = +params['id'];
-				console.log("calling Role service to getList()...");
 				return this.service.getList();
 			});
 
@@ -53,8 +48,6 @@ console.log("RoleListComponent >> ngOnInit()");
 	}
 
 	add(): void {
-		console.log('adding an role...');
-		console.log(this.models);
 		this.router.navigate(['/roles', 0]); // 0 represent new role
 	}
 

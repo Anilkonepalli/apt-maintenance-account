@@ -32,11 +32,10 @@ export class SignupComponent {
 	user = new User(null, '', '', '', '', '');
 
 	saveNewUser() {
-		console.log('Submitting Signup form...');
 
 		let data = JSON.stringify(this.user);
-		console.log(data);
 		let url = 'http://localhost:3002/api/users';
+		
 		this.http.post(url, data, {headers: contentHeaders})
 			.subscribe(
 				response => {

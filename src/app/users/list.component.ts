@@ -24,9 +24,6 @@ export class UserListComponent implements OnInit {
 
 	private selectedId: number;
 
-	//addingAccount: boolean = false;
-	//error: any;
-	
 	constructor(
 		private service: UserService,
 		private route: ActivatedRoute,
@@ -34,14 +31,11 @@ export class UserListComponent implements OnInit {
 	) {}
 
 	ngOnInit(): void {
-console.log("UserListComponent >> ngOnInit()");
 		this.models = this.route.params
 			.switchMap((params: Params) => {
 				this.selectedId = +params['id'];
-				console.log("calling User service to getList()...");
 				return this.service.getList();
 			});
-
 	}
 
 	onSelect(model: User): void {
@@ -53,8 +47,6 @@ console.log("UserListComponent >> ngOnInit()");
 	}
 
 	add(): void {
-		console.log('adding an user model...');
-		console.log(this.models);
 		this.router.navigate(['/users', 0]); // 0 represent new user
 	}
 

@@ -30,7 +30,6 @@ export class RoleDetailComponent implements OnInit {
 	) {}
 
 	ngOnInit(): void {
-		console.log(" RoleDetailComponent >> ngOnInit() ....");
 		this.route.params
 			.switchMap((params: Params) => this.service.get(+params['id']))
 			.subscribe((model: Role) => {

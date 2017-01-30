@@ -19,7 +19,6 @@ export class AccountService {
 	constructor(private http: Http) {}
 
 	getList(): Promise<Account[]> {
-		console.log('Get the accounts from: '+this.modelUrl);
 		return this.http.get(this.modelUrl, {headers: this.headers})
 			.toPromise()
 			.then(models => models.json() as Account[])
@@ -27,7 +26,6 @@ export class AccountService {
 	}
 
 	get(id: number): Promise<Account> {
-		console.log('Get an account from: '+this.modelUrl+'/'+id);
 		const url = this.modelUrl+'/'+id;
 		return this.http.get(url, {headers: this.headers})
 			.toPromise()
@@ -37,7 +35,6 @@ export class AccountService {
 
 	update(model: Account): Promise<Account> {
 		const url = `${this.modelUrl}/${model.id}`;
-		console.log('Update account model at url: '+url);
 		return this.http
 			.put(url, JSON.stringify(model), {headers: this.headers})
 			.toPromise()
@@ -49,7 +46,7 @@ export class AccountService {
 		return this.http
 			.post(this.modelUrl, JSON.stringify(model), {headers: this.headers})
 			.toPromise()
-			.then(response => response.json().data)
+			.then(model => model.json().data)
 			.catch(this.handleError);
 	}
 
@@ -62,8 +59,6 @@ export class AccountService {
 	}
 	
 	private handleError(error: any) {
-		console.log('An error occured in Maint Acct Service...');
-		console.log(error);
 		return Promise.reject(error.message || error);
 	}
 

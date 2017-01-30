@@ -45,7 +45,7 @@ export class AuthGuardService implements CanActivate {
 			queryParams: { 'session_id': sessionId },
 			fragment: 'anchor'
 		};
-console.log(url + ' cannot be activated.  Please login...');
+
 		// Navigate to the login page with extras
 		this.router.navigate(['/login'], navigationExtras);
 		return false;

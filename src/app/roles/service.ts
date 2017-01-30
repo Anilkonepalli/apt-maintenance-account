@@ -19,15 +19,13 @@ export class RoleService {
 	constructor(private http: Http) {}
 
 	getList(): Promise<Role[]> {
-		console.log('Get the roles from: '+this.modelUrl);
 		return this.http.get(this.modelUrl, {headers: this.headers})
 			.toPromise()
-			.then(model => model.json() as Role[])
+			.then(models => models.json() as Role[])
 			.catch(this.handleError)
 	}
 
 	get(id: number): Promise<Role> {
-		console.log('Get a role model from: '+this.modelUrl+'/'+id);
 		const url = this.modelUrl+'/'+id;
 		return this.http.get(url, {headers: this.headers})
 			.toPromise()
@@ -37,7 +35,6 @@ export class RoleService {
 
 	update(model: Role): Promise<Role> {
 		const url = `${this.modelUrl}/${model.id}`;
-		console.log('Update Role model at url: '+url);
 		return this.http
 			.put(url, JSON.stringify(model), {headers: this.headers})
 			.toPromise()
@@ -49,7 +46,7 @@ export class RoleService {
 		return this.http
 			.post(this.modelUrl, JSON.stringify(model), {headers: this.headers})
 			.toPromise()
-			.then(res => res.json().data)
+			.then(model => model.json().data)
 			.catch(this.handleError);
 	}
 
@@ -62,8 +59,6 @@ export class RoleService {
 	}
 	
 	private handleError(error: any) {
-		console.log('An error occured in Maint Acct Service...');
-		console.log(error);
 		return Promise.reject(error.message || error);
 	}
 

@@ -30,7 +30,6 @@ export class PermissionDetailComponent implements OnInit {
 	) {}
 
 	ngOnInit(): void {
-		console.log(" PermissionDetailComponent >> ngOnInit() ....");
 		this.route.params
 			.switchMap((params: Params) => this.service.get(+params['id']))
 			.subscribe((model: Permission) => {

@@ -24,9 +24,6 @@ export class AccountListComponent implements OnInit {
 
 	private selectedId: number;
 
-	//addingAccount: boolean = false;
-	//error: any;
-	
 	constructor(
 		private service: AccountService,
 		private route: ActivatedRoute,
@@ -34,14 +31,11 @@ export class AccountListComponent implements OnInit {
 	) {}
 
 	ngOnInit(): void {
-console.log("AccountListComponent >> ngOnInit()");
 		this.models = this.route.params
 			.switchMap((params: Params) => {
 				this.selectedId = +params['id'];
-				console.log("calling service to getList()...");
 				return this.service.getList();
 			});
-
 	}
 
 	onSelect(model: Account): void {
@@ -53,8 +47,6 @@ console.log("AccountListComponent >> ngOnInit()");
 	}
 
 	add(): void {
-		console.log('adding an account...');
-		console.log(this.models);
 		this.router.navigate(['/accounts', 0]); // 0 represent new account
 	}
 

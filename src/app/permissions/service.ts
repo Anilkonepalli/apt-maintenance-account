@@ -19,25 +19,22 @@ export class PermissionService {
 	constructor(private http: Http) {}
 
 	getList(): Promise<Permission[]> {
-		console.log('Get the models from: '+this.modelUrl);
 		return this.http.get(this.modelUrl, {headers: this.headers})
 			.toPromise()
-			.then(response => response.json() as Permission[])
+			.then(models => models.json() as Permission[])
 			.catch(this.handleError)
 	}
 
 	get(id: number): Promise<Permission> {
-		console.log('Get an Permission from: '+this.modelUrl+'/'+id);
 		const url = this.modelUrl+'/'+id;
 		return this.http.get(url, {headers: this.headers})
 			.toPromise()
-			.then(response => response.json() as Permission)
+			.then(model => model.json() as Permission)
 			.catch(this.handleError);
 	}
 
 	update(model: Permission): Promise<Permission> {
 		const url = `${this.modelUrl}/${model.id}`;
-		console.log('Update Model at url: '+url);
 		return this.http
 			.put(url, JSON.stringify(model), {headers: this.headers})
 			.toPromise()
@@ -49,7 +46,7 @@ export class PermissionService {
 		return this.http
 			.post(this.modelUrl, JSON.stringify(model), {headers: this.headers})
 			.toPromise()
-			.then(res => res.json().data)
+			.then(model => model.json().data)
 			.catch(this.handleError);
 	}
 
@@ -62,8 +59,6 @@ export class PermissionService {
 	}
 	
 	private handleError(error: any) {
-		console.log('An error occured in Maint Acct Service...');
-		console.log(error);
 		return Promise.reject(error.message || error);
 	}
 

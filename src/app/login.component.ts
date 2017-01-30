@@ -39,7 +39,7 @@ export class LoginComponent {
 		this.authService.login(event, email, password).subscribe( () => {
 			this.setMessage();
 			if(this.authService.isLoggedIn) {
-				console.log('isLoggedIn >> true');
+
 				// Get the redirect URL from our auth service
 				// If no redirect is set, use the default
 				let redirect = this.authService.redirectUrl ? this.authService.redirectUrl : '/home';
@@ -50,7 +50,7 @@ export class LoginComponent {
 					preserveQueryParams: true,
 					preserveFragment: true
 				};
-console.log('Redirect to ...'+redirect);
+
 				// Redirect the user
 				this.router.navigate([redirect], navigationExtras);
 			} else {
