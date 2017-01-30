@@ -17,7 +17,7 @@ const appRoutes: Routes = [
 	{ path: 'about', 	component: AboutComponent, canActivate: [AuthGuardService] },
 	{ path: 'accounts', loadChildren: './accounts/accounts.module#AccountsModule', canActivate: [AuthGuardService] },
 	{ path: 'users',    loadChildren: './users/users.module#UsersModule', canActivate: [AuthGuardService] },
-	{ path: 'roles',	loadChildren: './roles/roles.module#RolesModule', canActivate: [AuthGuardService] },
+	{ path: 'roles',	loadChildren: './roles/module#RolesModule', canActivate: [AuthGuardService] },
 	{ path: 'permissions', loadChildren: './permissions/module#PermissionsModule', canActivate: [AuthGuardService]},
 	{ path: '**',		component: PageNotFoundComponent }
 ];

@@ -2,10 +2,10 @@ import { NgModule }				from '@angular/core';
 import { CommonModule }			from '@angular/common';
 import { FormsModule }			from '@angular/forms';
 
-import { RoleListComponent }	from './role-list.component';
-import { RoleDetailComponent } 	from './role-detail.component';
-import { RoleService }			from './role.service';
-import { RolesRoutingModule }	from './roles-routing.module';
+import { RoleListComponent }	from './list.component';
+import { RoleDetailComponent } 	from './detail.component';
+import { RoleService }			from './service';
+import { RolesRoutingModule }	from './routing.module';
 
 @NgModule({
 	imports: [

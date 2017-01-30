@@ -4,12 +4,12 @@ import { Router, ActivatedRoute, Params }	from '@angular/router';
 import 'rxjs/add/operator/switchMap';
 import { Observable }						from 'rxjs/Observable';
 
-import { Role }							from './role';
-import { RoleService }					from './role.service';
+import { Role }							from './model';
+import { RoleService }					from './service';
 
-var list_css = require('./role-list.component.css');
+var list_css = require('./list.component.css');
 var list_css_string = list_css.toString();
-var list_html = require('./role-list.component.html');
+var list_html = require('./list.component.html');
 var list_html_string = list_html.toString();
 
 

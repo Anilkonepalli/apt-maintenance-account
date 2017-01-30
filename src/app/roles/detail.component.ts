@@ -2,14 +2,14 @@ import { Component, Input, OnInit } 		from '@angular/core';
 import { Router, ActivatedRoute, Params } 	from '@angular/router';
 import { Location }							from '@angular/common';
 
-import { Role }							from './role';
-import { RoleService }					from './role.service';
+import { Role }							from './model';
+import { RoleService }					from './service';
 
 import 'rxjs/add/operator/switchMap';
 
-var detail_html = require('./role-detail.component.html');
+var detail_html = require('./detail.component.html');
 var detail_html_string = detail_html.toString();
-var detail_css = require('./role-detail.component.css');
+var detail_css = require('./detail.component.css');
 var detail_css_string = detail_css.toString();
 
 @Component({
