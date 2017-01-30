@@ -15,7 +15,7 @@ const appRoutes: Routes = [
 	{ path: 'signup',	component: SignupComponent },
 	{ path: 'home', 	component: HomeComponent, canActivate: [AuthGuardService] },
 	{ path: 'about', 	component: AboutComponent, canActivate: [AuthGuardService] },
-	{ path: 'accounts', loadChildren: './accounts/accounts.module#AccountsModule', canActivate: [AuthGuardService] },
+	{ path: 'accounts', loadChildren: './accounts/module#AccountsModule', canActivate: [AuthGuardService] },
 	{ path: 'users',    loadChildren: './users/module#UsersModule', canActivate: [AuthGuardService] },
 	{ path: 'roles',	loadChildren: './roles/module#RolesModule', canActivate: [AuthGuardService] },
 	{ path: 'permissions', loadChildren: './permissions/module#PermissionsModule', canActivate: [AuthGuardService]},

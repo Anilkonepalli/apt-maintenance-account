@@ -4,12 +4,12 @@ import { Router, ActivatedRoute, Params }	from '@angular/router';
 import 'rxjs/add/operator/switchMap';
 import { Observable }						from 'rxjs/Observable';
 
-import { Account }							from './account';
-import { AccountService }					from './account.service';
+import { Account }							from './model';
+import { AccountService }					from './service';
 
-var list_css = require('./account-list.component.css');
+var list_css = require('./list.component.css');
 var list_css_string = list_css.toString();
-var list_html = require('./account-list.component.html');
+var list_html = require('./list.component.html');
 var list_html_string = list_html.toString();
 
 
@@ -20,12 +20,12 @@ var list_html_string = list_html.toString();
 })
 export class AccountListComponent implements OnInit {
 
-	accounts: Observable<Account[]>;
+	models: Observable<Account[]>;
 
 	private selectedId: number;
 
-	addingAccount: boolean = false;
-	error: any;
+	//addingAccount: boolean = false;
+	//error: any;
 	
 	constructor(
 		private service: AccountService,
@@ -35,35 +35,35 @@ export class AccountListComponent implements OnInit {
 
 	ngOnInit(): void {
 console.log("AccountListComponent >> ngOnInit()");
-		this.accounts = this.route.params
+		this.models = this.route.params
 			.switchMap((params: Params) => {
 				this.selectedId = +params['id'];
-				console.log("calling service to getAccounts()...");
-				return this.service.getAccounts();
+				console.log("calling service to getList()...");
+				return this.service.getList();
 			});
 
 	}
 
-	onSelect(account: Account): void {
-		this.router.navigate(['/accounts', account.id]);
+	onSelect(model: Account): void {
+		this.router.navigate(['/accounts', model.id]);
 	}
 
-	isSelected(account: Account) {
-		return account ? account.id === this.selectedId : false;
+	isSelected(model: Account) {
+		return model ? model.id === this.selectedId : false;
 	}
 
 	add(): void {
 		console.log('adding an account...');
-		console.log(this.accounts);
+		console.log(this.models);
 		this.router.navigate(['/accounts', 0]); // 0 represent new account
 	}
 
-	delete(account: Account): void {
+	delete(model: Account): void {
 		this.service
-			.delete(account.id)
-			.then( () => { // filter out the deleted account from accounts
-				this.accounts = this.accounts.filter( (acct, i) => {
-					return acct[i] !== account; 
+			.delete(model.id)
+			.then( () => { // filter out the deleted account modelfrom account models
+				this.models = this.models.filter( (models, i) => {
+					return models[i] !== model; 
 				});
 			});
 	}

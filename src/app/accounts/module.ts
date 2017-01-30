@@ -2,11 +2,11 @@ import { NgModule }				from '@angular/core';
 import { CommonModule }			from '@angular/common';
 import { FormsModule }			from '@angular/forms';
 
-import { AccountListComponent }	from './account-list.component';
-import { AccountDetailComponent } 	from './account-detail.component';
+import { AccountListComponent }	from './list.component';
+import { AccountDetailComponent } 	from './detail.component';
 
-import { AccountService }			from './account.service';
-import { AccountsRoutingModule }		from './accounts-routing.module';
+import { AccountService }			from './service';
+import { AccountsRoutingModule }		from './routing.module';
 
 @NgModule({
 	imports: [
