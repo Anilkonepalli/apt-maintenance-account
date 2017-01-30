@@ -2,14 +2,14 @@ import { Injectable } from '@angular/core';
 import { Http, Headers } from '@angular/http';
 import 'rxjs/add/operator/toPromise';
 
-import { User } from '../models/user';
+import { User } from './model';
 
 @Injectable()
 export class UserService {
 
 	public config: any = { server_ip_addr: "http://localhost:3002"};
 	
-	private userUrl = this.config.server_ip_addr+'/api/users';
+	private modelUrl = this.config.server_ip_addr+'/api/users';
 	private id_token = localStorage.getItem('id_token');
 	private headers = new Headers({
 		'Content-Type': 'application/json',
@@ -18,43 +18,43 @@ export class UserService {
 
 	constructor(private http: Http) {}
 
-	getUsers(): Promise<User[]> {
-		console.log('Get the users from: '+this.userUrl);
-		return this.http.get(this.userUrl, {headers: this.headers})
+	getList(): Promise<User[]> {
+		console.log('Get the user models from: '+this.modelUrl);
+		return this.http.get(this.modelUrl, {headers: this.headers})
 			.toPromise()
-			.then(response => response.json() as User[])
+			.then(models => models.json() as User[])
 			.catch(this.handleError)
 	}
 
-	getUser(id: number): Promise<User> {
-		console.log('Get an user from: '+this.userUrl+'/'+id);
-		const url = this.userUrl+'/'+id;
+	get(id: number): Promise<User> {
+		console.log('Get an user from: '+this.modelUrl+'/'+id);
+		const url = this.modelUrl+'/'+id;
 		return this.http.get(url, {headers: this.headers})
 			.toPromise()
-			.then(response => response.json() as User)
+			.then(model => model.json() as User)
 			.catch(this.handleError);
 	}
 
-	update(user: User): Promise<User> {
-		const url = `${this.userUrl}/${user.id}`;
-		console.log('Update user at url: '+url);
+	update(model: User): Promise<User> {
+		const url = `${this.modelUrl}/${model.id}`;
+		console.log('Update user model at url: '+url);
 		return this.http
-			.put(url, JSON.stringify(user), {headers: this.headers})
+			.put(url, JSON.stringify(model), {headers: this.headers})
 			.toPromise()
-			.then( () => user )
+			.then( () => model )
 			.catch(this.handleError);
 	}
 
-	create(user: User): Promise<User> {
+	create(model: User): Promise<User> {
 		return this.http
-			.post(this.userUrl, JSON.stringify(user), {headers: this.headers})
+			.post(this.modelUrl, JSON.stringify(model), {headers: this.headers})
 			.toPromise()
 			.then(res => res.json().data)
 			.catch(this.handleError);
 	}
 
 	delete(id: number): Promise<void> {
-		const url = `${this.userUrl}/${id}`;
+		const url = `${this.modelUrl}/${id}`;
 		return this.http.delete(url, {headers: this.headers})
 			.toPromise()
 			.then( () => null )

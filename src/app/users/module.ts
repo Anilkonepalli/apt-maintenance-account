@@ -2,10 +2,10 @@ import { NgModule }				from '@angular/core';
 import { CommonModule }			from '@angular/common';
 import { FormsModule }			from '@angular/forms';
 
-import { UserListComponent }	from './user-list.component';
-import { UserDetailComponent } 	from './user-detail.component';
-import { UserService }			from './user.service';
-import { UsersRoutingModule }		from './users-routing.module';
+import { UserListComponent }	from './list.component';
+import { UserDetailComponent } 	from './detail.component';
+import { UserService }			from './service';
+import { UsersRoutingModule }		from './routing.module';
 
 @NgModule({
 	imports: [

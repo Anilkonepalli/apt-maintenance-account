@@ -3,7 +3,7 @@ import { NgForm } from '@angular/forms';
 import { Http, Headers } from '@angular/http';
 import { Router } from '@angular/router';
 
-import { User } from './models/user';
+import { User } from './users/model';
 
 
 const contentHeaders = new Headers();

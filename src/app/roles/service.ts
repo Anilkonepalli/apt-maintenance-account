@@ -9,7 +9,7 @@ export class RoleService {
 
 	public config: any = { server_ip_addr: "http://localhost:3002"};
 	
-	private roleUrl = this.config.server_ip_addr+'/api/roles';
+	private modelUrl = this.config.server_ip_addr+'/api/roles';
 	private id_token = localStorage.getItem('id_token');
 	private headers = new Headers({
 		'Content-Type': 'application/json',
@@ -18,43 +18,43 @@ export class RoleService {
 
 	constructor(private http: Http) {}
 
-	getRoles(): Promise<Role[]> {
-		console.log('Get the roles from: '+this.roleUrl);
-		return this.http.get(this.roleUrl, {headers: this.headers})
+	getList(): Promise<Role[]> {
+		console.log('Get the roles from: '+this.modelUrl);
+		return this.http.get(this.modelUrl, {headers: this.headers})
 			.toPromise()
-			.then(response => response.json() as Role[])
+			.then(model => model.json() as Role[])
 			.catch(this.handleError)
 	}
 
-	getRole(id: number): Promise<Role> {
-		console.log('Get an role from: '+this.roleUrl+'/'+id);
-		const url = this.roleUrl+'/'+id;
+	get(id: number): Promise<Role> {
+		console.log('Get a role model from: '+this.modelUrl+'/'+id);
+		const url = this.modelUrl+'/'+id;
 		return this.http.get(url, {headers: this.headers})
 			.toPromise()
-			.then(response => response.json() as Role)
+			.then(model => model.json() as Role)
 			.catch(this.handleError);
 	}
 
-	update(role: Role): Promise<Role> {
-		const url = `${this.roleUrl}/${role.id}`;
-		console.log('Update role at url: '+url);
+	update(model: Role): Promise<Role> {
+		const url = `${this.modelUrl}/${model.id}`;
+		console.log('Update Role model at url: '+url);
 		return this.http
-			.put(url, JSON.stringify(role), {headers: this.headers})
+			.put(url, JSON.stringify(model), {headers: this.headers})
 			.toPromise()
-			.then( () => role )
+			.then( () => model )
 			.catch(this.handleError);
 	}
 
-	create(role: Role): Promise<Role> {
+	create(model: Role): Promise<Role> {
 		return this.http
-			.post(this.roleUrl, JSON.stringify(role), {headers: this.headers})
+			.post(this.modelUrl, JSON.stringify(model), {headers: this.headers})
 			.toPromise()
 			.then(res => res.json().data)
 			.catch(this.handleError);
 	}
 
 	delete(id: number): Promise<void> {
-		const url = `${this.roleUrl}/${id}`;
+		const url = `${this.modelUrl}/${id}`;
 		return this.http.delete(url, {headers: this.headers})
 			.toPromise()
 			.then( () => null )

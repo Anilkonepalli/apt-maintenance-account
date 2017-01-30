@@ -18,7 +18,8 @@ var detail_css_string = detail_css.toString();
 	styles: [ detail_css_string ],
 })
 export class RoleDetailComponent implements OnInit {
-	@Input() role: Role;
+	@Input() model: Role;
+	modelName: string = 'Role';
 	editMode: boolean = true;
 
 	constructor(
@@ -31,10 +32,10 @@ export class RoleDetailComponent implements OnInit {
 	ngOnInit(): void {
 		console.log(" RoleDetailComponent >> ngOnInit() ....");
 		this.route.params
-			.switchMap((params: Params) => this.service.getRole(+params['id']))
-			.subscribe((role: Role) => {
-				this.role = role;
-				if(role.id) this.editMode = true; 
+			.switchMap((params: Params) => this.service.get(+params['id']))
+			.subscribe((model: Role) => {
+				this.model = model;
+				if(model.id) this.editMode = true; 
 				else this.editMode = false;
 			});
 	}
@@ -43,9 +44,9 @@ export class RoleDetailComponent implements OnInit {
 		this.location.back();
 	}
 
-	gotoRoles() {
-		let roleId = this.role ? this.role.id : null;
-		this.router.navigate(['/roles', { id: roleId, foo: 'foo'}]);
+	gotoList() {
+		let modelId = this.model ? this.model.id : null;
+		this.router.navigate(['/roles', { id: modelId, foo: 'foo'}]);
 	}
 
 	save(): void {
@@ -53,15 +54,15 @@ export class RoleDetailComponent implements OnInit {
 	}
 
 	private add(): void {
-		this.service.create(this.role)
-			.then( (aRole) => { 
-				this.role = aRole; 
-				this.gotoRoles(); 
+		this.service.create(this.model)
+			.then( (model) => { 
+				this.model = model; 
+				this.gotoList(); 
 			});		
 	}
 
 	private update(): void {
-		this.service.update(this.role)
+		this.service.update(this.model)
 			.then( () => this.goBack() );
 	}
 }

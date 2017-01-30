@@ -20,7 +20,7 @@ var list_html_string = list_html.toString();
 })
 export class RoleListComponent implements OnInit {
 
-	roles: Observable<Role[]>;
+	models: Observable<Role[]>;
 
 	private selectedId: number;
 
@@ -35,35 +35,35 @@ export class RoleListComponent implements OnInit {
 
 	ngOnInit(): void {
 console.log("RoleListComponent >> ngOnInit()");
-		this.roles = this.route.params
+		this.models = this.route.params
 			.switchMap((params: Params) => {
 				this.selectedId = +params['id'];
-				console.log("calling service to getRoles()...");
-				return this.service.getRoles();
+				console.log("calling Role service to getList()...");
+				return this.service.getList();
 			});
 
 	}
 
-	onSelect(role: Role): void {
-		this.router.navigate(['/roles', role.id]);
+	onSelect(model: Role): void {
+		this.router.navigate(['/roles', model.id]);
 	}
 
-	isSelected(role: Role) {
-		return role ? role.id === this.selectedId : false;
+	isSelected(model: Role) {
+		return model ? model.id === this.selectedId : false;
 	}
 
 	add(): void {
 		console.log('adding an role...');
-		console.log(this.roles);
+		console.log(this.models);
 		this.router.navigate(['/roles', 0]); // 0 represent new role
 	}
 
-	delete(role: Role): void {
+	delete(model: Role): void {
 		this.service
-			.delete(role.id)
-			.then( () => { // filter out the deleted role from roles
-				this.roles = this.roles.filter( (roles, i) => {
-					return roles[i] !== role; 
+			.delete(model.id)
+			.then( () => { // filter out the deleted Role model from role models
+				this.models = this.models.filter( (models, i) => {
+					return models[i] !== model; 
 				});
 			});
 	}
