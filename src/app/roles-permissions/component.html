@@ -17,10 +17,10 @@
 </select>
 
 <select size="5" multiple>
-	<option *ngFor="let amodel of amodels | async" value={{amodel.id}}>{{amodel.operations}}-{{amodel.resource}}-{{amodel-condition}}</option>
+	<option *ngFor="let attached of attachedList | async" value={{attached.id}}>{{attached.operations}}-{{attached.resource}}-{{attached-condition}}</option>
 </select>
 
 <select size="5" multiple>
-	<option *ngFor="let rmodel of rmodels | async" value={{rmodel.id}}>{{rmodel.operations}}-{{rmodel.resource}}-{{rmodel-condition}}</option>
+	<option *ngFor="let detached of detachedList | async" value={{detached.id}}>{{detached.operations}}-{{detached.resource}}-{{detached-condition}}</option>
 </select>
 

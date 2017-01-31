@@ -23,15 +23,15 @@ var list_html_string = list_html.toString();
 	templateUrl: list_html_string
 })
 export class RolePermissionComponent implements OnInit {
-	//----------------------------------------------------------------------------------
-	//   Roles (lmodels)   |       Permissions (rmodels)                               |
-	//                     |   Attached (amodels)  |  Available ( = rmodels - amodels) |
-	//----------------------------------------------------------------------------------
+	//------------------------------------------------------------------------------
+	//   Roles (lmodels)   |       Permissions (rmodels = attached + detached)     |
+	//                     |   AttachedList   |  DetachedList (or Available List)) |
+	//------------------------------------------------------------------------------
 
 	lmodels: Observable<Role[]>;  // models on left side list
-	amodels: Observable<Permission[]>; // models attached
-	rmodels: Observable<Permission[]>; // models on right side list excluding attached models
-	rmodels_all: Observable<Permission[]>; // all models on right side
+	attachedList: Observable<Permission[]>; // attachedList models
+	detachedList: Observable<Permission[]>; // detachedList models
+	rmodels: Observable<Permission[]>; // all models on right side
 
 	private lselectedId: number;
 	private rselectedIds: Number[];
@@ -50,33 +50,35 @@ export class RolePermissionComponent implements OnInit {
 				return this.lservice.getList();
 			});
 	
-		this.rmodels_all = this.route.params
+		this.rmodels = this.route.params
 			.switchMap((params: Params) => {
 				return this.rservice.getList();
 			});
 	
-		this.rmodels = this.rmodels_all;
+		this.detachedList = this.rmodels; // initally all rmodels are in detachedList
 	}
 
 	onlSelect(model: Role): void {
-		//this.router.navigate(['/roles', model.id]);
 		this.lservice.getMyPermissions(model.id)
 			.then( models => {
-				let aIds = models.map(x => x.id);
-console.log('attached ids ....'); console.log(aIds);				
-				this.amodels = Observable.of(models);
-				let availables;
-				//this.rmodels = this.rmodels_all.filter((anArray, i) => anArray[i].id > 0);
-				this.rmodels_all.subscribe(rmodel => {
-					availables = rmodel.filter(each => !aIds.includes(each.id));
-console.log('availables...'); console.log(availables);					
-					this.rmodels = Observable.of(availables);
-				});
-				
+				this.attachedList = Observable.of(models);			
+				this.updateDetachedList();
 				return null;
-
 			});
-	} 
+	}
+
+	private updateDetachedList() {
+		let attachedIds: Array<number>;
+		this.attachedList.subscribe(x => {
+			attachedIds = x.map(each => each.id);
+		});
+
+		let availableModels;
+		this.rmodels.subscribe(rmodel => {
+			availableModels = rmodel.filter(each => !attachedIds.includes(each.id));
+			this.detachedList = Observable.of(availableModels);
+		});
+	}
 /*
 	islSelected(model: Role) {
 		return model ? model.id === this.lselectedId : false;
