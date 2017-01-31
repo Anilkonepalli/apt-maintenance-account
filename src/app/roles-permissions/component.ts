@@ -62,10 +62,17 @@ export class RolePermissionComponent implements OnInit {
 		//this.router.navigate(['/roles', model.id]);
 		this.lservice.getMyPermissions(model.id)
 			.then( models => {
+				let aIds = models.map(x => x.id);
+console.log('attached ids ....'); console.log(aIds);				
 				this.amodels = Observable.of(models);
-
+				let availables;
 				//this.rmodels = this.rmodels_all.filter((anArray, i) => anArray[i].id > 0);
-
+				this.rmodels_all.subscribe(rmodel => {
+					availables = rmodel.filter(each => !aIds.includes(each.id));
+console.log('availables...'); console.log(availables);					
+					this.rmodels = Observable.of(availables);
+				});
+				
 				return null;
 
 			});
