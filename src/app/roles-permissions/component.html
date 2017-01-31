@@ -1,0 +1,26 @@
+<h2>Roles-to-Permissions</h2>
+<button (click)="attach()">Attach</button>
+<button (click)="detach()">Detach</button>
+<!--ul class="items">
+	<li *ngFor="let lmodel of lmodels | async">
+		<span class="badge">{{lmodel.id}}</span>
+		<span>{{lmodel.name}}</span>
+	</li>
+</ul-->
+
+<select size="5">
+	<option 
+		*ngFor="let lmodel of lmodels | async" 
+		value={{lmodel.id}}
+		(click)="onlSelect(lmodel)"
+	>{{lmodel.name}}</option>
+</select>
+
+<select size="5" multiple>
+	<option *ngFor="let amodel of amodels | async" value={{amodel.id}}>{{amodel.operations}}-{{amodel.resource}}-{{amodel-condition}}</option>
+</select>
+
+<select size="5" multiple>
+	<option *ngFor="let rmodel of rmodels | async" value={{rmodel.id}}>{{rmodel.operations}}-{{rmodel.resource}}-{{rmodel-condition}}</option>
+</select>
+

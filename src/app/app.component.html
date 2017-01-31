@@ -24,6 +24,9 @@
 	<a [routerLink]="['/permissions']" *ngIf="jwt">Permissions</a>
 
 	<span *ngIf="jwt">|</span>
+	<a [routerLink]="['/roles-permissions']" *ngIf="jwt">Roles-Permissions</a>
+
+	<span *ngIf="jwt">|</span>
 	<a (click)="logout()" *ngIf="jwt">Logout</a>
 
 </nav>

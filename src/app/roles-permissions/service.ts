@@ -2,11 +2,10 @@ import { Injectable } from '@angular/core';
 import { Http, Headers } from '@angular/http';
 import 'rxjs/add/operator/toPromise';
 
-import { Role } from './model';
-import { Permission } from '../permissions/model';
+import { Role } from '../roles/model';
 
 @Injectable()
-export class RoleService {
+export class RolePermissionService {
 
 	public config: any = { server_ip_addr: "http://localhost:3002"};
 	
@@ -26,20 +25,14 @@ export class RoleService {
 			.catch(this.handleError)
 	}
 
-	getMe(id: number): Promise<Role> {
+	get(id: number): Promise<Role> {
 		const url = this.modelUrl+'/'+id;
 		return this.http.get(url, {headers: this.headers})
 			.toPromise()
 			.then(model => model.json() as Role)
 			.catch(this.handleError);
 	}
-	getMyPermissions(id: number): Promise<Permission[]> {
-		const url = this.modelUrl+'/mypermissions/'+id;
-		return this.http.get(url, {headers: this.headers})
-			.toPromise()
-			.then(models => models.json() as Permission[])
-			.catch(this.handleError);
-	}
+
 	update(model: Role): Promise<Role> {
 		const url = `${this.modelUrl}/${model.id}`;
 		return this.http
