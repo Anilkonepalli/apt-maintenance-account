@@ -2,7 +2,7 @@
 <button (click)="attach()">Attach</button>
 <button (click)="detach()">Detach</button>
 <!--ul class="items">
-	<li *ngFor="let lmodel of lmodels | async">
+	<li *ngFor="let lmodel of lstream | async">
 		<span class="badge">{{lmodel.id}}</span>
 		<span>{{lmodel.name}}</span>
 	</li>
@@ -10,17 +10,17 @@
 
 <select size="5">
 	<option 
-		*ngFor="let lmodel of lmodels | async" 
+		*ngFor="let lmodel of lstream | async" 
 		value={{lmodel.id}}
 		(click)="onlSelect(lmodel)"
 	>{{lmodel.name}}</option>
 </select>
 
 <select size="5" multiple>
-	<option *ngFor="let attached of attachedList | async" value={{attached.id}}>{{attached.operations}}-{{attached.resource}}-{{attached-condition}}</option>
+	<option *ngFor="let amodel of attachedStream | async" value={{amodel.id}}>{{amodel.operations}}-{{amodel.resource}}-{{amodel-condition}}</option>
 </select>
 
 <select size="5" multiple>
-	<option *ngFor="let detached of detachedList | async" value={{detached.id}}>{{detached.operations}}-{{detached.resource}}-{{detached-condition}}</option>
+	<option *ngFor="let dmodel of detachedStream | async" value={{dmodel.id}}>{{dmodel.operations}}-{{dmodel.resource}}-{{dmodel-condition}}</option>
 </select>
 

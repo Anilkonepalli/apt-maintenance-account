@@ -8,6 +8,7 @@ import { RolesPermissionsRoutingModule }	from './routing.module';
 
 import { RoleService }		from '../roles/service';
 import { PermissionService }  from '../permissions/service';
+import { RolePermissionService } from './service';
 
 @NgModule({
 	imports: [
@@ -20,7 +21,8 @@ import { PermissionService }  from '../permissions/service';
 	],
 	providers: [
 		RoleService,
-		PermissionService
+		PermissionService,
+		RolePermissionService
 	]
 })
 export class RolesPermissionsModule {}

@@ -7,8 +7,10 @@ import { Observable }						from 'rxjs/Observable';
 import { Role }							from '../roles/model';
 import { Permission }					from '../permissions/model';
 
-import { RoleService }					from '../roles/service';
-import { PermissionService }			from '../permissions/service';
+//import { RoleService }					from '../roles/service';
+//import { PermissionService }			from '../permissions/service';
+
+import { RolePermissionService }		from './service';
 
 
 var list_css = require('./component.css');
@@ -24,59 +26,63 @@ var list_html_string = list_html.toString();
 })
 export class RolePermissionComponent implements OnInit {
 	//------------------------------------------------------------------------------
-	//   Roles (lmodels)   |       Permissions (rmodels = attached + detached)     |
-	//                     |   AttachedList   |  DetachedList (or Available List)) |
+	//   Roles (lstream)   |       Permissions (rstream = attached + detached)     |
+	//                     |   AttachedStream   |  DetachedStream (or Available List)) |
 	//------------------------------------------------------------------------------
 
-	lmodels: Observable<Role[]>;  // models on left side list
-	attachedList: Observable<Permission[]>; // attachedList models
-	detachedList: Observable<Permission[]>; // detachedList models
-	rmodels: Observable<Permission[]>; // all models on right side
+	lstream: Observable<Role[]>;  // stream on left side models
+	attachedStream: Observable<Permission[]>; 
+	detachedStream: Observable<Permission[]>; 
+	rstream: Observable<Permission[]>; // rstream holds right side models (attached + detached)
 
 	private lselectedId: number;
 	private rselectedIds: Number[];
 	
 	constructor(
-		private lservice: RoleService,
-		private rservice: PermissionService,
+		//private lservice: RoleService,
+		//private rservice: PermissionService,
+		private service: RolePermissionService,
 		private route: ActivatedRoute,
 		private router: Router
 	) {}
 
 	ngOnInit(): void {
-		this.lmodels = this.route.params
+		this.lstream = this.route.params
 			.switchMap((params: Params) => {
 				this.lselectedId = +params['id'];
-				return this.lservice.getList();
+				//return this.lservice.getList();
+				return this.service.getlmodels();
 			});
 	
-		this.rmodels = this.route.params
+		this.rstream = this.route.params
 			.switchMap((params: Params) => {
-				return this.rservice.getList();
+				//return this.rservice.getList();
+				return this.service.getrmodels();
 			});
 	
-		this.detachedList = this.rmodels; // initally all rmodels are in detachedList
+		this.detachedStream = this.rstream; // initially rstream are in detachedStream
 	}
 
 	onlSelect(model: Role): void {
-		this.lservice.getMyPermissions(model.id)
+		//this.lservice.getMyPermissions(model.id)
+		this.service.getAttachedModels(model.id)
 			.then( models => {
-				this.attachedList = Observable.of(models);			
-				this.updateDetachedList();
+				this.attachedStream = Observable.of(models);			
+				this.updateDetachedModels();
 				return null;
 			});
 	}
 
-	private updateDetachedList() {
+	private updateDetachedModels() {
 		let attachedIds: Array<number>;
-		this.attachedList.subscribe(x => {
-			attachedIds = x.map(each => each.id);
+		this.attachedStream.subscribe(amodel => {
+			attachedIds = amodel.map(eachModel => eachModel.id);
 		});
 
 		let availableModels;
-		this.rmodels.subscribe(rmodel => {
-			availableModels = rmodel.filter(each => !attachedIds.includes(each.id));
-			this.detachedList = Observable.of(availableModels);
+		this.rstream.subscribe(dmodel => {
+			availableModels = dmodel.filter(eachModel => !attachedIds.includes(eachModel.id));
+			this.detachedStream = Observable.of(availableModels);
 		});
 	}
 /*
