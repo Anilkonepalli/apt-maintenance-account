@@ -16,11 +16,20 @@
 	>{{lmodel.name}}</option>
 </select>
 
-<select size="5" multiple>
-	<option *ngFor="let amodel of attachedStream | async" value={{amodel.id}}>{{amodel.operations}}-{{amodel.resource}}-{{amodel-condition}}</option>
+<select size="5" multiple [(ngModel)]="amodels_selected">
+	<option 
+		*ngFor="let amodel of attachedStream | async" 
+		value={{amodel.id}}
+	>{{amodel.operations}}-{{amodel.resource}}-{{amodel-condition}}</option>
 </select>
 
-<select size="5" multiple>
+<select size="5" multiple [(ngModel)]="dmodels_selected">
 	<option *ngFor="let dmodel of detachedStream | async" value={{dmodel.id}}>{{dmodel.operations}}-{{dmodel.resource}}-{{dmodel-condition}}</option>
 </select>
 
+<br>
+amodels selected:
+{{amodels_selected}}
+<br>
+dmodels_selected:
+{{dmodels_selected}}

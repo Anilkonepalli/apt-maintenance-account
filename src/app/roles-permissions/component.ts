@@ -7,17 +7,12 @@ import { Observable }						from 'rxjs/Observable';
 import { Role }							from '../roles/model';
 import { Permission }					from '../permissions/model';
 
-//import { RoleService }					from '../roles/service';
-//import { PermissionService }			from '../permissions/service';
-
 import { RolePermissionService }		from './service';
-
 
 var list_css = require('./component.css');
 var list_css_string = list_css.toString();
 var list_html = require('./component.html');
 var list_html_string = list_html.toString();
-
 
 @Component({
 	selector: 'role-permission',
@@ -35,12 +30,13 @@ export class RolePermissionComponent implements OnInit {
 	detachedStream: Observable<Permission[]>; 
 	rstream: Observable<Permission[]>; // rstream holds right side models (attached + detached)
 
-	private lselectedId: number;
-	private rselectedIds: Number[];
+	amodels_selected: string[];
+	dmodels_selected: string[];
+
+	//private lselectedId: number;
+	//private rselectedIds: Number[];
 	
 	constructor(
-		//private lservice: RoleService,
-		//private rservice: PermissionService,
 		private service: RolePermissionService,
 		private route: ActivatedRoute,
 		private router: Router
@@ -49,14 +45,12 @@ export class RolePermissionComponent implements OnInit {
 	ngOnInit(): void {
 		this.lstream = this.route.params
 			.switchMap((params: Params) => {
-				this.lselectedId = +params['id'];
-				//return this.lservice.getList();
+				//this.lselectedId = +params['id'];
 				return this.service.getlmodels();
 			});
 	
 		this.rstream = this.route.params
 			.switchMap((params: Params) => {
-				//return this.rservice.getList();
 				return this.service.getrmodels();
 			});
 	
@@ -64,7 +58,6 @@ export class RolePermissionComponent implements OnInit {
 	}
 
 	onlSelect(model: Role): void {
-		//this.lservice.getMyPermissions(model.id)
 		this.service.getAttachedModels(model.id)
 			.then( models => {
 				this.attachedStream = Observable.of(models);			
@@ -72,6 +65,12 @@ export class RolePermissionComponent implements OnInit {
 				return null;
 			});
 	}
+
+/*	onaselect(model: Permission): void {
+		console.log('selections are:...');
+		console.log(model);
+	}
+*/
 
 	private updateDetachedModels() {
 		let attachedIds: Array<number>;
