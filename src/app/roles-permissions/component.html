@@ -1,12 +1,4 @@
 <h2>Roles-to-Permissions</h2>
-<button (click)="attach()">Attach</button>
-<button (click)="detach()">Detach</button>
-<!--ul class="items">
-	<li *ngFor="let lmodel of lstream | async">
-		<span class="badge">{{lmodel.id}}</span>
-		<span>{{lmodel.name}}</span>
-	</li>
-</ul-->
 
 <select size="5">
 	<option 
@@ -16,20 +8,24 @@
 	>{{lmodel.name}}</option>
 </select>
 
-<select size="5" multiple [(ngModel)]="amodels_selected">
+<select size="5" multiple [(ngModel)]="aIds">
 	<option 
 		*ngFor="let amodel of attachedStream | async" 
 		value={{amodel.id}}
 	>{{amodel.operations}}-{{amodel.resource}}-{{amodel-condition}}</option>
 </select>
 
-<select size="5" multiple [(ngModel)]="dmodels_selected">
+<button (click)="detach()" title="Detach Permissions">>></button>
+<button (click)="attach()" title="Attach Permissions"><<</button>
+
+<select size="5" multiple [(ngModel)]="dIds">
 	<option *ngFor="let dmodel of detachedStream | async" value={{dmodel.id}}>{{dmodel.operations}}-{{dmodel.resource}}-{{dmodel-condition}}</option>
 </select>
+<button (click)="save()" title="Save changes">Save</button>
 
 <br>
-amodels selected:
-{{amodels_selected}}
+---------------------------------------------------------------
 <br>
-dmodels_selected:
-{{dmodels_selected}}
+selected_amodel_ids: {{aIds}}
+<br>
+selected_dmodel_ids: {{dIds}}

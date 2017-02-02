@@ -30,12 +30,11 @@ export class RolePermissionComponent implements OnInit {
 	detachedStream: Observable<Permission[]>; 
 	rstream: Observable<Permission[]>; // rstream holds right side models (attached + detached)
 
-	amodels_selected: string[];
-	dmodels_selected: string[];
+	attachedaIds: Observable<number[]> = this.attachedStream.map(models => models.map(model =>model.id));
 
-	//private lselectedId: number;
-	//private rselectedIds: Number[];
-	
+	aIds: Array<number>;  // ids of selected attached models
+	dIds: Array<number>;  // ids of selected detached models
+
 	constructor(
 		private service: RolePermissionService,
 		private route: ActivatedRoute,
@@ -66,51 +65,81 @@ export class RolePermissionComponent implements OnInit {
 			});
 	}
 
-/*	onaselect(model: Permission): void {
-		console.log('selections are:...');
-		console.log(model);
-	}
-*/
-
 	private updateDetachedModels() {
-		let attachedIds: Array<number>;
+		let attachedaIds: Array<number>;
 		this.attachedStream.subscribe(amodel => {
-			attachedIds = amodel.map(eachModel => eachModel.id);
+			attachedaIds = amodel.map(each => each.id);
 		});
 
-		let availableModels;
-		this.rstream.subscribe(dmodel => {
-			availableModels = dmodel.filter(eachModel => !attachedIds.includes(eachModel.id));
-			this.detachedStream = Observable.of(availableModels);
+		this.rstream.subscribe(rmodel => {
+			let availablerModels = rmodel.filter(each => !attachedaIds.includes(each.id));
+			this.detachedStream = Observable.of(availablerModels);
 		});
 	}
-/*
-	islSelected(model: Role) {
-		return model ? model.id === this.lselectedId : false;
-	}
-*/
+
+
+
 	attach() {
 
+		let attachedaIds: Array<number>;
+console.log('attached aIds'); console.log(this.attachedaIds);
+		this.attachedStream.subscribe(amodel => {
+			attachedaIds = amodel.map(each => each.id);
+		});
+
+		let selecteddIds = this.dIds.map(each => +each); // convert from string to integer
+
+		let newaIds = attachedaIds.concat(selecteddIds); // concatenate existing attached ids with selected dIds
+
+		this.rstream.subscribe(rmodel => {
+			let attachedModels = rmodel.filter(each => newaIds.includes(each.id));
+			this.attachedStream = Observable.of(attachedModels);
+		});
+
+		this.detachedStream.subscribe(dmodel => {
+			let newdModels = dmodel.filter(each => !selecteddIds.includes(each.id));	
+			this.detachedStream = Observable.of(newdModels);
+		});
+console.log('attach completes');
 	}
 
-	detach() {
 
+/*
+	attach() {
+		let newIds = this.newIdsToAttach();
+		this.updateAttachedModelsWith(newIds);
+		this.updateDetachedModels();
+	}
+
+	private newIdsToAttach() {
+		let attachedaIds: Array<number>;
+
+		this.attachedStream.subscribe(amodel => {
+			attachedaIds = amodel.map(each => each.id);
+		});
+
+		let selecteddIds = this.dIds.map(each => +each); // convert from string to integer
+
+		let newaIds = attachedaIds.concat(selecteddIds); // concatenate existing attached ids with selected dIds
+
+		return newaIds;
+	}
+
+	private updateAttachedModelsWith(newaIds: number[]) {
+		this.rstream.subscribe(rmodel => {
+			let attachedModels = rmodel.filter(each => newaIds.includes(each.id));
+			this.attachedStream = Observable.of(attachedModels);
+		});
+	}
+*/
+
+
+	detach() {
+console.log('Detach selected models...');
 	}
 
 	save() {
-		
-	}
-/*	add(): void {
-		this.router.navigate(['/roles', 0]); // 0 represent new role
+console.log('Save changes...');
 	}
 
-	delete(model: Role): void {
-		this.service
-			.delete(model.id)
-			.then( () => { // filter out the deleted Role model from role models
-				this.models = this.models.filter( (models, i) => {
-					return models[i] !== model; 
-				});
-			});
-	} */
 }
