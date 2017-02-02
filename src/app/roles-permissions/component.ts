@@ -64,46 +64,6 @@ export class RolePermissionComponent implements OnInit {
 			});
 	}
 
-/*	private updateDetachedModels() {
-		let attachedaIds: Array<number>;
-		this.attachedStream.subscribe(amodel => {
-			attachedaIds = amodel.map(each => each.id);
-		});
-
-		this.rstream.subscribe(rmodel => {
-			let availablerModels = rmodel.filter(each => !attachedaIds.includes(each.id));
-			this.detachedStream = Observable.of(availablerModels);
-		});
-console.log('Update Detached Models completes');
-	}
-*/
-
-/*
-	attach() {
-
-		let attachedaIds: Array<number>;
-
-		this.attachedStream.subscribe(amodel => {  // get ids of attached models
-			attachedaIds = amodel.map(each => each.id);
-		});
-
-		let selecteddIds = this.dIds.map(each => +each); // convert from string to integer
-
-		let newaIds = attachedaIds.concat(selecteddIds); // concatenate existing attached ids with selected dIds
-
-		this.rstream.subscribe(rmodel => { // update attached models
-			let attachedModels = rmodel.filter(each => newaIds.includes(each.id));
-			this.attachedStream = Observable.of(attachedModels);
-		});
-
-		this.detachedStream.subscribe(dmodel => { // update detached models
-			let newdModels = dmodel.filter(each => !selecteddIds.includes(each.id));	
-			this.detachedStream = Observable.of(newdModels);
-		});
-console.log('attach completes');
-	}
-*/
-
 	attach() {
 		this.detachedStream.subscribe(dmodel => {
 			let dIdNums = this.dIds.map(each => +each); // convert string id into integer
@@ -115,10 +75,15 @@ console.log('attach completes');
 		});
 	}
 
+	private updateAttachedModelsExcluding(attacheddIds: number[]){
+		this.rstream.subscribe(rmodel => {
+			let availablerModels = rmodel.filter(each => !attacheddIds.includes(each.id));
+			this.attachedStream = Observable.of(availablerModels);
+		});
+	}
+
 	detach() {
-console.log('Detach selected models...');
-		this.attachedStream.subscribe(amodel => {   // remove the selected items from attached models
-			
+		this.attachedStream.subscribe(amodel => {   // remove the selected items from attached models			
 			let aIdsNums = this.aIds.map(each => +each); // convert string id into integer
 			let amodels = amodel.filter(each => !aIdsNums.includes(each.id)); // filter out selected amodels
 			this.attachedStream = Observable.of(amodels); // update attached stream after filtering
@@ -133,18 +98,7 @@ console.log('Detach selected models...');
 			let availablerModels = rmodel.filter(each => !attachedaIds.includes(each.id));
 			this.detachedStream = Observable.of(availablerModels);
 		});
-console.log('Update Detached Models excluding attachedaIds completes');
 	}
-
-
-	private updateAttachedModelsExcluding(attacheddIds: number[]){
-		this.rstream.subscribe(rmodel => {
-			let availablerModels = rmodel.filter(each => !attacheddIds.includes(each.id));
-			this.attachedStream = Observable.of(availablerModels);
-		});
-console.log('Update Attached Models excluding attachedaIds completes');
-	}
-
 
 	save() {
 console.log('Save changes...');
