@@ -1,4 +1,4 @@
-<h2>Roles-to-Permissions</h2>
+<h2>Users-to-Roles</h2>
 
 <select size="5" [(ngModel)]="lId">
 	<option 
@@ -10,17 +10,14 @@
 </select>
 
 <select size="5" multiple [(ngModel)]="aIds">
-	<option 
-		*ngFor="let amodel of attachedStream | async" 
-		value={{amodel.id}}
-	>{{amodel.operations}}-{{amodel.resource}}-{{amodel-condition}}</option>
+	<option *ngFor="let amodel of attachedStream | async" value={{amodel.id}}>{{amodel.name}}</option>
 </select>
 
-<button (click)="detach()" title="Detach Permissions">>></button>
-<button (click)="attach()" title="Attach Permissions"><<</button>
+<button (click)="detach()" title="Detach Roles">>></button>
+<button (click)="attach()" title="Attach Roles"><<</button>
 
 <select size="5" multiple [(ngModel)]="dIds">
-	<option *ngFor="let dmodel of detachedStream | async" value={{dmodel.id}}>{{dmodel.operations}}-{{dmodel.resource}}-{{dmodel-condition}}</option>
+	<option *ngFor="let dmodel of detachedStream | async" value={{dmodel.id}}>{{dmodel.name}}</option>
 </select>
 
 <button (click)="save()" title="Save changes">Save</button>

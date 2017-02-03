@@ -31,7 +31,7 @@ export class UserDetailComponent implements OnInit {
 
 	ngOnInit(): void {
 		this.route.params
-			.switchMap((params: Params) => this.service.get(+params['id']))
+			.switchMap((params: Params) => this.service.getMe(+params['id']))
 			.subscribe((model: User) => {
 				this.model = model;
 				if(model.id) this.editMode = true; 

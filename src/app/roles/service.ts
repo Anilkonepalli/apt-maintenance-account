@@ -48,6 +48,16 @@ export class RoleService {
 			.then( () => model )
 			.catch(this.handleError);
 	}
+	updateMyPermissions(modelId: number, attachedIds: number[]): Promise<number> {
+		const url=`${this.modelUrl}/mypermissions/${modelId}`;
+		let data = { 'mypermissionsIds': attachedIds };
+		return this.http
+			.put(url, JSON.stringify(data), {headers: this.headers})
+			.toPromise()
+			.then( () => modelId )
+			.catch(this.handleError);
+	}
+
 
 	create(model: Role): Promise<Role> {
 		return this.http

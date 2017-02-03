@@ -5,9 +5,9 @@ import 'rxjs/add/operator/switchMap';
 import { Observable }						from 'rxjs/Observable';
 
 import { Role }							from '../roles/model';
-import { Permission }					from '../permissions/model';
+import { User }					from '../users/model';
 
-import { RolePermissionService }		from './service';
+import { UserRoleService }		from './service';
 
 var list_css = require('./component.css');
 var list_css_string = list_css.toString();
@@ -15,27 +15,27 @@ var list_html = require('./component.html');
 var list_html_string = list_html.toString();
 
 @Component({
-	selector: 'role-permission',
+	selector: 'user-role',
 	styles: [ list_css_string ],
 	templateUrl: list_html_string
 })
-export class RolePermissionComponent implements OnInit {
-	//------------------------------------------------------------------------------
-	//   Roles (lstream)   |       Permissions (rstream = attached + detached)     |
+export class UserRoleComponent implements OnInit {
+	//----------------------------------------------------------------------------------
+	//   Users (lstream)   |       Roles (rstream = attached + detached)               |
 	//                     |   AttachedStream   |  DetachedStream (or Available List)) |
-	//------------------------------------------------------------------------------
+	//----------------------------------------------------------------------------------
 
-	lstream: Observable<Role[]>;  // stream on left side models
-	attachedStream: Observable<Permission[]>; 
-	detachedStream: Observable<Permission[]>; 
-	rstream: Observable<Permission[]>; // rstream holds right side models (attached + detached)
+	lstream: Observable<User[]>;  // stream on left side models
+	attachedStream: Observable<Role[]>; 
+	detachedStream: Observable<Role[]>; 
+	rstream: Observable<Role[]>; // rstream holds right side models (attached + detached)
 
 	lId: number;       // selected left model
 	aIds: Array<number>;  // ids of selected attached models
 	dIds: Array<number>;  // ids of selected detached models
 
 	constructor(
-		private service: RolePermissionService,
+		private service: UserRoleService,
 		private route: ActivatedRoute,
 		private router: Router
 	) {}
@@ -43,7 +43,6 @@ export class RolePermissionComponent implements OnInit {
 	ngOnInit(): void {
 		this.lstream = this.route.params
 			.switchMap((params: Params) => {
-				//this.lselectedId = +params['id'];
 				return this.service.getlmodels();
 			});
 	
@@ -55,9 +54,10 @@ export class RolePermissionComponent implements OnInit {
 		this.detachedStream = this.rstream; // initially rstream are in detachedStream
 	}
 
-	onlSelect(model: Role): void {
+	onlSelect(model: User): void {
 		this.service.getAttachedModels(model.id)
 			.then( amodels => {
+console.log('Users Attached Roles...'); console.log(amodels);
 				this.attachedStream = Observable.of(amodels);
 				let attachedaIds = amodels.map(amodel => amodel.id);
 				this.updateDetachedModelsExcluding(attachedaIds);

@@ -3,6 +3,7 @@ import { Http, Headers } from '@angular/http';
 import 'rxjs/add/operator/toPromise';
 
 import { User } from './model';
+import { Role } from '../roles/model';
 
 @Injectable()
 export class UserService {
@@ -25,11 +26,20 @@ export class UserService {
 			.catch(this.handleError)
 	}
 
-	get(id: number): Promise<User> {
+	getMe(id: number): Promise<User> {
 		const url = this.modelUrl+'/'+id;
 		return this.http.get(url, {headers: this.headers})
 			.toPromise()
 			.then(model => model.json() as User)
+			.catch(this.handleError);
+	}
+
+	getMyRoles(id: number): Promise<Role[]> {
+		const url = this.modelUrl+'/myroles/'+id;
+console.log('Url : '+url);		
+		return this.http.get(url, {headers: this.headers})
+			.toPromise()
+			.then(models => models.json() as Role[])
 			.catch(this.handleError);
 	}
 
@@ -39,6 +49,16 @@ export class UserService {
 			.put(url, JSON.stringify(model), {headers: this.headers})
 			.toPromise()
 			.then( () => model )
+			.catch(this.handleError);
+	}
+
+	updateMyRoles(modelId: number, attachedIds: number[]): Promise<number> {
+		const url=`${this.modelUrl}/myroles/${modelId}`;
+		let data = { 'myrolesIds': attachedIds };
+		return this.http
+			.put(url, JSON.stringify(data), {headers: this.headers})
+			.toPromise()
+			.then( () => modelId )
 			.catch(this.handleError);
 	}
 

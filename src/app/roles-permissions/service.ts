@@ -28,5 +28,7 @@ export class RolePermissionService {
 	getAttachedModels(id: number): Promise<Permission[]> { // get attached models for the selected item on left side
 		return this.lservice.getMyPermissions(id);
 	}
-
+	saveAttachedModels(lId: number, ids: number[]): Promise<number> {
+		return this.lservice.updateMyPermissions(lId, ids);
+	}
 }
