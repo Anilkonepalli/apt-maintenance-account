@@ -6,6 +6,7 @@ import { Observable }						from 'rxjs/Observable';
 
 import { Account }							from './model';
 import { AccountService }					from './service';
+import { Permission }						from '../permissions/model';
 
 var list_css = require('./list.component.css');
 var list_css_string = list_css.toString();
@@ -21,6 +22,7 @@ var list_html_string = list_html.toString();
 export class AccountListComponent implements OnInit {
 
 	models: Observable<Account[]>;
+	auths: Permission[];
 
 	private selectedId: number;
 
@@ -31,11 +33,14 @@ export class AccountListComponent implements OnInit {
 	) {}
 
 	ngOnInit(): void {
+console.log('OnInit in AccountListComponent...');
 		this.models = this.route.params
 			.switchMap((params: Params) => {
 				this.selectedId = +params['id'];
 				return this.service.getList();
 			});
+		this.service.getMyPermissions()
+			.then(models => this.auths = models);
 	}
 
 	onSelect(model: Account): void {
@@ -47,6 +52,7 @@ export class AccountListComponent implements OnInit {
 	}
 
 	add(): void {
+console.log('Permissions are: '); console.log(this.auths);		
 		this.router.navigate(['/accounts', 0]); // 0 represent new account
 	}
 

@@ -1,9 +1,11 @@
 import { Injectable } from '@angular/core';
 import { Http, Headers } from '@angular/http';
 import 'rxjs/add/operator/toPromise';
+import { Observable } from 'rxjs/Observable';
 
 import { User } from './model';
 import { Role } from '../roles/model';
+import { Permission } from '../permissions/model';
 
 @Injectable()
 export class UserService {
@@ -42,6 +44,18 @@ console.log('Url : '+url);
 			.then(models => models.json() as Role[])
 			.catch(this.handleError);
 	}
+
+	getMyPermissionsFor(moduleName: string): Promise<Permission[]> {
+		//let url = `${this.modelUrl}/mypermissions/${moduleName}`;
+		let url = this.modelUrl+'/mypermissions/'+moduleName;
+console.log('Get my permissions Url : '+url);		
+		return this.http.get(url, {headers: this.headers})
+			.toPromise()
+			.then(models => models.json() as Permission[])
+			.catch(this.handleError);
+
+	}
+
 
 	update(model: User): Promise<User> {
 		const url = `${this.modelUrl}/${model.id}`;

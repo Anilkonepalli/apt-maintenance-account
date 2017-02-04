@@ -8,6 +8,8 @@ import { AccountDetailComponent } 	from './detail.component';
 import { AccountService }			from './service';
 import { AccountsRoutingModule }		from './routing.module';
 
+import { UserService } from '../users/service';
+
 @NgModule({
 	imports: [
 		CommonModule,
@@ -19,7 +21,8 @@ import { AccountsRoutingModule }		from './routing.module';
 		AccountDetailComponent
 	],
 	providers: [
-		AccountService
+		AccountService,
+		UserService
 	]
 })
 export class AccountsModule {}

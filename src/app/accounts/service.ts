@@ -2,7 +2,11 @@ import { Injectable } from '@angular/core';
 import { Http, Headers } from '@angular/http';
 import 'rxjs/add/operator/toPromise';
 
+import { Observable } from 'rxjs/Observable';
+
 import { Account } from './model';
+import { Permission } from '../permissions/model';
+import { UserService } from '../users/service';
 
 @Injectable()
 export class AccountService {
@@ -16,7 +20,10 @@ export class AccountService {
 		'x-access-token': this.id_token
 	});
 
-	constructor(private http: Http) {}
+	constructor(
+		private http: Http,
+		private userService: UserService
+	) {}
 
 	getList(): Promise<Account[]> {
 		return this.http.get(this.modelUrl, {headers: this.headers})
@@ -31,6 +38,10 @@ export class AccountService {
 			.toPromise()
 			.then(model => model.json() as Account)
 			.catch(this.handleError);
+	}
+
+	getMyPermissions(): Promise<Permission[]> {
+		return this.userService.getMyPermissionsFor('accounts');
 	}
 
 	update(model: Account): Promise<Account> {
