@@ -26,9 +26,9 @@ export class UserRoleService {
 	}
 
 	getAttachedModels(id: number): Promise<Role[]> { // get attached models for the selected item on left side
-		return this.lservice.getMyRoles(id);
+		return this.lservice.getRolesFor(id);
 	}
 	saveAttachedModels(lId: number, ids: number[]): Promise<number> {
-		return this.lservice.updateMyRoles(lId, ids);
+		return this.lservice.updateRolesFor(lId, ids);
 	}
 }

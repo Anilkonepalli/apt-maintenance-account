@@ -28,7 +28,7 @@ export class UserService {
 			.catch(this.handleError)
 	}
 
-	getMe(id: number): Promise<User> {
+	getUserFor(id: number): Promise<User> {
 		const url = this.modelUrl+'/'+id;
 		return this.http.get(url, {headers: this.headers})
 			.toPromise()
@@ -36,24 +36,31 @@ export class UserService {
 			.catch(this.handleError);
 	}
 
-	getMyRoles(id: number): Promise<Role[]> {
-		const url = this.modelUrl+'/myroles/'+id;
+	getRolesFor(id: number): Promise<Role[]> {
+		const url = this.modelUrl+'/rolesfor/'+id;
 console.log('Url : '+url);		
 		return this.http.get(url, {headers: this.headers})
 			.toPromise()
 			.then(models => models.json() as Role[])
 			.catch(this.handleError);
 	}
-
+/*
+	getMyRoles(): Promise<Role[]> {
+		const url = this.modelUrl+'/my/roles';
+console.log('Url : '+url);		
+	return this.http.get(url, {headers: this.headers})
+		.toPromise()
+		.then(models => models.json() as Role[])
+		.catch(this.handleError);	
+	}
+*/
 	getMyPermissionsFor(moduleName: string): Promise<Permission[]> {
-		//let url = `${this.modelUrl}/mypermissions/${moduleName}`;
 		let url = this.modelUrl+'/mypermissions/'+moduleName;
 console.log('Get my permissions Url : '+url);		
 		return this.http.get(url, {headers: this.headers})
 			.toPromise()
 			.then(models => models.json() as Permission[])
 			.catch(this.handleError);
-
 	}
 
 
@@ -66,7 +73,7 @@ console.log('Get my permissions Url : '+url);
 			.catch(this.handleError);
 	}
 
-	updateMyRoles(modelId: number, attachedIds: number[]): Promise<number> {
+	updateRolesFor(modelId: number, attachedIds: number[]): Promise<number> {
 		const url=`${this.modelUrl}/myroles/${modelId}`;
 		let data = { 'myrolesIds': attachedIds };
 		return this.http
