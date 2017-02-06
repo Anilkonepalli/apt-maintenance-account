@@ -10,6 +10,7 @@ import { AccountsRoutingModule }		from './routing.module';
 
 import { UserService } from '../users/service';
 
+
 @NgModule({
 	imports: [
 		CommonModule,

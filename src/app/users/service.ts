@@ -6,6 +6,7 @@ import { Observable } from 'rxjs/Observable';
 import { User } from './model';
 import { Role } from '../roles/model';
 import { Permission } from '../permissions/model';
+import { Authorization } from '../authorization/model';
 
 @Injectable()
 export class UserService {
@@ -63,6 +64,28 @@ console.log('Get my permissions Url : '+url);
 			.catch(this.handleError);
 	}
 
+	getMyPermissions(): Promise<Permission[]> {
+		let url = this.modelUrl+'/mypermissions/all';
+console.log('Get all my permissions Url : '+url);		
+		return this.http.get(url, {headers: this.headers})
+			.toPromise()
+			.then(models => models.json() as Permission[])
+			.catch(this.handleError);
+	}
+
+	getAuthorizationFor(moduleName: string): Promise<Authorization> {
+		let url = this.modelUrl+'/mypermissions/'+moduleName;
+console.log('Get my permissions Url : '+url);		
+		return this.http.get(url, {headers: this.headers})
+			.toPromise()
+			.then(models => {
+				let perms = models.json() as Permission[];
+				let auth = new Authorization(perms);
+console.log('Authorization is: '); console.log(auth);			
+				return auth;
+			})
+			.catch(this.handleError);
+	}
 
 	update(model: User): Promise<User> {
 		const url = `${this.modelUrl}/${model.id}`;

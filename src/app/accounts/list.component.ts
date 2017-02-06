@@ -2,11 +2,16 @@ import { Component, OnInit }				from '@angular/core';
 import { Router, ActivatedRoute, Params }	from '@angular/router';
 
 import 'rxjs/add/operator/switchMap';
+
 import { Observable }						from 'rxjs/Observable';
 
 import { Account }							from './model';
 import { AccountService }					from './service';
-import { Permission }						from '../permissions/model';
+
+//import { Permission }						from '../permissions/model';
+
+import { Authorization }					from '../authorization';
+//import { AuthorizationService }				from '../authorization/service';
 
 var list_css = require('./list.component.css');
 var list_css_string = list_css.toString();
@@ -22,7 +27,8 @@ var list_html_string = list_html.toString();
 export class AccountListComponent implements OnInit {
 
 	models: Observable<Account[]>;
-	auths: Permission[];
+
+	auth: Authorization;
 
 	private selectedId: number;
 
@@ -30,6 +36,7 @@ export class AccountListComponent implements OnInit {
 		private service: AccountService,
 		private route: ActivatedRoute,
 		private router: Router
+//		private authService: AuthorizationService
 	) {}
 
 	ngOnInit(): void {
@@ -39,8 +46,12 @@ console.log('OnInit in AccountListComponent...');
 				this.selectedId = +params['id'];
 				return this.service.getList();
 			});
-		this.service.getMyPermissions()
-			.then(models => this.auths = models);
+
+//		this.auth = this.authService.getFor('accounts');
+//		this.service.getMyPermissions()
+//			.then(models => this.auth = new Authorization(models));
+		this.service.getAuthorization()
+			.then(model => this.auth = model);
 	}
 
 	onSelect(model: Account): void {
@@ -52,7 +63,7 @@ console.log('OnInit in AccountListComponent...');
 	}
 
 	add(): void {
-console.log('Permissions are: '); console.log(this.auths);		
+console.log('Authorization: '); console.log(this.auth);		
 		this.router.navigate(['/accounts', 0]); // 0 represent new account
 	}
 

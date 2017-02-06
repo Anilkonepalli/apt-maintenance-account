@@ -7,7 +7,6 @@ import { AppComponent }  from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 
 import { LoginRoutingModule }   from './login-routing.module';
-//import { AccountsModule }      from './accounts/accounts.module';
 
 import { LoginComponent } 		from './login.component';
 import { SignupComponent } 	from './signup.component';
@@ -23,8 +22,7 @@ import { AboutComponent } from './about.component';
   	HttpModule, 
   	FormsModule, 
   	AppRoutingModule,
-  	LoginRoutingModule,
-  //  AccountsModule
+  	LoginRoutingModule
   ],
   declarations: [ 
   	AppComponent, 

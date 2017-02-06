@@ -7,14 +7,14 @@ import { Observable } from 'rxjs/Observable';
 import { Account } from './model';
 import { Permission } from '../permissions/model';
 import { UserService } from '../users/service';
-import { Role } from '../roles/model';
+import { Authorization } from '../authorization/model';
 
 @Injectable()
 export class AccountService {
 
 	public config: any = { server_ip_addr: "http://localhost:3002"};
 	
-	private roles: Role[];
+//	private roles: Role[];
 	private modelUrl = this.config.server_ip_addr+'/api/maintenance-accounts';
 	private id_token = localStorage.getItem('id_token');
 	private headers = new Headers({
@@ -44,6 +44,9 @@ export class AccountService {
 
 	getMyPermissions(): Promise<Permission[]> {
 		return this.userService.getMyPermissionsFor('accounts');
+	}
+	getAuthorization(): Promise<Authorization> {
+		return this.userService.getAuthorizationFor('accounts');
 	}
 
 	update(model: Account): Promise<Account> {
