@@ -1,7 +1,7 @@
-import { NgModule }					from '@angular/core';
-import { RouterModule, Routes }		from '@angular/router';
+import { NgModule }				from '@angular/core';
+import { RouterModule, Routes }	from '@angular/router';
 
-import { RoleListComponent }		from './list.component';
+import { RoleListComponent }	from './list.component';
 import { RoleDetailComponent }	from './detail.component';
 
 const roleRoutes: Routes = [

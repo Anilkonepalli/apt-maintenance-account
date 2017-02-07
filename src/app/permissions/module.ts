@@ -1,11 +1,12 @@
-import { NgModule }				from '@angular/core';
-import { CommonModule }			from '@angular/common';
-import { FormsModule }			from '@angular/forms';
+import { NgModule }						from '@angular/core';
+import { CommonModule }					from '@angular/common';
+import { FormsModule }					from '@angular/forms';
 
-import { PermissionListComponent }	from './list.component';
+import { PermissionListComponent }		from './list.component';
 import { PermissionDetailComponent } 	from './detail.component';
 import { PermissionService }			from './service';
-import { PermissionsRoutingModule }	from './routing.module';
+import { PermissionsRoutingModule }		from './routing.module';
+
 
 @NgModule({
 	imports: [

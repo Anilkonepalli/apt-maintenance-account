@@ -5,7 +5,7 @@ import { FormsModule }			from '@angular/forms';
 import { UserListComponent }	from './list.component';
 import { UserDetailComponent } 	from './detail.component';
 import { UserService }			from './service';
-import { UsersRoutingModule }		from './routing.module';
+import { UsersRoutingModule }	from './routing.module';
 
 @NgModule({
 	imports: [

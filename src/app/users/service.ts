@@ -1,12 +1,13 @@
-import { Injectable } from '@angular/core';
-import { Http, Headers } from '@angular/http';
-import 'rxjs/add/operator/toPromise';
-import { Observable } from 'rxjs/Observable';
+import { Injectable } 		from '@angular/core';
+import { Http, Headers } 	from '@angular/http';
+import { Observable } 		from 'rxjs/Observable';
 
-import { User } from './model';
-import { Role } from '../roles/model';
-import { Permission } from '../permissions/model';
-import { Authorization } from '../authorization/model';
+import { User } 			from './model';
+import { Role } 			from '../roles/model';
+import { Permission } 		from '../permissions/model';
+import { Authorization } 	from '../authorization/model';
+
+import 'rxjs/add/operator/toPromise';
 
 @Injectable()
 export class UserService {
@@ -23,7 +24,8 @@ export class UserService {
 	constructor(private http: Http) {}
 
 	getList(): Promise<User[]> {
-		return this.http.get(this.modelUrl, {headers: this.headers})
+		return this.http
+			.get(this.modelUrl, {headers: this.headers})
 			.toPromise()
 			.then(models => models.json() as User[])
 			.catch(this.handleError)
@@ -31,7 +33,8 @@ export class UserService {
 
 	getUserFor(id: number): Promise<User> {
 		const url = this.modelUrl+'/'+id;
-		return this.http.get(url, {headers: this.headers})
+		return this.http
+			.get(url, {headers: this.headers})
 			.toPromise()
 			.then(model => model.json() as User)
 			.catch(this.handleError);
@@ -39,49 +42,21 @@ export class UserService {
 
 	getRolesFor(id: number): Promise<Role[]> {
 		const url = this.modelUrl+'/rolesfor/'+id;
-console.log('Url : '+url);		
-		return this.http.get(url, {headers: this.headers})
+		return this.http
+			.get(url, {headers: this.headers})
 			.toPromise()
 			.then(models => models.json() as Role[])
 			.catch(this.handleError);
 	}
-/*
-	getMyRoles(): Promise<Role[]> {
-		const url = this.modelUrl+'/my/roles';
-console.log('Url : '+url);		
-	return this.http.get(url, {headers: this.headers})
-		.toPromise()
-		.then(models => models.json() as Role[])
-		.catch(this.handleError);	
-	}
-*/
-/*	getMyPermissionsFor(moduleName: string): Promise<Permission[]> {
-		let url = this.modelUrl+'/mypermissions/'+moduleName;
-console.log('Get my permissions Url : '+url);		
-		return this.http.get(url, {headers: this.headers})
-			.toPromise()
-			.then(models => models.json() as Permission[])
-			.catch(this.handleError);
-	}
 
-	getMyPermissions(): Promise<Permission[]> {
-		let url = this.modelUrl+'/mypermissions/all';
-console.log('Get all my permissions Url : '+url);		
-		return this.http.get(url, {headers: this.headers})
-			.toPromise()
-			.then(models => models.json() as Permission[])
-			.catch(this.handleError);
-	}
-*/
 	getAuthorizationFor(moduleName: string): Promise<Authorization> {
 		let url = this.modelUrl+'/mypermissions/'+moduleName;
-console.log('Get my permissions Url : '+url);		
-		return this.http.get(url, {headers: this.headers})
+		return this.http
+			.get(url, {headers: this.headers})
 			.toPromise()
 			.then(models => {
 				let perms = models.json() as Permission[];
 				let auth = new Authorization(perms);
-console.log('Authorization is: '); console.log(auth);			
 				return auth;
 			})
 			.catch(this.handleError);
@@ -116,7 +91,8 @@ console.log('Authorization is: '); console.log(auth);
 
 	delete(id: number): Promise<void> {
 		const url = `${this.modelUrl}/${id}`;
-		return this.http.delete(url, {headers: this.headers})
+		return this.http
+			.delete(url, {headers: this.headers})
 			.toPromise()
 			.then( () => null )
 			.catch(this.handleError);

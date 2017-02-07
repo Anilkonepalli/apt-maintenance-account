@@ -1,14 +1,14 @@
-import { NgModule }				from '@angular/core';
-import { CommonModule }			from '@angular/common';
-import { FormsModule }			from '@angular/forms';
+import { NgModule }					from '@angular/core';
+import { CommonModule }				from '@angular/common';
+import { FormsModule }				from '@angular/forms';
 
-import { AccountListComponent }	from './list.component';
+import { AccountListComponent }		from './list.component';
 import { AccountDetailComponent } 	from './detail.component';
 
 import { AccountService }			from './service';
-import { AccountsRoutingModule }		from './routing.module';
+import { AccountsRoutingModule }	from './routing.module';
 
-import { UserService } from '../users/service';
+import { UserService } 				from '../users/service';
 
 
 @NgModule({

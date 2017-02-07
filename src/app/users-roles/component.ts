@@ -1,13 +1,13 @@
 import { Component, OnInit }				from '@angular/core';
 import { Router, ActivatedRoute, Params }	from '@angular/router';
-
-import 'rxjs/add/operator/switchMap';
 import { Observable }						from 'rxjs/Observable';
 
-import { Role }							from '../roles/model';
-import { User }					from '../users/model';
+import { Role }								from '../roles/model';
+import { User }								from '../users/model';
 
-import { UserRoleService }		from './service';
+import { UserRoleService }					from './service';
+
+import 'rxjs/add/operator/switchMap';
 
 var list_css = require('./component.css');
 var list_css_string = list_css.toString();
@@ -57,7 +57,6 @@ export class UserRoleComponent implements OnInit {
 	onlSelect(model: User): void {
 		this.service.getAttachedModels(model.id)
 			.then( amodels => {
-console.log('Users Attached Roles...'); console.log(amodels);
 				this.attachedStream = Observable.of(amodels);
 				let attachedaIds = amodels.map(amodel => amodel.id);
 				this.updateDetachedModelsExcluding(attachedaIds);
@@ -76,13 +75,6 @@ console.log('Users Attached Roles...'); console.log(amodels);
 		});
 	}
 
-	private updateAttachedModelsExcluding(attacheddIds: number[]){
-		this.rstream.subscribe(rmodel => {
-			let availablerModels = rmodel.filter(each => !attacheddIds.includes(each.id));
-			this.attachedStream = Observable.of(availablerModels);
-		});
-	}
-
 	detach() {
 		this.attachedStream.subscribe(amodel => {   // remove the selected items from attached models			
 			let aIdsNums = this.aIds.map(each => +each); // convert string id into integer
@@ -94,6 +86,13 @@ console.log('Users Attached Roles...'); console.log(amodels);
 		});
 	}
 
+	save() {
+		this.attachedStream.subscribe(amodel => {
+			let aIds = amodel.map(each => each.id);
+			this.service.saveAttachedModels(this.lId, aIds);
+		})
+	}
+
 	private updateDetachedModelsExcluding(attachedaIds: number[]){
 		this.rstream.subscribe(rmodel => {
 			let availablerModels = rmodel.filter(each => !attachedaIds.includes(each.id));
@@ -101,13 +100,11 @@ console.log('Users Attached Roles...'); console.log(amodels);
 		});
 	}
 
-	save() {
-console.log('Save changes...');
-		this.attachedStream.subscribe(amodel => {
-			let aIds = amodel.map(each => each.id);
-console.log('mypermissions ids are: '); console.log(aIds);			
-			this.service.saveAttachedModels(this.lId, aIds);
-		})
+	private updateAttachedModelsExcluding(attacheddIds: number[]){
+		this.rstream.subscribe(rmodel => {
+			let availablerModels = rmodel.filter(each => !attacheddIds.includes(each.id));
+			this.attachedStream = Observable.of(availablerModels);
+		});
 	}
 
 }

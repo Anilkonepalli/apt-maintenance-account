@@ -1,14 +1,14 @@
-import { Component } from '@angular/core';
-import { NgForm } from '@angular/forms';
-import { Http, Headers } from '@angular/http';
-import { Router } from '@angular/router';
+import { Component } 		from '@angular/core';
+import { NgForm } 			from '@angular/forms';
+import { Http, Headers } 	from '@angular/http';
+import { Router } 			from '@angular/router';
 
-import { User } from './users/model';
-
+import { User } 			from './users/model';
 
 const contentHeaders = new Headers();
 contentHeaders.append('Accept', 'application/json');
 contentHeaders.append('Content-Type', 'application/json');
+
 
 @Component({
 	selector: 'signup',

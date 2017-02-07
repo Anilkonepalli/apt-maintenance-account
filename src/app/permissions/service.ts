@@ -1,8 +1,10 @@
-import { Injectable } from '@angular/core';
-import { Http, Headers } from '@angular/http';
+import { Injectable } 		from '@angular/core';
+import { Http, Headers } 	from '@angular/http';
+
+import { Permission } 		from './model';
+
 import 'rxjs/add/operator/toPromise';
 
-import { Permission } from './model';
 
 @Injectable()
 export class PermissionService {
@@ -19,7 +21,8 @@ export class PermissionService {
 	constructor(private http: Http) {}
 
 	getList(): Promise<Permission[]> {
-		return this.http.get(this.modelUrl, {headers: this.headers})
+		return this.http
+			.get(this.modelUrl, {headers: this.headers})
 			.toPromise()
 			.then(models => models.json() as Permission[])
 			.catch(this.handleError)
@@ -27,7 +30,8 @@ export class PermissionService {
 
 	get(id: number): Promise<Permission> {
 		const url = this.modelUrl+'/'+id;
-		return this.http.get(url, {headers: this.headers})
+		return this.http
+			.get(url, {headers: this.headers})
 			.toPromise()
 			.then(model => model.json() as Permission)
 			.catch(this.handleError);
@@ -52,7 +56,8 @@ export class PermissionService {
 
 	delete(id: number): Promise<void> {
 		const url = `${this.modelUrl}/${id}`;
-		return this.http.delete(url, {headers: this.headers})
+		return this.http
+			.delete(url, {headers: this.headers})
 			.toPromise()
 			.then( () => null )
 			.catch(this.handleError);

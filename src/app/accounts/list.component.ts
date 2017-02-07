@@ -1,14 +1,12 @@
 import { Component, OnInit }				from '@angular/core';
 import { Router, ActivatedRoute, Params }	from '@angular/router';
-
-import 'rxjs/add/operator/switchMap';
-
 import { Observable }						from 'rxjs/Observable';
 
 import { Account }							from './model';
 import { AccountService }					from './service';
 import { Authorization }					from '../authorization/model';
 
+import 'rxjs/add/operator/switchMap';
 
 var list_css = require('./list.component.css');
 var list_css_string = list_css.toString();
@@ -58,7 +56,6 @@ export class AccountListComponent implements OnInit {
 	}
 
 	add(): void {
-console.log('Authorization: '); console.log(this.user.canAdd);		
 		this.router.navigate(['/accounts', 0]); // 0 represent new account
 	}
 

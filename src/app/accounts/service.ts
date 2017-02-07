@@ -1,20 +1,20 @@
-import { Injectable } from '@angular/core';
-import { Http, Headers } from '@angular/http';
+import { Injectable } 		from '@angular/core';
+import { Http, Headers } 	from '@angular/http';
+import { Observable } 		from 'rxjs/Observable';
+
+import { Account } 			from './model';
+import { Permission } 		from '../permissions/model';
+import { UserService } 		from '../users/service';
+import { Authorization } 	from '../authorization/model';
+
 import 'rxjs/add/operator/toPromise';
 
-import { Observable } from 'rxjs/Observable';
-
-import { Account } from './model';
-import { Permission } from '../permissions/model';
-import { UserService } from '../users/service';
-import { Authorization } from '../authorization/model';
 
 @Injectable()
 export class AccountService {
 
 	public config: any = { server_ip_addr: "http://localhost:3002"};
 	
-//	private roles: Role[];
 	private modelUrl = this.config.server_ip_addr+'/api/maintenance-accounts';
 	private id_token = localStorage.getItem('id_token');
 	private headers = new Headers({
@@ -28,7 +28,8 @@ export class AccountService {
 	) {}
 
 	getList(): Promise<Account[]> {
-		return this.http.get(this.modelUrl, {headers: this.headers})
+		return this.http
+			.get(this.modelUrl, {headers: this.headers})
 			.toPromise()
 			.then(models => models.json() as Account[])
 			.catch(this.handleError)
@@ -36,16 +37,13 @@ export class AccountService {
 
 	get(id: number): Promise<Account> {
 		const url = this.modelUrl+'/'+id;
-		return this.http.get(url, {headers: this.headers})
+		return this.http
+			.get(url, {headers: this.headers})
 			.toPromise()
 			.then(model => model.json() as Account)
 			.catch(this.handleError);
 	}
 
-/*	getMyPermissions(): Promise<Permission[]> {
-		return this.userService.getMyPermissionsFor('accounts');
-	}  
-*/	
 	getAuthorization(): Promise<Authorization> {
 		return this.userService.getAuthorizationFor('accounts');
 	}
@@ -69,7 +67,8 @@ export class AccountService {
 
 	delete(id: number): Promise<void> {
 		const url = `${this.modelUrl}/${id}`;
-		return this.http.delete(url, {headers: this.headers})
+		return this.http
+			.delete(url, {headers: this.headers})
 			.toPromise()
 			.then( () => null )
 			.catch(this.handleError);

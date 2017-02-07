@@ -1,13 +1,13 @@
 import { Component, OnInit }				from '@angular/core';
 import { Router, ActivatedRoute, Params }	from '@angular/router';
-
-import 'rxjs/add/operator/switchMap';
 import { Observable }						from 'rxjs/Observable';
 
-import { Role }							from '../roles/model';
-import { Permission }					from '../permissions/model';
+import { Role }								from '../roles/model';
+import { Permission }						from '../permissions/model';
 
-import { RolePermissionService }		from './service';
+import { RolePermissionService }			from './service';
+
+import 'rxjs/add/operator/switchMap';
 
 var list_css = require('./component.css');
 var list_css_string = list_css.toString();
@@ -76,13 +76,6 @@ export class RolePermissionComponent implements OnInit {
 		});
 	}
 
-	private updateAttachedModelsExcluding(attacheddIds: number[]){
-		this.rstream.subscribe(rmodel => {
-			let availablerModels = rmodel.filter(each => !attacheddIds.includes(each.id));
-			this.attachedStream = Observable.of(availablerModels);
-		});
-	}
-
 	detach() {
 		this.attachedStream.subscribe(amodel => {   // remove the selected items from attached models			
 			let aIdsNums = this.aIds.map(each => +each); // convert string id into integer
@@ -94,6 +87,13 @@ export class RolePermissionComponent implements OnInit {
 		});
 	}
 
+	save() {
+		this.attachedStream.subscribe(amodel => {
+			let aIds = amodel.map(each => each.id);
+			this.service.saveAttachedModels(this.lId, aIds);
+		})
+	}
+
 	private updateDetachedModelsExcluding(attachedaIds: number[]){
 		this.rstream.subscribe(rmodel => {
 			let availablerModels = rmodel.filter(each => !attachedaIds.includes(each.id));
@@ -101,13 +101,11 @@ export class RolePermissionComponent implements OnInit {
 		});
 	}
 
-	save() {
-console.log('Save changes...');
-		this.attachedStream.subscribe(amodel => {
-			let aIds = amodel.map(each => each.id);
-console.log('mypermissions ids are: '); console.log(aIds);			
-			this.service.saveAttachedModels(this.lId, aIds);
-		})
+	private updateAttachedModelsExcluding(attacheddIds: number[]){
+		this.rstream.subscribe(rmodel => {
+			let availablerModels = rmodel.filter(each => !attacheddIds.includes(each.id));
+			this.attachedStream = Observable.of(availablerModels);
+		});
 	}
 
 }

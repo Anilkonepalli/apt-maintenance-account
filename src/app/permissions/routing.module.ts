@@ -1,5 +1,5 @@
-import { NgModule }					from '@angular/core';
-import { RouterModule, Routes }		from '@angular/router';
+import { NgModule }						from '@angular/core';
+import { RouterModule, Routes }			from '@angular/router';
 
 import { PermissionListComponent }		from './list.component';
 import { PermissionDetailComponent }	from './detail.component';

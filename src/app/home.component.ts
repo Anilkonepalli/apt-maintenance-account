@@ -1,7 +1,7 @@
-import { Component, Host } from '@angular/core';
-import { JwtHelper } from 'angular2-jwt';
+import { Component, Host } 	from '@angular/core';
+import { JwtHelper } 		from 'angular2-jwt';
 
-import { AppComponent } from './app.component';
+import { AppComponent } 	from './app.component';
 
 @Component({
 	selector: 'home',

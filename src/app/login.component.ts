@@ -1,16 +1,9 @@
-import { Component } from '@angular/core';
-import { NgForm } from '@angular/forms';
-//import { Http, Headers } from '@angular/http';
+import { Component } 				from '@angular/core';
+import { NgForm } 					from '@angular/forms';
 import { Router, NavigationExtras } from '@angular/router';
 
-//import { User } from './models/user';
+import { AuthService } 				from './auth.service';
 
-import { AuthService } from './auth.service';
-
-/*
-const contentHeaders = new Headers();
-contentHeaders.append('Accept', 'application/json');
-contentHeaders.append('Content-Type', 'application/json'); */
 
 @Component({
 	selector: 'login',

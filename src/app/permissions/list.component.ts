@@ -1,11 +1,11 @@
 import { Component, OnInit }				from '@angular/core';
 import { Router, ActivatedRoute, Params }	from '@angular/router';
-
-import 'rxjs/add/operator/switchMap';
 import { Observable }						from 'rxjs/Observable';
 
 import { Permission }						from './model';
 import { PermissionService }				from './service';
+
+import 'rxjs/add/operator/switchMap';
 
 var list_css = require('./list.component.css');
 var list_css_string = list_css.toString();

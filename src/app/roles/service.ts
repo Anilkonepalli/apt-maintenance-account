@@ -1,9 +1,11 @@
-import { Injectable } from '@angular/core';
-import { Http, Headers } from '@angular/http';
+import { Injectable } 		from '@angular/core';
+import { Http, Headers } 	from '@angular/http';
+
+import { Role } 			from './model';
+import { Permission } 		from '../permissions/model';
+
 import 'rxjs/add/operator/toPromise';
 
-import { Role } from './model';
-import { Permission } from '../permissions/model';
 
 @Injectable()
 export class RoleService {
@@ -20,7 +22,8 @@ export class RoleService {
 	constructor(private http: Http) {}
 
 	getList(): Promise<Role[]> {
-		return this.http.get(this.modelUrl, {headers: this.headers})
+		return this.http
+			.get(this.modelUrl, {headers: this.headers})
 			.toPromise()
 			.then(models => models.json() as Role[])
 			.catch(this.handleError)
@@ -28,18 +31,22 @@ export class RoleService {
 
 	getMe(id: number): Promise<Role> {
 		const url = this.modelUrl+'/'+id;
-		return this.http.get(url, {headers: this.headers})
+		return this.http
+			.get(url, {headers: this.headers})
 			.toPromise()
 			.then(model => model.json() as Role)
 			.catch(this.handleError);
 	}
+
 	getMyPermissions(id: number): Promise<Permission[]> {
 		const url = this.modelUrl+'/mypermissions/'+id;
-		return this.http.get(url, {headers: this.headers})
+		return this.http
+			.get(url, {headers: this.headers})
 			.toPromise()
 			.then(models => models.json() as Permission[])
 			.catch(this.handleError);
 	}
+
 	update(model: Role): Promise<Role> {
 		const url = `${this.modelUrl}/${model.id}`;
 		return this.http
@@ -48,6 +55,7 @@ export class RoleService {
 			.then( () => model )
 			.catch(this.handleError);
 	}
+
 	updateMyPermissions(modelId: number, attachedIds: number[]): Promise<number> {
 		const url=`${this.modelUrl}/mypermissions/${modelId}`;
 		let data = { 'mypermissionsIds': attachedIds };
@@ -57,7 +65,6 @@ export class RoleService {
 			.then( () => modelId )
 			.catch(this.handleError);
 	}
-
 
 	create(model: Role): Promise<Role> {
 		return this.http
@@ -69,7 +76,8 @@ export class RoleService {
 
 	delete(id: number): Promise<void> {
 		const url = `${this.modelUrl}/${id}`;
-		return this.http.delete(url, {headers: this.headers})
+		return this.http
+			.delete(url, {headers: this.headers})
 			.toPromise()
 			.then( () => null )
 			.catch(this.handleError);
