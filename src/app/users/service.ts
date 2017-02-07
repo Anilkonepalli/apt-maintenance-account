@@ -55,7 +55,7 @@ console.log('Url : '+url);
 		.catch(this.handleError);	
 	}
 */
-	getMyPermissionsFor(moduleName: string): Promise<Permission[]> {
+/*	getMyPermissionsFor(moduleName: string): Promise<Permission[]> {
 		let url = this.modelUrl+'/mypermissions/'+moduleName;
 console.log('Get my permissions Url : '+url);		
 		return this.http.get(url, {headers: this.headers})
@@ -72,7 +72,7 @@ console.log('Get all my permissions Url : '+url);
 			.then(models => models.json() as Permission[])
 			.catch(this.handleError);
 	}
-
+*/
 	getAuthorizationFor(moduleName: string): Promise<Authorization> {
 		let url = this.modelUrl+'/mypermissions/'+moduleName;
 console.log('Get my permissions Url : '+url);		

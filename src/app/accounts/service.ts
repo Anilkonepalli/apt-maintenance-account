@@ -42,9 +42,10 @@ export class AccountService {
 			.catch(this.handleError);
 	}
 
-	getMyPermissions(): Promise<Permission[]> {
+/*	getMyPermissions(): Promise<Permission[]> {
 		return this.userService.getMyPermissionsFor('accounts');
-	}
+	}  
+*/	
 	getAuthorization(): Promise<Authorization> {
 		return this.userService.getAuthorizationFor('accounts');
 	}

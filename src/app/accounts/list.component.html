@@ -1,6 +1,8 @@
 <h2>Account List</h2>
 
+<div *ngIf="user.canAdd">
 <button (click)="add()">Add</button>
+</div>
 
 <ul class="items">
 	<li *ngFor="let model of models | async"
