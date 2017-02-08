@@ -1,6 +1,6 @@
-import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
-import { Http, Headers, Response } from '@angular/http';
+import { Injectable } 				from '@angular/core';
+import { Observable } 				from 'rxjs/Observable';
+import { Http, Headers, Response } 	from '@angular/http';
 
 import 'rxjs/add/observable/of';
 import 'rxjs/add/operator/do';
@@ -28,7 +28,10 @@ export class AuthService {
 		this.http.post(url, data, {headers: contentHeaders})
 			.subscribe(
 				response => { 
-					localStorage.setItem('id_token', response.json().id_token);
+console.log('Logged In success...response object is...'); console.log(response.json());
+					let res = response.json();
+					localStorage.setItem('id_token', res.id_token);
+					localStorage.setItem('user', res.user.id);
 					this.isLoggedIn = true;
 				},
 				error => { 
