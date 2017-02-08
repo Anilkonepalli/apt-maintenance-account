@@ -53,6 +53,7 @@ console.log('Logged In success...response object is...'); console.log(response.j
 	}
 
 	logout(): void {
+console.log("Auth Service Logout now...");
 		this.isLoggedIn = false;
 	}
 }

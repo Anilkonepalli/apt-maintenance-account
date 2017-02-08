@@ -12,7 +12,8 @@ export class Account {
 		public balance: number = 0.0,
 		public category: string = '',
 		public recorded_at: string = '',
-		public remarks: string = ''
+		public remarks: string = '',
+		public owner_id: number = undefined
 	){}
 
 }

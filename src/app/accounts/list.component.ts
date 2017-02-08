@@ -23,6 +23,7 @@ export class AccountListComponent implements OnInit {
 
 	models: Observable<Account[]>;
 
+	auth: Authorization;
 	user = Authorization.defaultPermissions; // initialize with defaults so that it opens up html
 
 	private selectedId: number;
@@ -38,13 +39,16 @@ export class AccountListComponent implements OnInit {
 		this.service.getAuthorization()
 			.then(auth => {
 				this.user = auth.getUserPermissions();
+				this.auth = auth;
 			});
 
 		this.models = this.route.params
+			.delay(500) // this allows completion auth initialization in the above statement.
 			.switchMap((params: Params) => {
 				this.selectedId = +params['id'];
 				return this.service.getList();
 			});
+	
 	}
 
 	onSelect(model: Account): void {
