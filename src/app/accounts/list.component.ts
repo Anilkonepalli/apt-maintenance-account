@@ -24,7 +24,8 @@ export class AccountListComponent implements OnInit {
 	models: Observable<Account[]>;
 
 	auth: Authorization;
-	user = Authorization.defaultPermissions; // initialize with defaults so that it opens up html
+//	user = Authorization.defaultPermissions; // initialize with defaults so that it opens up html
+	addAllowed: boolean = false;
 
 	private selectedId: number;
 
@@ -38,7 +39,8 @@ export class AccountListComponent implements OnInit {
 
 		this.service.getAuthorization()
 			.then(auth => {
-				this.user = auth.getUserPermissions();
+				//this.user = auth.getUserPermissions();
+				this.addAllowed = auth.allowsAdd();
 				this.auth = auth;
 			});
 

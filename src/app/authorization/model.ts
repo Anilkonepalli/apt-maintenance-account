@@ -8,25 +8,29 @@ export class Authorization {
 		public user: number
 	){}
 
-	static defaultPermissions = {
+/*	static defaultPermissions = {
 		canAdd: false
 	};
 
 	getUserPermissions() {
-		let user = {
+		return {
 			canAdd: this.allowsAdd()
 		};
-		return user;
+	}
+*/
+
+	public allowsAdd(): boolean {
+		//return this.permissions.find(this.hasAdd) !== undefined;
+		let perm = this.permissions.find(eachPerm => {
+			return eachPerm.operations.indexOf('C') >= 0; // find first permission that satisfies this condition
+		});
+		return perm != undefined;
 	}
 
-	private allowsAdd(): boolean {
-		return this.permissions.find(this.hasAdd) !== undefined;
-	}
-
-	private hasAdd(permission: Permission): boolean {
+/*	private hasAdd(permission: Permission): boolean {
 		return permission.operations.indexOf('C') >= 0;
 	}
-
+*/
 	public allowsView(owner: number): boolean {
 
 		let permissions = this.permissions.filter(perm => { // find permissions with Read grants
