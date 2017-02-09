@@ -4,6 +4,7 @@ import { Location }							from '@angular/common';
 
 import { Account }							from './model';
 import { AccountService }					from './service';
+import { Authorization }					from '../authorization/model';
 
 import 'rxjs/add/operator/switchMap';
 
@@ -19,6 +20,7 @@ export class AccountDetailComponent implements OnInit {
 	@Input() model: Account;
 	editMode: boolean = true;
 	modelName: string = 'Account';
+	auth: Authorization;
 
 	constructor(
 		private service: AccountService,
@@ -34,6 +36,10 @@ export class AccountDetailComponent implements OnInit {
 				this.model = model;
 				if(model.id) this.editMode = true; 
 				else this.editMode = false;
+			});
+		this.service.getAuthorization()
+			.then(auth => {
+				this.auth = auth;
 			});
 	}
 

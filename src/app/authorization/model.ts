@@ -37,4 +37,26 @@ export class Authorization {
 
 	}
 
+
+	public allowsEdit(owner: number): boolean {
+
+		let permissions = this.permissions.filter(perm => { // find permissions with Read grants
+			return perm.operations.indexOf('U') >= 0;
+		});
+
+		if(permissions.length < 1) return false; // no permissions found
+
+		permissions = permissions.filter(perm => { // find permissions with condition
+			return perm.condition != null && perm.condition != '';
+		});
+
+		if(permissions.length < 1) return true; // permission(s) exist but has no condition
+
+		// evaluate condition
+		let fn = new Function("data", permissions[0].condition);
+		let data = { userId: this.user, ownerId: owner };
+
+		return fn(data);
+
+	}
 }

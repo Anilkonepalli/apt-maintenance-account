@@ -7,8 +7,10 @@
 		<label>name: </label>
 		<input [(ngModel)]="model.name" placeholder="name" />
 	</div>
-	<p>
+	<div>
 		<button (click)="gotoList()">Cancel</button>
-		<button (click)="save()">Save</button>
-	</p>
+		<div *ngIf="(editMode && auth.allowsEdit(model.owner_id)) || (!editMode && auth.allowsAdd())">
+			<button (click)="save()">Save</button>
+		</div>
+	</div>
 </div>

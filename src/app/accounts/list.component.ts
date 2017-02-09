@@ -41,7 +41,7 @@ export class AccountListComponent implements OnInit {
 			});
 
 		this.models = this.route.params
-			.delay(500) // this allows completion auth initialization in the above statement.
+			.delay(100) // this allows completion auth initialization in the above statement.
 			.switchMap((params: Params) => {
 				this.selectedId = +params['id'];
 				return this.service.getList();
