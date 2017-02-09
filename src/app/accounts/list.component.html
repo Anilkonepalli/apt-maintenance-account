@@ -11,7 +11,15 @@
 			<span class="badge1">{{model.id}}</span>
 			<span>{{model.name}}</span>
 			<span>{{model.owner_id}}</span>
-			<button class="view1" (click)="onSelect(model)" *ngIf="auth.allowsView(model.owner_id)">View</button>
-			<button class="delete1" (click)="delete(model); $event.stopPropagation()">x</button>
+			<button 
+				class="view1" 
+				(click)="onSelect(model)" 
+				*ngIf="auth.allowsView(model.owner_id)"
+			>View</button>
+			<button 
+				class="delete1" 
+				(click)="delete(model); $event.stopPropagation()"
+				*ngIf="auth.allowsDelete(model.owner_id)"
+			>x</button>
 	</li>
 </ul>

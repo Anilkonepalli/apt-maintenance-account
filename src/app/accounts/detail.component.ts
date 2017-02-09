@@ -30,17 +30,21 @@ export class AccountDetailComponent implements OnInit {
 	) {}
 
 	ngOnInit(): void {
+console.log('Get auth in Acct detail');			
+		this.service.getAuthorization()
+			.then(auth => {
+				this.auth = auth;
+console.log('auth available now');				
+			});
 		this.route.params
+			.delay(100)	// this allows completion auth initialization in the above statement
 			.switchMap((params: Params) => this.service.get(+params['id']))
 			.subscribe((model: Account) => {
 				this.model = model;
 				if(model.id) this.editMode = true; 
 				else this.editMode = false;
 			});
-		this.service.getAuthorization()
-			.then(auth => {
-				this.auth = auth;
-			});
+
 	}
 
 	goBack(): void {
