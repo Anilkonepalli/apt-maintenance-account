@@ -29,23 +29,29 @@ export class Authorization {
 
 	private allows(action: string, owner:number): boolean {
 
-		let permissions = this.permissions.filter(perm => { // find permissions with Read grants
+		let permissions = this.permissions.filter(perm => { // find permissions with granted action
 			return perm.operations.indexOf(action) >= 0;
 		});
+		let pCount = permissions.length;
+		if(pCount < 1) return false; // no permissions found
 
-		if(permissions.length < 1) return false; // no permissions found
-
-		permissions = permissions.filter(perm => { // find permissions with condition
+		let permissionsWithCondition = permissions.filter(perm => { // find permissions with condition
 			return perm.condition != null && perm.condition != '';
 		});
+		let pwcCount = permissionsWithCondition.length;
+		if(pwcCount < 1) return true; // permission(s) exist but has no condition
 
-		if(permissions.length < 1) return true; // permission(s) exist but has no condition
+		if(pCount > pwcCount) return true; // permissions with no condition take precedence, hence return true 
 
-		// evaluate condition
-		let fn = new Function("data", permissions[0].condition);
-		let data = { userId: this.user, ownerId: owner };
-
-		return fn(data);
+		// evaluate condition in each ofthe permissionsWithCondition
+		let fn;
+		let data;
+		let evaluatedPerms = permissionsWithCondition.filter(perm => { // filter for permission that 
+			fn = new Function("data", perm.condition);				   // evaluates its condition to true
+			data = { userId: this.user, ownerId: owner };
+			return fn(data);
+		});
+		return evaluatedPerms.length > 0;
 	}
 
 }
