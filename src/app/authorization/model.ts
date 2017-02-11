@@ -29,7 +29,7 @@ export class Authorization {
 
 	private allows(action: string, owner:number): boolean {
 
-		let permissions = this.permissions.filter(perm => { // find permissions with granted action
+		let permissions = this.permissions.filter(perm => { // find permissions with granted 'action'
 			return perm.operations.indexOf(action) >= 0;
 		});
 		let pCount = permissions.length;
@@ -43,7 +43,7 @@ export class Authorization {
 
 		if(pCount > pwcCount) return true; // permissions with no condition take precedence, hence return true 
 
-		// evaluate condition in each ofthe permissionsWithCondition
+		// evaluate condition in each of the permissionsWithCondition
 		let fn;
 		let data;
 		let evaluatedPerms = permissionsWithCondition.filter(perm => { // filter for permission that 
