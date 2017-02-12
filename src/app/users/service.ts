@@ -16,7 +16,7 @@ export class UserService {
 	
 	private modelUrl = this.config.server_ip_addr+'/api/users';
 	private id_token = localStorage.getItem('id_token');
-	private user = localStorage.getItem('user');
+	private userId = localStorage.getItem('userId');
 	private headers = new Headers({
 		'Content-Type': 'application/json',
 		'x-access-token': this.id_token
@@ -57,7 +57,8 @@ export class UserService {
 			.toPromise()
 			.then(models => {
 				let perms = models.json() as Permission[];
-				let auth = new Authorization(perms, +this.user);
+console.log('Permissions are:...'); console.log(perms);				
+				let auth = new Authorization(perms, +this.userId);
 				return auth;
 			})
 			.catch(this.handleError);

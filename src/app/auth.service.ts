@@ -1,6 +1,7 @@
 import { Injectable } 				from '@angular/core';
 import { Observable } 				from 'rxjs/Observable';
 import { Http, Headers, Response } 	from '@angular/http';
+import { JwtHelper } 				from 'angular2-jwt';
 
 import 'rxjs/add/observable/of';
 import 'rxjs/add/operator/do';
@@ -15,6 +16,7 @@ contentHeaders.append('Content-Type', 'application/json');
 export class AuthService {
 	
 	isLoggedIn: boolean = false;
+	JwtHelper = new JwtHelper();
 
 	// store the URL so we can redirect after logging in
 	redirectUrl: string;
@@ -31,7 +33,9 @@ export class AuthService {
 console.log('Logged In success...response object is...'); console.log(response.json());
 					let res = response.json();
 					localStorage.setItem('id_token', res.id_token);
-					localStorage.setItem('user', res.user.id);
+					//localStorage.setItem('user', res.user.id);
+					let decodedJwt = res.id_token && this.JwtHelper.decodeToken(res.id_token);
+					localStorage.setItem('userId', decodedJwt.id);
 					this.isLoggedIn = true;
 				},
 				error => { 
