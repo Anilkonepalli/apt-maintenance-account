@@ -38,15 +38,14 @@ export class AccountListComponent implements OnInit {
 			.then(auth => {
 				this.addAllowed = auth.allowsAdd();
 				this.auth = auth;
-			});
 
-		this.models = this.route.params
-			.delay(100) // this allows completion auth initialization in the above statement.
-			.switchMap((params: Params) => {
-				this.selectedId = +params['id'];
-				return this.service.getList();
-			});
+				this.models = this.route.params
+					.switchMap((params: Params) => {
+						this.selectedId = +params['id'];
+						return this.service.getList();
+					});
 	
+			});
 	}
 
 	onSelect(model: Account): void {

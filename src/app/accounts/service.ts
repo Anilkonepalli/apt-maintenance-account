@@ -17,7 +17,6 @@ export class AccountService {
 	
 	private modelUrl = this.config.server_ip_addr+'/api/maintenance-accounts';
 	private id_token = localStorage.getItem('id_token');
-	//private user = localStorage.getItem('user');
 	private headers = new Headers({
 		'Content-Type': 'application/json',
 		'x-access-token': this.id_token
