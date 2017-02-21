@@ -52,6 +52,7 @@ export class UserService {
 
 	getAuthorizationFor(moduleName: string): Promise<Authorization> {
 		let url = this.modelUrl+'/mypermissions/'+moduleName;
+console.log('User.getAuthorizationFor( '+moduleName+' )...URL is '+url);		
 		return this.http
 			.get(url, {headers: this.headers})
 			.toPromise()

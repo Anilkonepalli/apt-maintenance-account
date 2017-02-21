@@ -28,6 +28,7 @@ export class AccountService {
 	) {}
 
 	getList(): Promise<Account[]> {
+console.log('Account Model Url is: ');console.log(this.modelUrl);		
 		return this.http
 			.get(this.modelUrl, {headers: this.headers})
 			.toPromise()
