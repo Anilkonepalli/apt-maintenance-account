@@ -42,7 +42,8 @@ export class UserService {
 	}
 
 	getRolesFor(id: number): Promise<Role[]> {
-		const url = this.modelUrl+'/rolesfor/'+id;
+		//const url = this.modelUrl+'/rolesfor/'+id;
+		const url = this.modelUrl+'/myroles/'+id;
 		return this.http
 			.get(url, {headers: this.headers})
 			.toPromise()
