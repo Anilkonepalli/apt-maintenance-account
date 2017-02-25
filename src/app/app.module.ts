@@ -6,10 +6,10 @@ import { FormsModule }           from '@angular/forms';
 import { AppComponent }          from './app.component';
 import { AppRoutingModule }      from './app-routing.module';
 
-import { LoginRoutingModule }    from './login-routing.module';
+import { LoginRoutingModule }    from './authentication/login-routing.module';
 
-import { LoginComponent }        from './login.component';
-import { SignupComponent }       from './signup.component';
+import { LoginComponent }        from './authentication/login.component';
+import { SignupComponent }       from './authentication/signup.component';
 import { PageNotFoundComponent } from './not-found.component';
 
 import { HomeComponent }         from './home.component';
