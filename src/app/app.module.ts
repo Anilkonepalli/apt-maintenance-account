@@ -15,6 +15,8 @@ import { PageNotFoundComponent } from './not-found.component';
 import { HomeComponent }         from './home.component';
 import { AboutComponent }        from './about.component';
 
+import { ConsoleLogService }     from './logger/log.service';
+import { Logger }                from './logger/default-log.service';
 
 @NgModule({
   imports:      [ 
@@ -32,6 +34,11 @@ import { AboutComponent }        from './about.component';
   	AboutComponent,
     PageNotFoundComponent
   ],
-  bootstrap:    [ AppComponent ]
+  providers: [
+    { provide: Logger, useClass: ConsoleLogService }
+  ],
+  bootstrap:   [ 
+    AppComponent
+  ]
 })
 export class AppModule { }
