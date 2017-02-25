@@ -25,6 +25,7 @@ module.exports = function (config) {
     },
 
     reporters: ['progress', 'kjhtml'],  // kjhtml stands for karma-jasmine-html-reporter
+    //reporters: ['progress'],
     port: 9876,
     colors: true,
     logLevel: config.LOG_INFO,
