@@ -1,5 +1,5 @@
 <div *ngIf="model">
-	<h2 *ngIf="editMode">{{modelName}} Details</h2>
+	<h2 *ngIf="editMode" class="title">{{modelName}} Details</h2>
 	<h2 *ngIf="!editMode">Add {{modelName}}</h2>
 
 	<div *ngIf="editMode"><label>id: </label>{{model.id}}</div>
