@@ -1,42 +1,55 @@
+var webpack = require('webpack');
 var helpers = require('./helpers');
 
 module.exports = {
-  devtool: 'inline-source-map',
+  entry: {
+    'polyfills': './src/polyfills.ts',
+    'vendor': './src/vendor.ts',
+    'app': './src/main.ts'
+  },
 
   resolve: {
-    extensions: ['', '.ts', '.js']
+    extensions: ['.js', '.ts']
   },
 
   module: {
     loaders: [
       {
         test: /\.ts$/,
-        loaders: ['awesome-typescript-loader', 'angular2-template-loader']
+        loaders: [
+          'awesome-typescript-loader', 
+          'angular2-template-loader',
+          'angular-router-loader']
       },
       {
         test: /\.html$/,
-        loader: 'html'
-
+        loader: 'html-loader'
       },
       {
         test: /\.(png|jpe?g|gif|svg|woff|woff2|ttf|eot|ico)$/,
-        loader: 'null'
-      },
-      {
-        test: /\.css$/,
-        exclude: helpers.root('src', 'app'),
-        loader: 'null'
+        loader: 'file?name=assets/[name].[hash].[ext]'
       },
       {
         test: /\.css$/,
         include: helpers.root('src', 'app'),
-        loader: 'raw'
+        loader: 'css-loader'
       },
       {
         test: /\.json$/,
         exclude: helpers.root('node_modules'),
         loader: 'file?name=config/[name].[hash].[ext]'
-      }      
+      }
     ]
-  }
-}
+  },
+
+  plugins: [
+    new webpack.ContextReplacementPlugin(
+      // The (\\|\/) piece accounts for path separators in the *nix and Windows
+      /angular(\\|\/)core(\\|\/)(esm(\\|\/)src|src)(\\|\/)linker/,
+      helpers.root('./src'), // location of your src
+      {} // a map of your routes
+    )
+  ]
+
+};
+

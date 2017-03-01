@@ -6,15 +6,17 @@ import { FormsModule }           from '@angular/forms';
 import { AppComponent }          from './app.component';
 import { AppRoutingModule }      from './app-routing.module';
 
-import { LoginRoutingModule }    from './login-routing.module';
+import { LoginRoutingModule }    from './authentication/login-routing.module';
 
-import { LoginComponent }        from './login.component';
-import { SignupComponent }       from './signup.component';
+import { LoginComponent }        from './authentication/login.component';
+import { SignupComponent }       from './authentication/signup.component';
 import { PageNotFoundComponent } from './not-found.component';
 
 import { HomeComponent }         from './home.component';
 import { AboutComponent }        from './about.component';
 
+import { ConsoleLogService }     from './logger/log.service';
+import { Logger }                from './logger/default-log.service';
 
 @NgModule({
   imports:      [ 
@@ -32,6 +34,11 @@ import { AboutComponent }        from './about.component';
   	AboutComponent,
     PageNotFoundComponent
   ],
-  bootstrap:    [ AppComponent ]
+  providers: [
+    { provide: Logger, useClass: ConsoleLogService }
+  ],
+  bootstrap:   [ 
+    AppComponent
+  ]
 })
 export class AppModule { }
