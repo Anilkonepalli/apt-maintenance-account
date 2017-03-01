@@ -13,7 +13,7 @@ import 'rxjs/add/operator/toPromise';
 @Injectable()
 export class AccountService {
 
-	public config: any = { server_ip_addr: "http://localhost:3002"};
+	//public config: any = { server_ip_addr: "http://localhost:3002"};
 	
 	//private modelUrl = this.config.server_ip_addr+'/api/maintenance-accounts';
 	private modelUrl = process.env.API_URL+'/api/maintenance-accounts';
