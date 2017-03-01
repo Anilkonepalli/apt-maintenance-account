@@ -10,9 +10,10 @@ import 'rxjs/add/operator/toPromise';
 @Injectable()
 export class RoleService {
 
-	public config: any = { server_ip_addr: "http://localhost:3002"};
+	//public config: any = { server_ip_addr: "http://localhost:3002"};
 	
-	private modelUrl = this.config.server_ip_addr+'/api/roles';
+	//private modelUrl = this.config.server_ip_addr+'/api/roles';
+	private modelUrl = process.env.API_URL + '/api/roles';
 	private id_token = localStorage.getItem('id_token');
 	private headers = new Headers({
 		'Content-Type': 'application/json',

@@ -26,7 +26,8 @@ export class AuthService {
 	login( event: String, email: String, password: String ): Observable<boolean> {
 		let data = JSON.stringify({ email, password });
 		//let url = 'http://localhost:3002/api/sessions/create';
-		let url = 'http://localhost:3002/api/login';
+		//let url = 'http://localhost:3002/api/login';
+		let url = process.env.API_URL+'/api/login';
 
 		this.http.post(url, data, {headers: contentHeaders})
 			.subscribe(

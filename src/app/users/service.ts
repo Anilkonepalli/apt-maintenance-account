@@ -12,9 +12,10 @@ import 'rxjs/add/operator/toPromise';
 @Injectable()
 export class UserService {
 
-	public config: any = { server_ip_addr: "http://localhost:3002"};
+	//public config: any = { server_ip_addr: "http://localhost:3002"};
 	
-	private modelUrl = this.config.server_ip_addr+'/api/users';
+	//private modelUrl = this.config.server_ip_addr+'/api/users';
+	private modelUrl = process.env.API_URL + '/api/users';
 	private id_token = localStorage.getItem('id_token');
 	private userId = localStorage.getItem('userId');
 	private headers = new Headers({
