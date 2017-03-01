@@ -15,7 +15,8 @@ export class AccountService {
 
 	public config: any = { server_ip_addr: "http://localhost:3002"};
 	
-	private modelUrl = this.config.server_ip_addr+'/api/maintenance-accounts';
+	//private modelUrl = this.config.server_ip_addr+'/api/maintenance-accounts';
+	private modelUrl = process.env.API_URL+'/api/maintenance-accounts';
 	private id_token = localStorage.getItem('id_token');
 	private headers = new Headers({
 		'Content-Type': 'application/json',
@@ -28,6 +29,7 @@ export class AccountService {
 	) {}
 
 	getList(): Promise<Account[]> {
+console.log('API URL is: '); console.log(process.env.API_URL);		
 console.log('Account Model Url is: ');console.log(this.modelUrl);		
 		return this.http
 			.get(this.modelUrl, {headers: this.headers})
