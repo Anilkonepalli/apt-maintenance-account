@@ -34,7 +34,7 @@ export class AuthService {
 		this.http.post(url, data, {headers: contentHeaders})
 			.subscribe(
 				response => { 
-//console.log('Logged In success...response object is...'); console.log(response.json());
+// console.log('Logged In success...response object is...'); console.log(response.json());
 					this.logger.info('Logged In successfully...');
 					let res = response.json();
 					localStorage.setItem('id_token', res.id_token);

@@ -20,11 +20,17 @@ server.get('/echo', function(req, res){
 // You can use the one used by JSON Server
 server.use(jsonServer.bodyParser);
 server.post('/api/login', function(req, res){
+/*	let user = data.users.find(each => 
+		each.email === req.body.email 
+		&& each.password === req.body.password); */
 	let user = getUser(req.body.email, req.body.password);
+
+	//let userExist = user ? 'User Exist' : 'No User found';
 	let id_token = null;
 	if(user) {
-		id_token = getToken(user);
+		id_token = jwt.sign(_.omit(user, ['password']), jwtSecretKey, {expiresIn: 60*60*1}); // expires in 1 hour
 	}
+
 	res.jsonp({
 		id_token: id_token
 	});
