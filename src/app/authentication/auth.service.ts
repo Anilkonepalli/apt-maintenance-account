@@ -7,6 +7,8 @@ import 'rxjs/add/observable/of';
 import 'rxjs/add/operator/do';
 import 'rxjs/add/operator/delay';
 
+import { Logger }		from '../logger/default-log.service';
+
 const contentHeaders = new Headers();
 contentHeaders.append('Accept', 'application/json');
 contentHeaders.append('Content-Type', 'application/json');
@@ -21,7 +23,7 @@ export class AuthService {
 	// store the URL so we can redirect after logging in
 	redirectUrl: string;
 
-	constructor(private http: Http) {}
+	constructor(private http: Http, private logger: Logger) {}
 
 	login( event: String, email: String, password: String ): Observable<boolean> {
 		let data = JSON.stringify({ email, password });
@@ -32,7 +34,8 @@ export class AuthService {
 		this.http.post(url, data, {headers: contentHeaders})
 			.subscribe(
 				response => { 
-console.log('Logged In success...response object is...'); console.log(response.json());
+//console.log('Logged In success...response object is...'); console.log(response.json());
+					this.logger.info('Logged In successfully...');
 					let res = response.json();
 					localStorage.setItem('id_token', res.id_token);
 					//localStorage.setItem('user', res.user.id);
