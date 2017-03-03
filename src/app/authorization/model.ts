@@ -39,9 +39,9 @@ export class Authorization {
 			return perm.condition != null && perm.condition != '';
 		});
 		let pwcCount = permissionsWithCondition.length;
-		if(pwcCount < 1) return true; // permission(s) exist but has no condition
+		if(pwcCount < 1) return true; // permission(s) exist but ha(s|ve) no condition(s) with it
 
-		if(pCount > pwcCount) return true; // permissions with no condition take precedence, hence return true 
+		if(pCount > pwcCount) return true; // permissions with no condition take higher precedence, hence return true 
 
 		// evaluate condition in each of the permissionsWithCondition
 		let fn;

@@ -16,8 +16,7 @@ server.get('/echo', function(req, res){
 	res.jsonp(req.query);
 });
 
-// To handle POST, PUT and PATCH you need to use a body-parser
-// You can use the one used by JSON Server
+// To handle POST, PUT and PATCH, a body-parser is needed
 server.use(jsonServer.bodyParser);
 server.post('/api/login', function(req, res){
 	let user = getUser(req.body.email, req.body.password);
@@ -37,7 +36,7 @@ server.use(function(req, res, next) {
 	next();
 });
 
-// Use default router
+// Use default router ...
 // Mount the router on another endpoint; here, it is '/api'
 server.use('/api', router); 
 server.listen(port, () => {
