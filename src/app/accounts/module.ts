@@ -1,20 +1,23 @@
-import { NgModule }					from '@angular/core';
-import { CommonModule }				from '@angular/common';
-import { FormsModule }				from '@angular/forms';
+import { NgModule }								from '@angular/core';
+import { CommonModule }						from '@angular/common';
+import { FormsModule }						from '@angular/forms';
+import { HttpModule }							from '@angular/http';
+import { Router, ActivatedRoute }	from '@angular/router';
 
 import { AccountListComponent }		from './list.component';
-import { AccountDetailComponent } 	from './detail.component';
+import { AccountDetailComponent } from './detail.component';
 
-import { AccountService }			from './service';
+import { AccountService }					from './service';
 import { AccountsRoutingModule }	from './routing.module';
 
-import { UserService } 				from '../users/service';
+import { UserService } 						from '../users/service';
 
 
 @NgModule({
 	imports: [
 		CommonModule,
 		FormsModule,
+		HttpModule,
 		AccountsRoutingModule
 	],
 	declarations: [
@@ -23,7 +26,9 @@ import { UserService } 				from '../users/service';
 	],
 	providers: [
 		AccountService,
-		UserService
+		UserService,
+		ActivatedRoute,
+		Router
 	]
 })
 export class AccountsModule {}

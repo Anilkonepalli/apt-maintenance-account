@@ -1,19 +1,22 @@
-import { Component, Input, OnInit } 		from '@angular/core';
+import { Component, Input, OnInit } 				from '@angular/core';
 import { Router, ActivatedRoute, Params } 	from '@angular/router';
-import { Location }							from '@angular/common';
+import { Location }													from '@angular/common';
 
-import { Account }							from './model';
-import { AccountService }					from './service';
-import { Authorization }					from '../authorization/model';
+import { Account }													from './model';
+import { AccountService }										from './service';
+import { Authorization }										from '../authorization/model';
 
 import 'rxjs/add/operator/switchMap';
 
+var detail_html = require('./detail.component.html');
+var detail_html_string = detail_html.toString();
 var detail_css = require('./detail.component.css');
 var detail_css_string = detail_css.toString();
 
 @Component({
 	selector: 'account-detail',
-	templateUrl: './detail.component.html',
+	//templateUrl: './detail.component.html',
+	template: detail_html_string,
 	styles: [ detail_css_string ],
 })
 export class AccountDetailComponent implements OnInit {
@@ -37,7 +40,7 @@ export class AccountDetailComponent implements OnInit {
 					.switchMap((params: Params) => this.service.get(+params['id']))
 					.subscribe((model: Account) => {
 						this.model = model;
-						if(model.id) this.editMode = true; 
+						if(model.id) this.editMode = true;
 						else this.editMode = false;
 					});
 			});
@@ -58,10 +61,10 @@ export class AccountDetailComponent implements OnInit {
 
 	private add(): void {
 		this.service.create(this.model)
-			.then( (model) => { 
-				this.model = model; 
-				this.gotoList(); 
-			});		
+			.then( (model) => {
+				this.model = model;
+				this.gotoList();
+			});
 	}
 
 	private update(): void {
