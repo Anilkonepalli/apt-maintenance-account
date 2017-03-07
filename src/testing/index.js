@@ -31,13 +31,10 @@ exports.ButtonClickEvents = {
 /** Simulate element click. Defaults to mouse left-button click event */
 function click(el, eventObj) {
     if (eventObj === void 0) { eventObj = exports.ButtonClickEvents.left; }
-    if (el)
-        instanceOf;
-    HTMLElement;
-    {
+    if (el instanceof HTMLElement) {
         el.click();
     }
-    {
+    else {
         el.triggerEventHandler('click', eventObj);
     }
 }
