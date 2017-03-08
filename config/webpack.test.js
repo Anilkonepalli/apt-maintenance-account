@@ -33,7 +33,7 @@ module.exports = {
       {
         test: /\.ts$/,
         loaders: [
-          'awesome-typescript-loader', 
+          'awesome-typescript-loader',
           'angular2-template-loader',
           'angular-router-loader']
       },
@@ -53,7 +53,7 @@ module.exports = {
       {
         test: /\.json$/,
         exclude: helpers.root('node_modules'),
-        loader: 'file?name=config/[name].[hash].[ext]'
+        loader: 'file-loader?name=config/[name].[hash].[ext]'
       }
     ]
   },
@@ -73,8 +73,7 @@ module.exports = {
         'NODE_ENV': JSON.stringify(METADATA.ENV),
         'API_URL': JSON.stringify(METADATA.API_URL)
       }
-    })    
+    })
   ]
 
 };
-

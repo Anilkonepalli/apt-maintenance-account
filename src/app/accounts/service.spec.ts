@@ -12,7 +12,7 @@ import { UserService } 		                        from '../users/service';
 import { AccountService }                         from './service';
 import { Account }                                from './model';
 
-var data = require('./db.json');
+var data = require('../../testing/db.json');
 const makeAccoutData = data.maintenance_accounts as Account[];
 
 /////////////////////  Tests //////////////////////
@@ -22,6 +22,7 @@ describe('Account Service (mockBackend)', () => {
       imports: [ HttpModule ],
       providers: [
         AccountService,
+        UserService,
         { provide: XHRBackend, useClass: MockBackend }
       ]
     });

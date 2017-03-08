@@ -7,8 +7,9 @@ require("rxjs/add/observable/of");
 require("rxjs/add/operator/catch");
 require("rxjs/add/operator/do");
 require("rxjs/add/operator/toPromise");
-var service_1 = require("./service");
-var data = require('./db.json');
+var service_1 = require("../users/service");
+var service_2 = require("./service");
+var data = require('../../testing/db.json');
 var makeAccoutData = data.maintenance_accounts;
 /////////////////////  Tests //////////////////////
 describe('Account Service (mockBackend)', function () {
@@ -16,13 +17,14 @@ describe('Account Service (mockBackend)', function () {
         testing_1.TestBed.configureTestingModule({
             imports: [http_1.HttpModule],
             providers: [
-                service_1.AccountService,
+                service_2.AccountService,
+                service_1.UserService,
                 { provide: http_1.XHRBackend, useClass: testing_2.MockBackend }
             ]
         });
     }));
-    it('can instantiate service when inject service', testing_1.inject([service_1.AccountService], function (service) {
-        expect(service instanceof service_1.AccountService).toBe(true);
+    it('can instantiate service when inject service', testing_1.inject([service_2.AccountService], function (service) {
+        expect(service instanceof service_2.AccountService).toBe(true);
     }));
 });
 //# sourceMappingURL=service.spec.js.map
