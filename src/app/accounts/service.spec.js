@@ -26,5 +26,11 @@ describe('Account Service (mockBackend)', function () {
     it('can instantiate service when inject service', testing_1.inject([service_2.AccountService], function (service) {
         expect(service instanceof service_2.AccountService).toBe(true);
     }));
+    it('can instantiate service with "new"', testing_1.inject([http_1.Http, service_1.UserService], function (http, us) {
+        expect(http).not.toBeNull('http should be provided');
+        expect(us).not.toBeNull('UserService should be provided');
+        var service = new service_2.AccountService(http, us);
+        expect(service instanceof service_2.AccountService).toBe(true, 'new service should be ok');
+    }));
 });
 //# sourceMappingURL=service.spec.js.map

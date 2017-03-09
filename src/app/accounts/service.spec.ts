@@ -32,4 +32,12 @@ describe('Account Service (mockBackend)', () => {
     inject([AccountService], (service: AccountService) => {
       expect(service instanceof AccountService).toBe(true);
     }));
+
+  it('can instantiate service with "new"', inject([Http, UserService ], (http: Http, us: UserService) => {
+    expect(http).not.toBeNull('http should be provided');
+    expect(us).not.toBeNull('UserService should be provided');
+    let service = new AccountService(http, us);
+    expect(service instanceof AccountService).toBe(true, 'new service should be ok');
+  }));
+
 });
