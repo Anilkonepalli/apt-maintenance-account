@@ -8,8 +8,8 @@ import { Logger }		from './logger/default-log.service';
   selector: 'app',
   templateUrl: './app.component.html'
 })
-export class AppComponent  { 
-	title = 'XYZ Apartments'; 
+export class AppComponent  {
+	title = 'XYZ Apartments';
 	jwt: string = ''; // initialize with an empty string
 
 //	user: any;

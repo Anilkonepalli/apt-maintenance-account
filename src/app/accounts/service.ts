@@ -1,5 +1,5 @@
 import { Injectable } 		from '@angular/core';
-import { Http, Headers } 	from '@angular/http';
+import { Http, Headers, Response, RequestOptions } 	from '@angular/http';
 import { Observable } 		from 'rxjs/Observable';
 
 import { Account } 			from './model';
@@ -7,6 +7,10 @@ import { Permission } 		from '../permissions/model';
 import { UserService } 		from '../users/service';
 import { Authorization } 	from '../authorization/model';
 
+import 'rxjs/add/observable/throw';
+import 'rxjs/add/operator/do';
+import 'rxjs/add/operator/catch';
+import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/toPromise';
 
 
@@ -14,7 +18,7 @@ import 'rxjs/add/operator/toPromise';
 export class AccountService {
 
 	//public config: any = { server_ip_addr: "http://localhost:3002"};
-	
+
 	//private modelUrl = this.config.server_ip_addr+'/api/maintenance-accounts';
 	private modelUrl = process.env.API_URL+'/api/maintenance-accounts';
 	private id_token = localStorage.getItem('id_token');
@@ -28,13 +32,37 @@ export class AccountService {
 		private userService: UserService
 	) {}
 
+	getList999(): Observable<Account[]> {
+		return this.http.get(this.modelUrl)
+								.map(this.extractData)
+								.catch(this.handleError999);
+	}
+
+	private extractData(res: Response) {
+		if(res.status < 200 || res.status >= 300) {
+			throw new Error('Bad response status: '+res.status);
+		}
+		let body = res.json();
+		return body.data || [];
+	}
+
+	private handleError999(error: any) {
+		// In a real world app, error is send to remote logging infrastructure
+		let errMsg = error.message || 'Server error';
+		console.error(errMsg); // log to console instead
+		return Observable.throw(errMsg);
+	}
+
 	getList(): Promise<Account[]> {
-console.log('API URL is: '); console.log(process.env.API_URL);		
-console.log('Account Model Url is: ');console.log(this.modelUrl);		
+console.log('API URL is: '); console.log(process.env.API_URL);
+console.log('Account Model Url is: ');console.log(this.modelUrl);
 		return this.http
 			.get(this.modelUrl, {headers: this.headers})
 			.toPromise()
-			.then(models => models.json() as Account[])
+			.then(models => {
+console.log('getList() of Account...'); console.log(models.json());
+						return models.json() as Account[];
+			})
 			.catch(this.handleError)
 	}
 
@@ -76,7 +104,7 @@ console.log('Account Model Url is: ');console.log(this.modelUrl);
 			.then( () => null )
 			.catch(this.handleError);
 	}
-	
+
 	private handleError(error: any) {
 		return Promise.reject(error.message || error);
 	}

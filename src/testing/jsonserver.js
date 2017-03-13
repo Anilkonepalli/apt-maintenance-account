@@ -16,6 +16,16 @@ server.get('/echo', function(req, res){
 	res.jsonp(req.query);
 });
 
+
+// temporary testing
+server.get('/api/maintenance-accounts', function(req, res){
+	return [
+			{ id: 1, name: 'test1'},
+			{ id: 2, name: 'test2'}
+		];
+});
+
+
 // To handle POST, PUT and PATCH, a body-parser is needed
 server.use(jsonServer.bodyParser);
 server.post('/api/login', function(req, res){
@@ -38,7 +48,7 @@ server.use(function(req, res, next) {
 
 // Use default router ...
 // Mount the router on another endpoint; here, it is '/api'
-server.use('/api', router); 
+server.use('/api', router);
 server.listen(port, () => {
 	console.log('JSON Server is running on port# '+port);
 });
@@ -46,8 +56,8 @@ server.listen(port, () => {
 
 // private methods
 function getUser(email, password){
-	let user = data.users.find(each => 
-		each.email === email 
+	let user = data.users.find(each =>
+		each.email === email
 		&& each.password === password);
 
 	return user;
@@ -55,8 +65,8 @@ function getUser(email, password){
 
 function getToken(user) {
 	return jwt.sign(
-				_.omit(user, ['password']), 
-				secret, 
+				_.omit(user, ['password']),
+				jwtSecretKey,
 				{expiresIn: 60*60*1}
 			); // expires in 1 hour OR (60 x 60 x 1) seconds
 }
