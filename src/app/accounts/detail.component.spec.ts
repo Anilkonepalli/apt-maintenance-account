@@ -1,42 +1,107 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { By }                               from '@angular/platform-browser';
-import { DebugElement }                     from '@angular/core';
-//import { FormsModule }                    from '@angular/forms';
-import { AccountDetailComponent }           from './detail.component';
-import { AccountsModule }                   from './module';
-import { Router, ActivatedRoute, Params } 	from '@angular/router';
+import { async, ComponentFixture, TestBed,
+    fakeAsync, inject, tick }                   from '@angular/core/testing';
+import { By }                                   from '@angular/platform-browser';
+import { DebugElement }                         from '@angular/core';
+import { Location }													    from '@angular/common';
 
+import { ActivatedRoute, ActivatedRouteStub,
+    click, newEvent, Router, RouterStub }       from '../../testing';
+
+import { AccountsModule }                       from './module';
+import { SharedModule }                         from '../shared/shared.module';
+
+import { Account }                              from './model';
+import { AccountDetailComponent }               from './detail.component';
+import { AccountService }                       from './service';
+
+/////////// Testing Vars //////////
+let activatedRoute: ActivatedRouteStub;
 let comp: AccountDetailComponent;
 let fixture: ComponentFixture<AccountDetailComponent>;
-let de: DebugElement;
-let el: HTMLElement;
+let page: Page;
 
-describe('Account Detail Component ...', () => {
+/////////////// Tests
+describe('AccountDetailComponent', () => {
+    beforeEach(() => {
+        activatedRoute = new ActivatedRouteStub();
+    });
+    describe('with AccountModule setup', accountModuleSetup);
+});
 
-    // async beforeEach
+//////////////
+import { ACCOUNTS, FakeAccountService } from './testing';
+
+const firstAccount = ACCOUNTS[0];
+
+function accountModuleSetup() {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [AccountsModule],
-            //imports: [ FormsModule ],
-            //declarations: [ AccountDetailComponent ] // declare the test component
-            providers: [ActivatedRoute, Router]
+            providers: [
+                { provide: ActivatedRoute, useValue: activatedRoute },
+                { provide: AccountService, useClass: FakeAccountService },
+                { provide: Router, useClass: RouterStub },
+                { provide: Location }
+            ]
         });
-        //    .compileComponents(); // compile template and css files; not required if webpack is used
     }));
 
-    // synchronous beforeEach
-    beforeEach(() => {
-        fixture = TestBed.createComponent(AccountDetailComponent);
-        comp = fixture.componentInstance; // AccountDetailComponent test instance
+    describe('when navigate to existing account', () => {
+        let expectedAccount: Account;
 
-        // query for the title class by CSS element selector
-        de = fixture.debugElement.query(By.css('.title'));
-        el = de.nativeElement;
+        beforeEach(async(() => {
+            expectedAccount = firstAccount;
+            activatedRoute.testParams = { id: expectedAccount.id };
+            createComponent();
+        }));
+
+        it('should display that account\'s name', () => {
+            expect(page.nameDisplay.textContent).toBe(expectedAccount.name);
+        });
     });
-    /*  // following test is failing...yet to analyze; for now, no sample is found to test with actual router
-      it('should display original title', () => {
+}
+
+
+//////////////////  Helpers  ////////////////
+/** Create the HeroDetailComponent, initialize it, set test variables */
+function createComponent() {
+    fixture = TestBed.createComponent(AccountDetailComponent);
+    comp = fixture.componentInstance;
+    page = new Page();
+
+    // 1st change detection triggers ngOnInit which gets an account
+    fixture.detectChanges();
+    return fixture.whenStable().then(() => {
+        // 2nd change detection displays the async-fetched account
         fixture.detectChanges();
-        expect(el.textContent).toContain(comp.modelName);
-      });
-    */
-});
+        page.addPageElements();
+    });
+}
+
+class Page {
+    gotoSpy: jasmine.Spy;
+    navSpy: jasmine.Spy;
+
+    saveBtn: DebugElement;
+    cancelBtn: DebugElement;
+    nameDisplay: HTMLElement;
+    nameInput: HTMLInputElement;
+
+    constructor() {
+        const router = TestBed.get(Router); // get router from root injector
+        this.gotoSpy = spyOn(comp, 'gotoList').and.callThrough();
+        this.navSpy = spyOn(router, 'navigate');
+    }
+
+    /** Add page elements after account arrives */
+    addPageElements() {
+        if (comp.model) {
+            // have an account so these elements are now in the DOM
+            const buttons = fixture.debugElement.queryAll(By.css('button'));
+            this.saveBtn = buttons[1];
+            this.cancelBtn = buttons[0];
+            this.nameDisplay = fixture.debugElement.query(By.css('.title')).nativeElement;
+            this.nameInput = fixture.debugElement.query(By.css('input')).nativeElement;
+        }
+    }
+}
