@@ -14,21 +14,21 @@ import { UserService } 						from '../users/service';
 
 
 @NgModule({
-	imports: [
-		CommonModule,
-		FormsModule,
-		HttpModule,
-		AccountsRoutingModule
-	],
-	declarations: [
-		AccountListComponent,
-		AccountDetailComponent
-	],
-	providers: [
-		AccountService,
-		UserService,
-		ActivatedRoute,
-		Router
-	]
+    imports: [
+        CommonModule,
+        FormsModule,
+        HttpModule,
+        AccountsRoutingModule
+    ],
+    declarations: [
+        AccountListComponent,
+        AccountDetailComponent
+    ],
+    providers: [
+        AccountService,
+        UserService,
+        ActivatedRoute,
+        Router
+    ]
 })
-export class AccountsModule {}
+export class AccountsModule { }

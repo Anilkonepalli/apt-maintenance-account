@@ -38,10 +38,9 @@ function accountModuleSetup() {
         TestBed.configureTestingModule({
             imports: [AccountsModule],
             providers: [
-                { provide: ActivatedRoute, useValue: activatedRoute },
-                { provide: AccountService, useClass: FakeAccountService },
                 { provide: Router, useClass: RouterStub },
-                { provide: Location }
+                { provide: ActivatedRoute, useValue: activatedRoute },
+                { provide: AccountService, useClass: FakeAccountService }
             ]
         });
     }));

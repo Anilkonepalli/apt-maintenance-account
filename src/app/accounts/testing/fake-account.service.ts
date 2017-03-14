@@ -6,25 +6,25 @@ import { Account }    from '../model';
 import { AccountService } from '../service';
 
 export var ACCOUNTS: Account[] = [
-    {
-        id: 1,
-        item: '',
-        flat_number: '',
-        for_month: 0,
-        for_year: 0,
-        name: 'test1',
-        crdr: '',
-        amount: 0.0,
-        balance: 0.0,
-        category: '',
-        recorded_at: '',
-        remarks: '',
-        owner_id: 0
-    }
+    new Account(
+        1,
+        '',
+        '',
+        0,
+        0,
+        'test1',
+        '',
+        0.0,
+        0.0,
+        '',
+        '',
+        '',
+        0
+    )
     //{ id: 2, name: 'test2' },
     //{ id: 3, name: 'test3' }
 ];
-export class FakeAccountService implements AccountService {
+export class FakeAccountService extends AccountService {
     accounts = ACCOUNTS.map(h => h.clone());
     lastPromise: Promise<any>; // remember so it can spy on promise calls
 
@@ -37,10 +37,10 @@ export class FakeAccountService implements AccountService {
     }
 
     getList() {
-        return this.lastPromise = Promise.resolve<Hero[]>(this.accounts);
+        return this.lastPromise = Promise.resolve<Account[]>(this.accounts);
     }
 
-    update(account: Account): Promise<Hero> {
+    update(account: Account): Promise<Account> {
         return this.lastPromise = this.get(account.id).then(acct => {
             return acct ?
                 Object.assign(acct, account) :
