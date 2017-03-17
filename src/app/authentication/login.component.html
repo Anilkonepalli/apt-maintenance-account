@@ -10,13 +10,13 @@
 			<label for="password">Password</label>
 			<input type="password" class="form-control" id="password" placeholder="Password" value="user1secret" #password>
 		</div>
-		<div class="form-group">
+		<div class="form-group has-success">
 			<button type="submit" class="btn btn-default">Submit</button>
 			<button type="button" class="btn btn-link" (click)="cancel()">Cancel</button>
 			<button type="button" class="btn btn-link" (click)="signup()">Click here to signup</button>
 		</div>
+		<div class="alert alert-danger" *ngIf="message.text">{{message.text}}</div>
 
-		<p class="error" *ngIf="errorMessage">{{errorMessage}}</p>
 	</form>
 
 </div>

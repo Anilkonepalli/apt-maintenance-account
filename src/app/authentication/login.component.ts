@@ -9,15 +9,14 @@ import { AuthService } 				from './auth.service';
     selector: 'login',
     templateUrl: './login.component.html',
     styles: [`
-		.login {
-			width: 40%;
-		}`
+    		.login {
+    			width: 40%;
+    		}`
     ]
 })
 export class LoginComponent {
 
-    //	message: string;
-    errorMessage: string;
+    message: any = { text: '' };
 
     constructor(public authService: AuthService, public router: Router) {
         //		this.setMessage();
@@ -32,6 +31,7 @@ export class LoginComponent {
 
         this.authService.login(event, email, password).subscribe(() => {
             //		this.setMessage();
+            console.log('authService.login...'); console.log(this.authService);
             if (this.authService.isLoggedIn) {
 
                 // Get the redirect URL from our auth service
@@ -47,8 +47,10 @@ export class LoginComponent {
 
                 // Redirect the user
                 this.router.navigate([redirect], navigationExtras);
-            } else {
+            } else { // login failed
                 console.log('isLoggedIn >> false');
+                console.log('AuthSErvice message...'); console.log(this.authService.message);
+                this.message = this.authService.message;
             }
         });
     }
@@ -59,5 +61,9 @@ export class LoginComponent {
 
     signup() {
         this.router.navigate(['/signup']);
+    }
+
+    hasError() {
+        return this.message && this.message.type === 'error';
     }
 }

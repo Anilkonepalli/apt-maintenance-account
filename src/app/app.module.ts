@@ -19,26 +19,26 @@ import { ConsoleLogService }     from './logger/log.service';
 import { Logger }                from './logger/default-log.service';
 
 @NgModule({
-  imports:      [ 
-  	BrowserModule, 
-  	HttpModule, 
-  	FormsModule, 
-  	AppRoutingModule,
-  	LoginRoutingModule
-  ],
-  declarations: [ 
-  	AppComponent, 
-  	LoginComponent, 
-  	SignupComponent, 
-  	HomeComponent, 
-  	AboutComponent,
-    PageNotFoundComponent
-  ],
-  providers: [
-    { provide: Logger, useClass: ConsoleLogService }
-  ],
-  bootstrap:   [ 
-    AppComponent
-  ]
+    imports: [
+        BrowserModule,
+        HttpModule,
+        FormsModule,
+        AppRoutingModule,
+        LoginRoutingModule
+    ],
+    declarations: [
+        AppComponent,
+        LoginComponent,
+        SignupComponent,
+        HomeComponent,
+        AboutComponent,
+        PageNotFoundComponent
+    ],
+    providers: [
+        { provide: Logger, useClass: ConsoleLogService }
+    ],
+    bootstrap: [
+        AppComponent
+    ]
 })
 export class AppModule { }

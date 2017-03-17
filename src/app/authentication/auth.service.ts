@@ -16,53 +16,62 @@ contentHeaders.append('Content-Type', 'application/json');
 
 @Injectable()
 export class AuthService {
-	
-	isLoggedIn: boolean = false;
-	JwtHelper = new JwtHelper();
 
-	// store the URL so we can redirect after logging in
-	redirectUrl: string;
+    isLoggedIn: boolean = false;
+    JwtHelper = new JwtHelper();
+    message = { type: '', title: '', text: '' }; // type can be error|warning|info
 
-	constructor(private http: Http, private logger: Logger) {}
+    // store the URL so we can redirect after logging in
+    redirectUrl: string;
 
-	login( event: String, email: String, password: String ): Observable<boolean> {
-		let data = JSON.stringify({ email, password });
-		//let url = 'http://localhost:3002/api/sessions/create';
-		//let url = 'http://localhost:3002/api/login';
-		let url = process.env.API_URL+'/api/login';
+    constructor(private http: Http, private logger: Logger) { }
 
-		this.http.post(url, data, {headers: contentHeaders})
-			.subscribe(
-				response => { 
-// console.log('Logged In success...response object is...'); console.log(response.json());
-					this.logger.info('Logged In successfully...');
-					let res = response.json();
-					localStorage.setItem('id_token', res.id_token);
-					//localStorage.setItem('user', res.user.id);
-					let decodedJwt = res.id_token && this.JwtHelper.decodeToken(res.id_token);
-					localStorage.setItem('userId', decodedJwt.id);
-					this.isLoggedIn = true;
-				},
-				error => { 
-					this.isLoggedIn = false;
+    login(event: String, email: String, password: String): Observable<object> {
+        let data = JSON.stringify({ email, password });
+        //let url = 'http://localhost:3002/api/sessions/create';
+        //let url = 'http://localhost:3002/api/login';
+        let url = process.env.API_URL + '/api/login';
 
-					// ToDo: Use a remote logging infrastructure later
-					let errMsg: string;
-					if(error instanceof Response) {
-						const body = error.json() || '';
-						const err = body.error || JSON.stringify(body);
-						errMsg = `${error.status} - ${error.statusText || ''} ${err}`;
-					} else {
-						errMsg = error.message ? error.message : error.toString();
-					}
-					console.error(errMsg);
-				}
-			);
-		return Observable.of(this.isLoggedIn).delay(1000);
-	}
+        this.http.post(url, data, { headers: contentHeaders }).subscribe(
+            response => {
+                console.log('Logged In success...response object is...'); console.log(response.json());
+                this.logger.info('Logged In successfully...');
+                let res = response.json();
+                localStorage.setItem('id_token', res.id_token);
+                //localStorage.setItem('user', res.user.id);
+                let decodedJwt = res.id_token && this.JwtHelper.decodeToken(res.id_token);
+                localStorage.setItem('userId', decodedJwt.id);
+                this.isLoggedIn = true;
+                this.message.type = 'info';
+                this.message.title = "Success";
+                this.message.text = "Logged in successfully";
+            },
+            error => {
+                console.log('Login Failed...'); console.log(error);
+                this.isLoggedIn = false;
 
-	logout(): void {
-console.log("Auth Service Logout now...");
-		this.isLoggedIn = false;
-	}
+                // ToDo: Use a remote logging infrastructure later
+                let errMsg: string;
+                if (error instanceof Response) {
+                    //const body = error.json() || '';
+                    //const err = body.error || JSON.stringify(body);
+                    //errMsg = `${error.status} - ${error.statusText || ''} ${err}`;
+                    errMsg = `${error.status} - ${error.statusText || ''}`;
+                } else {
+                    errMsg = error.message ? error.message : error.toString();
+                }
+                //console.error('Error is:...'); console.error(error);
+                //console.error('Err Msg is:...'); console.error(errMsg);
+                this.message.type = 'error';
+                this.message.title = "Failure";
+                this.message.text = errMsg;
+            });
+        //return Observable.of(this.isLoggedIn).delay(1000);
+        return Observable.of(this).delay(1000);
+    }
+
+    logout(): void {
+        console.log("Auth Service Logout now...");
+        this.isLoggedIn = false;
+    }
 }
