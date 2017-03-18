@@ -2,7 +2,7 @@ import { NgModule }								from '@angular/core';
 import { CommonModule }						from '@angular/common';
 import { FormsModule }						from '@angular/forms';
 import { HttpModule }							from '@angular/http';
-import { Router, ActivatedRoute }	from '@angular/router';
+//import { Router, ActivatedRoute }	from '@angular/router';
 
 import { AccountListComponent }		from './list.component';
 import { AccountDetailComponent } from './detail.component';
@@ -26,9 +26,9 @@ import { UserService } 						from '../users/service';
     ],
     providers: [
         AccountService,
-        UserService,
-        ActivatedRoute,
-        Router
+        UserService
+        //        ActivatedRoute,
+        //Router
     ]
 })
 export class AccountsModule { }
