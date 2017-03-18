@@ -16,23 +16,14 @@ import { Message }            from '../shared';
 })
 export class LoginComponent {
 
-    //message: any = { text: '' };
     message: Message = new Message();
 
-    constructor(public authService: AuthService, public router: Router) {
-        //		this.setMessage();
-    }
-
-    //	setMessage() {
-    //		this.message = 'Logged '+ (this.authService.isLoggedIn ? 'in' : 'out');
-    //	}
+    constructor(public authService: AuthService, public router: Router) { }
 
     login(event: String, email: String, password: String) {
-        //		this.message = 'Trying to log in ...';
 
         this.authService.login(event, email, password).subscribe(() => {
-            //		this.setMessage();
-            console.log('authService.login...'); console.log(this.authService);
+
             if (this.authService.isLoggedIn) {
 
                 // Get the redirect URL from our auth service
@@ -49,8 +40,6 @@ export class LoginComponent {
                 // Redirect the user
                 this.router.navigate([redirect], navigationExtras);
             } else { // login failed
-                console.log('isLoggedIn >> false');
-                console.log('AuthSErvice ...'); console.log(this.authService);
                 this.message = this.authService.message;
             }
         });

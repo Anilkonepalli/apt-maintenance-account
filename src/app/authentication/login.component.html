@@ -1,6 +1,5 @@
 <div class="container login center-block">
 	<h1>Login</h1>
-	<!--p class="title">{{message}}</p-->
 	<form role="form" #loginForm="ngForm" (submit)="login($event, email.value, password.value)">
 		<div class="form-group">
 			<label for="email">E-mail</label>
@@ -15,8 +14,6 @@
 			<button type="button" class="btn btn-link" (click)="cancel()">Cancel</button>
 			<button type="button" class="btn btn-link" (click)="signup()">Click here to signup</button>
 		</div>
-		<!--div class="alert alert-danger" *ngIf="message.text">{{message.text}}</div-->
 		<message [message]="message"></message>
 	</form>
-
 </div>
