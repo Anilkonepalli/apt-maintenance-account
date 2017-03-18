@@ -13,6 +13,8 @@ import { LoginComponent }        from './authentication/login.component';
 import { SignupComponent }       from './authentication/signup.component';
 import { PageNotFoundComponent } from './not-found.component';
 
+import { FacebookLoginComponent } from './authentication/social/facebook-login.component';
+
 import { HomeComponent }         from './home.component';
 import { AboutComponent }        from './about.component';
 
@@ -34,7 +36,8 @@ import { Logger }                from './logger/default-log.service';
         SignupComponent,
         HomeComponent,
         AboutComponent,
-        PageNotFoundComponent
+        PageNotFoundComponent,
+        FacebookLoginComponent
     ],
     providers: [
         { provide: Logger, useClass: ConsoleLogService }
