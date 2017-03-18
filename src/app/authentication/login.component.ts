@@ -3,7 +3,7 @@ import { NgForm } 					from '@angular/forms';
 import { Router, NavigationExtras } from '@angular/router';
 
 import { AuthService } 				from './auth.service';
-
+import { Message }            from '../shared';
 
 @Component({
     selector: 'login',
@@ -16,7 +16,8 @@ import { AuthService } 				from './auth.service';
 })
 export class LoginComponent {
 
-    message: any = { text: '' };
+    //message: any = { text: '' };
+    message: Message = new Message();
 
     constructor(public authService: AuthService, public router: Router) {
         //		this.setMessage();
@@ -49,7 +50,7 @@ export class LoginComponent {
                 this.router.navigate([redirect], navigationExtras);
             } else { // login failed
                 console.log('isLoggedIn >> false');
-                console.log('AuthSErvice message...'); console.log(this.authService.message);
+                console.log('AuthSErvice ...'); console.log(this.authService);
                 this.message = this.authService.message;
             }
         });
@@ -63,7 +64,4 @@ export class LoginComponent {
         this.router.navigate(['/signup']);
     }
 
-    hasError() {
-        return this.message && this.message.type === 'error';
-    }
 }

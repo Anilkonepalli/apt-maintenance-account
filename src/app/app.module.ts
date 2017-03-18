@@ -6,6 +6,7 @@ import { FormsModule }           from '@angular/forms';
 import { AppComponent }          from './app.component';
 import { AppRoutingModule }      from './app-routing.module';
 
+import { SharedModule }          from './shared/shared.module';
 import { LoginRoutingModule }    from './authentication/login-routing.module';
 
 import { LoginComponent }        from './authentication/login.component';
@@ -24,7 +25,8 @@ import { Logger }                from './logger/default-log.service';
         HttpModule,
         FormsModule,
         AppRoutingModule,
-        LoginRoutingModule
+        LoginRoutingModule,
+        SharedModule,
     ],
     declarations: [
         AppComponent,

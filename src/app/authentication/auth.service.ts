@@ -1,13 +1,15 @@
-import { Injectable } 				from '@angular/core';
-import { Observable } 				from 'rxjs/Observable';
-import { Http, Headers, Response } 	from '@angular/http';
-import { JwtHelper } 				from 'angular2-jwt';
+import { Injectable } 				          from '@angular/core';
+import { Observable } 				          from 'rxjs/Observable';
+import { Http, Headers, Response }      from '@angular/http';
+import { JwtHelper } 				            from 'angular2-jwt';
 
 import 'rxjs/add/observable/of';
 import 'rxjs/add/operator/do';
 import 'rxjs/add/operator/delay';
 
-import { Logger }		from '../logger/default-log.service';
+import { Logger }		                    from '../logger/default-log.service';
+import { Message, ErrorMessage,
+    InfoMessage, WarningMessage }  from '../shared';
 
 const contentHeaders = new Headers();
 contentHeaders.append('Accept', 'application/json');
@@ -19,7 +21,10 @@ export class AuthService {
 
     isLoggedIn: boolean = false;
     JwtHelper = new JwtHelper();
-    message = { type: '', title: '', text: '' }; // type can be error|warning|info
+    //message = { type: '', title: '', text: '' }; // type can be error|warning|info
+    //errorMessage: ErrorMessage;
+    //infoMessage: InfoMessage;
+    message: Message;
 
     // store the URL so we can redirect after logging in
     redirectUrl: string;
@@ -42,9 +47,11 @@ export class AuthService {
                 let decodedJwt = res.id_token && this.JwtHelper.decodeToken(res.id_token);
                 localStorage.setItem('userId', decodedJwt.id);
                 this.isLoggedIn = true;
-                this.message.type = 'info';
-                this.message.title = "Success";
-                this.message.text = "Logged in successfully";
+                //this.message.type = 'info';
+                //this.message.title = "Success";
+                //this.message.text = "Logged in successfully";
+                //this.infoMessage = new InfoMessage("Success", "Logged in Successfully");
+                this.message = new InfoMessage("Success", "log...");
             },
             error => {
                 console.log('Login Failed...'); console.log(error);
@@ -62,9 +69,11 @@ export class AuthService {
                 }
                 //console.error('Error is:...'); console.error(error);
                 //console.error('Err Msg is:...'); console.error(errMsg);
-                this.message.type = 'error';
-                this.message.title = "Failure";
-                this.message.text = errMsg;
+                //this.message.type = 'error';
+                //this.message.title = "Failure";
+                //this.message.text = errMsg;
+                //this.errorMessage = new ErrorMessage("Failure", errMsg);
+                this.message = new ErrorMessage("Failure", errMsg);
             });
         //return Observable.of(this.isLoggedIn).delay(1000);
         return Observable.of(this).delay(1000);

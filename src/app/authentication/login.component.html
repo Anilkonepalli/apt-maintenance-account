@@ -15,8 +15,8 @@
 			<button type="button" class="btn btn-link" (click)="cancel()">Cancel</button>
 			<button type="button" class="btn btn-link" (click)="signup()">Click here to signup</button>
 		</div>
-		<div class="alert alert-danger" *ngIf="message.text">{{message.text}}</div>
-
+		<!--div class="alert alert-danger" *ngIf="message.text">{{message.text}}</div-->
+		<message [message]="message"></message>
 	</form>
 
 </div>
