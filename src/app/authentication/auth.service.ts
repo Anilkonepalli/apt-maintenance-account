@@ -63,7 +63,7 @@ export class AuthService {
         this.isLoggedIn = false;
     }
 
-    socialLogin(network: String, socialToken: String): Observable<object> {
+    loginToAppUsing(network: String, socialToken: String): Observable<object> {
         let data = JSON.stringify({ network: network, socialToken: socialToken });
         let url = process.env.API_URL + '/api/socialLogin';
 
@@ -92,7 +92,7 @@ export class AuthService {
         return Observable.of(this).delay(1000);
     }
 
-    socialLogout(): void {
+    logoutFromApp(): void {  // for socially logged in user
         this.logger.info('Logged Out @auth.service...');
         this.isSocialLoggedIn = false;
     }
