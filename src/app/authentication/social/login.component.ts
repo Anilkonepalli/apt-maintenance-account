@@ -72,7 +72,7 @@ export class SocialLoginComponent {
                     preserveQueryParams: true,
                     preserveFragment: true
                 };
-
+                console.log('Redirecting to: ...'); console.log(redirect);
                 // Redirect the user
                 this.router.navigate([redirect], navigationExtras);
             } else { // login failed

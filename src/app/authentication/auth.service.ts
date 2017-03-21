@@ -70,15 +70,17 @@ export class AuthService {
         this.http.post(url, data, { headers: contentHeaders }).subscribe(
             response => {
                 this.logger.info('Logged In successfully...');
-                console.log('Response ...'); console.log(response);
                 let res = response.json();
+                console.log('Response ...'); console.log(res);
                 localStorage.setItem('id_token', res.id_token);
                 let decodedJwt = res.id_token && this.JwtHelper.decodeToken(res.id_token);
                 localStorage.setItem('userId', decodedJwt.id);
+                this.isLoggedIn = true;
                 this.isSocialLoggedIn = true;
                 this.message = new InfoMessage("Success", "log...");
             },
             error => {
+                this.isLoggedIn = false;
                 this.isSocialLoggedIn = false;
 
                 // ToDo: Use a remote logging infrastructure later
@@ -95,6 +97,7 @@ export class AuthService {
 
     logoutFromApp(): void {  // for socially logged in user
         this.logger.info('Logged Out @auth.service...');
+        this.isLoggedIn = false;
         this.isSocialLoggedIn = false;
     }
 }
