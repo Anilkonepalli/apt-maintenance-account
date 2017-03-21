@@ -65,11 +65,12 @@ export class AuthService {
 
     loginToAppUsing(network: String, socialToken: String): Observable<object> {
         let data = JSON.stringify({ network: network, socialToken: socialToken });
-        let url = process.env.API_URL + '/api/socialLogin';
+        let url = process.env.API_URL + '/api/sociallogin';
 
         this.http.post(url, data, { headers: contentHeaders }).subscribe(
             response => {
                 this.logger.info('Logged In successfully...');
+                console.log('Response ...'); console.log(response);
                 let res = response.json();
                 localStorage.setItem('id_token', res.id_token);
                 let decodedJwt = res.id_token && this.JwtHelper.decodeToken(res.id_token);
