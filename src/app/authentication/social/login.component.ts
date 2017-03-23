@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Router, NavigationExtras } from '@angular/router';
 
+import { Logger }		          from '../../logger/default-log.service';
 import { AuthService }        from '../auth.service';
 import { Message }            from '../../shared';
 
@@ -18,29 +19,25 @@ export class SocialLoginComponent {
     serverToken: String;
     message: Message = new Message();
 
-    constructor(public authService: AuthService, public router: Router) {
-        //console.log('constructor() called @SocialLoginComponent...');
+    constructor(public authService: AuthService, public router: Router, private logger: Logger) {
+        this.logger.info('constructor() called @SocialLoginComponent...');
         hello.init({
             facebook: '988055257994411',
-            google: '<Google client id>' // yet to add actual id
-        }, { scope: 'public_profile, email' });
-
-        //hello.on('auth.login', this.authenticate);
+            google: '826489296470-hrm7t6hq57gnurtm5tfbavfk4f04tqaq.apps.googleusercontent.com'
+            //}, { scope: 'public_profile, email' });
+        }, { scope: 'email' });
     }
 
     login(network: string) {
-        console.log('Social Login network: ' + network);
-        //hello('facebook').login()
+        this.logger.info('Social Login network: ' + network);
         hello(network).login().then( // social login here
             () => { // social login is success
-                //alert('You are signed in to ' + network);
-                console.log('You are signed into ' + network);
+                this.logger.info('You are signed into ' + network);
                 let authResponse = hello(network).getAuthResponse();
                 this.loginToAppUsing(network, authResponse); // now login to Application using social response
             },
             (err: any) => { // failure
-                //alert(network + ' sign-in error: ' + err.error.message);
-                console.error(network + ' sign in error: ' + err.error.message);
+                this.logger.error(network + ' sign in error: ' + err.error.message);
             }
         );
     }
@@ -48,20 +45,10 @@ export class SocialLoginComponent {
     loginToAppUsing(network: String, authResponse: any) {
         // Save the social token
         let socialToken = authResponse.access_token;
-        console.log('Auth Response: ...'); console.log(authResponse);
-        /*      // sample api calls of hello js api("me") gets profile details
-                hello(auth.network).api("me")
-                    .then((res: any) => {
-                        console.log('Response object...'); console.log(res);
-                    })
-                    .catch((err: any) => {
-                        console.log('Error in hello api call to me ' + err);
-                    });
-        */
 
         // Auth with our app server using the social token
         this.authService.loginToAppUsing(network, socialToken).subscribe(() => {
-            console.log('Auth Service...'); console.log(this.authService);
+
             if (this.authService.isSocialLoggedIn) {
 
                 // Get the redirect URL from our auth service
@@ -74,7 +61,7 @@ export class SocialLoginComponent {
                     preserveQueryParams: true,
                     preserveFragment: true
                 };
-                console.log('Redirecting to: ...'); console.log(redirect);
+                this.logger.info('Redirecting to: ...' + redirect);
                 // Redirect the user
                 this.router.navigate([redirect], navigationExtras);
             } else { // login failed
