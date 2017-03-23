@@ -33,12 +33,14 @@ export class SocialLoginComponent {
         //hello('facebook').login()
         hello(network).login().then( // social login here
             () => { // social login is success
-                alert('You are signed in to ' + network);
+                //alert('You are signed in to ' + network);
+                console.log('You are signed into ' + network);
                 let authResponse = hello(network).getAuthResponse();
                 this.loginToAppUsing(network, authResponse); // now login to Application using social response
             },
             (err: any) => { // failure
-                alert(network + ' sign-in error: ' + err.error.message);
+                //alert(network + ' sign-in error: ' + err.error.message);
+                console.error(network + ' sign in error: ' + err.error.message);
             }
         );
     }
