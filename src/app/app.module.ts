@@ -13,7 +13,6 @@ import { LoginComponent }        from './authentication/login.component';
 import { SignupComponent }       from './authentication/signup.component';
 import { PageNotFoundComponent } from './not-found.component';
 
-import { FacebookLoginComponent } from './authentication/social/facebook-login.component';
 import { SocialLoginComponent }  from './authentication/social/login.component';
 
 import { HomeComponent }         from './home.component';
@@ -38,7 +37,6 @@ import { Logger }                from './logger/default-log.service';
         HomeComponent,
         AboutComponent,
         PageNotFoundComponent,
-        FacebookLoginComponent,
         SocialLoginComponent
     ],
     providers: [
