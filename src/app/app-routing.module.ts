@@ -11,7 +11,7 @@ import { SignupComponent } 			from './authentication/signup.component';
 import { AuthGuardService } 		from './authentication/auth-guard.service';
 
 const appRoutes: Routes = [
-
+    { path: '', redirectTo: '/home', pathMatch: 'full' },
     { path: 'login', component: LoginComponent },
     { path: 'sociallogin', component: SocialLoginComponent },
     { path: 'signup', component: SignupComponent },

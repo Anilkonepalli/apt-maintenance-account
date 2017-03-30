@@ -11,12 +11,12 @@ import { AuthService } from './authentication/auth.service';
 })
 export class AppComponent {
     title = 'XYZ Apartments';
-    jwt: string = ''; // initialize with an empty string
+    //jwt: string = ''; // initialize with an empty string
 
     //	user: any;
 
     constructor(public router: Router, public logger: Logger, public authService: AuthService) {
-        this.jwt = localStorage.getItem('id_token');
+        //this.jwt = localStorage.getItem('id_token');
         //this.logger.info('Testing Logger in AppComponent...');
         //this.user = localStorage.getItem('user');
     }
@@ -25,9 +25,9 @@ export class AppComponent {
         this.logger.info('Logging out of application @app.component...');
         this.logger.warn('A warning message...');
         this.logger.error('An error message...');
-        localStorage.removeItem('id_token');
+        //localStorage.removeItem('id_token');
         //localStorage.removeItem('user');
-        this.jwt = '';
+        //this.jwt = '';
         //this.user = '';
         this.authService.logout();
         this.router.navigate(['/login']);

@@ -1,37 +1,35 @@
 <h1>{{title}}</h1>
-<nav>
-	<a [routerLink]="['/home']">Home</a>
 
+<!--nav *ngIf="!jwt"> <!-- Menu before logging in -->
+<nav *ngIf="!authService.isLoggedIn"> <!-- Menu before logging in -->
+	<a [routerLink]="['/home']">Home</a>
 	<span>|</span>
 	<a [routerLink]="['/about']">About</a>
-	
-	<span *ngIf="!jwt">|</span>
-	<a [routerLink]="['/login']" *ngIf="!jwt">Login</a>
-	
-	<span *ngIf="!jwt">|</span>
-	<a [routerLink]="['/signup']" *ngIf="!jwt">Signup</a>
-	
-	<span *ngIf="jwt">|</span>
-	<a [routerLink]="['/accounts']" *ngIf="jwt">Accounts</a>
+	<span>|</span>
+	<a [routerLink]="['/login']">Login</a>
+	<span>|</span>
+	<a [routerLink]="['/signup']">Signup</a>
+</nav>
 
-	<span *ngIf="jwt">|</span>
-	<a [routerLink]="['/users']" *ngIf="jwt">Users</a>
-
-	<span *ngIf="jwt">|</span>
-	<a [routerLink]="['/roles']" *ngIf="jwt">Roles</a>
-
-	<span *ngIf="jwt">|</span>
-	<a [routerLink]="['/permissions']" *ngIf="jwt">Permissions</a>
-
-	<span *ngIf="jwt">|</span>
-	<a [routerLink]="['/roles-permissions']" *ngIf="jwt">Roles-Permissions</a>
-
-	<span *ngIf="jwt">|</span>
-	<a [routerLink]="['/users-roles']" *ngIf="jwt">Users-Roles</a>
-
-	<span *ngIf="jwt">|</span>
-	<a (click)="logout()" *ngIf="jwt">Logout</a>
-
+<!--nav *ngIf="jwt"> <!-- Menu after logging in -->
+<nav *ngIf="authService.isLoggedIn"> <!-- Menu after logging in -->
+	<a [routerLink]="['/home']">Home</a>
+	<span>|</span>
+	<a [routerLink]="['/about']">About</a>
+	<span>|</span>
+	<a [routerLink]="['/accounts']">Accounts</a>
+	<span>|</span>
+	<a [routerLink]="['/users']">Users</a>
+	<span>|</span>
+	<a [routerLink]="['/roles']">Roles</a>
+	<span>|</span>
+	<a [routerLink]="['/permissions']">Permissions</a>
+	<span>|</span>
+	<a [routerLink]="['/roles-permissions']">Roles-Permissions</a>
+	<span>|</span>
+	<a [routerLink]="['/users-roles']">Users-Roles</a>
+	<span>|</span>
+	<a (click)="logout()">Logout</a>
 </nav>
 
 <main>

@@ -1,5 +1,5 @@
 <div class="container">
-	
+
 	<h1 class="col-md-6 col-md-offset-3">Signup</h1>
 
 	<form class="col-md-6 col-md-offset-3" #signupForm="ngForm" (submit)="saveNewUser()">
@@ -32,4 +32,5 @@
 			<button type="submit" class="btn btn-default" [disabled]="!signupForm.form.valid">Add User</button>
 			<button type="button" class="btn btn-link" (click)="cancel()">Cancel</button>
 		</div>
+		<social-login></social-login>
 	</form>

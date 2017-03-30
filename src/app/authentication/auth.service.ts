@@ -45,7 +45,7 @@ export class AuthService {
             },
             error => {
                 this.isLoggedIn = false;
-
+                localStorage.removeItem('id_token'); // whenever isLoggedIn is set to false, remove id_token too!
                 // ToDo: Use a remote logging infrastructure later
                 let errMsg: string;
                 if (error instanceof Response) {
@@ -61,6 +61,9 @@ export class AuthService {
     logout(): void {
         this.logger.info('Logged Out @auth.service...');
         this.isLoggedIn = false;
+        localStorage.removeItem('id_token'); // whenever isLoggedIn is set to false, remove id_token too!
+        // TODO: To fix menu related problem, reset jwt to an empty string in
+        // app component using parent child relationship
     }
 
     loginToAppUsing(network: String, socialToken: String): Observable<object> {
