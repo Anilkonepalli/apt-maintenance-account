@@ -1,4 +1,5 @@
 export class Message {
+
     public constructor(
         public title: string = '',
         public text: string = ''

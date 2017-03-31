@@ -1,7 +1,7 @@
-import { Component, Host } 	from '@angular/core';
-import { JwtHelper } 		from 'angular2-jwt';
+import { Component, Host } from '@angular/core';
+import { JwtHelper } 		   from 'angular2-jwt';
 
-import { AppComponent } 	from './app.component';
+import { AppComponent } 	 from './app.component';
 
 @Component({
     selector: 'home',
@@ -20,6 +20,5 @@ export class HomeComponent {
     constructor( @Host() parent: AppComponent) {
         this.jwt = localStorage.getItem('id_token');
         this.decodedJwt = this.jwt && this.JwtHelper.decodeToken(this.jwt);
-        //parent.jwt = this.jwt;
     }
 }

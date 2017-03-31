@@ -1,6 +1,5 @@
 <h1>{{title}}</h1>
 
-<!--nav *ngIf="!jwt"> <!-- Menu before logging in -->
 <nav *ngIf="!authService.isLoggedIn"> <!-- Menu before logging in -->
 	<a [routerLink]="['/home']">Home</a>
 	<span>|</span>
@@ -11,7 +10,6 @@
 	<a [routerLink]="['/signup']">Signup</a>
 </nav>
 
-<!--nav *ngIf="jwt"> <!-- Menu after logging in -->
 <nav *ngIf="authService.isLoggedIn"> <!-- Menu after logging in -->
 	<a [routerLink]="['/home']">Home</a>
 	<span>|</span>

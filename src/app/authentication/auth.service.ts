@@ -7,9 +7,9 @@ import 'rxjs/add/observable/of';
 import 'rxjs/add/operator/do';
 import 'rxjs/add/operator/delay';
 
-import { Logger }		               from '../logger/default-log.service';
+import { Logger }		                    from '../logger/default-log.service';
 import { Message, ErrorMessage,
-    InfoMessage, WarningMessage }  from '../shared';
+    InfoMessage, WarningMessage }       from '../shared';
 
 const contentHeaders = new Headers();
 contentHeaders.append('Accept', 'application/json');

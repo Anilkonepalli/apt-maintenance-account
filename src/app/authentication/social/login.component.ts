@@ -1,9 +1,9 @@
-import { Component } from '@angular/core';
+import { Component }                from '@angular/core';
 import { Router, NavigationExtras } from '@angular/router';
 
-import { Logger }		          from '../../logger/default-log.service';
-import { AuthService }        from '../auth.service';
-import { Message }            from '../../shared';
+import { Logger }		                from '../../logger/default-log.service';
+import { AuthService }              from '../auth.service';
+import { Message }                  from '../../shared';
 
 
 declare const hello: any;
@@ -24,7 +24,6 @@ export class SocialLoginComponent {
         hello.init({
             facebook: '988055257994411',
             google: '826489296470-hrm7t6hq57gnurtm5tfbavfk4f04tqaq.apps.googleusercontent.com'
-            //}, { scope: 'public_profile, email' });
         }, { scope: 'email' });
     }
 

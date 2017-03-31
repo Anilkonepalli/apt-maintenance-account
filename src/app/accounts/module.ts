@@ -2,7 +2,6 @@ import { NgModule }								from '@angular/core';
 import { CommonModule }						from '@angular/common';
 import { FormsModule }						from '@angular/forms';
 import { HttpModule }							from '@angular/http';
-//import { Router, ActivatedRoute }	from '@angular/router';
 
 import { AccountListComponent }		from './list.component';
 import { AccountDetailComponent } from './detail.component';

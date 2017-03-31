@@ -1,9 +1,9 @@
-import { Component } 		from '@angular/core';
-import { NgForm } 			from '@angular/forms';
+import { Component } 			from '@angular/core';
+import { NgForm } 				from '@angular/forms';
 import { Http, Headers } 	from '@angular/http';
-import { Router } 			from '@angular/router';
+import { Router } 				from '@angular/router';
 
-import { User } 			from '../users/model';
+import { User } 					from '../users/model';
 
 const contentHeaders = new Headers();
 contentHeaders.append('Accept', 'application/json');
@@ -11,46 +11,46 @@ contentHeaders.append('Content-Type', 'application/json');
 
 
 @Component({
-	selector: 'signup',
-	templateUrl: './signup.component.html',
-	styles: [
-		`.ng-valid[required] {
+    selector: 'signup',
+    templateUrl: './signup.component.html',
+    styles: [
+        `.ng-valid[required] {
 			border-left: 5px solid #42A948; /* green */
 		}
-		
+
 		.ng-invalid {
 			border-left: 5px solid #a94442; /* red */
 		}`
-	]
+    ]
 })
 export class SignupComponent {
 
-	constructor(private http: Http, private router: Router) {}
+    constructor(private http: Http, private router: Router) { }
 
-	active = true;
+    active = true;
 
-	user = new User(null, '', '', '', '', '');
+    user = new User(null, '', '', '', '', '');
 
-	saveNewUser() {
+    saveNewUser() {
 
-		let data = JSON.stringify(this.user);
-		let url = 'http://localhost:3002/api/users';
-		
-		this.http.post(url, data, {headers: contentHeaders})
-			.subscribe(
-				response => {
-					alert('New User is saved!');
-				},
-				error => {
-					alert('Error in saving new user:' + error.json());
-				}
-			);
-		this.user = new User(10, '', '', '', '', '');
-		this.active = false;
-		setTimeout( () => this.active = true, 0); // after a small interval set active to true
-	}
+        let data = JSON.stringify(this.user);
+        let url = 'http://localhost:3002/api/users';
 
-	cancel() {
-		this.router.navigate(['/home']);
-	}
+        this.http.post(url, data, { headers: contentHeaders })
+            .subscribe(
+            response => {
+                alert('New User is saved!');
+            },
+            error => {
+                alert('Error in saving new user:' + error.json());
+            }
+            );
+        this.user = new User(10, '', '', '', '', '');
+        this.active = false;
+        setTimeout(() => this.active = true, 0); // after a small interval set active to true
+    }
+
+    cancel() {
+        this.router.navigate(['/home']);
+    }
 }

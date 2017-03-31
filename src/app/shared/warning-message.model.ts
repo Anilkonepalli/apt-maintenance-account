@@ -1,6 +1,7 @@
 import { Message } from './message.model';
 
 export class WarningMessage extends Message {
+
     public constructor(
         public title: string = '',
         public text: string = ''
@@ -11,4 +12,5 @@ export class WarningMessage extends Message {
     public isWarning(): boolean {
         return true;
     }
+
 }
