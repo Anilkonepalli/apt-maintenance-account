@@ -1,14 +1,14 @@
-import { NgModule } 				from '@angular/core';
-import { RouterModule, Routes } 	from '@angular/router';
+import { NgModule } 				       from '@angular/core';
+import { RouterModule, Routes } 	 from '@angular/router';
 
-import { PageNotFoundComponent } 	from './not-found.component';
+import { PageNotFoundComponent } 	 from './not-found.component';
 
-import { HomeComponent } 			from './home.component';
-import { AboutComponent } 			from './about.component';
-import { LoginComponent } 			from './authentication/login.component';
-import { SocialLoginComponent } from './authentication/social/login.component';
-import { SignupComponent } 			from './authentication/signup.component';
-import { AuthGuardService } 		from './authentication/auth-guard.service';
+import { HomeComponent } 			     from './home.component';
+import { AboutComponent } 			   from './about.component';
+import { LoginComponent } 			   from './authentication/login.component';
+import { SocialLoginComponent }    from './authentication/social/login.component';
+import { SignupComponent } 			   from './authentication/signup.component';
+import { AuthGuardService } 		   from './authentication/auth-guard.service';
 
 const appRoutes: Routes = [
     { path: '', redirectTo: '/home', pathMatch: 'full' },
