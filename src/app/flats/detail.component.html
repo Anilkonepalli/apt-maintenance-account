@@ -16,10 +16,10 @@
 				required
 				[(ngModel)]="model.block_number"
 				name="blockNumber"
-				#item="ngModel"
+				#blockNumber="ngModel"
 				placeholder="<block number here>">
 			<div
-				[hidden]="block_number.valid || block_number.pristine"
+				[hidden]="blockNumber.valid || blockNumber.pristine"
 				class="alert alert-danger"
 				>Block Number is required</div>
 		</div>
@@ -33,10 +33,10 @@
 				required
 				[(ngModel)]="model.flat_number"
 				name="flatNumber"
-				#item="ngModel"
+				#flatNumber="ngModel"
 				placeholder="<flat number here>">
 			<div
-				[hidden]="flat_number.valid || flat_number.pristine"
+				[hidden]="flatNumber.valid || flatNumber.pristine"
 				class="alert alert-danger"
 				>Flat Number is required</div>
 		</div>

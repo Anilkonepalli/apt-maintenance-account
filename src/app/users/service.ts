@@ -56,7 +56,7 @@ export class UserService {
             .toPromise()
             .then(models => {
                 let perms = models.json() as Permission[];
-                if (perms.length < 1) throw new Error('Insufficient Privileges on ' + moduleName);
+                if (perms.length < 1) alert('No permissions on ' + moduleName);
                 console.log('Permissions are:...'); console.log(perms);
                 let auth = new Authorization(perms, +this.userId);
                 return auth;

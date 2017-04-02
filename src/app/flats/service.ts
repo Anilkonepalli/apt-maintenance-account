@@ -28,38 +28,40 @@ export class FlatService {
         private http: Http,
         private userService: UserService
     ) { }
-
-    getList(): Observable<Flat[]> {
-        return this.http.get(this.modelUrl)
-            .map(this.extractData)
-            .catch(this.handleError);
-    }
-
-    private extractData(res: Response) {
-        if (res.status < 200 || res.status >= 300) {
-            throw new Error('Bad response status: ' + res.status);
-        }
-        let body = res.json();
-        return body.data || [];
-    }
-
-    private handleError(error: any) {
-        // In a real world app, error is send to remote logging infrastructure
-        let errMsg = error.message || 'Server error';
-        console.error(errMsg); // log to console instead
-        return Observable.throw(errMsg);
-    }
     /*
-        getList(): Promise<Flat[]> {
-            return this.http
-                .get(this.modelUrl, { headers: this.headers })
-                .toPromise()
-                .then(models => {
-                    return models.json() as Flat[];
-                })
-                .catch(this.handleError)
+        getList(): Observable<Flat[]> {
+            console.log('Inside flats service >> getList()...');
+            return this.http.get(this.modelUrl, { headers: this.headers })
+                .map(this.extractData)
+                .catch(this.handleError);
         }
-    */
+
+        private extractData(res: Response) {
+            if (res.status < 200 || res.status >= 300) {
+                throw new Error('Bad response status: ' + res.status);
+            }
+            console.log('Inside flats service >> extractData(response)...'); console.log(res.json());
+            let body = res.json();
+            return body.data || [];
+        }
+
+        private handleError(error: any) {
+            // In a real world app, error is send to remote logging infrastructure
+            let errMsg = error.message || 'Server error';
+            console.error(errMsg); // log to console instead
+            return Observable.throw(errMsg);
+        } */
+
+    getList(): Promise<Flat[]> {
+        return this.http
+            .get(this.modelUrl, { headers: this.headers })
+            .toPromise()
+            .then(models => {
+                return models.json() as Flat[];
+            })
+            .catch(this.handleError)
+    }
+
     get(id: number): Promise<Flat> {
         const url = this.modelUrl + '/' + id;
         return this.http
@@ -98,10 +100,10 @@ export class FlatService {
             .then(() => null)
             .catch(this.handleError);
     }
-    /*
-        private handleError(error: any) {
-            return Promise.reject(error.message || error);
-        }
-    */
+
+    private handleError(error: any) {
+        return Promise.reject(error.message || error);
+    }
+
 
 }

@@ -36,6 +36,8 @@ export class FlatListComponent implements OnInit {
 
         this.service.getAuthorization()
             .then(auth => {
+                console.log('Inside flats list component...'); console.log(auth);
+                if (auth.permissions.length < 1) return []; // just return empty array if permission list is empty
                 this.addAllowed = auth.allowsAdd();
                 this.auth = auth;
 
@@ -44,7 +46,6 @@ export class FlatListComponent implements OnInit {
                         this.selectedId = +params['id'];
                         return this.service.getList();
                     });
-
             });
     }
 
