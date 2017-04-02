@@ -3,8 +3,8 @@ import { FormBuilder, FormGroup }						from '@angular/forms';
 import { Router, ActivatedRoute, Params } 	from '@angular/router';
 import { Location }													from '@angular/common';
 
-import { Account }													from './model';
-import { AccountService }										from './service';
+import { Flat }													    from './model';
+import { FlatService }										  from './service';
 import { Authorization }										from '../authorization/model';
 
 import 'rxjs/add/operator/switchMap';
@@ -15,21 +15,20 @@ var detail_css = require('./detail.component.css');
 var detail_css_string = detail_css.toString();
 
 @Component({
-    selector: 'account-detail',
+    selector: 'flat-detail',
     //templateUrl: './detail.component.html',
     template: detail_html_string,
     styles: [detail_css_string],
 })
-export class AccountDetailComponent implements OnInit {
-    @Input() model: Account;
+export class FlatDetailComponent implements OnInit {
+    @Input() model: Flat;
     editMode: boolean = true;
-    modelName: string = 'Account';
+    modelName: string = 'Flat';
     auth: Authorization;
     hideSave: boolean = true;
-    flatNumbers: string[] = ['G1', 'G2', 'F1', 'F2'];
 
     constructor(
-        private service: AccountService,
+        private service: FlatService,
         private route: ActivatedRoute,
         private router: Router,
         private location: Location
@@ -41,7 +40,7 @@ export class AccountDetailComponent implements OnInit {
                 this.auth = auth;
                 this.route.params
                     .switchMap((params: Params) => this.service.get(+params['id']))
-                    .subscribe((model: Account) => {
+                    .subscribe((model: Flat) => {
                         this.model = model;
                         if (model.id) this.editMode = true;
                         else this.editMode = false;
@@ -58,7 +57,7 @@ export class AccountDetailComponent implements OnInit {
 
     gotoList() {
         let modelId = this.model ? this.model.id : null;
-        this.router.navigate(['/accounts', { id: modelId, foo: 'foo' }]);
+        this.router.navigate(['/flats', { id: modelId, foo: 'foo' }]);
     }
 
     save(): void {
@@ -76,6 +75,5 @@ export class AccountDetailComponent implements OnInit {
     private update(): void {
         this.service.update(this.model)
             .then(() => this.goBack());
-
     }
 }

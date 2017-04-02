@@ -1,16 +1,78 @@
-<div *ngIf="model">
+<div *ngIf="model" class="container">
+
 	<h2 *ngIf="editMode" class="title">{{modelName}} Details</h2>
 	<h2 *ngIf="!editMode">Add {{modelName}}</h2>
 
 	<div *ngIf="editMode"><label>id: </label>{{model.id}}</div>
-	<div>
-		<label>name: </label>
-		<input [(ngModel)]="model.name" placeholder="name" />
-	</div>
-	<div>
-		<button (click)="gotoList()">Cancel</button>
-		<div *ngIf="(editMode && auth.allowsEdit(model.owner_id)) || (!editMode && auth.allowsAdd())">
-			<button (click)="save()">Save</button>
+
+	<form (ngSubmit)="save()" #detailForm="ngForm">
+
+		<div class="form-group">
+			<label for="item">Item</label>
+			<input
+				type="text"
+				class="form-control"
+				id="item"
+				required
+				[(ngModel)]="model.item"
+				name="item"
+				#item="ngModel"
+				placeholder="item name">
+			<div
+				[hidden]="item.valid || item.pristine"
+				class="alert alert-danger"
+				>Item Name is required</div>
 		</div>
-	</div>
+
+		<div class="form-group">
+			<label for="flatnumber">Flat Number</label>
+			<select
+				class="form-control"
+				id="flatnumber"
+				required
+				[(ngModel)]="model.flat_number"
+				name="flatnumber"
+				#flatnumber="ngModel">
+				<option
+					*ngFor="let flatNumber of flatNumbers"
+					[value]="flatNumber"
+					>{{flatNumber}}</option>
+			</select>
+			<div
+				[hidden]="flatnumber.valid || flatnumber.pristine"
+				class="alert alert-danger"
+				>Flat Number is required</div>
+		</div>
+
+		<div class="form-group">
+			<label for="name">Name</label>
+			<input
+				type="text"
+				class="form-control"
+				id="name"
+				required
+				[(ngModel)]="model.name"
+				name="name"
+				#name="ngModel"
+				placeholder="name">
+			<div
+				[hidden]="name.valid || name.pristine"
+				class="alert alert-danger"
+				>Name is required</div>
+		</div>
+
+		<button
+			type="submit"
+			class="btn btn-success"
+			[disabled]="!detailForm.form.valid"
+			[hidden]="hideSave"
+			>Save</button>
+		<button
+			type="button"
+			class="btn btn-link"
+			(click)="gotoList()"
+			>Cancel</button>
+
+	</form>
+
 </div>

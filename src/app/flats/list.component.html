@@ -1,4 +1,4 @@
-<h2>Account List</h2>
+<h2>Flat List</h2>
 
 <div *ngIf="addAllowed">
 <button (click)="add()">Add</button>
@@ -9,8 +9,8 @@
 		[class.selected] = "isSelected(model)"
 		(click)="onSelect(model)">
 			<span class="badge1">{{model.id}}</span>
-			<span>{{model.name}}</span>
-			<span>{{model.owner_id}}</span>
+			<span>{{model.block_number}}</span>
+			<span>{{model.flat_number}}</span>
 			<button
 				class="view1"
 				(click)="onSelect(model)"

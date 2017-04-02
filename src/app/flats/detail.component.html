@@ -1,0 +1,58 @@
+<div *ngIf="model" class="container">
+
+	<h2 *ngIf="editMode" class="title">{{modelName}} Details</h2>
+	<h2 *ngIf="!editMode">Add {{modelName}}</h2>
+
+	<div *ngIf="editMode"><label>id: </label>{{model.id}}</div>
+
+	<form (ngSubmit)="save()" #detailForm="ngForm">
+
+		<div class="form-group">
+			<label for="blockNumber">Block Number</label>
+			<input
+				type="text"
+				class="form-control"
+				id="blockNumber"
+				required
+				[(ngModel)]="model.block_number"
+				name="blockNumber"
+				#item="ngModel"
+				placeholder="<block number here>">
+			<div
+				[hidden]="block_number.valid || block_number.pristine"
+				class="alert alert-danger"
+				>Block Number is required</div>
+		</div>
+
+		<div class="form-group">
+			<label for="flatNumber">Flat Number</label>
+			<input
+				type="text"
+				class="form-control"
+				id="flatNumber"
+				required
+				[(ngModel)]="model.flat_number"
+				name="flatNumber"
+				#item="ngModel"
+				placeholder="<flat number here>">
+			<div
+				[hidden]="flat_number.valid || flat_number.pristine"
+				class="alert alert-danger"
+				>Flat Number is required</div>
+		</div>
+
+		<button
+			type="submit"
+			class="btn btn-success"
+			[disabled]="!detailForm.form.valid"
+			[hidden]="hideSave"
+			>Save</button>
+		<button
+			type="button"
+			class="btn btn-link"
+			(click)="gotoList()"
+			>Cancel</button>
+
+	</form>
+
+</div>

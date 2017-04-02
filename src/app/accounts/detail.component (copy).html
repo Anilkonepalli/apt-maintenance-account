@@ -1,0 +1,16 @@
+<div *ngIf="model" class="jumbotron">
+	<h2 *ngIf="editMode" class="title">{{modelName}} Details</h2>
+	<h2 *ngIf="!editMode">Add {{modelName}}</h2>
+
+	<div *ngIf="editMode"><label>id: </label>{{model.id}}</div>
+	<div>
+		<label>name: </label>
+		<input [(ngModel)]="model.name" placeholder="name" />
+	</div>
+	<div>
+		<button (click)="gotoList()">Cancel</button>
+		<div *ngIf="(editMode && auth.allowsEdit(model.owner_id)) || (!editMode && auth.allowsAdd())">
+			<button (click)="save()">Save</button>
+		</div>
+	</div>
+</div>
