@@ -10,7 +10,7 @@ import { AccountService }					from './service';
 import { AccountsRoutingModule }	from './routing.module';
 
 import { UserService } 						from '../users/service';
-
+import { FlatService }            from '../flats';
 
 @NgModule({
     imports: [
@@ -25,7 +25,8 @@ import { UserService } 						from '../users/service';
     ],
     providers: [
         AccountService,
-        UserService
+        UserService,
+        FlatService
         //        ActivatedRoute,
         //Router
     ]

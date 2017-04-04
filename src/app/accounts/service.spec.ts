@@ -11,6 +11,7 @@ import 'rxjs/add/operator/toPromise';
 import { UserService } 		                        from '../users/service';
 import { AccountService }                         from './service';
 import { Account }                                from './model';
+import { FlatService, Flat }                      from '../flats';
 
 const makeAccountData = () => [
     { id: 1, name: 'Windstorm' },
@@ -27,6 +28,7 @@ describe('Account Service (mockBackend)', () => {
             imports: [HttpModule],
             providers: [
                 AccountService,
+                FlatService,
                 UserService,
                 { provide: XHRBackend, useClass: MockBackend }
             ]
@@ -38,10 +40,10 @@ describe('Account Service (mockBackend)', () => {
             expect(service instanceof AccountService).toBe(true);
         }));
 
-    it('can instantiate service with "new"', inject([Http, UserService], (http: Http, us: UserService) => {
+    it('can instantiate service with "new"', inject([Http, UserService, FlatService], (http: Http, us: UserService, flat: FlatService) => {
         expect(http).not.toBeNull('http should be provided');
         expect(us).not.toBeNull('UserService should be provided');
-        let service = new AccountService(http, us);
+        let service = new AccountService(http, us, flat);
         expect(service instanceof AccountService).toBe(true, 'new service should be ok');
     }));
 
@@ -56,9 +58,9 @@ describe('Account Service (mockBackend)', () => {
         let fakeAccounts: Account[];
         let response: Response;
 
-        beforeEach(inject([Http, XHRBackend, UserService], (http: Http, mbe: MockBackend, us: UserService) => {
+        beforeEach(inject([Http, XHRBackend, UserService, FlatService], (http: Http, mbe: MockBackend, us: UserService, flat: FlatService) => {
             backend = mbe;
-            service = new AccountService(http, us);
+            service = new AccountService(http, us, flat);
             fakeAccounts = makeAccountData();
             let options = new ResponseOptions({ status: 200, body: { data: fakeAccounts } });
             response = new Response(options);

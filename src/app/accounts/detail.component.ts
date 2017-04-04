@@ -6,6 +6,7 @@ import { Location }													from '@angular/common';
 import { Account }													from './model';
 import { AccountService }										from './service';
 import { Authorization }										from '../authorization/model';
+import { Flat }                             from '../flats';
 
 import 'rxjs/add/operator/switchMap';
 
@@ -26,7 +27,12 @@ export class AccountDetailComponent implements OnInit {
     modelName: string = 'Account';
     auth: Authorization;
     hideSave: boolean = true;
-    flatNumbers: string[] = ['G1', 'G2', 'F1', 'F2'];
+    // flatNumbers: string[] = ['G1', 'G2', 'F1', 'F2'];
+    flats: Flat[];
+    months: any[] = [
+        { number: 1, shortName: 'Jan', longName: 'January' },
+        { number: 2, shortName: 'Feb', longName: 'February' }
+    ]
 
     constructor(
         private service: AccountService,
@@ -36,6 +42,8 @@ export class AccountDetailComponent implements OnInit {
     ) { }
 
     ngOnInit(): void {
+        console.log('initializing accounts detail component...');
+        console.log('get authorization...');
         this.service.getAuthorization()
             .then(auth => {
                 this.auth = auth;
@@ -49,6 +57,18 @@ export class AccountDetailComponent implements OnInit {
                         let canAdd = this.auth.allowsAdd() && !this.editMode;
                         this.hideSave = !(canEdit || canAdd);
                     });
+            })
+            .catch(err => {
+                console.log('Error in Accounts detail components > ngOnInit');
+            });
+        console.log('getFlatList...');
+        this.service.getFlatList()
+            .then(flats => {
+                console.log('Flat list: '); console.log(flats);
+                this.flats = flats;
+            })
+            .catch(err => {
+                console.log('error in fetching flats inside Account Detail Component')
             });
     }
 

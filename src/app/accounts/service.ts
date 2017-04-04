@@ -6,6 +6,7 @@ import { Account } 																	from './model';
 import { Permission } 															from '../permissions/model';
 import { UserService } 															from '../users/service';
 import { Authorization } 														from '../authorization/model';
+import { FlatService, Flat }                        from '../flats';
 
 import 'rxjs/add/observable/throw';
 import 'rxjs/add/operator/do';
@@ -26,7 +27,8 @@ export class AccountService {
 
     constructor(
         private http: Http,
-        private userService: UserService
+        private userService: UserService,
+        private flatService: FlatService
     ) { }
 
     getList999(): Observable<Account[]> {
@@ -103,4 +105,7 @@ export class AccountService {
         return Promise.reject(error.message || error);
     }
 
+    getFlatList(): Promise<Flat[]> {
+        return this.flatService.getList();
+    }
 }
