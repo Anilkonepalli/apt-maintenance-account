@@ -10,14 +10,15 @@ import { FlatService }					  from './service';
 import { FlatsRoutingModule }	    from './routing.module';
 
 import { UserService } 						from '../users/service';
-
+import { SharedModule }           from '../shared/shared.module';
 
 @NgModule({
     imports: [
         CommonModule,
         FormsModule,
         HttpModule,
-        FlatsRoutingModule
+        FlatsRoutingModule,
+        SharedModule
     ],
     declarations: [
         FlatListComponent,

@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } 				from '@angular/core';
+import { Response }                         from '@angular/http';
 import { FormBuilder, FormGroup }						from '@angular/forms';
 import { Router, ActivatedRoute, Params } 	from '@angular/router';
 import { Location }													from '@angular/common';
@@ -6,6 +7,8 @@ import { Location }													from '@angular/common';
 import { Flat }													    from './model';
 import { FlatService }										  from './service';
 import { Authorization }										from '../authorization/model';
+import { Message, ErrorMessage,
+    InfoMessage, WarningMessage }           from '../shared';
 
 import 'rxjs/add/operator/switchMap';
 
@@ -26,6 +29,7 @@ export class FlatDetailComponent implements OnInit {
     modelName: string = 'Flat';
     auth: Authorization;
     hideSave: boolean = true;
+    message: Message = new Message();
 
     constructor(
         private service: FlatService,
@@ -40,15 +44,26 @@ export class FlatDetailComponent implements OnInit {
                 this.auth = auth;
                 this.route.params
                     .switchMap((params: Params) => this.service.get(+params['id']))
-                    .subscribe((model: Flat) => {
+                    .subscribe(
+                    (model: Flat) => {
                         this.model = model;
                         if (model.id) this.editMode = true;
                         else this.editMode = false;
                         let canEdit = this.auth.allowsEdit(model.owner_id) && this.editMode;
                         let canAdd = this.auth.allowsAdd() && !this.editMode;
                         this.hideSave = !(canEdit || canAdd);
-                    });
-            });
+                    },
+                    (error: any) => {
+                        console.log('Error in Flats detail.component >> ngOnInit()...');
+                        console.log(error);
+                    }
+                    );
+            })
+            .catch((error: any) => {
+                console.log('Error in authorization Flats detail.component > ngOnInit()...');
+                console.log(error);
+            }
+            );
     }
 
     goBack(): void {
@@ -74,6 +89,21 @@ export class FlatDetailComponent implements OnInit {
 
     private update(): void {
         this.service.update(this.model)
-            .then(() => this.goBack());
+            .then(() => this.goBack())
+            .catch((error: any) => {
+                let msg = this.handleError(error);
+                this.message = new ErrorMessage("Failure", msg);
+            });
     }
+
+    private handleError(error: any) {
+        let errMsg: string;
+        if (error instanceof Response) {
+            errMsg = `${error.status} - ${error.statusText || ''}`;
+        } else {
+            errMsg = error.message ? error.message : error.toString();
+        }
+        return errMsg;
+    }
+
 }
