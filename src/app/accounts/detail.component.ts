@@ -33,7 +33,11 @@ export class AccountDetailComponent implements OnInit {
         { number: 1, shortName: 'Jan', longName: 'January' },
         { number: 2, shortName: 'Feb', longName: 'February' }
     ]
-
+    residents: any[] = [
+        { name: 'mohan' },
+        { name: 'kumar' },
+        { name: 'anna' }
+    ];
     constructor(
         private service: AccountService,
         private route: ActivatedRoute,

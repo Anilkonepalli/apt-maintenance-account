@@ -53,12 +53,18 @@
 			<input
 				type="text"
 				class="form-control"
+				list="residentNames"
 				id="name"
 				required
 				[(ngModel)]="model.name"
 				name="name"
 				#name="ngModel"
 				placeholder="name">
+			<datalist id="residentNames">
+				<option *ngFor="let resident of residents" [value]="resident.name">
+				<!--option value="mohan">
+				<option value="kumar"-->
+			</datalist>
 			<div
 				[hidden]="name.valid || name.pristine"
 				class="alert alert-danger"
@@ -88,18 +94,55 @@
 		<div class="form-group">
 			<label for="forYear">For the Year</label>
 			<input
-				type="month"
+				type="number"
 				class="form-control"
 				id="forYear"
 				required
 				[(ngModel)]="model.for_year"
 				name="forYear"
 				#forYear="ngModel"
+				min="2016"
+				max="2020"
 				placeholder="for the year">
 			<div
 				[hidden]="forYear.valid || forYear.pristine"
 				class="alert alert-danger"
 				>Year is required</div>
+		</div>
+
+		<div class="form-group">
+			<input type="radio" value="cr" name="crdr" [(ngModel)]="model.crdr" required /> Cr
+			<input type="radio" value="dr" name="crdr" [(ngModel)]="model.crdr" /> Dr
+		</div>
+
+		<div class="form-group">
+			<label for="amount">Amount</label>
+			<input
+				type="number"
+				step="0.01"
+				class="form-control"
+				id="amount"
+				required
+				[(ngModel)]="model.amount"
+				name="amount"
+				#amount="ngModel"
+				placeholder="Amount here">
+			<div
+				[hidden]="amount.valid || amount.pristine"
+				class="alert alert-danger"
+				>Amount is required</div>
+		</div>
+
+		<div class="form-group">
+			<label for="recordedAt">Date of Transaction</label>
+			<input
+				type="date"
+				class="form-control"
+				id="recordedAt"
+				[(ngModel)]="model.recorded_at"
+				name="recordedAt"
+				#recordedAt="ngModel"
+				placeholder="Date of Transaction here">
 		</div>
 
 		<button
