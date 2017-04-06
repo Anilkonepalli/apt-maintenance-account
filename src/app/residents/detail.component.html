@@ -1,0 +1,74 @@
+<div *ngIf="model" class="container">
+
+	<h2 *ngIf="editMode" class="title">{{modelName}} Details</h2>
+	<h2 *ngIf="!editMode">Add {{modelName}}</h2>
+
+	<div *ngIf="editMode"><label>id: </label>{{model.id}}</div>
+
+	<form (ngSubmit)="save()" #detailForm="ngForm">
+
+		<div class="form-group">
+			<label for="firstName">First Name</label>
+			<input
+				type="text"
+				class="form-control"
+				id="firstName"
+				required
+				[(ngModel)]="model.first_name"
+				name="firstName"
+				#firstName="ngModel"
+				placeholder="<first name here>">
+			<div
+				[hidden]="firstName.valid || firstName.pristine"
+				class="alert alert-danger"
+				>First Name is required</div>
+		</div>
+
+		<div class="form-group">
+			<label for="lastName">Flat Number</label>
+			<input
+				type="text"
+				class="form-control"
+				id="lastName"
+				[(ngModel)]="model.last_name"
+				name="lastName"
+				#lastName="ngModel"
+				placeholder="<last name here>">
+		</div>
+
+		<div class="form-group">
+			<label for="isa">Resident Is A</label>
+			<select
+				class="form-control"
+				id="isa"
+				required
+				[(ngModel)]="model.is_a"
+				name="isa"
+				#isa="ngModel">
+				<option
+					*ngFor="let type of types"
+					[value]="type"
+				 >{{type}}</option>
+			</select>
+			<div
+				[hidden]="isa.valid || isa.pristine"
+				class="alert alert-danger"
+				>Resident type is required</div>
+		</div>
+
+		<button
+			type="submit"
+			class="btn btn-success"
+			[disabled]="!detailForm.form.valid"
+			[hidden]="hideSave"
+			>Save</button>
+		<button
+			type="button"
+			class="btn btn-link"
+			(click)="gotoList()"
+			>Cancel</button>
+			<div class="form-group"></div>
+			<message [message]="message"></message>
+	</form>
+
+</div>
