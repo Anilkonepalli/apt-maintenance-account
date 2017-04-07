@@ -1,0 +1,32 @@
+<h2>Flats-to-Residents</h2>
+
+<select size="5" [(ngModel)]="lId">
+	<option
+		*ngFor="let lmodel of lstream | async"
+		value={{lmodel.id}}
+		(click)="onlSelect(lmodel)"
+	>{{lmodel.flat_number}}</option>
+
+</select>
+
+<select size="5" multiple [(ngModel)]="aIds">
+	<option
+		*ngFor="let amodel of attachedStream | async"
+		value={{amodel.id}}
+	>{{amodel.first_name}}-{{amodel.last_name}}</option>
+</select>
+
+<button (click)="detach()" title="Detach Residents">>></button>
+<button (click)="attach()" title="Attach Residents"><<</button>
+
+<select size="5" multiple [(ngModel)]="dIds">
+	<option *ngFor="let dmodel of detachedStream | async" value={{dmodel.id}}>{{dmodel.first_name}}-{{dmodel.last_name}}</option>
+</select>
+
+<button (click)="save()" title="Save changes">Save</button>
+<br>
+---------------------------------------------------------------
+<br>
+selected_amodel_ids: {{aIds}}
+<br>
+selected_dmodel_ids: {{dIds}}

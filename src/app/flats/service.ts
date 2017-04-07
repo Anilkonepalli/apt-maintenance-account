@@ -3,7 +3,7 @@ import { Http, Headers, Response, RequestOptions } 	from '@angular/http';
 import { Observable } 															from 'rxjs/Observable';
 
 import { Flat } 																	  from './model';
-import { Permission } 															from '../permissions/model';
+import { Resident } 															  from '../residents/model';
 import { UserService } 															from '../users/service';
 import { Authorization } 														from '../authorization/model';
 
@@ -75,12 +75,31 @@ export class FlatService {
         return this.userService.getAuthorizationFor('flats');
     }
 
+    getMyResidents(id: number): Promise<Resident[]> {
+        const url = this.modelUrl + '/myresidents/' + id;
+        return this.http
+            .get(url, { headers: this.headers })
+            .toPromise()
+            .then(models => models.json() as Resident[])
+            .catch(this.handleError);
+    }
+
     update(model: Flat): Promise<Flat> {
         const url = `${this.modelUrl}/${model.id}`;
         return this.http
             .put(url, JSON.stringify(model), { headers: this.headers })
             .toPromise()
             .then(() => model)
+            .catch(this.handleError);
+    }
+
+    updateMyResidents(modelId: number, attachedIds: number[]): Promise<number> {
+        const url = `${this.modelUrl}/myresidents/${modelId}`;
+        let data = { 'myresidentsIds': attachedIds };
+        return this.http
+            .put(url, JSON.stringify(data), { headers: this.headers })
+            .toPromise()
+            .then(() => modelId)
             .catch(this.handleError);
     }
 
