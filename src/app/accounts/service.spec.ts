@@ -11,8 +11,10 @@ import 'rxjs/add/operator/toPromise';
 import { UserService } 		                        from '../users/service';
 import { AccountService }                         from './service';
 import { Account }                                from './model';
-import { FlatService }                              from '../flats/service';
-import { Flat }                                     from '../flats/model';
+import { FlatService }                            from '../flats/service';
+import { Flat }                                   from '../flats/model';
+import { ResidentService }                        from '../residents/service';
+import { Resident }                               from '../residents/model';
 
 const makeAccountData = () => [
     { id: 1, name: 'Windstorm' },
@@ -30,6 +32,7 @@ describe('Account Service (mockBackend)', () => {
             providers: [
                 AccountService,
                 FlatService,
+                ResidentService,
                 UserService,
                 { provide: XHRBackend, useClass: MockBackend }
             ]
@@ -41,10 +44,10 @@ describe('Account Service (mockBackend)', () => {
             expect(service instanceof AccountService).toBe(true);
         }));
 
-    it('can instantiate service with "new"', inject([Http, UserService, FlatService], (http: Http, us: UserService, flat: FlatService) => {
+    it('can instantiate service with "new"', inject([Http, UserService, FlatService, ResidentService], (http: Http, us: UserService, flat: FlatService, resi: ResidentService) => {
         expect(http).not.toBeNull('http should be provided');
         expect(us).not.toBeNull('UserService should be provided');
-        let service = new AccountService(http, us, flat);
+        let service = new AccountService(http, us, flat, resi);
         expect(service instanceof AccountService).toBe(true, 'new service should be ok');
     }));
 
@@ -59,9 +62,9 @@ describe('Account Service (mockBackend)', () => {
         let fakeAccounts: Account[];
         let response: Response;
 
-        beforeEach(inject([Http, XHRBackend, UserService, FlatService], (http: Http, mbe: MockBackend, us: UserService, flat: FlatService) => {
+        beforeEach(inject([Http, XHRBackend, UserService, FlatService, ResidentService], (http: Http, mbe: MockBackend, us: UserService, flat: FlatService, resi: ResidentService) => {
             backend = mbe;
-            service = new AccountService(http, us, flat);
+            service = new AccountService(http, us, flat, resi);
             fakeAccounts = makeAccountData();
             let options = new ResponseOptions({ status: 200, body: { data: fakeAccounts } });
             response = new Response(options);

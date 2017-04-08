@@ -11,6 +11,7 @@ import { AccountsRoutingModule }	from './routing.module';
 
 import { UserService } 						from '../users/service';
 import { FlatService }            from '../flats/service';
+import { ResidentService }        from '../residents/service';
 
 @NgModule({
     imports: [
@@ -26,7 +27,8 @@ import { FlatService }            from '../flats/service';
     providers: [
         AccountService,
         UserService,
-        FlatService
+        FlatService,
+        ResidentService
         //        ActivatedRoute,
         //Router
     ]

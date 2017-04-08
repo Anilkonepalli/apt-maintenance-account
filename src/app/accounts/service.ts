@@ -8,6 +8,8 @@ import { UserService } 															from '../users/service';
 import { Authorization } 														from '../authorization/model';
 import { FlatService }                              from '../flats/service';
 import { Flat }                                     from '../flats/model';
+import { ResidentService }                          from '../residents/service';
+import { Resident }                                 from '../residents/model';
 
 import 'rxjs/add/observable/throw';
 import 'rxjs/add/operator/do';
@@ -29,7 +31,8 @@ export class AccountService {
     constructor(
         private http: Http,
         private userService: UserService,
-        private flatService: FlatService
+        private flatService: FlatService,
+        private residentService: ResidentService
     ) { }
 
     getList999(): Observable<Account[]> {
@@ -108,5 +111,13 @@ export class AccountService {
 
     getFlatList(): Promise<Flat[]> {
         return this.flatService.getList();
+    }
+
+    getFlatResidents(flatId: number): Promise<Resident[]> {
+        return this.flatService.getMyResidents(flatId);
+    }
+
+    getResidentList(): Promise<Resident[]> {
+        return this.residentService.getList();
     }
 }

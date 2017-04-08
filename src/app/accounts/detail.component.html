@@ -31,6 +31,7 @@
 				id="flatnumber"
 				required
 				[(ngModel)]="model.flat_number"
+				(ngModelChange)="onFlatNumberChange($event)"
 				name="flatnumber"
 				#flatnumber="ngModel">
 				<!--option
@@ -61,7 +62,7 @@
 				#name="ngModel"
 				placeholder="name">
 			<datalist id="residentNames">
-				<option *ngFor="let resident of residents" [value]="resident.name">
+				<option *ngFor="let resident of residents" [value]="resident.first_name">
 				<!--option value="mohan">
 				<option value="kumar"-->
 			</datalist>
