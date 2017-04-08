@@ -11,7 +11,8 @@ import 'rxjs/add/operator/toPromise';
 import { UserService } 		                        from '../users/service';
 import { AccountService }                         from './service';
 import { Account }                                from './model';
-import { FlatService, Flat }                      from '../flats';
+import { FlatService }                              from '../flats/service';
+import { Flat }                                     from '../flats/model';
 
 const makeAccountData = () => [
     { id: 1, name: 'Windstorm' },

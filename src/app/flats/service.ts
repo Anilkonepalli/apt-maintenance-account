@@ -1,16 +1,11 @@
 import { Injectable } 															from '@angular/core';
-import { Http, Headers, Response, RequestOptions } 	from '@angular/http';
-import { Observable } 															from 'rxjs/Observable';
+import { Http, Headers } 	                          from '@angular/http';
 
 import { Flat } 																	  from './model';
 import { Resident } 															  from '../residents/model';
 import { UserService } 															from '../users/service';
 import { Authorization } 														from '../authorization/model';
 
-import 'rxjs/add/observable/throw';
-import 'rxjs/add/operator/do';
-import 'rxjs/add/operator/catch';
-import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/toPromise';
 
 
@@ -28,29 +23,6 @@ export class FlatService {
         private http: Http,
         private userService: UserService
     ) { }
-    /*
-        getList(): Observable<Flat[]> {
-            console.log('Inside flats service >> getList()...');
-            return this.http.get(this.modelUrl, { headers: this.headers })
-                .map(this.extractData)
-                .catch(this.handleError);
-        }
-
-        private extractData(res: Response) {
-            if (res.status < 200 || res.status >= 300) {
-                throw new Error('Bad response status: ' + res.status);
-            }
-            console.log('Inside flats service >> extractData(response)...'); console.log(res.json());
-            let body = res.json();
-            return body.data || [];
-        }
-
-        private handleError(error: any) {
-            // In a real world app, error is send to remote logging infrastructure
-            let errMsg = error.message || 'Server error';
-            console.error(errMsg); // log to console instead
-            return Observable.throw(errMsg);
-        } */
 
     getList(): Promise<Flat[]> {
         return this.http

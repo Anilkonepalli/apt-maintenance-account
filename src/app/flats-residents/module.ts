@@ -8,6 +8,7 @@ import { FlatsResidentsRoutingModule }	  from './routing.module';
 import { FlatService }										from '../flats/service';
 import { ResidentService }  						  from '../residents/service';
 import { FlatResidentService } 					  from './service';
+import { UserService } 						from '../users/service';
 
 @NgModule({
     imports: [
@@ -19,6 +20,7 @@ import { FlatResidentService } 					  from './service';
         FlatResidentComponent
     ],
     providers: [
+        UserService,
         FlatService,
         ResidentService,
         FlatResidentService

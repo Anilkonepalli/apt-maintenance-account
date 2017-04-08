@@ -6,7 +6,7 @@ import { Location }													from '@angular/common';
 import { Account }													from './model';
 import { AccountService }										from './service';
 import { Authorization }										from '../authorization/model';
-import { Flat }                             from '../flats';
+import { Flat }                             from '../flats/model';
 
 import 'rxjs/add/operator/switchMap';
 

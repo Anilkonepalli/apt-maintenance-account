@@ -6,7 +6,8 @@ import { Account } 																	from './model';
 import { Permission } 															from '../permissions/model';
 import { UserService } 															from '../users/service';
 import { Authorization } 														from '../authorization/model';
-import { FlatService, Flat }                        from '../flats';
+import { FlatService }                              from '../flats/service';
+import { Flat }                                     from '../flats/model';
 
 import 'rxjs/add/observable/throw';
 import 'rxjs/add/operator/do';
