@@ -20,11 +20,10 @@ const appRoutes: Routes = [
     { path: 'accounts', loadChildren: './accounts/module#AccountsModule', canActivate: [AuthGuardService] },
     { path: 'flats', loadChildren: './flats/module#FlatsModule', canActivate: [AuthGuardService] },
     { path: 'residents', loadChildren: './residents/module#ResidentsModule', canActivate: [AuthGuardService] },
+    { path: 'flats-residents', loadChildren: './flats-residents/module#FlatsResidentsModule', canActivate: [AuthGuardService] },
     { path: 'users', loadChildren: './users/module#UsersModule', canActivate: [AuthGuardService] },
     { path: 'roles', loadChildren: './roles/module#RolesModule', canActivate: [AuthGuardService] },
     { path: 'permissions', loadChildren: './permissions/module#PermissionsModule', canActivate: [AuthGuardService] },
-    { path: 'flatsresidents', loadChildren: './flats-residents/module#FlatsResidentsModule', canActivate: [AuthGuardService] },
-    { path: 'flatsToResidents', loadChildren: './flatsToResidents/module#FlatsResidentsModule', canActivate: [AuthGuardService] },
     { path: 'roles-permissions', loadChildren: './roles-permissions/module#RolesPermissionsModule', canActivate: [AuthGuardService] },
     { path: 'users-roles', loadChildren: './users-roles/module#UsersRolesModule', canActivate: [AuthGuardService] },
     { path: '**', component: PageNotFoundComponent }

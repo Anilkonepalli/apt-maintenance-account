@@ -15,20 +15,22 @@ export class FlatResidentService {
         private lservice: FlatService,
         private rservice: ResidentService
     ) { }
+    /*
+        getlmodels(): Promise<Flat[]> {
+            return this.lservice.getList();
+        }
 
-    getlmodels(): Promise<Flat[]> {
-        return this.lservice.getList();
-    }
+        getrmodels(): Promise<Resident[]> {
+            return this.rservice.getList();
+        }
 
-    getrmodels(): Promise<Resident[]> {
-        return this.rservice.getList();
-    }
+        getAttachedModels(id: number): Promise<Resident[]> { // get attached models for the selected item on left side
+            return this.lservice.getMyResidents(id);
+        }
 
-    getAttachedModels(id: number): Promise<Resident[]> { // get attached models for the selected item on left side
-        return this.lservice.getMyResidents(id);
-    }
+        saveAttachedModels(lId: number, ids: number[]): Promise<number> {
+            return this.lservice.updateMyResidents(lId, ids);
+        }
+    */
 
-    saveAttachedModels(lId: number, ids: number[]): Promise<number> {
-        return this.lservice.updateMyResidents(lId, ids);
-    }
 }
