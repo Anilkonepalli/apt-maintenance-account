@@ -40,6 +40,18 @@ export class AccountDetailComponent implements OnInit {
             { name: 'anna' }
         ]; */
     residents: Resident[];
+    categories: string[] = [
+        'Monthly Maintenance',
+        'Sweeping',
+        'Garbage',
+        'Electrical',
+        'Plumbing',
+        'Septic Tank',
+        'Water Tank - Overhead',
+        'Water Tank - Sump',
+        'Major Maintenance',
+        'Others'
+    ];
 
     constructor(
         private service: AccountService,
