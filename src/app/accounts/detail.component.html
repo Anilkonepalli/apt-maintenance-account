@@ -17,7 +17,8 @@
 				[(ngModel)]="model.item"
 				name="item"
 				#item="ngModel"
-				placeholder="item name">
+				placeholder="item name"
+				title="Name the item or transaction">
 			<div
 				[hidden]="item.valid || item.pristine"
 				class="alert alert-danger"
@@ -29,24 +30,17 @@
 			<select
 				class="form-control"
 				id="flatnumber"
-				required
 				[(ngModel)]="model.flat_number"
 				(ngModelChange)="onFlatNumberChange($event)"
 				name="flatnumber"
-				#flatnumber="ngModel">
-				<!--option
-					*ngFor="let flatNumber of flatNumbers"
-					[value]="flatNumber"
-					>{{flatNumber}}</option-->
+				#flatnumber="ngModel"
+				title="Flat associated to transaction">
+				<option [value]="">NA</option>
 				<option
 					*ngFor="let flat of flats"
 					[value]="flat.flat_number"
 				 >{{flat.flat_number}}</option>
 			</select>
-			<div
-				[hidden]="flatnumber.valid || flatnumber.pristine"
-				class="alert alert-danger"
-				>Flat Number is required</div>
 		</div>
 
 		<div class="form-group">
@@ -60,7 +54,8 @@
 				[(ngModel)]="model.name"
 				name="name"
 				#name="ngModel"
-				placeholder="name">
+				placeholder="name"
+				title="Person associated to transaction">
 			<datalist id="residentNames">
 				<option *ngFor="let resident of residents" [value]="resident.first_name">
 				<!--option value="mohan">
@@ -73,14 +68,15 @@
 		</div>
 
 		<div class="form-group">
-			<label for="forMonth">For the Month</label>
+			<label for="forMonth">Transaction for the month of</label>
 			<select
 				class="form-control"
 				id="forMonth"
 				required
 				[(ngModel)]="model.for_month"
 				name="forMonth"
-				#forMonth="ngModel">
+				#forMonth="ngModel"
+				title="month, transaction belongs to">
 				<option
 					*ngFor="let month of months"
 					[value]="month.number"
@@ -93,7 +89,7 @@
 		</div>
 
 		<div class="form-group">
-			<label for="forYear">For the Year</label>
+			<label for="forYear">Transaction in the year of</label>
 			<input
 				type="number"
 				class="form-control"
@@ -104,7 +100,8 @@
 				#forYear="ngModel"
 				min="2016"
 				max="2020"
-				placeholder="for the year">
+				placeholder="for the year"
+				title="year, transaction belongs to">
 			<div
 				[hidden]="forYear.valid || forYear.pristine"
 				class="alert alert-danger"
@@ -117,7 +114,7 @@
 		</div>
 
 		<div class="form-group">
-			<label for="amount">Amount</label>
+			<label for="amount">Transaction Amount</label>
 			<input
 				type="number"
 				step="0.01"
@@ -127,7 +124,8 @@
 				[(ngModel)]="model.amount"
 				name="amount"
 				#amount="ngModel"
-				placeholder="Amount here">
+				placeholder="Amount here"
+				title="Transacting amount">
 			<div
 				[hidden]="amount.valid || amount.pristine"
 				class="alert alert-danger"
@@ -141,7 +139,8 @@
 				id="category"
 				[(ngModel)]="model.category"
 				name="category"
-				#category="ngModel">
+				#category="ngModel"
+				title="category, transaction falls into">
 				<option
 					*ngFor="let category of categories"
 					[value]="category"
@@ -151,11 +150,19 @@
 
 		<div class="form-group">
 			<label for="remarks">Remarks</label>
-			<textarea [(ngModel)]="model.remarks"></textarea>
+			<textarea
+				class="form-control"
+				id="remarks"
+				[(ngModel)]="model.remarks"
+				name="remarks"
+				rows="2"
+				placeholders="Enter remarks here"
+				title="Details about transaction"
+				></textarea>
 		</div>
 
 		<div class="form-group">
-			<label for="recordedAt">Date of Transaction</label>
+			<label for="recordedAt">Transaction Entry Date</label>
 			<input
 				type="date"
 				class="form-control"
@@ -163,7 +170,8 @@
 				[(ngModel)]="model.recorded_at"
 				name="recordedAt"
 				#recordedAt="ngModel"
-				placeholder="Date of Transaction here">
+				placeholder="Transaction Keyed in Date"
+				title="Date, transaction keyed in">
 		</div>
 
 		<button
@@ -171,11 +179,13 @@
 			class="btn btn-success"
 			[disabled]="!detailForm.form.valid"
 			[hidden]="hideSave"
+			title="Save changes made"
 			>Save</button>
 		<button
 			type="button"
 			class="btn btn-link"
 			(click)="gotoList()"
+			title="Cancel changes made"
 			>Cancel</button>
 
 	</form>

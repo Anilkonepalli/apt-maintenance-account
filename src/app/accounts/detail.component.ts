@@ -10,6 +10,7 @@ import { Flat }                             from '../flats/model';
 import { Resident }                         from '../residents/model';
 
 import 'rxjs/add/operator/switchMap';
+import * as _                               from 'lodash';
 
 var detail_html = require('./detail.component.html');
 var detail_html_string = detail_html.toString();
@@ -28,18 +29,13 @@ export class AccountDetailComponent implements OnInit {
     modelName: string = 'Account';
     auth: Authorization;
     hideSave: boolean = true;
-    // flatNumbers: string[] = ['G1', 'G2', 'F1', 'F2'];
     flats: Flat[];
     months: any[] = [
         { number: 1, shortName: 'Jan', longName: 'January' },
         { number: 2, shortName: 'Feb', longName: 'February' }
     ]
-    /*    residents: any[] = [
-            { name: 'mohan' },
-            { name: 'kumar' },
-            { name: 'anna' }
-        ]; */
     residents: Resident[];
+    residentsAll: Resident[];
     categories: string[] = [
         'Monthly Maintenance',
         'Sweeping',
@@ -84,7 +80,8 @@ export class AccountDetailComponent implements OnInit {
         this.service.getFlatList()
             .then(flats => {
                 console.log('Flat list: '); console.log(flats);
-                this.flats = flats;
+                //this.flats = this.sortedFlats(flats);
+                this.flats = _.sortBy(flats, [function(obj: Flat) { return obj.flat_number; }]);
             })
             .catch(err => {
                 console.log('error in fetching flats inside Account Detail Component');
@@ -94,7 +91,9 @@ export class AccountDetailComponent implements OnInit {
         this.service.getResidentList()
             .then(residents => {
                 console.log('Resident List: '); console.log(residents);
-                this.residents = residents;
+                //this.residents = this.sortedResidents(residents);
+                this.residents = _.sortBy(residents, [function(obj: Resident) { return obj.first_name; }]);
+                this.residentsAll = this.residents;
             })
             .catch(err => {
                 console.log('error in retrieving residents in Account Detail Component');
@@ -131,13 +130,19 @@ export class AccountDetailComponent implements OnInit {
         //console.log('detail component >> onFlatNumberChange'); console.log(event);
         let flat = this.flats.find(flat => flat.flat_number === event);
         //console.log('Flat object id: '); console.log(flat.id);
+        if (event === 'NA') {
+            this.residents = this.residentsAll;
+            return;
+        }
         this.service.getFlatResidents(flat.id)
             .then(flatResidents => {
                 //console.log('FlatResidents are: '); console.log(flatResidents);
-                this.residents = flatResidents;
+                //this.residents = this.sortedResidents(flatResidents);
+                this.residents = _.sortBy(flatResidents, [function(obj: Resident) { return obj.first_name; }]);
             })
             .catch(err => {
                 console.log('error in retrieving flatResidents in Account Detail Component');
             });
     }
+
 }

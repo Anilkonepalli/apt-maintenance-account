@@ -8,6 +8,7 @@ import { Resident }											  from '../residents/model';
 import { FlatResidentService }					  from './service';
 
 import 'rxjs/add/operator/switchMap';
+import * as _                               from 'lodash';
 
 var list_css = require('./component.css');
 var list_css_string = list_css.toString();
@@ -45,6 +46,9 @@ export class FlatResidentComponent implements OnInit {
         this.lstream = this.route.params
             .switchMap((params: Params) => {
                 return this.service.getlmodels();
+            })
+            .map((flats: Flat[]) => {
+                return _.sortBy(flats, [function(obj: Flat) { return obj.flat_number; }]);
             });
 
         this.rstream = this.route.params
