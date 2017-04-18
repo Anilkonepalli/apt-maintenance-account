@@ -58,8 +58,6 @@
 				title="Person associated to transaction">
 			<datalist id="residentNames">
 				<option *ngFor="let resident of residents" [value]="resident.first_name">
-				<!--option value="mohan">
-				<option value="kumar"-->
 			</datalist>
 			<div
 				[hidden]="name.valid || name.pristine"
@@ -137,6 +135,7 @@
 			<select
 				class="form-control"
 				id="category"
+				required
 				[(ngModel)]="model.category"
 				name="category"
 				#category="ngModel"
@@ -146,6 +145,10 @@
 					[value]="category"
 				 >{{category}}</option>
 			</select>
+			<div
+				[hidden]="category.valid || category.pristine"
+				class="alert alert-danger"
+				>Category is required</div>
 		</div>
 
 		<div class="form-group">
@@ -162,16 +165,21 @@
 		</div>
 
 		<div class="form-group">
-			<label for="recordedAt">Transaction Entry Date</label>
+			<label for="recordedAt">Date of Transaction</label>
 			<input
 				type="date"
 				class="form-control"
 				id="recordedAt"
+				required
 				[(ngModel)]="model.recorded_at"
 				name="recordedAt"
 				#recordedAt="ngModel"
-				placeholder="Transaction Keyed in Date"
-				title="Date, transaction keyed in">
+				placeholder="Date of transaction"
+				title="Date on which transaction occurred">
+				<div
+					[hidden]="recordedAt.valid || recordedAt.pristine"
+					class="alert alert-danger"
+					>Date of Txn is required</div>
 		</div>
 
 		<button

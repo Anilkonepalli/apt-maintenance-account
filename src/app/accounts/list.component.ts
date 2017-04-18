@@ -15,58 +15,62 @@ var list_html_string = list_html.toString();
 
 
 @Component({
-    selector: 'account-list',
-    styles: [list_css_string],
-    templateUrl: list_html_string
+  selector: 'account-list',
+  styles: [list_css_string],
+  templateUrl: list_html_string
 })
 export class AccountListComponent implements OnInit {
 
-    models: Observable<Account[]>;
-    auth: Authorization;
-    addAllowed: boolean = false;
-    private selectedId: number;
+  models: Observable<Account[]>;
+  auth: Authorization;
+  addAllowed: boolean = false;
+  private selectedId: number;
 
-    constructor(
-        private service: AccountService,
-        private route: ActivatedRoute,
-        private router: Router
-    ) { }
+  constructor(
+    private service: AccountService,
+    private route: ActivatedRoute,
+    private router: Router
+  ) { }
 
-    ngOnInit(): void {
+  ngOnInit(): void {
 
-        this.service.getAuthorization()
-            .then(auth => {
-                this.addAllowed = auth.allowsAdd();
-                this.auth = auth;
+    this.service.getAuthorization()
+      .then(auth => {
+        this.addAllowed = auth.allowsAdd();
+        this.auth = auth;
 
-                this.models = this.route.params
-                    .switchMap((params: Params) => {
-                        this.selectedId = +params['id'];
-                        return this.service.getList();
-                    });
+        this.models = this.route.params
+          .switchMap((params: Params) => {
+            this.selectedId = +params['id'];
+            // return this.service.getList();
+            let list = this.service.getList();
+            console.log('Account List: ...');
+            console.log(list);
+            return list;
+          });
 
-            });
-    }
+      });
+  }
 
-    onSelect(model: Account): void {
-        this.router.navigate(['/accounts', model.id]);
-    }
+  onSelect(model: Account): void {
+    this.router.navigate(['/accounts', model.id]);
+  }
 
-    isSelected(model: Account) {
-        return model ? model.id === this.selectedId : false;
-    }
+  isSelected(model: Account) {
+    return model ? model.id === this.selectedId : false;
+  }
 
-    add(): void {
-        this.router.navigate(['/accounts', 0]); // 0 represent new account
-    }
+  add(): void {
+    this.router.navigate(['/accounts', 0]); // 0 represent new account
+  }
 
-    delete(model: Account): void {
-        this.service
-            .delete(model.id)
-            .then(() => { // filter out the deleted account modelfrom account models
-                this.models = this.models.filter((models, i) => {
-                    return models[i] !== model;
-                });
-            });
-    }
+  delete(model: Account): void {
+    this.service
+      .delete(model.id)
+      .then(() => { // filter out the deleted account modelfrom account models
+        this.models = this.models.filter((models, i) => {
+          return models[i] !== model;
+        });
+      });
+  }
 }
