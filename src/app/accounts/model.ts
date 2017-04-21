@@ -37,4 +37,5 @@ export class Account {
   public txn_date() {
     return new Date(this.recorded_at);
   }
+
 }

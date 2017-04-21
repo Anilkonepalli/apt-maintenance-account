@@ -26,15 +26,12 @@ var detail_css_string = detail_css.toString();
 })
 export class AccountDetailComponent implements OnInit {
   @Input() model: Account;
+  recordDate: string = '2017-04-11';
   editMode: boolean = true;
   modelName: string = 'Account';
   auth: Authorization;
   hideSave: boolean = true;
   flats: Flat[];
-  /*    months: any[] = [
-          { number: 1, shortName: 'Jan', longName: 'January' },
-          { number: 2, shortName: 'Feb', longName: 'February' }
-      ]; */
   months: Month[] = Month.all();
   residents: Resident[];
   residentsAll: Resident[];
@@ -70,6 +67,7 @@ export class AccountDetailComponent implements OnInit {
             this.model = model;
             if (model.id) this.editMode = true;
             else this.editMode = false;
+            // this.setRecordDate();
             let canEdit = this.auth.allowsEdit(model.owner_id) && this.editMode;
             let canAdd = this.auth.allowsAdd() && !this.editMode;
             this.hideSave = !(canEdit || canAdd);
@@ -127,6 +125,13 @@ export class AccountDetailComponent implements OnInit {
     this.service.update(this.model)
       .then(() => this.goBack());
   }
+  /*
+    private setRecordDate(): void {
+      this.recordDate = this.model.recorded_at
+        ? new Date(this.model.recorded_at)
+        : new Date();
+    }
+  */
 
   onFlatNumberChange(event: any) {
     //console.log('detail component >> onFlatNumberChange'); console.log(event);

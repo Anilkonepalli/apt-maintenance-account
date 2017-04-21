@@ -8,16 +8,16 @@
 	<li *ngFor="let model of models | async"
 		[class.selected] = "isSelected(model)"
 		(click)="onSelect(model)">
-			<span>{{model.recorded_at.split('T')[0]}}</span>
-			<span class="badge1">{{model.id}}</span>
-			<span>{{model.flat_number}}</span>
-			<span>{{model.name}}</span>
-			<span>{{model.for_month}}</span>
-			<span>{{model.for_year}}</span>
-			<span>{{model.crdr}}</span>
-			<span>{{model.amount}}</span>
-			<span>{{model.balance}}</span>
-			<span>{{model.category}}</span>
+			<span>{{ model.recorded_at }}</span>
+			<span class="badge1">{{ model.id }}</span>
+			<span>{{ model.flat_number }}</span>
+			<span>{{ model.name }}</span>
+			<span>{{ model.for_month }}</span>
+			<span>{{ model.for_year }}</span>
+			<span>{{ model.crdr }}</span>
+			<span>{{ model.amount }}</span>
+			<span>{{ model.balance }}</span>
+			<span>{{ model.category }}</span>
 			<button
 				class="view1"
 				(click)="onSelect(model)"
