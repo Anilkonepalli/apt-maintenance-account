@@ -5,16 +5,16 @@ import { AccountListComponent }		from './list.component';
 import { AccountDetailComponent }	from './detail.component';
 
 const accountsRoutes: Routes = [
-    { path: '', component: AccountListComponent },
-    { path: ':id', component: AccountDetailComponent }
+  { path: '', component: AccountListComponent },
+  { path: ':id', component: AccountDetailComponent }
 ];
 
 @NgModule({
-    imports: [
-        RouterModule.forChild(accountsRoutes)
-    ],
-    exports: [
-        RouterModule
-    ]
+  imports: [
+    RouterModule.forChild(accountsRoutes)
+  ],
+  exports: [
+    RouterModule
+  ]
 })
 export class AccountsRoutingModule { }
