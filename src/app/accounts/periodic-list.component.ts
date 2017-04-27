@@ -8,18 +8,18 @@ import { Authorization }									from '../authorization/model';
 
 import 'rxjs/add/operator/switchMap';
 
-var periodic_css = require('./periodic.component.css');
-var periodic_css_string = periodic_css.toString();
-var periodic_html = require('./periodic.component.html');
-var periodic_html_string = periodic_html.toString();
+var periodic_list_css = require('./periodic-list.component.css');
+var periodic_list_css_string = periodic_list_css.toString();
+var periodic_list_html = require('./periodic-list.component.html');
+var periodic_list_html_string = periodic_list_html.toString();
 
 
 @Component({
-  selector: 'account-periodic',
-  styles: [periodic_css_string],
-  templateUrl: periodic_html_string
+  selector: 'account-periodic-list',
+  styles: [periodic_list_css_string],
+  templateUrl: periodic_list_html_string
 })
-export class PeriodicComponent implements OnInit {
+export class PeriodicListComponent implements OnInit {
 
   ngOnInit(): void {
 
