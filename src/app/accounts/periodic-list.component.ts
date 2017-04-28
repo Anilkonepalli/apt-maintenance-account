@@ -26,11 +26,31 @@ export class PeriodicListComponent implements OnInit {
   for_month: number;
   for_year: number;
 
+  models: Observable<Account[]>;
+  auth: Authorization;
+
+  constructor(
+    private service: AccountService,
+    private route: ActivatedRoute,
+    private router: Router
+  ) { }
+
   ngOnInit(): void {
+
     this.months = Month.all();
     let today: any = new Date();
     this.for_month = today.getMonth() + 1;
     this.for_year = today.getFullYear();
+
+    this.service.getAuthorization()
+      .then(auth => {
+        this.auth = auth;
+        this.models = this.route.params
+          .switchMap((params: Params) => {
+            return this.service.getPeriodicList(this.for_month, this.for_year);
+          });
+      });
+
   }
 
 }

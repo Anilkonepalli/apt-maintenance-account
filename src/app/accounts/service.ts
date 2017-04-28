@@ -1,5 +1,5 @@
 import { Injectable } 															from '@angular/core';
-import { Http, Headers, Response, RequestOptions } 	from '@angular/http';
+import { Http, Headers, Response, RequestOptions }  from '@angular/http';
 import { Observable } 															from 'rxjs/Observable';
 
 import { Account } 																	from './model';
@@ -21,103 +21,117 @@ import 'rxjs/add/operator/toPromise';
 @Injectable()
 export class AccountService {
 
-    private modelUrl = process.env.API_URL + '/api/maintenance-accounts';
-    private id_token = localStorage.getItem('id_token');
-    private headers = new Headers({
-        'Content-Type': 'application/json',
-        'x-access-token': this.id_token
-    });
+  private modelUrl = process.env.API_URL + '/api/maintenance-accounts';
+  private id_token = localStorage.getItem('id_token');
+  private headers = new Headers({
+    'Content-Type': 'application/json',
+    'x-access-token': this.id_token
+  });
 
-    constructor(
-        private http: Http,
-        private userService: UserService,
-        private flatService: FlatService,
-        private residentService: ResidentService
-    ) { }
+  constructor(
+    private http: Http,
+    private userService: UserService,
+    private flatService: FlatService,
+    private residentService: ResidentService
+  ) { }
 
-    getList999(): Observable<Account[]> {
-        return this.http.get(this.modelUrl)
-            .map(this.extractData)
-            .catch(this.handleError999);
+  getList999(): Observable<Account[]> {
+    return this.http.get(this.modelUrl)
+      .map(this.extractData)
+      .catch(this.handleError999);
+  }
+
+  private extractData(res: Response) {
+    if (res.status < 200 || res.status >= 300) {
+      throw new Error('Bad response status: ' + res.status);
     }
+    let body = res.json();
+    return body.data || [];
+  }
 
-    private extractData(res: Response) {
-        if (res.status < 200 || res.status >= 300) {
-            throw new Error('Bad response status: ' + res.status);
-        }
-        let body = res.json();
-        return body.data || [];
-    }
+  private handleError999(error: any) {
+    // In a real world app, error is send to remote logging infrastructure
+    let errMsg = error.message || 'Server error';
+    console.error(errMsg); // log to console instead
+    return Observable.throw(errMsg);
+  }
 
-    private handleError999(error: any) {
-        // In a real world app, error is send to remote logging infrastructure
-        let errMsg = error.message || 'Server error';
-        console.error(errMsg); // log to console instead
-        return Observable.throw(errMsg);
-    }
+  getList(): Promise<Account[]> {
+    return this.http
+      .get(this.modelUrl, { headers: this.headers })
+      .toPromise()
+      .then(models => {
+        return models.json() as Account[];
+      })
+      .catch(this.handleError)
+  }
 
-    getList(): Promise<Account[]> {
-        return this.http
-            .get(this.modelUrl, { headers: this.headers })
-            .toPromise()
-            .then(models => {
-                return models.json() as Account[];
-            })
-            .catch(this.handleError)
-    }
+  get(id: number): Promise<Account> {
+    const url = this.modelUrl + '/' + id;
+    return this.http
+      .get(url, { headers: this.headers })
+      .toPromise()
+      .then(model => model.json() as Account)
+      .catch(this.handleError);
+  }
 
-    get(id: number): Promise<Account> {
-        const url = this.modelUrl + '/' + id;
-        return this.http
-            .get(url, { headers: this.headers })
-            .toPromise()
-            .then(model => model.json() as Account)
-            .catch(this.handleError);
-    }
+  getAuthorization(): Promise<Authorization> {
+    return this.userService.getAuthorizationFor('accounts');
+  }
 
-    getAuthorization(): Promise<Authorization> {
-        return this.userService.getAuthorizationFor('accounts');
-    }
+  update(model: Account): Promise<Account> {
+    const url = `${this.modelUrl}/${model.id}`;
+    return this.http
+      .put(url, JSON.stringify(model), { headers: this.headers })
+      .toPromise()
+      .then(() => model)
+      .catch(this.handleError);
+  }
 
-    update(model: Account): Promise<Account> {
-        const url = `${this.modelUrl}/${model.id}`;
-        return this.http
-            .put(url, JSON.stringify(model), { headers: this.headers })
-            .toPromise()
-            .then(() => model)
-            .catch(this.handleError);
-    }
+  create(model: Account): Promise<Account> {
+    return this.http
+      .post(this.modelUrl, JSON.stringify(model), { headers: this.headers })
+      .toPromise()
+      .then(model => model.json().data)
+      .catch(this.handleError);
+  }
 
-    create(model: Account): Promise<Account> {
-        return this.http
-            .post(this.modelUrl, JSON.stringify(model), { headers: this.headers })
-            .toPromise()
-            .then(model => model.json().data)
-            .catch(this.handleError);
-    }
+  delete(id: number): Promise<void> {
+    const url = `${this.modelUrl}/${id}`;
+    return this.http
+      .delete(url, { headers: this.headers })
+      .toPromise()
+      .then(() => null)
+      .catch(this.handleError);
+  }
 
-    delete(id: number): Promise<void> {
-        const url = `${this.modelUrl}/${id}`;
-        return this.http
-            .delete(url, { headers: this.headers })
-            .toPromise()
-            .then(() => null)
-            .catch(this.handleError);
-    }
+  private handleError(error: any) {
+    return Promise.reject(error.message || error);
+  }
 
-    private handleError(error: any) {
-        return Promise.reject(error.message || error);
-    }
+  getFlatList(): Promise<Flat[]> {
+    return this.flatService.getList();
+  }
 
-    getFlatList(): Promise<Flat[]> {
-        return this.flatService.getList();
-    }
+  getFlatResidents(flatId: number): Promise<Resident[]> {
+    return this.flatService.getMyResidents(flatId);
+  }
 
-    getFlatResidents(flatId: number): Promise<Resident[]> {
-        return this.flatService.getMyResidents(flatId);
-    }
+  getResidentList(): Promise<Resident[]> {
+    return this.residentService.getList();
+  }
 
-    getResidentList(): Promise<Resident[]> {
-        return this.residentService.getList();
-    }
+  getPeriodicList(month: number, year: number): Promise<Account[]> {
+    //let params = new URLSearchParams();
+    //params.set('month', month);
+    //params.set('year', year);
+    let url = process.env.API_URL + '/api/maintenance-accounts-periodic?month=' + month + '&year=' + year;
+    return this.http
+      .get(url, { headers: this.headers })
+      .toPromise()
+      .then(models => {
+        return models.json() as Account[];
+      })
+      .catch(this.handleError)
+  }
 }

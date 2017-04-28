@@ -28,4 +28,14 @@
       title="Periodic view for they year">
   </div>
 
+  <ul class="items">
+  	<li *ngFor="let model of models | async">
+  			<span>{{ model.recorded_at }}</span>
+  			<span class="badge1">{{ model.id }}</span>
+  			<span>{{ model.flat_number }}</span>
+  			<span>{{ model.name }}</span>
+  	</li>
+  </ul>
+
+
 </div>

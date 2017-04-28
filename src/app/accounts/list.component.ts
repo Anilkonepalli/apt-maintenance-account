@@ -42,13 +42,8 @@ export class AccountListComponent implements OnInit {
         this.models = this.route.params
           .switchMap((params: Params) => {
             this.selectedId = +params['id'];
-            // return this.service.getList();
-            let list = this.service.getList();
-            console.log('Account List: ...');
-            console.log(list);
-            return list;
+            return this.service.getList();
           });
-
       });
   }
 
