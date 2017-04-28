@@ -1,5 +1,5 @@
 import { Injectable } 															from '@angular/core';
-import { Http, Headers, Response, RequestOptions }  from '@angular/http';
+import { Http, Headers, Response, RequestOptions, URLSearchParams }  from '@angular/http';
 import { Observable } 															from 'rxjs/Observable';
 
 import { Account } 																	from './model';
@@ -122,12 +122,13 @@ export class AccountService {
   }
 
   getPeriodicList(month: number, year: number): Promise<Account[]> {
-    //let params = new URLSearchParams();
-    //params.set('month', month);
-    //params.set('year', year);
-    let url = process.env.API_URL + '/api/maintenance-accounts-periodic?month=' + month + '&year=' + year;
+    let params = new URLSearchParams();
+    params.set('month', month.toString());
+    params.set('year', year.toString());
+    //let url = process.env.API_URL + '/api/maintenance-accounts-periodic?month=' + month + '&year=' + year;
+    let url = process.env.API_URL + '/api/maintenance-accounts-periodic';
     return this.http
-      .get(url, { headers: this.headers })
+      .get(url, { headers: this.headers, search: params })
       .toPromise()
       .then(models => {
         return models.json() as Account[];

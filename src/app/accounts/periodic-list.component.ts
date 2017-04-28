@@ -8,7 +8,10 @@ import { Account }												from './model';
 import { AccountService }									from './service';
 import { Authorization }									from '../authorization/model';
 
+import { Flat }                           from '../flats/model';
+
 import 'rxjs/add/operator/switchMap';
+import * as _                             from 'lodash';
 
 var periodic_list_css = require('./periodic-list.component.css');
 var periodic_list_css_string = periodic_list_css.toString();
@@ -22,9 +25,10 @@ var periodic_list_html_string = periodic_list_html.toString();
   templateUrl: periodic_list_html_string
 })
 export class PeriodicListComponent implements OnInit {
-  months: Month[];
-  for_month: number;
-  for_year: number;
+  months: Month[] = Month.all();
+  today: any = new Date();
+  for_month: number = this.today.getMonth() + 1;
+  for_year: number = this.today.getFullYear();
 
   models: Observable<Account[]>;
   auth: Authorization;
@@ -36,12 +40,6 @@ export class PeriodicListComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-
-    this.months = Month.all();
-    let today: any = new Date();
-    this.for_month = today.getMonth() + 1;
-    this.for_year = today.getFullYear();
-
     this.service.getAuthorization()
       .then(auth => {
         this.auth = auth;
@@ -50,7 +48,6 @@ export class PeriodicListComponent implements OnInit {
             return this.service.getPeriodicList(this.for_month, this.for_year);
           });
       });
-
   }
 
 }
