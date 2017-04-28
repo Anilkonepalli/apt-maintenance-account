@@ -1,1 +1,31 @@
 <h2>Periodic Grid View</h2>
+
+<div class="container">
+
+  <div>
+    <select
+      id="forMonth"
+      required
+      [(ngModel)]="for_month"
+      name="forMonth"
+      #forMonth="ngModel"
+      title="Periodic view for the month">
+      <option
+        *ngFor="let month of months"
+        [value]="month.number"
+       >{{month.shortName}}</option>
+    </select>
+
+    <input
+      type="number"
+      id="forYear"
+      required
+      [(ngModel)]="for_year"
+      name="forYear"
+      #forYear="ngModel"
+      min="2010"
+      max="2030"
+      title="Periodic view for they year">
+  </div>
+
+</div>

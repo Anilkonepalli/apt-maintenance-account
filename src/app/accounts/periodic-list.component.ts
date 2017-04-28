@@ -2,6 +2,8 @@ import { Component, OnInit }							from '@angular/core';
 import { Router, ActivatedRoute, Params }	from '@angular/router';
 import { Observable }											from 'rxjs/Observable';
 
+import { Month }                          from '../shared';
+
 import { Account }												from './model';
 import { AccountService }									from './service';
 import { Authorization }									from '../authorization/model';
@@ -20,9 +22,15 @@ var periodic_list_html_string = periodic_list_html.toString();
   templateUrl: periodic_list_html_string
 })
 export class PeriodicListComponent implements OnInit {
+  months: Month[];
+  for_month: number;
+  for_year: number;
 
   ngOnInit(): void {
-
+    this.months = Month.all();
+    let today: any = new Date();
+    this.for_month = today.getMonth() + 1;
+    this.for_year = today.getFullYear();
   }
 
 }
