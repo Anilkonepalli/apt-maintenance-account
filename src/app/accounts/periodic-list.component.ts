@@ -29,6 +29,7 @@ export class PeriodicListComponent implements OnInit {
   today: any = new Date();
   for_month: number = this.today.getMonth() + 1;
   for_year: number = this.today.getFullYear();
+  monthlyMaintCharge = 600;
 
   models: Observable<Account[]>;
   auth: Authorization;
@@ -49,5 +50,25 @@ export class PeriodicListComponent implements OnInit {
           });
       });
   }
-
+  paid(status: boolean, model: Account) {
+    console.log('model is: '); console.log(model);
+    status ? console.log('paid') : console.log('due');
+    if (status) {
+      model.amount = this.monthlyMaintCharge;
+      model.crdr = 'cr';
+      model.category = 'Monthly Maintenance';
+      model.remarks = 'paid'
+      this.service.create(model)
+        .then((acct) =>
+          console.log('Saved account'));
+    } else {
+      model.amount = 0;
+      if (model.id != 0) {
+        this.service.delete(model.id)
+          .then((acct) =>
+            console.log('Account Deleted'));
+      }
+      model.id = 0;
+    }
+  }
 }

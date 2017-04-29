@@ -26,14 +26,23 @@
       min="2010"
       max="2030"
       title="Periodic view for they year">
+
+      Monthly Maintenance Charge: &#8377; {{monthlyMaintCharge}}
   </div>
 
   <ul class="items">
+    <li>
+      <span>Record-dt</span>
+      <span>Flat#</span>
+      <span>Paid</span>
+    </li>
   	<li *ngFor="let model of models | async">
   			<span>{{ model.recorded_at }}</span>
-  			<span class="badge1">{{ model.id }}</span>
   			<span>{{ model.flat_number }}</span>
-  			<span>{{ model.name }}</span>
+        <input
+          type="checkbox"
+          [checked]="model.amount==monthlyMaintCharge"
+          (change)="paid($event.target.checked, model)" />
   	</li>
   </ul>
 
