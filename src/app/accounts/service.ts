@@ -131,6 +131,7 @@ export class AccountService {
       .get(url, { headers: this.headers, search: params })
       .toPromise()
       .then(models => {
+        console.log('periodic list models....'); console.log(models);
         return models.json() as Account[];
       })
       .catch(this.handleError)
