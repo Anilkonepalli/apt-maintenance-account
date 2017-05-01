@@ -46,4 +46,19 @@
   	</li>
   </ul>
 
+  <ul class="items">
+    <div class="grid">
+    	<li *ngFor="let model of models | async" class="box">
+    			<span>{{ model.recorded_at }}</span>
+    			<span>{{ model.flat_number }}</span>
+          <input
+            type="checkbox"
+            [checked]="model.amount==monthlyMaintCharge"
+            (change)="paid($event.target.checked, model)" />
+    	</li>
+    </div>
+  </ul>
+
+
+
 </div>
