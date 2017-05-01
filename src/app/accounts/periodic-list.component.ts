@@ -50,25 +50,50 @@ export class PeriodicListComponent implements OnInit {
           });
       });
   }
-  paid(status: boolean, model: Account) {
-    console.log('model is: '); console.log(model);
-    status ? console.log('paid') : console.log('due');
-    if (status) {
-      model.amount = this.monthlyMaintCharge;
-      model.crdr = 'cr';
-      model.category = 'Monthly Maintenance';
-      model.remarks = 'paid'
-      this.service.create(model)
-        .then((acct) =>
-          console.log('Saved account'));
-    } else {
-      model.amount = 0;
-      if (model.id != 0) {
-        this.service.delete(model.id)
+  /*
+    paid(status: boolean, model: Account) {
+      console.log('model is: '); console.log(model);
+      status ? console.log('paid') : console.log('due');
+      if (status) {
+        model.amount = this.monthlyMaintCharge;
+        model.crdr = 'cr';
+        model.category = 'Monthly Maintenance';
+        model.remarks = 'paid'
+        this.service.create(model)
           .then((acct) =>
-            console.log('Account Deleted'));
+            console.log('Saved account'));
+      } else {
+        model.amount = 0;
+        if (model.id != 0) {
+          this.service.delete(model.id)
+            .then((acct) =>
+              console.log('Account Deleted'));
+        }
+        model.id = 0;
       }
-      model.id = 0;
-    }
+    } */
+  togglePaidStatus(event: any, model: Account) {
+    console.log('toggle paid status event: '); console.log(event);
+    console.log('toggle paid status model: '); console.log(model);
+    model.amount != this.monthlyMaintCharge
+      ? this.addAccount(model)
+      : this.removeAccount(model);
   }
+  addAccount(model: Account) {
+    model.amount = this.monthlyMaintCharge;
+    model.crdr = 'cr';
+    model.category = 'Monthly Maintenance';
+    model.remarks = 'paid'
+    this.service.create(model)
+      .then((acct) => console.log('Saved account'));
+  }
+  removeAccount(model: Account) {
+    model.amount = 0;
+    if (model.id != 0) {
+      this.service.delete(model.id)
+        .then((acct) => console.log('Account Deleted'));
+    }
+    model.id = 0;
+  }
+
 }

@@ -31,34 +31,20 @@
   </div>
 
   <ul class="items">
-    <li>
-      <span>Record-dt</span>
-      <span>Flat#</span>
-      <span>Paid</span>
-    </li>
-  	<li *ngFor="let model of models | async">
-  			<span>{{ model.recorded_at }}</span>
-  			<span>{{ model.flat_number }}</span>
-        <input
-          type="checkbox"
-          [checked]="model.amount==monthlyMaintCharge"
-          (change)="paid($event.target.checked, model)" />
-  	</li>
-  </ul>
-
-  <ul class="items">
     <div class="grid">
-    	<li *ngFor="let model of models | async" class="box">
-    			<span>{{ model.recorded_at }}</span>
-    			<span>{{ model.flat_number }}</span>
-          <input
-            type="checkbox"
-            [checked]="model.amount==monthlyMaintCharge"
-            (change)="paid($event.target.checked, model)" />
+    	<li *ngFor="let model of models | async" class="box" role="button" (click)="togglePaidStatus($event, model)">
+    			<div class="flat-number">{{ model.flat_number }}</div>
+          <div class="payment">
+            <!--input
+              type="checkbox"
+              [checked]="model.amount==monthlyMaintCharge"
+              (change)="paid($event.target.checked, model)" /-->
+            <span *ngIf="model.amount == monthlyMaintCharge">&#10004; Paid</span>
+            <!--span *ngIf="model.amount != monthlyMaintCharge">&#10008;</span-->
+            </div>
+            <div class="recorded-at" *ngIf="model.amount == monthlyMaintCharge">{{ model.recorded_at }}</div>
     	</li>
     </div>
   </ul>
-
-
 
 </div>
