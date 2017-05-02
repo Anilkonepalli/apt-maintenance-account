@@ -3,10 +3,16 @@
 <div class="container">
 
   <div>
+    <button
+      (click)="gotoPreviousMonth($event)"
+      title="Go to previous month">
+      <i class="fa fa-chevron-left" aria-hidden="true"></i>
+    </button>
     <select
       id="forMonth"
       required
       [(ngModel)]="for_month"
+      (ngModelChange)="monthChanged($event)"
       name="forMonth"
       #forMonth="ngModel"
       title="Periodic view for the month">
@@ -27,7 +33,20 @@
       max="2030"
       title="Periodic view for they year">
 
+      <button
+        (click)="gotoNextMonth($event)"
+        title="Go to next month">
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </button>
+
       Monthly Maintenance Charge: &#8377; {{monthlyMaintCharge}}
+
+    <input
+      type="button"
+      value="Get List"
+      title="Retreive List for month and year"
+      (click)="getPeriodicList(forMonth.value, forYear.value)">
+
   </div>
 
   <ul class="items">
