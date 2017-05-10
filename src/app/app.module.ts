@@ -2,6 +2,7 @@ import { NgModule }              from '@angular/core';
 import { BrowserModule }         from '@angular/platform-browser';
 import { HttpModule }	           from '@angular/http';
 import { FormsModule }           from '@angular/forms';
+import { NgbModule }             from '@ng-bootstrap/ng-bootstrap';
 
 import { AppComponent }          from './app.component';
 import { AppRoutingModule }      from './app-routing.module';
@@ -21,29 +22,31 @@ import { AboutComponent }        from './about.component';
 import { ConsoleLogService }     from './logger/log.service';
 import { Logger }                from './logger/default-log.service';
 
+
 @NgModule({
-    imports: [
-        BrowserModule,
-        HttpModule,
-        FormsModule,
-        AppRoutingModule,
-        LoginRoutingModule,
-        SharedModule,
-    ],
-    declarations: [
-        AppComponent,
-        LoginComponent,
-        SignupComponent,
-        HomeComponent,
-        AboutComponent,
-        PageNotFoundComponent,
-        SocialLoginComponent
-    ],
-    providers: [
-        { provide: Logger, useClass: ConsoleLogService }
-    ],
-    bootstrap: [
-        AppComponent
-    ]
+  imports: [
+    BrowserModule,
+    HttpModule,
+    FormsModule,
+    AppRoutingModule,
+    LoginRoutingModule,
+    SharedModule,
+    NgbModule.forRoot()
+  ],
+  declarations: [
+    AppComponent,
+    LoginComponent,
+    SignupComponent,
+    HomeComponent,
+    AboutComponent,
+    PageNotFoundComponent,
+    SocialLoginComponent
+  ],
+  providers: [
+    { provide: Logger, useClass: ConsoleLogService }
+  ],
+  bootstrap: [
+    AppComponent
+  ]
 })
 export class AppModule { }

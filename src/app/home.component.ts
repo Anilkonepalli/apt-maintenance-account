@@ -12,6 +12,17 @@ import { AuthService } from './authentication/auth.service';
     <h2 *ngIf="authService.isLoggedIn">Your JWT is:</h2>
 		<pre *ngIf="authService.isLoggedIn" class="jwt"><code>{{ jwt }}</code></pre>
 		<pre *ngIf="authService.isLoggedIn" class="jwt"><code>{{ decodedJwt | json }}</code></pre>
+
+    Dropdown menu 1
+    <div ngbDropdown class="d-inline-block">
+    	<button class="btn btn-outline-primary" id="dropdownBasic1" ngbDropdownToggle>Toggle dropdown</button>
+    	<div class="dropdown-menu" aria-labelledby="dropdownBasic1">
+    		<button class="dropdown-item">Action-1</button>
+    		<button class="dropdown-item">Another Action</button>
+    		<button class="dropdown-item">Something else</button>
+    	</div>
+    </div>
+
 	`
 })
 export class HomeComponent implements OnInit {
