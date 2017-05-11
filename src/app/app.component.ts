@@ -14,7 +14,7 @@ var app_css_string = app_css.toString();
   styles: [app_css_string]
 })
 export class AppComponent {
-  brand = 'XYZ Apartments';
+  brand = 'ABC Apartments';
 
   constructor(public router: Router,
     public logger: Logger,

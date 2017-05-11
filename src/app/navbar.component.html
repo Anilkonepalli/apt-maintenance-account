@@ -1,0 +1,87 @@
+<!-- Menu before logging in -->
+<nav *ngIf="!authService.isLoggedIn" class="navbar navbar-toggleable-md navbar-light bg-faded">
+
+	<button
+		class="navbar-toggler navbar-toggler-right"
+		type="button"
+		data-toggle="collapse"
+		data-target="#navbarSupportedContent"
+		aria-controls="navbarSupportedContent"
+		aria-expanded="false"
+		aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+	</button>
+	<a class="navbar-brand" href="#">Apt Maint</a>
+
+	<div class="collapse navbar-collapse" id="navbarSupportedContent">
+		<ul class="navbar-nav mr-auto">
+			<li class="nav-item" [routerLinkActive]="['active']">
+				<a class="nav-link" [routerLink]="['/home']">Home</a>
+			</li>
+			<li class="nav-item" [routerLinkActive]="['active']">
+				<a class="nav-link" [routerLink]="['/about']">About</a>
+			</li>
+			<li class="nav-item" [routerLinkActive]="['active']">
+				<a class="nav-link" [routerLink]="['/login']">Login</a>
+			</li>
+			<li class="nav-item" [routerLinkActive]="['active']">
+				<a class="nav-link" [routerLink]="['/signup']">Signup</a>
+			</li>
+		</ul>
+	</div>
+
+</nav>
+
+<!-- Menu after logging in -->
+<nav *ngIf="authService.isLoggedIn" class="navbar navbar-toggleable-md navbar-light bg-faded">
+
+	<button
+		class="navbar-toggler navbar-toggler-right"
+		type="button"
+		data-toggle="collapse"
+		data-target="#navbarSupportedContent2"
+		aria-controls="navbarSupportedContent2"
+		aria-expanded="false"
+		aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+	</button>
+	<a class="navbar-brand" href="#">Apt Maint</a>
+
+	<div class="collapse navbar-collapse" id="navbarSupportedContent2">
+		<ul class="navbar-nav mr-auto">
+			<li class="nav-item" [routerLinkActive]="['active']">
+				<a class="nav-link" [routerLink]="['/home']">Home</a>
+			</li>
+			<li class="nav-item" [routerLinkActive]="['active']">
+				<a class="nav-link" [routerLink]="['/about']">About</a>
+			</li>
+			<li class="nav-item dropdown" [routerLinkActive]="['active']">
+				<div ngbDropdown class="d-inline-block">
+		    	<button class="btn btn-link" id="dropdownBasic1" ngbDropdownToggle>Accounts</button>
+		    	<div class="dropdown-menu" aria-labelledby="dropdownBasic1">
+						<a class="dropdown-item" [routerLink]="['/accounts']">Full List</a>
+						<a class="dropdown-item" [routerLink]="['/accounts-periodic']">Monthly List</a>
+		    	</div>
+		    </div>
+		  </li>
+			<li class="nav-item dropdown" [routerLinkActive]="['active']">
+				<div ngbDropdown class="d-inline-block">
+		    	<button class="btn btn-link" id="dropdownBasic2" ngbDropdownToggle>Admin</button>
+		    	<div class="dropdown-menu" aria-labelledby="dropdownBasic2">
+						<a class="dropdown-item" [routerLink]="['/flats']">Flats</a>
+						<a class="dropdown-item" [routerLink]="['/residents']">Residents</a>
+						<a class="dropdown-item" [routerLink]="['/flats-residents']">Link Flats-Residents</a>
+						<a class="dropdown-item" [routerLink]="['/users']">Users</a>
+						<a class="dropdown-item" [routerLink]="['/roles']">Roles</a>
+						<a class="dropdown-item" [routerLink]="['/permissions']">Permissions</a>
+						<a class="dropdown-item" [routerLink]="['/roles-permissions']">Link Roles-Permissions</a>
+						<a class="dropdown-item" [routerLink]="['/users-roles']">Link Users-Roles</a>
+		    	</div>
+		    </div>
+		  </li>
+			<li class="nav-item">
+				<a class="nav-link"(click)="logout()">Logout</a>
+			</li>
+		</ul>
+	</div>
+</nav>

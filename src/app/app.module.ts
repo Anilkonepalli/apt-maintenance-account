@@ -5,6 +5,8 @@ import { FormsModule }           from '@angular/forms';
 import { NgbModule }             from '@ng-bootstrap/ng-bootstrap';
 
 import { AppComponent }          from './app.component';
+import { NavbarComponent }       from './navbar.component';
+import { FooterComponent }       from './app-footer.component';
 import { AppRoutingModule }      from './app-routing.module';
 
 import { SharedModule }          from './shared/shared.module';
@@ -40,7 +42,9 @@ import { Logger }                from './logger/default-log.service';
     HomeComponent,
     AboutComponent,
     PageNotFoundComponent,
-    SocialLoginComponent
+    SocialLoginComponent,
+    FooterComponent,
+    NavbarComponent
   ],
   providers: [
     { provide: Logger, useClass: ConsoleLogService }
