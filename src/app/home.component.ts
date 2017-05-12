@@ -8,20 +8,21 @@ import { AuthService } from './authentication/auth.service';
 @Component({
   selector: 'home',
   template: `
-		<h1>Welcome to Apt Maint Acct</h1>
-    <h2 *ngIf="authService.isLoggedIn">Your JWT is:</h2>
+    <div class="jumbotron jumbotron-fluid">
+      <div class="container">
+		    <h1 class="display-5 text-center">Welcome</h1>
+        <h1 class="display-6 text-center">to</h1>
+        <h1 class="display-5 text-center">Apartment Maintenance Account</h1>
+        <hr>
+        <h5>It is used</h5>
+        <ul>
+          <li>To track the collections and expenses towards maintenance of flats in the apartment complex<br></li>
+          <li>To ensure any time access to transactions in the maintenance account<br></li>
+          <li>To enable transparency<br></li>
+        </ul>
+    <!--h2 *ngIf="authService.isLoggedIn">Your JWT is:</h2>
 		<pre *ngIf="authService.isLoggedIn" class="jwt"><code>{{ jwt }}</code></pre>
-		<pre *ngIf="authService.isLoggedIn" class="jwt"><code>{{ decodedJwt | json }}</code></pre>
-
-    Dropdown menu 1
-    <div ngbDropdown class="d-inline-block">
-    	<button class="btn btn-outline-primary" id="dropdownBasic1" ngbDropdownToggle>Toggle dropdown</button>
-    	<div class="dropdown-menu" aria-labelledby="dropdownBasic1">
-    		<button class="dropdown-item">Action-1</button>
-    		<button class="dropdown-item">Another Action</button>
-    		<button class="dropdown-item">Something else</button>
-    	</div>
-    </div>
+		<pre *ngIf="authService.isLoggedIn" class="jwt"><code>{{ decodedJwt | json }}</code></pre-->
 
 	`
 })
