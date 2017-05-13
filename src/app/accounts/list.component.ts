@@ -36,20 +36,20 @@ export class AccountListComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-
-    this.service.getAuthorization()
-      .then(auth => {
-        this.addAllowed = auth.allowsAdd();
-        this.auth = auth;
-
-        this.models = this.route.params
-          .switchMap((params: Params) => {
-            this.selectedId = +params['id'];
-            return this.service.getList();
-          });
-      });
-
     this.setFromDate();
+    this.getList();
+    /*    this.service.getAuthorization()
+          .then(auth => {
+            this.addAllowed = auth.allowsAdd();
+            this.auth = auth;
+
+            this.models = this.route.params
+              .switchMap((params: Params) => {
+                this.selectedId = +params['id'];
+                //return this.service.getList();
+                return this.service.getListFor(this.fromDate, this.toDate);
+              });
+          }); */
   }
 
   onSelect(model: Account): void {
@@ -78,5 +78,20 @@ export class AccountListComponent implements OnInit {
     let year = new Date().getFullYear();
     let month = new Date().getMonth() - this.noOfPrevMonths;
     this.fromDate = new Date(year, month, 1)
+  }
+
+  public getList() {
+    this.service.getAuthorization()
+      .then(auth => {
+        this.addAllowed = auth.allowsAdd();
+        this.auth = auth;
+
+        this.models = this.route.params
+          .switchMap((params: Params) => {
+            this.selectedId = +params['id'];
+            //return this.service.getList();
+            return this.service.getListFor(this.fromDate, this.toDate);
+          });
+      });
   }
 }

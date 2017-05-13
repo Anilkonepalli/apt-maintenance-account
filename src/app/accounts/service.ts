@@ -66,6 +66,19 @@ export class AccountService {
       .catch(this.handleError)
   }
 
+  getListFor(fromDate: Date, toDate: Date): Promise<Account[]> {
+    let params = new URLSearchParams();
+    params.set('fromDate', fromDate.toString());
+    params.set('toDate', toDate.toString());
+    return this.http
+      .get(this.modelUrl, { headers: this.headers, search: params })
+      .toPromise()
+      .then(models => {
+        return models.json() as Account[];
+      })
+      .catch(this.handleError)
+  }
+
   get(id: number): Promise<Account> {
     const url = this.modelUrl + '/' + id;
     return this.http
