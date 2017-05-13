@@ -27,6 +27,7 @@ body {
 
 #wrapper {
   min-height: calc(100vh - 50px); /* 50px is footer height */
+/*  background-image: url("http://localhost:8080/images/flats2.jpg"); */
 }
 
 .main {

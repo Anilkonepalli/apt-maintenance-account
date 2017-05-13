@@ -24,12 +24,15 @@ export class AccountListComponent implements OnInit {
   models: Observable<Account[]>;
   auth: Authorization;
   addAllowed: boolean = false;
-  private selectedId: number;
+  selectedId: number;
+  fromDate: Date;
+  toDate: Date = new Date();
+  noOfPrevMonths: number = 2;
 
+  private router: Router
   constructor(
     private service: AccountService,
     private route: ActivatedRoute,
-    private router: Router
   ) { }
 
   ngOnInit(): void {
@@ -45,6 +48,8 @@ export class AccountListComponent implements OnInit {
             return this.service.getList();
           });
       });
+
+    this.setFromDate();
   }
 
   onSelect(model: Account): void {
@@ -67,5 +72,11 @@ export class AccountListComponent implements OnInit {
           return models[i] !== model;
         });
       });
+  }
+
+  private setFromDate() {
+    let year = new Date().getFullYear();
+    let month = new Date().getMonth() - this.noOfPrevMonths;
+    this.fromDate = new Date(year, month, 1)
   }
 }

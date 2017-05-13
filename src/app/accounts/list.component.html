@@ -1,35 +1,7 @@
 <h2>Account List</h2>
 
-<!--div *ngIf="addAllowed">
-<button (click)="add()"><i class="fa fa-plus" aria-hidden="true"></i> Add</button>
-</div>
-
-<ul class="items">
-	<li *ngFor="let model of models | async"
-		[class.selected] = "isSelected(model)"
-		(click)="onSelect(model)">
-			<span>{{ model.recorded_at }}</span>
-			<span class="badge1">{{ model.id }}</span>
-			<span>{{ model.flat_number }}</span>
-			<span>{{ model.name }}</span>
-			<span>{{ model.for_month }}</span>
-			<span>{{ model.for_year }}</span>
-			<span>{{ model.crdr }}</span>
-			<span>{{ model.amount }}</span>
-			<span>{{ model.balance }}</span>
-			<span>{{ model.category }}</span>
-			<button
-				class="view1"
-				(click)="onSelect(model)"
-				*ngIf="auth.allowsView(model.owner_id)"
-			><i class="fa fa-eye" aria-hidden="true"></i> View</button>
-			<button
-				class="delete1"
-				(click)="delete(model); $event.stopPropagation()"
-				*ngIf="auth.allowsDelete(model.owner_id)"
-			>Del</button>
-	</li>
-</ul-->
+From <input type="date" [ngModel]="fromDate | date: 'yyyy-MM-dd'" (ngModelChange)="fromDate = $event" />
+To <input type="date" [ngModel]="toDate | date: 'yyyy-MM-dd'" (ngModelChange)="toDate = $event" />
 
 <table class="table table-responsive">
 	<thead>
