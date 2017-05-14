@@ -13,7 +13,11 @@ var list_css_string = list_css.toString();
 var list_html = require('./list.component.html');
 var list_html_string = list_html.toString();
 
-
+interface IColumn {
+  name: string,
+  displayName: string,
+  title: string
+}
 @Component({
   selector: 'account-list',
   styles: [list_css_string],
@@ -29,7 +33,14 @@ export class AccountListComponent implements OnInit {
   toDate: Date = new Date();
   noOfPrevMonths: number = 2;
 
-  private router: Router
+  columns: IColumn[] = [
+    { name: 'recorded_at', displayName: 'Txn Date', title: 'Transaction Date' },
+    { name: 'flat_number', displayName: 'Flat#', title: 'Flat Number, if applicable' }
+  ];
+
+  selectedColumnNames: string[] = [];
+  private router: Router;
+
   constructor(
     private service: AccountService,
     private route: ActivatedRoute,
@@ -38,18 +49,7 @@ export class AccountListComponent implements OnInit {
   ngOnInit(): void {
     this.setFromDate();
     this.getList();
-    /*    this.service.getAuthorization()
-          .then(auth => {
-            this.addAllowed = auth.allowsAdd();
-            this.auth = auth;
-
-            this.models = this.route.params
-              .switchMap((params: Params) => {
-                this.selectedId = +params['id'];
-                //return this.service.getList();
-                return this.service.getListFor(this.fromDate, this.toDate);
-              });
-          }); */
+    this.setSelectedColumnNames();
   }
 
   onSelect(model: Account): void {
@@ -93,5 +93,12 @@ export class AccountListComponent implements OnInit {
             return this.service.getListFor(this.fromDate, this.toDate);
           });
       });
+  }
+
+  public setSelectedColumnNames() {
+    this.columns.forEach((each: IColumn) => {
+      this.selectedColumnNames.push(each.name);
+    });
+    console.log('Selected Column Names are: '); console.log(this.selectedColumnNames);
   }
 }

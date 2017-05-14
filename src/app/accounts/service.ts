@@ -1,15 +1,15 @@
-import { Injectable } 															from '@angular/core';
+import { Injectable } 						from '@angular/core';
 import { Http, Headers, Response, RequestOptions, URLSearchParams }  from '@angular/http';
-import { Observable } 															from 'rxjs/Observable';
+import { Observable } 						from 'rxjs/Observable';
 
-import { Account } 																	from './model';
-import { Permission } 															from '../permissions/model';
-import { UserService } 															from '../users/service';
-import { Authorization } 														from '../authorization/model';
-import { FlatService }                              from '../flats/service';
-import { Flat }                                     from '../flats/model';
-import { ResidentService }                          from '../residents/service';
-import { Resident }                                 from '../residents/model';
+import { Account } 								from './model';
+import { Permission } 						from '../permissions/model';
+import { UserService } 						from '../users/service';
+import { Authorization } 					from '../authorization/model';
+import { FlatService }            from '../flats/service';
+import { Flat }                   from '../flats/model';
+import { ResidentService }        from '../residents/service';
+import { Resident }               from '../residents/model';
 
 import 'rxjs/add/observable/throw';
 import 'rxjs/add/operator/do';
@@ -35,35 +35,12 @@ export class AccountService {
     private residentService: ResidentService
   ) { }
 
-  getList999(): Observable<Account[]> {
-    return this.http.get(this.modelUrl)
-      .map(this.extractData)
-      .catch(this.handleError999);
-  }
-
   private extractData(res: Response) {
     if (res.status < 200 || res.status >= 300) {
       throw new Error('Bad response status: ' + res.status);
     }
     let body = res.json();
     return body.data || [];
-  }
-
-  private handleError999(error: any) {
-    // In a real world app, error is send to remote logging infrastructure
-    let errMsg = error.message || 'Server error';
-    console.error(errMsg); // log to console instead
-    return Observable.throw(errMsg);
-  }
-
-  getList(): Promise<Account[]> {
-    return this.http
-      .get(this.modelUrl, { headers: this.headers })
-      .toPromise()
-      .then(models => {
-        return models.json() as Account[];
-      })
-      .catch(this.handleError)
   }
 
   getListFor(fromDate: Date, toDate: Date): Promise<Account[]> {
@@ -138,7 +115,6 @@ export class AccountService {
     let params = new URLSearchParams();
     params.set('month', month.toString());
     params.set('year', year.toString());
-    //let url = process.env.API_URL + '/api/maintenance-accounts-periodic?month=' + month + '&year=' + year;
     let url = process.env.API_URL + '/api/maintenance-accounts-periodic';
     return this.http
       .get(url, { headers: this.headers, search: params })
