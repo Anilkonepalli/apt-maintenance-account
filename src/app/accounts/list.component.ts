@@ -1,6 +1,9 @@
 import { Component, OnInit }							from '@angular/core';
 import { Router, ActivatedRoute, Params }	from '@angular/router';
 import { Observable }											from 'rxjs/Observable';
+import { IMultiSelectOption,
+  IMultiSelectSettings,
+  IMultiSelectTexts}                      from 'angular-2-dropdown-multiselect';
 
 import { Account }												from './model';
 import { AccountService }									from './service';
@@ -33,13 +36,13 @@ export class AccountListComponent implements OnInit {
   toDate: Date = new Date();
   noOfPrevMonths: number = 2;
 
-  columns: IColumn[] = [
-    { name: 'recorded_at', displayName: 'Txn Date', title: 'Transaction Date' },
-    { name: 'flat_number', displayName: 'Flat#', title: 'Flat Number, if applicable' }
-  ];
-
-  selectedColumnNames: string[] = [];
   private router: Router;
+
+  // for multi select dropdown configuration
+  optionsModel: number[]; // for Default Selection
+  myOptions: IMultiSelectOption[];
+  mySettings: IMultiSelectSettings;
+  myTexts: IMultiSelectTexts;
 
   constructor(
     private service: AccountService,
@@ -49,7 +52,41 @@ export class AccountListComponent implements OnInit {
   ngOnInit(): void {
     this.setFromDate();
     this.getList();
-    this.setSelectedColumnNames();
+
+    this.myOptions = [
+      { id: 1, name: 'Txn Date' },
+      { id: 2, name: 'Flat#' },
+      { id: 3, name: 'Name' },
+      { id: 4, name: 'Month' },
+      { id: 5, name: 'Year' },
+      { id: 6, name: 'Cr/Dr' },
+      { id: 7, name: 'Amount' },
+      { id: 8, name: 'Balance' },
+      { id: 9, name: 'Category' },
+    ];
+
+    this.optionsModel = [2, 3, 4, 5, 6, 7, 8, 9]; // default columns shown
+
+    this.mySettings = {
+      enableSearch: false,
+      checkedStyle: 'checkboxes', // available options: checkboxes, glyphicon, fontawesome
+      buttonClasses: 'btn btn-default btn-block',
+      dynamicTitleMaxItems: 0,
+      displayAllSelectedText: false,
+      showCheckAll: true,
+      showUncheckAll: true,
+      fixedTitle: true
+    };
+
+    this.myTexts = {
+      checkAll: 'Select All',
+      uncheckAll: 'Unselect All',
+      checked: 'column selected',
+      checkedPlural: 'columns selected',
+      searchPlaceholder: 'Find',
+      defaultTitle: 'Show Columns',
+      allSelected: 'All selected'
+    }
   }
 
   onSelect(model: Account): void {
@@ -95,10 +132,11 @@ export class AccountListComponent implements OnInit {
       });
   }
 
-  public setSelectedColumnNames() {
-    this.columns.forEach((each: IColumn) => {
-      this.selectedColumnNames.push(each.name);
-    });
-    console.log('Selected Column Names are: '); console.log(this.selectedColumnNames);
-  }
+  /*
+    onChange($event: any) {
+      console.log($event);
+      console.log(this.optionsModel);
+    }
+  */
+
 }

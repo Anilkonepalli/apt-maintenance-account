@@ -2,31 +2,27 @@
 
 From <input type="date" [ngModel]="fromDate | date: 'yyyy-MM-dd'" (ngModelChange)="fromDate = $event; getList()" />
 To <input type="date" [ngModel]="toDate | date: 'yyyy-MM-dd'" (ngModelChange)="toDate = $event; getList()" />
-Show Columns
-<select
-	id="showColumns"
-	[ngModel]="selectedColumns"
-	(ngModelChange)="selectedColumns = $event"
-	name="showColumns"
-	multiple="multiple">
-		<option
-			*ngFor="let column of columns"
-			[value]="column.name"
-		 >{{column.displayName}}</option>
-</select>
+
+<ss-multiselect-dropdown
+	[options]="myOptions"
+	[texts]="myTexts"
+	[settings]="mySettings"
+	[(ngModel)]="optionsModel"
+	>
+</ss-multiselect-dropdown>
 
 <table class="table table-responsive">
 	<thead>
 		<tr>
-			<th title="Transaction Date">Txn Date</th>
-			<th title="Flat Number, if applicable">Flat#</th>
-			<th title="Person who pays or receives">Name</th>
-			<th title="Month, collected or expended amount belongs to">Month</th>
-			<th title="Year, collected or expended amount belongs to">Year</th>
-			<th title="Credit / Debit">Cr/Dr</th>
-			<th title="Amount collected or expended">Amount</th>
-			<th title="Balance Amount">Balance</th>
-			<th title="Category of the transaction">Category</th>
+			<th *ngIf="optionsModel.includes(1)" title="Transaction Date">Txn Date</th>
+			<th *ngIf="optionsModel.includes(2)" title="Flat Number, if applicable">Flat#</th>
+			<th *ngIf="optionsModel.includes(3)" title="Person who pays or receives">Name</th>
+			<th *ngIf="optionsModel.includes(4)" title="Month, collected or expended amount belongs to">Month</th>
+			<th *ngIf="optionsModel.includes(5)" title="Year, collected or expended amount belongs to">Year</th>
+			<th *ngIf="optionsModel.includes(6)" title="Credit / Debit">Cr/Dr</th>
+			<th *ngIf="optionsModel.includes(7)" title="Amount collected or expended">Amount</th>
+			<th *ngIf="optionsModel.includes(8)" title="Balance Amount">Balance</th>
+			<th *ngIf="optionsModel.includes(9)" title="Category of the transaction">Category</th>
 			<th title="View/Edit/Delete">Actions
 				<span *ngIf="addAllowed">
 						<button class="btn btn-link" (click)="add()" title="Add an Account"><i class="fa fa-plus" aria-hidden="true"></i></button>
@@ -36,65 +32,15 @@ Show Columns
 	</thead>
 	<tbody>
 		<tr *ngFor="let model of models | async">
-			<td>{{ model.recorded_at }}</td>
-			<td>{{ model.flat_number }}</td>
-			<td>{{ model.name }}</td>
-			<td>{{ model.for_month }}</td>
-			<td>{{ model.for_year }}</td>
-			<td>{{ model.crdr }}</td>
-			<td>{{ model.amount }}</td>
-			<td>{{ model.balance }}</td>
-			<td>{{ model.category }}</td>
-			<td>
-				<button
-					class="view1 btn btn-link"
-					(click)="onSelect(model)"
-					title="View the details"
-					*ngIf="auth.allowsView(model.owner_id)"
-				><i class="fa fa-eye" aria-hidden="true"></i></button>
-				<button
-					class="delete1 btn btn-link"
-					(click)="delete(model); $event.stopPropagation()"
-					title="Delete this record"
-					*ngIf="auth.allowsDelete(model.owner_id)"
-				><i class="fa fa-trash" aria-hidden="true"></i></button>
-			</td>
-		</tr>
-	</tbody>
-</table>
-
-<hr />
-
-<table class="table table-responsive">
-	<thead>
-		<tr>
-			<th *ngIf="selectedColumnNames.includes(recorded_at)" title="Transaction Date">Txn Date</th>
-			<th title="Flat Number, if applicable">Flat#</th>
-			<th title="Person who pays or receives">Name</th>
-			<th title="Month, collected or expended amount belongs to">Month</th>
-			<th title="Year, collected or expended amount belongs to">Year</th>
-			<th title="Credit / Debit">Cr/Dr</th>
-			<th title="Amount collected or expended">Amount</th>
-			<th title="Balance Amount">Balance</th>
-			<th title="Category of the transaction">Category</th>
-			<th title="View/Edit/Delete">Actions
-				<span *ngIf="addAllowed">
-						<button class="btn btn-link" (click)="add()" title="Add an Account"><i class="fa fa-plus" aria-hidden="true"></i></button>
-				</span>
-			</th>
-		</tr>
-	</thead>
-	<tbody>
-		<tr *ngFor="let model of models | async">
-			<td>{{ model.recorded_at }}</td>
-			<td>{{ model.flat_number }}</td>
-			<td>{{ model.name }}</td>
-			<td>{{ model.for_month }}</td>
-			<td>{{ model.for_year }}</td>
-			<td>{{ model.crdr }}</td>
-			<td>{{ model.amount }}</td>
-			<td>{{ model.balance }}</td>
-			<td>{{ model.category }}</td>
+			<td *ngIf="optionsModel.includes(1)">{{ model.recorded_at }}</td>
+			<td *ngIf="optionsModel.includes(2)">{{ model.flat_number }}</td>
+			<td *ngIf="optionsModel.includes(3)">{{ model.name }}</td>
+			<td *ngIf="optionsModel.includes(4)">{{ model.for_month }}</td>
+			<td *ngIf="optionsModel.includes(5)">{{ model.for_year }}</td>
+			<td *ngIf="optionsModel.includes(6)">{{ model.crdr }}</td>
+			<td *ngIf="optionsModel.includes(7)">{{ model.amount }}</td>
+			<td *ngIf="optionsModel.includes(8)">{{ model.balance }}</td>
+			<td *ngIf="optionsModel.includes(9)">{{ model.category }}</td>
 			<td>
 				<button
 					class="view1 btn btn-link"
