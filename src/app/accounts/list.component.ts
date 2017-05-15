@@ -36,8 +36,6 @@ export class AccountListComponent implements OnInit {
   toDate: Date = new Date();
   noOfPrevMonths: number = 2;
 
-  private router: Router;
-
   // for multi select dropdown configuration
   optionsModel: number[]; // for Default Selection
   myOptions: IMultiSelectOption[];
@@ -47,6 +45,7 @@ export class AccountListComponent implements OnInit {
   constructor(
     private service: AccountService,
     private route: ActivatedRoute,
+    private router: Router
   ) { }
 
   ngOnInit(): void {

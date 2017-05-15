@@ -29,8 +29,8 @@
 			<div [hidden]="password.valid || password.pristine" class="alert alert-danger">Password is required</div>
 		</div>
 		<div class="form-group">
-			<button type="submit" class="btn btn-default" [disabled]="!signupForm.form.valid">Add User</button>
-			<button type="button" class="btn btn-link" (click)="cancel()">Cancel</button>
+			<button type="submit" class="btn btn-default" [disabled]="!signupForm.form.valid"><i class="fa fa-check" aria-hidden="true"></i> Add User</button>
+			<button type="button" class="btn btn-link" (click)="cancel()"><i class="fa fa-times" aria-hidden="true"></i> Cancel</button>
 		</div>
 		<social-login></social-login>
 	</form>
