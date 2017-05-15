@@ -1,18 +1,44 @@
-<div *ngIf="model" class="">
+<div *ngIf="model" class="container">
 
 	<h2 *ngIf="editMode" class="title">{{modelName}} Details</h2>
 	<h2 *ngIf="!editMode">Add {{modelName}}</h2>
 
 	<div *ngIf="editMode"><label>id: </label>{{model.id}}</div>
 
-	<form class="form-horizontal">
-	  <div class="form-group">
-	    <label for="inputEmail3" class="col-sm-2 control-label">Email</label>
-	    <div class="col-sm-10">
-	      <input type="email" class="form-control" id="inputEmail3" placeholder="Email">
-	    </div>
-	  </div>
+	<form (ngSubmit)="save()" #detailForm="ngForm" class="grid-form">
+		<fieldset>
+			<legend>Form Section</legend>
+			<div data-row-span="2">
+				<div data-field-span="1" class="form-group">
+					<label>Txn Date</label>
+					<input
+						type="date"
+						required
+						[(ngModel)]="model.recorded_at"
+						#recordedAt="ngModel"
+						placeholder="Date of transaction"
+						title="Date on which transaction occurred">
+				</div>
+
+				<div data-field-span="1" class="form-group">
+						<label>Item</label>
+						<input
+							type="text"
+							required
+							[(ngModel)]="model.item"
+							#item="ngModel"
+							placeholder="item name"
+							title="Name the item or transaction">
+						<div
+							[hidden]="item.valid || item.pristine"
+							class="alert alert-danger"
+							>Item Name is required</div>
+				</div>
+			</div>
+
+		</fieldset>
 	</form>
+
 
 	<!--form (ngSubmit)="save()" #detailForm="ngForm" class="form-horizontal">
 
@@ -31,8 +57,8 @@
 					title="Date on which transaction occurred">
 				</div>
 			</div>
-		</form-->
-			<!--div class="form-group">
+
+			<div class="form-group">
 				<label for="item">Item</label>
 				<input
 					type="text"
