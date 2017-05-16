@@ -1,50 +1,11 @@
-<div *ngIf="model" class="container">
+<div *ngIf="model" class="container-fluid">
 
-	<h2>{{title}}</h2>
-	<!--h2 *ngIf="editMode" class="title">{{modelName}} Details</h2>
+	<h2 *ngIf="editMode" class="title">{{modelName}} Details</h2>
 	<h2 *ngIf="!editMode">Add {{modelName}}</h2>
 
-	<div *ngIf="editMode"><label>id: </label>{{model.id}}</div-->
+	<div *ngIf="editMode"><label>id: </label>{{model.id}}</div>
 
-	<form (ngSubmit)="save()" #detailForm="ngForm" class="grid-form">
-		<fieldset>
-			<legend>{{accountId}}</legend>
-				<div data-row-span="4">
-					<div data-field-span="1">
-						<label for="recordedAt">Txn Date</label>
-						<input
-							type="date"
-							id="recordedAt"
-							required
-							[(ngModel)]="model.recorded_at"
-							name="recordedAt"
-							#recordedAt="ngModel"
-							placeholder="Date of transaction"
-							title="Date on which transaction occurred">
-					</div>
-
-					<div data-field-span="3">
-						<label for="item">Item</label>
-						<input
-							type="text"
-							id="item"
-							required
-							[(ngModel)]="model.item"
-							name="item"
-							#item="ngModel"
-							placeholder="item name"
-							title="Name the item or transaction">
-						<div
-							[hidden]="item.valid || item.pristine"
-							class="alert alert-danger"
-							>Item Name is required</div>
-					</div>
-				</div>
-		</fieldset>
-	</form>
-
-
-	<!--form (ngSubmit)="save()" #detailForm="ngForm" class="form-horizontal">
+	<form (ngSubmit)="save()" #detailForm="ngForm" class="form-horizontal">
 
 			<div class="form-group">
 				<label for="recordedAt" class="control-label">Txn Date</label>
@@ -232,6 +193,6 @@
 			title="Cancel changes made"
 			><i class="fa fa-times" aria-hidden="true"></i> Cancel</button>
 
-	</form-->
+	</form>
 
 </div>
