@@ -32,15 +32,186 @@
 							[(ngModel)]="model.item"
 							name="item"
 							#item="ngModel"
-							placeholder="item name"
-							title="Name the item or transaction">
+							placeholder="Enter Short Description Here"
+							title="Short description of item">
 						<div
 							[hidden]="item.valid || item.pristine"
 							class="alert alert-danger"
 							>Item Name is required</div>
 					</div>
 				</div>
+
+
+			<div data-row-span="1">
+				<div data-field-span="1">
+					<label for="category">Category</label>
+					<select
+						id="category"
+						required
+						[(ngModel)]="model.category"
+						name="category"
+						#category="ngModel"
+						title="category, transaction falls into">
+						<option
+							*ngFor="let category of categories"
+							[value]="category"
+						 >{{category}}</option>
+					</select>
+					<div
+						[hidden]="category.valid || category.pristine"
+						class="alert alert-danger"
+						>Category is required</div>
+				</div>
+			</div>
+
+
+			<div data-row-span="4">
+
+				<div data-field-span="1">
+					<label for="flatnumber">Flat Number</label>
+					<select
+						id="flatnumber"
+						[(ngModel)]="model.flat_number"
+						(ngModelChange)="onFlatNumberChange($event)"
+						name="flatnumber"
+						#flatnumber="ngModel"
+						title="Flat associated to transaction">
+						<option [value]="">NA</option>
+						<option
+							*ngFor="let flat of flats"
+							[value]="flat.flat_number"
+						 >{{flat.flat_number}}</option>
+					</select>
+				</div>
+
+				<div data-field-span="3">
+					<label for="name">Name</label>
+					<input
+						type="text"
+						list="residentNames"
+						id="name"
+						required
+						[(ngModel)]="model.name"
+						name="name"
+						#name="ngModel"
+						placeholder="Person Name Here"
+						title="Person associated to transaction">
+					<datalist id="residentNames">
+						<option *ngFor="let resident of residents" [value]="resident.first_name">
+					</datalist>
+					<div
+						[hidden]="name.valid || name.pristine"
+						class="alert alert-danger"
+						>Name is required</div>
+				</div>
+
+			</div>
+
+
+			<div data-row-span="4">
+
+					<div data-field-span="1">
+						<label for="forMonth">Month</label>
+						<select
+							id="forMonth"
+							required
+							[(ngModel)]="model.for_month"
+							name="forMonth"
+							#forMonth="ngModel"
+							title="month, transaction belongs to">
+							<option
+								*ngFor="let month of months"
+								[value]="month.number"
+							 >{{month.shortName}}</option>
+						</select>
+						<div
+							[hidden]="forMonth.valid || forMonth.pristine"
+							class="alert alert-danger"
+							>Month is required</div>
+					</div>
+
+					<div data-field-span="1">
+						<label for="forYear">Year</label>
+						<input
+							type="number"
+							id="forYear"
+							required
+							[(ngModel)]="model.for_year"
+							name="forYear"
+							#forYear="ngModel"
+							min="2016"
+							max="2020"
+							placeholder="Transaction for the year"
+							title="year, transaction belongs to">
+						<div
+							[hidden]="forYear.valid || forYear.pristine"
+							class="alert alert-danger"
+							>Year is required</div>
+					</div>
+
+				<div data-field-span="1">
+					<label for="amount">Txn Amount in &#8377;</label>
+					<input
+						type="number"
+						step="0.01"
+						id="amount"
+						required
+						[(ngModel)]="model.amount"
+						name="amount"
+						#amount="ngModel"
+						placeholder="Enter Transaction Amount here"
+						title="Transacting amount">
+					<div
+						[hidden]="amount.valid || amount.pristine"
+						class="alert alert-danger"
+						>Amount is required</div>
+				</div>
+
+				<div data-field-span="1">
+					<label for="crdr">Collection/Expenditure</label>
+					<input type="radio" value="cr" name="crdr" [(ngModel)]="model.crdr" required /> Cr
+					<input type="radio" value="dr" name="crdr" [(ngModel)]="model.crdr" /> Dr
+				</div>
+
+			</div>
+
+
+			<div data-row-span="1">
+
+				<div data-field-span="1">
+					<label for="remarks">Remarks</label>
+					<textarea
+						id="remarks"
+						[(ngModel)]="model.remarks"
+						name="remarks"
+						rows="2"
+						placeholder="Enter Long Description here"
+						title="Describe transaction"
+						></textarea>
+				</div>
+
+			</div>
+
 		</fieldset>
+
+		<br />
+
+		<button
+			type="submit"
+			class="btn btn-success"
+			[disabled]="!detailForm.form.valid"
+			[hidden]="hideSave"
+			title="Save changes made"
+			><i class="fa fa-floppy-o" aria-hidden="true"></i> Save</button>
+
+		<button
+			type="button"
+			class="btn btn-link"
+			(click)="gotoList()"
+			title="Cancel changes made"
+			><i class="fa fa-times" aria-hidden="true"></i> Cancel</button>
+
+
 	</form>
 
 

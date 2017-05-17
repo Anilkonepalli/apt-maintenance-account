@@ -1,55 +1,63 @@
-<h2>Periodic Grid View</h2>
-
 <div class="container">
 
-  <div>
-    <button
-      (click)="gotoPreviousMonth($event)"
-      title="Go to previous month">
-      <i class="fa fa-chevron-left" aria-hidden="true"></i>
-    </button>
-    <select
-      id="forMonth"
-      required
-      [(ngModel)]="for_month"
-      (ngModelChange)="monthChanged($event)"
-      name="forMonth"
-      #forMonth="ngModel"
-      title="Periodic view for the month">
-      <option
-        *ngFor="let month of months"
-        [value]="month.number"
-       >{{month.shortName}}</option>
-    </select>
-
-    <input
-      type="number"
-      id="forYear"
-      required
-      [(ngModel)]="for_year"
-      name="forYear"
-      #forYear="ngModel"
-      min="2010"
-      max="2030"
-      title="Periodic view for they year">
-
-      <button
-        (click)="gotoNextMonth($event)"
-        title="Go to next month">
-        <i class="fa fa-chevron-right" aria-hidden="true"></i>
-      </button>
-
-      Monthly Maintenance Charge: &#8377; {{monthlyMaintCharge}}
-
-    <input
-      type="button"
-      value="Get List"
-      title="Retreive List for month and year"
-      (click)="getPeriodicList(forMonth.value, forYear.value)">
-
-  </div>
-
   <ul class="items">
+
+    <h2>Periodic Grid View</h2>
+
+    <div>
+      <button
+        class="btn btn-link"
+        (click)="gotoPreviousMonth($event)"
+        title="Go to previous month">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+      </button>
+      <select
+        class="btn btn-link"
+        id="forMonth"
+        required
+        [(ngModel)]="for_month"
+        (ngModelChange)="monthChanged($event)"
+        name="forMonth"
+        #forMonth="ngModel"
+        title="Periodic view for the month">
+        <option
+          *ngFor="let month of months"
+          [value]="month.number"
+         >{{month.shortName}}</option>
+      </select>
+
+      <input
+        class="btn btn-link"
+        type="number"
+        id="forYear"
+        required
+        [(ngModel)]="for_year"
+        name="forYear"
+        #forYear="ngModel"
+        min="2010"
+        max="2030"
+        title="Periodic view for they year">
+
+        <button
+          class="btn btn-link"
+          (click)="gotoNextMonth($event)"
+          title="Go to next month">
+          <i class="fa fa-chevron-right" aria-hidden="true"></i>
+        </button>
+
+        Monthly Maintenance Charge: &#8377; {{monthlyMaintCharge}}
+
+      <input
+        class="btn btn-link"
+        type="button"
+        value="Get List"
+        title="Retreive List for month and year"
+        (click)="getPeriodicList(forMonth.value, forYear.value)">
+
+    </div>
+
+    <br />
+
     <div class="grid">
     	<li *ngFor="let model of models | async" class="box" role="button" (click)="togglePaidStatus($event, model)">
     			<div class="flat-number">{{ model.flat_number }}</div>

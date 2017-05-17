@@ -8,6 +8,7 @@ import { IMultiSelectOption,
 import { Account }												from './model';
 import { AccountService }									from './service';
 import { Authorization }									from '../authorization/model';
+import { Month }                          from '../shared';
 
 import 'rxjs/add/operator/switchMap';
 
@@ -41,6 +42,8 @@ export class AccountListComponent implements OnInit {
   myOptions: IMultiSelectOption[];
   mySettings: IMultiSelectSettings;
   myTexts: IMultiSelectTexts;
+  months: Month[] = Month.all();
+
 
   constructor(
     private service: AccountService,
