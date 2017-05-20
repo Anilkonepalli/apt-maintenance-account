@@ -1,0 +1,95 @@
+<h2>Flat List-n-Detail</h2>
+
+<form  *ngIf="addAllowed" (ngSubmit)="save(); flatForm.reset()" #flatForm="ngForm">
+
+	<div>
+		<label for="blockNumber">Block Number</label>
+		<input
+			type="text"
+			id="blockNumber"
+			required
+			[(ngModel)]="model.block_number"
+			name="blockNumber"
+			#blockNumber="ngModel"
+			placeholder="<block number here>">
+			<div
+				[hidden]="blockNumber.valid || blockNumber.pristine"
+				class="alert alert-danger"
+				>Block Number is required</div>
+	</div>
+
+	<div>
+		<label for="flatNumber">Flat Number</label>
+		<input
+			type="text"
+			id="flatNumber"
+			required
+			[(ngModel)]="model.flat_number"
+			name="flatNumber"
+			#flatNumber="ngModel"
+			placeholder="<flat number here>">
+			<div
+				[hidden]="flatNumber.valid || flatNumber.pristine"
+				class="alert alert-danger"
+				>Flat Number is required</div>
+	</div>
+
+	<div>
+		<button
+			type="submit"
+			class="btn btn-success"
+			[disabled]="!flatForm.form.valid"
+			[hidden]="hideSave"
+			>Add</button>
+	</div>
+
+</form>
+
+
+<!--div *ngIf="addAllowed">
+<button (click)="add()">Add</button>
+</div-->
+
+<table class="table table-responsive">
+	<thead>
+		<tr>
+			<th title="Block Number">Block No.</th>
+			<th title="Flat Number">Flat No.</th>
+			<th title="View/Edit/Delete">Actions</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr *ngFor="let model of models | async">
+			<td>{{ model.block_number }}</td>
+			<td>{{ model.flat_number}}</td>
+			<td>
+				<button
+					class="delete1 btn btn-link"
+					(click)="delete(model); $event.stopPropagation()"
+					title="Delete record"
+					*ngIf="auth.allowsDelete(model.owner_id)"
+				><i class="fa fa-trash" aria-hidden="true"></i></button>
+			</td>
+		</tr>
+	</tbody>
+</table>
+
+<ul class="items">
+	<li *ngFor="let model of models | async"
+		[class.selected] = "isSelected(model)"
+		(click)="onSelect(model)">
+			<!--span class="badge1">{{model.id}}</span-->
+			<span>{{model.block_number}}</span>
+			<span>{{model.flat_number}}</span>
+			<button
+				class="view1"
+				(click)="onSelect(model)"
+				*ngIf="auth.allowsView(model.owner_id)"
+			>View</button>
+			<button
+				class="delete1"
+				(click)="delete(model); $event.stopPropagation()"
+				*ngIf="auth.allowsDelete(model.owner_id)"
+			>Del</button>
+	</li>
+</ul>
