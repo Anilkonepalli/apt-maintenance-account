@@ -26,6 +26,7 @@ export class FlatComponent implements OnInit {
   addAllowed: boolean = false;
   private selectedId: number;
   model: Flat = new Flat();
+  totalFlats: number = 0;
 
   constructor(
     private service: FlatService,
@@ -42,6 +43,9 @@ export class FlatComponent implements OnInit {
         this.addAllowed = auth.allowsAdd();
         this.auth = auth;
         this.getList();
+        this.models.subscribe((models) => {
+          this.totalFlats = models.length;
+        });
         /*        this.models = this.route.params
                   .switchMap((params: Params) => {
                     this.selectedId = +params['id'];
@@ -63,6 +67,9 @@ export class FlatComponent implements OnInit {
     this.router.navigate(['/flats', 0]); // 0 represent new account
   }
 
+  addFlatFor(blockNumber: string, flatNumber: string) {
+    console.log('Add new flat for ' + blockNumber + ' and ' + flatNumber);
+  }
   save(): void {
     console.log('Save new Flat Details...');
     this.service.create(this.model)

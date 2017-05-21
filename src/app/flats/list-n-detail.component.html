@@ -1,5 +1,5 @@
-<h2>Flat List-n-Detail</h2>
-
+<h2>Add a Flat detail</h2>
+<br />
 <form  *ngIf="addAllowed" (ngSubmit)="save(); flatForm.reset()" #flatForm="ngForm">
 
 	<div>
@@ -45,22 +45,35 @@
 
 </form>
 
-
+<hr />
+<h2>List of Flats</h2>
 <!--div *ngIf="addAllowed">
 <button (click)="add()">Add</button>
 </div-->
 
-<table class="table table-responsive">
+<table summary="Flat list">
+	<caption>Flat list of XYZ Apartments</caption>
 	<thead>
 		<tr>
-			<th title="Block Number">Block No.</th>
-			<th title="Flat Number">Flat No.</th>
-			<th title="View/Edit/Delete">Actions</th>
+			<th title="Block Number" scope="col">Block No.</th>
+			<th title="Flat Number" scope="col">Flat No.</th>
+			<th title="Delete" scope="col">Actions</th>
 		</tr>
 	</thead>
 	<tbody>
+		<tr>
+			<td><input type="text" placeholder="<new block number here>" #bNum /></td>
+			<td><input type="text" placeholder="<new flat number here>" #fNum/></td>
+			<td>
+				<button
+					class="btn btn-link"
+					(click)="addFlatFor(bNum, fNum)"
+					title="Add record"
+					>Add</button>
+			</td>
+		</tr>
 		<tr *ngFor="let model of models | async">
-			<td>{{ model.block_number }}</td>
+			<th scope="row">{{ model.block_number }}</th>
 			<td>{{ model.flat_number}}</td>
 			<td>
 				<button
@@ -72,24 +85,10 @@
 			</td>
 		</tr>
 	</tbody>
+	<tfoot>
+		<tr>
+			<th scope="row" colspan="2">Total Flats</th>
+			<td colspan="1">{{totalFlats}}</td>
+		</tr>
+	</tfoot>
 </table>
-
-<ul class="items">
-	<li *ngFor="let model of models | async"
-		[class.selected] = "isSelected(model)"
-		(click)="onSelect(model)">
-			<!--span class="badge1">{{model.id}}</span-->
-			<span>{{model.block_number}}</span>
-			<span>{{model.flat_number}}</span>
-			<button
-				class="view1"
-				(click)="onSelect(model)"
-				*ngIf="auth.allowsView(model.owner_id)"
-			>View</button>
-			<button
-				class="delete1"
-				(click)="delete(model); $event.stopPropagation()"
-				*ngIf="auth.allowsDelete(model.owner_id)"
-			>Del</button>
-	</li>
-</ul>
