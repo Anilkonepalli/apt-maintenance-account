@@ -2,9 +2,10 @@ import { Component, OnInit }							from '@angular/core';
 import { Router, ActivatedRoute, Params }	from '@angular/router';
 import { Observable }											from 'rxjs/Observable';
 
-import { Flat }												from './model';
-import { FlatService }									from './service';
+import { Flat }												    from './model';
+import { FlatService }									  from './service';
 import { Authorization }									from '../authorization/model';
+import { Logger }		                      from '../logger/default-log.service';
 
 import 'rxjs/add/operator/switchMap';
 
@@ -31,7 +32,8 @@ export class FlatComponent implements OnInit {
   constructor(
     private service: FlatService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private logger: Logger
   ) { }
 
   ngOnInit(): void {
@@ -66,16 +68,23 @@ export class FlatComponent implements OnInit {
   add(): void {
     this.router.navigate(['/flats', 0]); // 0 represent new account
   }
-
-  addFlatFor(blockNumber: string, flatNumber: string) {
-    console.log('Add new flat for ' + blockNumber + ' and ' + flatNumber);
-  }
+  /*
+    addFlatFor(blockNumber: string, flatNumber: string) {
+      console.log('Add new flat for ' + blockNumber + ' and ' + flatNumber);
+    }  */
   save(): void {
     console.log('Save new Flat Details...');
     this.service.create(this.model)
       .then((model) => {
         console.log('New Flat details added...'); console.log(model);
         this.getList();
+      })
+      .catch((error: any) => {
+        let jerror = error.json();
+        console.log('Error occurred...'); console.log(jerror);
+        console.log('Error message'); console.log(jerror.data.message);
+        this.logger.error('Flat module > list-n-detail component...' + jerror.data.message);
+        alert(jerror.data.message);
       });
   }
 

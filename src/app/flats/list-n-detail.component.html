@@ -1,4 +1,4 @@
-<h2>Add a Flat detail</h2>
+<!--h2>Add a Flat detail</h2>
 <br />
 <form  *ngIf="addAllowed" (ngSubmit)="save(); flatForm.reset()" #flatForm="ngForm">
 
@@ -43,7 +43,7 @@
 			>Add</button>
 	</div>
 
-</form>
+</form-->
 
 <hr />
 <h2>List of Flats</h2>
@@ -62,14 +62,29 @@
 	</thead>
 	<tbody>
 		<tr>
-			<td><input type="text" placeholder="<new block number here>" #bNum /></td>
-			<td><input type="text" placeholder="<new flat number here>" #fNum/></td>
+			<td>
+				<input
+					type="text"
+					required
+					[(ngModel)]="model.block_number"
+					placeholder="<new block number here>"
+					#blockNumber="ngModel" />
+			</td>
+			<td>
+				<input
+					type="text"
+					required
+					[(ngModel)]="model.flat_number"
+					placeholder="<new flat number here>"
+					#flatNumber="ngModel" />
+			</td>
 			<td>
 				<button
 					class="btn btn-link"
-					(click)="addFlatFor(bNum, fNum)"
+					(click)="save()"
 					title="Add record"
-					>Add</button>
+					[disabled]="!(model.block_number && model.flat_number)"
+					><i class="fa fa-plus" aria-hidden="true"></i></button>
 			</td>
 		</tr>
 		<tr *ngFor="let model of models | async">
