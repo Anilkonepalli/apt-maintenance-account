@@ -1,17 +1,100 @@
-<h2>Resident List</h2>
+<h2>List of Residents</h2>
 
-<div *ngIf="addAllowed">
+<table summary="Residents">
+	<caption>Residents of XYZ Apartments</caption>
+	<thead>
+		<tr>
+			<th title="First Name" scope="col">First Name</th>
+			<th title="Last Name" scope="col">Last Name</th>
+			<th title="Resident Type" scope="col">Is A</th>
+			<th title="Delete" scope="col">Actions</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td>
+				<input
+					type="text"
+					required
+					[(ngModel)]="model.first_name"
+					placeholder="<first name here>"
+					#blockNumber="ngModel" />
+			</td>
+			<td>
+				<input
+					type="text"
+					required
+					[(ngModel)]="model.last_name"
+					placeholder="<last name here>"
+					#flatNumber="ngModel" />
+			</td>
+			<td>
+				<!--input
+					type="text"
+					required
+					[(ngModel)]="model.is_a"
+					placeholder="<resident type here>"
+					#flatNumber="ngModel" /-->
+					<select
+						class="form-control"
+						id="isa"
+						required
+						[(ngModel)]="model.is_a"
+						name="isa"
+						#isa="ngModel">
+						<option
+							*ngFor="let type of types"
+							[value]="type"
+						 >{{type}}</option>
+					</select>
+			</td>
+			<td>
+				<button
+					class="btn btn-link"
+					(click)="save()"
+					title="Add New Resident"
+					[disabled]="!(model.first_name && model.is_a)"
+					><i class="fa fa-plus" aria-hidden="true"></i></button>
+			</td>
+		</tr>
+		<tr *ngFor="let model of models | async">
+			<th scope="row">{{ model.first_name }}</th>
+			<td>{{ model.last_name }}</td>
+			<td>{{ model.is_a }}</td>
+			<td>
+				<button
+					class="delete1 btn btn-link"
+					(click)="delete(model); $event.stopPropagation()"
+					title="Delete Resident"
+					*ngIf="auth.allowsDelete(model.owner_id)"
+				><i class="fa fa-trash" aria-hidden="true"></i></button>
+			</td>
+		</tr>
+	</tbody>
+	<tfoot>
+		<tr>
+			<th scope="row" colspan="3">Total Residents</th>
+			<td colspan="1">{{totalResidents}}</td>
+		</tr>
+	</tfoot>
+</table>
+
+
+
+<hr />
+
+<!--div *ngIf="addAllowed">
 <button (click)="add()">Add</button>
 </div>
 
-<ul class="items">
+<!--ul class="items">
 	<li *ngFor="let model of models | async"
 		[class.selected] = "isSelected(model)"
 		(click)="onSelect(model)">
 			<span class="badge1">{{model.id}}</span>
 			<span>{{model.first_name}}</span>
 			<span>{{model.last_name}}</span>
-			<!--span>{{model.is_a}}</span-->
+			<!--span>{{model.is_a}}</span- ->
 			<button
 				class="view1"
 				(click)="onSelect(model)"
@@ -23,4 +106,4 @@
 				*ngIf="auth.allowsDelete(model.owner_id)"
 			>Del</button>
 	</li>
-</ul>
+</ul-->
