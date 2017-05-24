@@ -120,4 +120,9 @@ export class ResidentListComponent implements OnInit {
       });
   }
 
+  public onRowClick(event: any, id: number) {
+    console.log('Resident Row clicked...');
+    console.log(event.target.outerText, id);
+  }
+
 }

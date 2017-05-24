@@ -6,7 +6,7 @@
 		<tr>
 			<th title="First Name" scope="col">First Name</th>
 			<th title="Last Name" scope="col">Last Name</th>
-			<th title="Resident Type" scope="col">Is A</th>
+			<th title="Resident Type" scope="col">Type</th>
 			<th title="Delete" scope="col">Actions</th>
 		</tr>
 	</thead>
@@ -42,6 +42,9 @@
 						[(ngModel)]="model.is_a"
 						name="isa"
 						#isa="ngModel">
+						<option value="" disabled selected>
+							-- Select a type --
+						</option>
 						<option
 							*ngFor="let type of types"
 							[value]="type"
@@ -58,7 +61,7 @@
 			</td>
 		</tr>
 		<tr *ngFor="let model of models | async">
-			<th scope="row">{{ model.first_name }}</th>
+			<th scope="row" contentEditable="true" (input)="onRowClick($event, model.id)">{{ model.first_name }}</th>
 			<td>{{ model.last_name }}</td>
 			<td>{{ model.is_a }}</td>
 			<td>
