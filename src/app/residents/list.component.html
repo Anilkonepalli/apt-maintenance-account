@@ -61,7 +61,7 @@
 			</td>
 		</tr>
 		<tr *ngFor="let model of models | async">
-			<th scope="row" contentEditable="true" (input)="onRowClick($event, model.id)">{{ model.first_name }}</th>
+			<th scope="row" (click)="rowSelected($event, model.id)">{{ model.first_name }}</th>
 			<td>{{ model.last_name }}</td>
 			<td>{{ model.is_a }}</td>
 			<td>
