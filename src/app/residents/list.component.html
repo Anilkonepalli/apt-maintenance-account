@@ -29,12 +29,6 @@
 					#lastName="ngModel" />
 			</td>
 			<td>
-				<!--input
-					type="text"
-					required
-					[(ngModel)]="model.is_a"
-					placeholder="<resident type here>"
-					#flatNumber="ngModel" /-->
 					<select
 						class="form-control"
 						id="isa"
@@ -71,8 +65,27 @@
 					placeholder="<first name here>"
 				/>
 			</th>
-			<td>{{ model.last_name }}</td>
-			<td>{{ model.is_a }}</td>
+			<td (click)="rowSelected($event, model)" *ngIf="!canEdit[model.id]">
+				{{ model.last_name }}
+			</td>
+			<td *ngIf="canEdit[model.id]">
+				<input
+					type="text"
+					[(ngModel)]="editModel.last_name"
+					placeholder="<last name here>"
+				/>
+			</td>
+			<td (click)="rowSelected($event, model)" *ngIf="!canEdit[model.id]">
+				{{ model.is_a }}
+			</td>
+			<td *ngIf="canEdit[model.id]">
+				<select	[(ngModel)]="editModel.is_a">
+					<option
+						*ngFor="let type of types"
+						[value]="type"
+					 >{{type}}</option>
+				</select>
+			</td>
 			<td>
 				<button
 					class="btn btn-link"
