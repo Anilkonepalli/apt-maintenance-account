@@ -57,12 +57,6 @@ export class ResidentListComponent implements OnInit {
         this.addAllowed = auth.allowsAdd();
         this.auth = auth;
         this.getList();
-        /*
-                this.models = this.route.params
-                  .switchMap((params: Params) => {
-                    this.selectedId = +params['id'];
-                    return this.service.getList();
-                  });   */
 
         this.models.subscribe((models) => {
           // set total residents
@@ -72,27 +66,8 @@ export class ResidentListComponent implements OnInit {
             this.canEdit[each.id] = false;
           });
         });
-
-
       });
-
-
   }
-
-  /*
-    onSelect(model: Resident): void {
-      this.router.navigate(['/residents', model.id]);
-    }
-
-    isSelected(model: Resident) {
-      return model ? model.id === this.selectedId : false;
-    }
-
-
-      add(): void {
-        this.router.navigate(['/residents', 0]); // 0 represent new account
-      }
-    */
 
   save(): void {
     console.log('Save new Resident Details...');
@@ -100,7 +75,7 @@ export class ResidentListComponent implements OnInit {
       .then((model) => {
         console.log('New Resident added...'); console.log(model);
         this.totalResidents++;
-        this.getList();
+        this.models = this.models.do(res => { }); // just resets the models
         this.model = new Resident(); // reset the fields associated to model
       })
       .catch((error: any) => {
@@ -110,13 +85,12 @@ export class ResidentListComponent implements OnInit {
       });
   }
 
-  delete(model: Resident): void {
+  delete(model: Resident, models: Resident[]): void {
     this.service
       .delete(model.id)
-      .then(() => { // filter out the deleted resident model from resident models
-        this.models = this.models.filter((models, i) => {
-          return models[i] !== model;
-        });
+      .then(() => {
+        console.log('Models on delete...'); console.log(models);
+        this.models = this.models.do(res => { }); // just resets the models
         this.totalResidents--;
       });
   }
@@ -143,17 +117,18 @@ export class ResidentListComponent implements OnInit {
     this.editModel = Object.assign({}, model); // assign a copy of model
   }
 
-  public saveChanges(model: Resident) {
-    console.log('Save Changes...' + model.id); console.log(model);
-    this.canEdit[model.id] = false;
+  public saveChanges(modelWChanges: Resident, modelWOChanges: Resident) {
+
+    console.log('Save Changes...' + modelWChanges.id); console.log(modelWChanges);
+
+    // disable edit mode
+    this.canEdit[modelWChanges.id] = false;
     this.editModel = null;
 
-    this.service.update(model)
+    // save changes into database
+    this.service.update(modelWChanges)
       .then((model) => {
-        console.log('Resident Updated...'); console.log(model);
-        this.models.do((each: Resident) => {
-          console.log(each);
-        });
+        modelWOChanges.first_name = model.first_name; // update the view with changes
       })
       .catch((error: any) => {
         let jerror = error.json();
@@ -168,6 +143,5 @@ export class ResidentListComponent implements OnInit {
     console.log('Changed model...'); console.log(this.editModel);
     this.canEdit[model.id] = false;
     this.editModel = null;
-    //this.getList();
   }
 }
