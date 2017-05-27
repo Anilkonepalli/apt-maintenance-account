@@ -18,7 +18,7 @@
 					required
 					[(ngModel)]="model.first_name"
 					placeholder="<first name here>"
-					#blockNumber="ngModel" />
+					#firstName="ngModel" />
 			</td>
 			<td>
 				<input
@@ -26,7 +26,7 @@
 					required
 					[(ngModel)]="model.last_name"
 					placeholder="<last name here>"
-					#flatNumber="ngModel" />
+					#lastName="ngModel" />
 			</td>
 			<td>
 				<!--input
@@ -61,15 +61,38 @@
 			</td>
 		</tr>
 		<tr *ngFor="let model of models | async">
-			<th scope="row" (click)="rowSelected($event, model.id)">{{ model.first_name }}</th>
+			<th scope="row" (click)="rowSelected($event, model)" *ngIf="!canEdit[model.id]">
+				{{ model.first_name }}
+			</th>
+			<th scope="row" *ngIf="canEdit[model.id]">
+				<input
+					type="text"
+					[(ngModel)]="editModel.first_name"
+					placeholder="<first name here>"
+				/>
+			</th>
 			<td>{{ model.last_name }}</td>
 			<td>{{ model.is_a }}</td>
 			<td>
 				<button
+					class="btn btn-link"
+					(click)="saveChanges(editModel)"
+					title="Save Changes"
+					*ngIf="canEdit[model.id]"
+					><i class="fa fa-floppy-o" aria-hidden="true"></i></button>
+
+				<button
+					class="btn btn-link"
+					(click)="cancelChanges(editModel)"
+					title="Cancel changes"
+					*ngIf="canEdit[model.id]"
+					><i class="fa fa-times" aria-hidden="true"></i></button>
+
+				<button
 					class="delete1 btn btn-link"
 					(click)="delete(model); $event.stopPropagation()"
 					title="Delete Resident"
-					*ngIf="auth.allowsDelete(model.owner_id)"
+					*ngIf="auth.allowsDelete(model.owner_id) && !canEdit[model.id]"
 				><i class="fa fa-trash" aria-hidden="true"></i></button>
 			</td>
 		</tr>

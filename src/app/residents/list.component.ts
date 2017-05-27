@@ -38,6 +38,8 @@ export class ResidentListComponent implements OnInit {
     'friend',
     'guest'
   ];
+  canEdit: any = {};
+  editModel: Resident;
 
   constructor(
     private service: ResidentService,
@@ -63,10 +65,17 @@ export class ResidentListComponent implements OnInit {
                   });   */
 
         this.models.subscribe((models) => {
+          // set total residents
           this.totalResidents = models.length;
+          // set edit flag on each model; false by default
+          models.forEach((each) => {
+            this.canEdit[each.id] = false;
+          });
         });
 
+
       });
+
 
   }
 
@@ -120,9 +129,45 @@ export class ResidentListComponent implements OnInit {
       });
   }
 
-  public rowSelected(event: any, id: number) {
-    console.log('Row clicked...' + id);
+  public rowSelected(event: any, model: Resident) {
+    console.log('Row clicked...' + model.id);
     console.log(event);
+
+    // disable previous edits, if any
+    if (this.editModel) {
+      let prevModelId = this.editModel.id;
+      this.canEdit[prevModelId] = false;
+    }
+
+    this.canEdit[model.id] = true; // toggle edit.id value
+    this.editModel = Object.assign({}, model); // assign a copy of model
   }
 
+  public saveChanges(model: Resident) {
+    console.log('Save Changes...' + model.id); console.log(model);
+    this.canEdit[model.id] = false;
+    this.editModel = null;
+
+    this.service.update(model)
+      .then((model) => {
+        console.log('Resident Updated...'); console.log(model);
+        this.models.do((each: Resident) => {
+          console.log(each);
+        });
+      })
+      .catch((error: any) => {
+        let jerror = error.json();
+        this.logger.error('Resident module > list component...' + jerror.data.message);
+        alert(jerror.data.message);
+      });
+
+  }
+
+  public cancelChanges(model: Resident) {
+    console.log('Cancel changes...' + model.id);
+    console.log('Changed model...'); console.log(this.editModel);
+    this.canEdit[model.id] = false;
+    this.editModel = null;
+    //this.getList();
+  }
 }
