@@ -10,17 +10,17 @@ import { FlatResidentService }					  from './service';
 import 'rxjs/add/operator/switchMap';
 import * as _                               from 'lodash';
 
-var list_css = require('./component.css');
+var list_css = require('./grid.component.css');
 var list_css_string = list_css.toString();
-var list_html = require('./component.html');
+var list_html = require('./grid.component.html');
 var list_html_string = list_html.toString();
 
 @Component({
-  selector: 'flat-resident',
+  selector: 'flat-resident-grid',
   styles: [list_css_string],
   templateUrl: list_html_string
 })
-export class FlatResidentComponent implements OnInit {
+export class FlatResidentGridComponent implements OnInit {
   //----------------------------------------------------------------------------------
   //   Flats (lstream)   |       Residents (rstream = attached + detached)           |
   //                     |   AttachedStream   |  DetachedStream (or Available List)) |

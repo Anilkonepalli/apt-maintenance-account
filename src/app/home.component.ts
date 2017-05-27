@@ -14,7 +14,7 @@ import { AuthService } from './authentication/auth.service';
         <h1 class="display-6 text-center">to</h1>
         <h1 class="display-5 text-center">Apartment Maintenance Account</h1>
         <hr>
-        <h5>It is used</h5>
+        <h5>It is intended</h5>
         <ul>
           <li>To track the collections and expenses towards maintenance of flats in the apartment complex<br></li>
           <li>To ensure any time access to transactions in the maintenance account<br></li>
