@@ -13,56 +13,59 @@ var detail_css = require('./detail.component.css');
 var detail_css_string = detail_css.toString();
 
 @Component({
-    selector: 'user-detail',
-    templateUrl: detail_html_string,
-    styles: [detail_css_string],
+  selector: 'user-detail',
+  templateUrl: detail_html_string,
+  styles: [detail_css_string],
 })
 export class UserDetailComponent implements OnInit {
-    @Input() model: User;
-    editMode: boolean = true;
-    modelName: string = 'User';
+  @Input() model: User;
+  editMode: boolean = true;
+  modelName: string = 'User';
+  title: string = this.editMode ? this.modelName + ' details' : 'Add ' + this.modelName;
+  userId: string;
 
-    constructor(
-        private service: UserService,
-        private route: ActivatedRoute,
-        private router: Router,
-        private location: Location
-    ) { }
+  constructor(
+    private service: UserService,
+    private route: ActivatedRoute,
+    private router: Router,
+    private location: Location
+  ) { }
 
-    ngOnInit(): void {
-        this.route.params
-            .switchMap((params: Params) => this.service.getUserFor(+params['id']))
-            .subscribe((model: User) => {
-                this.model = model;
-                if (model.id) this.editMode = true;
-                else this.editMode = false;
-            });
-    }
+  ngOnInit(): void {
+    this.route.params
+      .switchMap((params: Params) => this.service.getUserFor(+params['id']))
+      .subscribe((model: User) => {
+        this.model = model;
+        if (model.id) this.editMode = true;
+        else this.editMode = false;
+        this.userId = this.editMode ? 'ID - ' + this.model.id : 'ID - 0';
+      });
+  }
 
-    goBack(): void {
-        this.location.back();
-    }
+  goBack(): void {
+    this.location.back();
+  }
 
-    gotoList() {
-        let modelId = this.model ? this.model.id : null;
-        this.router.navigate(['/users', { id: modelId, foo: 'foo' }]);
-    }
+  gotoList() {
+    let modelId = this.model ? this.model.id : null;
+    this.router.navigate(['/users', { id: modelId, foo: 'foo' }]);
+  }
 
-    save(): void {
-        this.editMode ? this.update() : this.add();
-    }
+  save(): void {
+    this.editMode ? this.update() : this.add();
+  }
 
-    private add(): void {
-        this.service.create(this.model)
-            .then((model) => {
-                this.model = model;
-                this.gotoList();
-            });
-    }
+  private add(): void {
+    this.service.create(this.model)
+      .then((model) => {
+        this.model = model;
+        this.gotoList();
+      });
+  }
 
-    private update(): void {
-        this.service.update(this.model)
-            .then(() => this.goBack());
-    }
+  private update(): void {
+    this.service.update(this.model)
+      .then(() => this.goBack());
+  }
 
 }
