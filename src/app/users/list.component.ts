@@ -25,6 +25,7 @@ export class UserListComponent implements OnInit {
   auth: Authorization;
   addAllowed: boolean = false;
   private selectedId: number;
+  totalUsers: number = 0;
 
   constructor(
     private service: UserService,
@@ -33,12 +34,9 @@ export class UserListComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+
     this.getList();
-    /*        this.models = this.route.params
-                .switchMap((params: Params) => {
-                    this.selectedId = +params['id'];
-                    return this.service.getList();
-                });  */
+
   }
 
   onSelect(model: User): void {
@@ -56,10 +54,14 @@ export class UserListComponent implements OnInit {
   delete(model: User): void {
     this.service
       .delete(model.id)
-      .then(() => { // filter out the deleted model from models
-        this.models = this.models.filter((models, i) => {
-          return models[i] !== model;
-        });
+      .then(() => {
+        /*
+                // filter out the deleted model from models
+                this.models = this.models.filter((models, i) => {
+                  return models[i] !== model;
+                }); */
+        this.models = this.models.do(res => { }); // just resets the models
+        this.totalUsers--;
       });
   }
 
@@ -74,6 +76,9 @@ export class UserListComponent implements OnInit {
             this.selectedId = +params['id'];
             return this.service.getList();
           });
+        this.models.subscribe((models) => {
+          this.totalUsers = models.length; // sets total users
+        });
       });
   }
 }

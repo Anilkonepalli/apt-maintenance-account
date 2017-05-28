@@ -48,11 +48,6 @@ export class FlatComponent implements OnInit {
         this.models.subscribe((models) => {
           this.totalFlats = models.length;
         });
-        /*        this.models = this.route.params
-                  .switchMap((params: Params) => {
-                    this.selectedId = +params['id'];
-                    return this.service.getList();
-                  }); */
       });
   }
 
@@ -68,11 +63,6 @@ export class FlatComponent implements OnInit {
   add(): void {
     this.router.navigate(['/flats', 0]); // 0 represent new account
   }
-
-  /*
-    addFlatFor(blockNumber: string, flatNumber: string) {
-      console.log('Add new flat for ' + blockNumber + ' and ' + flatNumber);
-    }  */
 
   save(): void {
     console.log('Save new Flat Details...');
