@@ -4,6 +4,7 @@ import { Location }													from '@angular/common';
 
 import { User }															from './model';
 import { UserService }											from './service';
+import { Logger }		                        from '../logger/default-log.service';
 
 import 'rxjs/add/operator/switchMap';
 
@@ -28,7 +29,8 @@ export class UserDetailComponent implements OnInit {
     private service: UserService,
     private route: ActivatedRoute,
     private router: Router,
-    private location: Location
+    private location: Location,
+    private logger: Logger
   ) { }
 
   ngOnInit(): void {
@@ -56,6 +58,7 @@ export class UserDetailComponent implements OnInit {
   }
 
   private add(): void {
+    this.logger.info('Adding new user...');
     this.service.create(this.model)
       .then((model) => {
         this.model = model;

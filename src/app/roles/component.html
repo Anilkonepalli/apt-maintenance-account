@@ -1,0 +1,79 @@
+<h2>List of Roles</h2>
+
+<table summary="Role list">
+	<caption>Role list of XYZ Apartments</caption>
+	<thead>
+		<tr>
+			<th title="Role Name" scope="col">Role Name</th>
+			<th title="Describe briefly on Role" scope="col">Description</th>
+			<th title="Inherits from Roles" scope="col">Inherits</th>
+			<th title="Delete" scope="col">Actions</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td>
+				<input
+					type="text"
+					required
+					[(ngModel)]="model.name"
+					placeholder="<role name here>"
+					#roleName="ngModel" />
+			</td>
+			<td>
+				<input
+					type="text"
+					required
+					[(ngModel)]="model.description"
+					placeholder="<brief description on role here>"
+					#description="ngModel" />
+			</td>
+			<td>
+				<input
+					type="text"
+					required
+					[(ngModel)]="model.inherits"
+					placeholder="<inherited roles here>"
+					#inherit="ngModel" />
+			</td>
+			<td>
+				<button
+					class="btn btn-link"
+					(click)="save()"
+					title="Add record"
+					[disabled]="!(model.name && model.description)"
+					><i class="fa fa-plus" aria-hidden="true"></i></button>
+			</td>
+		</tr>
+		<tr *ngFor="let model of models | async">
+			<th scope="row">{{ model.name }}</th>
+			<td>{{ model.description }}</td>
+			<td>{{ model.inherits }}</td>
+			<td>
+				<button
+					class="btn btn-link"
+					(click)="delete(model); $event.stopPropagation()"
+					title="Delete record"
+				><i class="fa fa-trash" aria-hidden="true"></i></button>
+			</td>
+		</tr>
+	</tbody>
+	<tfoot>
+		<tr>
+			<th scope="row" colspan="2">Total Flats</th>
+			<td colspan="1">{{totalFlats}}</td>
+		</tr>
+	</tfoot>
+</table>
+
+
+<!--button (click)="add()">Add</button>
+<ul class="items">
+	<li *ngFor="let model of models | async"
+		[class.selected] = "isSelected(model)"
+		(click)="onSelect(model)">
+		<span class="badge">{{model.id}}</span>
+		<span>{{model.name}}</span>
+		<button class="delete" (click)="delete(model); $event.stopPropagation()">x</button>
+	</li>
+</ul-->
