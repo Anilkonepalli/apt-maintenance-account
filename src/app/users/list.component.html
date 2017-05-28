@@ -1,5 +1,52 @@
 <h2>User List</h2>
-<button (click)="add()">Add</button>
+
+<table summary="Users">
+	<caption>Users of XYZ Apartments</caption>
+	<thead>
+		<tr>
+			<th title="User Name" scope="col">User Name</th>
+			<th title="First Name" scope="col">First Name</th>
+			<th title="Email ID" scope="col">Email</th>
+			<th title="View/Edit/Delete">Actions
+				<span *ngIf="addAllowed">
+						<button class="btn btn-link" (click)="add()" title="Add User"><i class="fa fa-plus" aria-hidden="true"></i></button>
+				</span>
+			</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr *ngFor="let model of models | async">
+			<th>{{ model.name }}</th>
+			<td>{{ model.first_name }}</td>
+			<td>{{ model.email }}</td>
+			<td>
+				<button
+					class="view1 btn btn-link"
+					(click)="onSelect(model)"
+					title="View details"
+					*ngIf="auth.allowsView(model.id)"
+				><i class="fa fa-eye" aria-hidden="true"></i></button>
+				<button
+					class="delete1 btn btn-link"
+					(click)="delete(model); $event.stopPropagation()"
+					title="Delete record"
+					*ngIf="auth.allowsDelete(model.id)"
+				><i class="fa fa-trash" aria-hidden="true"></i></button>
+			</td>
+		</tr>
+	</tbody>
+	<tfoot>
+		<tr>
+			<th scope="row" colspan="3">Total Users</th>
+			<td colspan="1">{{totalUserss}}</td>
+		</tr>
+	</tfoot>
+</table>
+
+
+
+
+<!--button (click)="add()">Add</button>
 <ul class="items">
 	<li *ngFor="let model of models | async"
 		[class.selected] = "isSelected(model)"
@@ -8,4 +55,4 @@
 		<span>{{model.name}}</span>
 		<button class="delete" (click)="delete(model); $event.stopPropagation()">x</button>
 	</li>
-</ul>
+</ul-->
