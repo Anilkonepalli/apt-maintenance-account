@@ -122,7 +122,7 @@ export class RoleDetailComponent implements OnInit {
 
   private update(): void {
     let selOp = this.selectedOptions();
-    if (this.model.inherits != selOp) {
+    if (this.model.inherits !== selOp) {
       this.model.inherits = selOp;
     }
     this.service.update(this.model)
