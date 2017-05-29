@@ -3,8 +3,8 @@ import { Http, Headers } 	from '@angular/http';
 
 import { Role } 					from './model';
 import { Permission } 		from '../permissions/model';
-import { UserService } 		from '../users/service';
-import { Authorization } 	from '../authorization/model';
+//import { UserService } 		from '../users/service';
+//import { Authorization } 	from '../authorization/model';
 
 import 'rxjs/add/operator/toPromise';
 
@@ -12,9 +12,6 @@ import 'rxjs/add/operator/toPromise';
 @Injectable()
 export class RoleService {
 
-  //public config: any = { server_ip_addr: "http://localhost:3002"};
-
-  //private modelUrl = this.config.server_ip_addr+'/api/roles';
   private modelUrl = process.env.API_URL + '/api/roles';
   private id_token = localStorage.getItem('id_token');
   private headers = new Headers({
@@ -22,9 +19,7 @@ export class RoleService {
     'x-access-token': this.id_token
   });
 
-  constructor(
-    private http: Http,
-    private userService: UserService) { }
+  constructor(private http: Http) { }
 
   getList(): Promise<Role[]> {
     console.log('roles >> service . getList()...');
@@ -43,10 +38,7 @@ export class RoleService {
       .then(model => model.json() as Role)
       .catch(this.handleError);
   }
-  getAuthorization(): Promise<Authorization> {
-    console.log('roles >> service . getAuthorization...');
-    return this.userService.getAuthorizationFor('roles');
-  }
+
   getMyPermissions(id: number): Promise<Permission[]> {
     const url = this.modelUrl + '/mypermissions/' + id;
     return this.http

@@ -14,50 +14,52 @@ var list_html_string = list_html.toString();
 
 
 @Component({
-    selector: 'role-list',
-    styles: [list_css_string],
-    templateUrl: list_html_string
+  selector: 'role-list',
+  styles: [list_css_string],
+  templateUrl: list_html_string
 })
 export class RoleListComponent implements OnInit {
 
-    models: Observable<Role[]>;
+  models: Observable<Role[]>;
+  totalRoles: number = 0;
+  private selectedId: number;
 
-    private selectedId: number;
+  constructor(
+    private service: RoleService,
+    private route: ActivatedRoute,
+    private router: Router
+  ) { }
 
-    constructor(
-        private service: RoleService,
-        private route: ActivatedRoute,
-        private router: Router
-    ) { }
+  ngOnInit(): void {
+    this.models = this.route.params
+      .switchMap((params: Params) => {
+        this.selectedId = +params['id'];
+        return this.service.getList();
+      });
+    this.models.subscribe(models => {
+      this.totalRoles = models.length;
+    });
+  }
 
-    ngOnInit(): void {
-        this.models = this.route.params
-            .switchMap((params: Params) => {
-                this.selectedId = +params['id'];
-                return this.service.getList();
-            });
+  onSelect(model: Role): void {
+    this.router.navigate(['/roles', model.id]);
+  }
 
-    }
+  isSelected(model: Role) {
+    return model ? model.id === this.selectedId : false;
+  }
 
-    onSelect(model: Role): void {
-        this.router.navigate(['/roles', model.id]);
-    }
+  add(): void {
+    this.router.navigate(['/roles', 0]); // 0 represent new role
+  }
 
-    isSelected(model: Role) {
-        return model ? model.id === this.selectedId : false;
-    }
-
-    add(): void {
-        this.router.navigate(['/roles', 0]); // 0 represent new role
-    }
-
-    delete(model: Role): void {
-        this.service
-            .delete(model.id)
-            .then(() => { // filter out the deleted Role model from role models
-                this.models = this.models.filter((models, i) => {
-                    return models[i] !== model;
-                });
-            });
-    }
+  delete(model: Role): void {
+    this.service
+      .delete(model.id)
+      .then(() => { // filter out the deleted Role model from role models
+        this.models = this.models.filter((models, i) => {
+          return models[i] !== model;
+        });
+      });
+  }
 }

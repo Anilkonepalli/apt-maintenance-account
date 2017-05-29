@@ -1,4 +1,52 @@
-<h2>Roles</h2>
+<h2>List of Roles</h2>
+
+<table summary="Role list">
+	<caption>Role list of XYZ Apartments</caption>
+	<thead>
+		<tr>
+			<th title="Role Name" scope="col">Role Name</th>
+			<th title="Describe briefly on Role" scope="col">Description</th>
+			<th title="Inherits from Roles" scope="col">Inherits</th>
+			<th title="View/Edit/Delete">Actions
+				<span>
+						<button
+							class="btn btn-link"
+							(click)="add()"
+							title="Add New Role"
+						><i class="fa fa-plus" aria-hidden="true"></i></button>
+				</span>
+			</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr *ngFor="let model of models | async">
+			<th scope="row">{{ model.name }}</th>
+			<td>{{ model.description }}</td>
+			<td>{{ model.inherits }}</td>
+			<td>
+				<button
+					class="btn btn-link"
+					(click)="onSelect(model)"
+					title="View details"
+				><i class="fa fa-eye" aria-hidden="true"></i></button>
+				<button
+					class="btn btn-link"
+					(click)="delete(model); $event.stopPropagation()"
+					title="Delete record"
+				><i class="fa fa-trash" aria-hidden="true"></i></button>
+			</td>
+		</tr>
+	</tbody>
+	<tfoot>
+		<tr>
+			<th scope="row" colspan="3">Total Roles</th>
+			<td colspan="1">{{totalRoles}}</td>
+		</tr>
+	</tfoot>
+</table>
+
+
+<!--h2>Roles</h2>
 <button (click)="add()">Add</button>
 <ul class="items">
 	<li *ngFor="let model of models | async"
@@ -8,4 +56,4 @@
 		<span>{{model.name}}</span>
 		<button class="delete" (click)="delete(model); $event.stopPropagation()">x</button>
 	</li>
-</ul>
+</ul-->

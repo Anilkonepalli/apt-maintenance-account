@@ -2,7 +2,9 @@ import { NgModule }							from '@angular/core';
 import { CommonModule }					from '@angular/common';
 import { FormsModule }					from '@angular/forms';
 
-import { RoleComponent }        from './component';
+//import { RoleComponent }        from './component';
+import { RoleListComponent }    from './list.component';
+import { RoleDetailComponent }  from './detail.component';
 import { RoleService }					from './service';
 import { RolesRoutingModule }		from './routing.module';
 
@@ -13,7 +15,8 @@ import { RolesRoutingModule }		from './routing.module';
     RolesRoutingModule
   ],
   declarations: [
-    RoleComponent
+    RoleListComponent,
+    RoleDetailComponent
   ],
   providers: [
     RoleService
