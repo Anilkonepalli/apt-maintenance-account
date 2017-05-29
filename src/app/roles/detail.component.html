@@ -1,9 +1,109 @@
-<div *ngIf="model">
+<div *ngIf="model" class="container">
 
-	<h2 *ngIf="editMode">{{modelName}} Details</h2>
-	<h2 *ngIf="!editMode">Add {{modelName}}</h2>
+	<h2>{{ title }}</h2>
 
-	<div *ngIf="editMode"><label>id: </label>{{model.id}}</div>
+	<form (ngSubmit)="save()" #detailForm="ngForm" class="grid-form">
+		<fieldset>
+			<legend>{{ recordId }}</legend>
+
+				<div data-row-span="2">
+					<div data-field-span="1">
+						<label for="roleName">RoleName</label>
+						<input
+							type="text"
+							id="roleName"
+							required
+							[(ngModel)]="model.name"
+							name="roleName"
+							#roleName="ngModel"
+							placeholder="<role name here>"
+							title="Name of the role">
+						<div
+							[hidden]="roleName.valid || roleName.pristine"
+							class="alert alert-danger"
+							>Role Name is required</div>
+					</div>
+
+					<!--div data-field-span="1">
+						<label for="inheritRoles">Inherits</label>
+						<select
+							id="inheritRoles"
+							required
+							[(ngModel)]="model.inherits"
+							name="inheritRoles"
+							#inheritRoles="ngModel"
+							title="inherit Roles">
+							<option
+								*ngFor="let aRole of roleNames"
+								[value]="aRole"
+							 >{{ aRole }}</option>
+						</select>
+						<div
+							[hidden]="inheritRoles.valid || inheritRoles.pristine"
+							class="alert alert-danger"
+							>Inherits required</div>
+					</div-->
+					<div data-field-span="1">
+						<label for="inheritRoles">Inherits</label>
+						<ss-multiselect-dropdown
+							name="inheritRoles"
+							[options]="myOptions"
+							[texts]="myTexts"
+							[settings]="mySettings"
+							[(ngModel)]="optionsModel">
+						</ss-multiselect-dropdown>
+					</div>
+				</div>
+
+				<div data-row-span="1">
+					<div data-field-span="1">
+						<label for="description">Description</label>
+						<input
+							type="text"
+							id="description"
+							required
+							[(ngModel)]="model.description"
+							name="description"
+							#description="ngModel"
+							placeholder="<a short description>"
+							title="Short description on Role">
+						<div
+							[hidden]="description.valid || description.pristine"
+							class="alert alert-danger"
+							>Description is required</div>
+					</div>
+				</div>
+
+		</fieldset>
+
+		<br />
+
+		<button
+			type="submit"
+			class="btn btn-success"
+			[disabled]="!detailForm.form.valid"
+			[hidden]="hideSave"
+			title="Save changes made"
+			><i class="fa fa-floppy-o" aria-hidden="true"></i> Save</button>
+
+		<button
+			type="button"
+			class="btn btn-link"
+			(click)="gotoList()"
+			title="Cancel changes made"
+			><i class="fa fa-times" aria-hidden="true"></i> Cancel</button>
+
+	</form>
+
+</div>
+
+
+
+
+<!--div *ngIf="model">
+
+	<h2>{{ title }}</h2>
+	<label class="record-id">{{ recordId }}</label>
 
 	<div>
 		<label>name: </label>
@@ -15,4 +115,4 @@
 		<button (click)="save()">Save</button>
 	</p>
 
-</div>
+</div-->

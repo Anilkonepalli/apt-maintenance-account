@@ -48,7 +48,7 @@ export class AccountDetailComponent implements OnInit {
     'Others'
   ];
   title: string = this.editMode ? this.modelName + ' details' : 'Add ' + this.modelName;
-  accountId: string;
+  recordId: string;
 
   constructor(
     private service: AccountService,
@@ -73,7 +73,7 @@ export class AccountDetailComponent implements OnInit {
             let canEdit = this.auth.allowsEdit(model.owner_id) && this.editMode;
             let canAdd = this.auth.allowsAdd() && !this.editMode;
             this.hideSave = !(canEdit || canAdd);
-            this.accountId = this.editMode ? 'ID - ' + this.model.id : 'ID - 0';
+            this.recordId = this.editMode ? 'ID - ' + this.model.id : 'ID - 0';
           });
       })
       .catch(err => {

@@ -3,8 +3,6 @@ import { Http, Headers } 	from '@angular/http';
 
 import { Role } 					from './model';
 import { Permission } 		from '../permissions/model';
-//import { UserService } 		from '../users/service';
-//import { Authorization } 	from '../authorization/model';
 
 import 'rxjs/add/operator/toPromise';
 

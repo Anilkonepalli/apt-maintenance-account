@@ -4,12 +4,18 @@
 	<div data-row-span="6">
 		<div data-field-span="1">
 			<label>From</label>
-			<input type="date" [ngModel]="fromDate | date: 'yyyy-MM-dd'" (ngModelChange)="fromDate = $event; getList()" />
+			<input
+				type="date"
+				[ngModel]="fromDate | date: 'yyyy-MM-dd'"
+				(ngModelChange)="fromDate = $event; getList()" />
 		</div>
 
 		<div data-field-span="1">
 			<label>To</label>
-			<input type="date" [ngModel]="toDate | date: 'yyyy-MM-dd'" (ngModelChange)="toDate = $event; getList()" />
+			<input
+				type="date"
+				[ngModel]="toDate | date: 'yyyy-MM-dd'"
+				(ngModelChange)="toDate = $event; getList()" />
 		</div>
 
 		<div data-field-span="1">
@@ -40,7 +46,7 @@
 			<th title="View/Edit/Delete">Actions
 				<span *ngIf="addAllowed">
 						<button
-							0class="btn btn-link"
+							class="btn btn-link"
 							(click)="add()"
 							title="Add Account"
 						><i class="fa fa-plus" aria-hidden="true"></i></button>

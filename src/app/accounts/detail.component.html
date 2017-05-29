@@ -1,10 +1,10 @@
 <div *ngIf="model" class="container">
 
-	<h2>{{title}}</h2>
+	<h2>{{ title }}</h2>
 
 	<form (ngSubmit)="save()" #detailForm="ngForm" class="grid-form">
 		<fieldset>
-			<legend>{{accountId}}</legend>
+			<legend>{{ recordId }}</legend>
 				<div data-row-span="4">
 					<div data-field-span="1">
 						<label for="recordedAt">Txn Date</label>
