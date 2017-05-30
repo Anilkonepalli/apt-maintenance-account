@@ -21,7 +21,7 @@ var list_html_string = list_html.toString();
 export class RoleListComponent implements OnInit {
 
   models: Observable<Role[]>;
-  totalRoles: number = 0;
+  totalRecords: number = 0;
   private selectedId: number;
 
   constructor(
@@ -37,7 +37,7 @@ export class RoleListComponent implements OnInit {
         return this.service.getList();
       });
     this.models.subscribe(models => {
-      this.totalRoles = models.length;
+      this.totalRecords = models.length;
     });
   }
 
@@ -60,6 +60,7 @@ export class RoleListComponent implements OnInit {
         this.models = this.models.filter((models, i) => {
           return models[i] !== model;
         });
+        this.totalRecords--;
       });
   }
 }

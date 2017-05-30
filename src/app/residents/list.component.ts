@@ -30,7 +30,7 @@ export class ResidentListComponent implements OnInit {
   last_name: string;
   is_a: string;
   model: Resident = new Resident();
-  totalResidents: number = 0;
+  totalRecords: number = 0;
   types: string[] = [
     'owner',
     'tenant',
@@ -60,7 +60,7 @@ export class ResidentListComponent implements OnInit {
 
         this.models.subscribe((models) => {
           // set total residents
-          this.totalResidents = models.length;
+          this.totalRecords = models.length;
           // set edit flag on each model; false by default
           models.forEach((each) => {
             this.canEdit[each.id] = false;
@@ -74,7 +74,7 @@ export class ResidentListComponent implements OnInit {
     this.service.create(this.model)
       .then((model) => {
         console.log('New Resident added...'); console.log(model);
-        this.totalResidents++;
+        this.totalRecords++;
         this.models = this.models.do(res => { }); // just resets the models
         this.model = new Resident(); // reset the fields associated to model
       })
@@ -91,7 +91,7 @@ export class ResidentListComponent implements OnInit {
       .then(() => {
         console.log('Models on delete...'); console.log(models);
         this.models = this.models.do(res => { }); // just resets the models
-        this.totalResidents--;
+        this.totalRecords--;
       });
   }
 

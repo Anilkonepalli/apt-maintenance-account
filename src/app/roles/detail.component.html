@@ -24,25 +24,6 @@
 							>Role Name is required</div>
 					</div>
 
-					<!--div data-field-span="1">
-						<label for="inheritRoles">Inherits</label>
-						<select
-							id="inheritRoles"
-							required
-							[(ngModel)]="model.inherits"
-							name="inheritRoles"
-							#inheritRoles="ngModel"
-							title="inherit Roles">
-							<option
-								*ngFor="let aRole of roleNames"
-								[value]="aRole"
-							 >{{ aRole }}</option>
-						</select>
-						<div
-							[hidden]="inheritRoles.valid || inheritRoles.pristine"
-							class="alert alert-danger"
-							>Inherits required</div>
-					</div-->
 					<div data-field-span="1">
 						<label for="inheritRoles">Inherits</label>
 						<ss-multiselect-dropdown
@@ -96,23 +77,3 @@
 	</form>
 
 </div>
-
-
-
-
-<!--div *ngIf="model">
-
-	<h2>{{ title }}</h2>
-	<label class="record-id">{{ recordId }}</label>
-
-	<div>
-		<label>name: </label>
-		<input [(ngModel)]="model.name" placeholder="name" />
-	</div>
-
-	<p>
-		<button (click)="gotoList()">Cancel</button>
-		<button (click)="save()">Save</button>
-	</p>
-
-</div-->

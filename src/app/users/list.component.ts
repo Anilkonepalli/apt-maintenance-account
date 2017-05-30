@@ -25,7 +25,7 @@ export class UserListComponent implements OnInit {
   auth: Authorization;
   addAllowed: boolean = false;
   private selectedId: number;
-  totalUsers: number = 0;
+  totalRecords: number = 0;
 
   constructor(
     private service: UserService,
@@ -61,7 +61,7 @@ export class UserListComponent implements OnInit {
                   return models[i] !== model;
                 }); */
         this.models = this.models.do(res => { }); // just resets the models
-        this.totalUsers--;
+        this.totalRecords--;
       });
   }
 
@@ -77,7 +77,7 @@ export class UserListComponent implements OnInit {
             return this.service.getList();
           });
         this.models.subscribe((models) => {
-          this.totalUsers = models.length; // sets total users
+          this.totalRecords = models.length; // sets total users
         });
       });
   }

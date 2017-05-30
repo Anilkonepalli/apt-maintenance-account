@@ -14,49 +14,53 @@ var list_html_string = list_html.toString();
 
 
 @Component({
-    selector: 'permission-list',
-    styles: [list_css_string],
-    templateUrl: list_html_string
+  selector: 'permission-list',
+  styles: [list_css_string],
+  templateUrl: list_html_string
 })
 export class PermissionListComponent implements OnInit {
 
-    models: Observable<Permission[]>;
+  models: Observable<Permission[]>;
+  totalRecords: number = 0;
+  private selectedId: number;
 
-    private selectedId: number;
+  constructor(
+    private service: PermissionService,
+    private route: ActivatedRoute,
+    private router: Router
+  ) { }
 
-    constructor(
-        private service: PermissionService,
-        private route: ActivatedRoute,
-        private router: Router
-    ) { }
+  ngOnInit(): void {
+    this.models = this.route.params
+      .switchMap((params: Params) => {
+        this.selectedId = +params['id'];
+        return this.service.getList();
+      });
+    this.models.subscribe(models => {
+      this.totalRecords = models.length;
+    });
+  }
 
-    ngOnInit(): void {
-        this.models = this.route.params
-            .switchMap((params: Params) => {
-                this.selectedId = +params['id'];
-                return this.service.getList();
-            });
-    }
+  onSelect(model: Permission): void {
+    this.router.navigate(['/permissions', model.id]);
+  }
 
-    onSelect(model: Permission): void {
-        this.router.navigate(['/permissions', model.id]);
-    }
+  isSelected(model: Permission) {
+    return model ? model.id === this.selectedId : false;
+  }
 
-    isSelected(model: Permission) {
-        return model ? model.id === this.selectedId : false;
-    }
+  add(): void {
+    this.router.navigate(['/permissions', 0]); // 0 represent new permission
+  }
 
-    add(): void {
-        this.router.navigate(['/permissions', 0]); // 0 represent new permission
-    }
-
-    delete(model: Permission): void {
-        this.service
-            .delete(model.id)
-            .then(() => { // filter out the deleted permission from roles
-                this.models = this.models.filter((models, i) => {
-                    return models[i] !== model;
-                });
-            });
-    }
+  delete(model: Permission): void {
+    this.service
+      .delete(model.id)
+      .then(() => { // filter out the deleted permission from roles
+        this.models = this.models.filter((models, i) => {
+          return models[i] !== model;
+        });
+        this.totalRecords--;
+      });
+  }
 }

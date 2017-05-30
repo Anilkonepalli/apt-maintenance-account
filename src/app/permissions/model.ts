@@ -4,8 +4,8 @@ export class Permission {
     public id: number = undefined,
     public operations: string = '',
     public resource: string = '',
-    public condition: string = null,
-    public description: string = null,
+    public condition: string = '',
+    public description: string = '',
     public owner_id: number = undefined
   ) { }
 

@@ -11,6 +11,8 @@ import { Flat }                   from '../flats/model';
 import { ResidentService }        from '../residents/service';
 import { Resident }               from '../residents/model';
 
+import { MODULE }                 from '../shared/constants';
+
 import 'rxjs/add/observable/throw';
 import 'rxjs/add/operator/do';
 import 'rxjs/add/operator/catch';
@@ -66,7 +68,8 @@ export class AccountService {
   }
 
   getAuthorization(): Promise<Authorization> {
-    return this.userService.getAuthorizationFor('accounts');
+    //return this.userService.getAuthorizationFor('accounts');
+    return this.userService.getAuthorizationFor(MODULE.ACCOUNT);
   }
 
   update(model: Account): Promise<Account> {

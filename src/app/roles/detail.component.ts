@@ -24,14 +24,14 @@ export class RoleDetailComponent implements OnInit {
   @Input() model: Role;
   modelName: string = 'Role';
   editMode: boolean;
-  title: string = this.editMode ? this.modelName + ' Details' : 'Add ' + this.modelName;
-  recordId: string = this.editMode ? 'ID - ' + this.model.id : 'ID - 0';
+  title: string;
+  recordId: string;
 
   // for multi select dropdown configuration
   optionsModel: number[] = []; // for Default Selection
   myOptions: IMultiSelectOption[];
-  mySettings: IMultiSelectSettings = this.settings();
-  myTexts: IMultiSelectTexts = this.texts();
+  mySettings: IMultiSelectSettings = this.dropdownSettings();
+  myTexts: IMultiSelectTexts = this.dropdownTexts();
 
   constructor(
     private service: RoleService,
@@ -42,7 +42,7 @@ export class RoleDetailComponent implements OnInit {
 
   ngOnInit(): void {
 
-    let role = this;
+    let self = this;
 
     this.route.params
       .switchMap(toGetModel)
@@ -50,31 +50,39 @@ export class RoleDetailComponent implements OnInit {
       .subscribe(toInitializeDropdown);
 
     function toGetModel(params: Params): Promise<Role> {
-      return role.service.getMe(+params['id']);
+      return self.service.getMe(+params['id']);
     }
     function toSetModel(model: Role): Promise<Role[]> {
-      role.model = model;
-      role.editMode = model.id > 0;
-      return role.service.getList();
+      self.model = model;
+      self.editMode = model.id > 0;
+      self.editMode ? self.editSettings() : self.addSettings();
+      return self.service.getList();
     }
     function toInitializeDropdown(models: Role[]) {
-      role.myOptions = models
-        .filter((each: Role) => each.name != role.model.name) // exclude own name
+      self.myOptions = models
+        .filter((each: Role) => each.name != self.model.name) // exclude own name
         .map((each: Role, index: number) => { // make available options
           return { id: index, name: each.name };
         });
 
-      role.myOptions.forEach((each: any) => {
-        let inh = role.model.inherits;
+      self.myOptions.forEach((each: any) => {
+        let inh = self.model.inherits;
         if (inh && inh.includes(each.name)) {
-          role.optionsModel.push(each.id); // make selected options
+          self.optionsModel.push(each.id); // make selected options
         }
       });
     }
 
   }
-
-  private settings(): IMultiSelectSettings {
+  private editSettings() {
+    this.title = 'Edit ' + this.modelName + ' Details';
+    this.recordId = 'ID - ' + this.model.id;
+  }
+  private addSettings() {
+    this.title = 'Add a new ' + this.modelName;
+    this.recordId = 'ID - 0';
+  }
+  private dropdownSettings(): IMultiSelectSettings {
     return {
       enableSearch: false,
       checkedStyle: 'checkboxes', // available options: checkboxes, glyphicon, fontawesome
@@ -86,7 +94,7 @@ export class RoleDetailComponent implements OnInit {
       fixedTitle: false
     };
   }
-  private texts(): IMultiSelectTexts {
+  private dropdownTexts(): IMultiSelectTexts {
     return {
       checkAll: 'Select All',
       uncheckAll: 'Unselect All',

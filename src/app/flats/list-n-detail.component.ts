@@ -27,7 +27,7 @@ export class FlatComponent implements OnInit {
   addAllowed: boolean = false;
   private selectedId: number;
   model: Flat = new Flat();
-  totalFlats: number = 0;
+  totalRecords: number = 0;
 
   constructor(
     private service: FlatService,
@@ -46,24 +46,24 @@ export class FlatComponent implements OnInit {
         this.auth = auth;
         this.getList();
         this.models.subscribe((models) => {
-          this.totalFlats = models.length;
+          this.totalRecords = models.length;
         });
       });
   }
 
+  /*
+    onSelect(model: Flat): void {
+      this.router.navigate(['/flats', model.id]);
+    }
 
-  onSelect(model: Flat): void {
-    this.router.navigate(['/flats', model.id]);
-  }
+    isSelected(model: Flat) {
+      return model ? model.id === this.selectedId : false;
+    }
 
-  isSelected(model: Flat) {
-    return model ? model.id === this.selectedId : false;
-  }
-
-  add(): void {
-    this.router.navigate(['/flats', 0]); // 0 represent new account
-  }
-
+    add(): void {
+      this.router.navigate(['/flats', 0]); // 0 represent new account
+    }
+  */
   save(): void {
     console.log('Save new Flat Details...');
     this.service.create(this.model)
@@ -71,6 +71,7 @@ export class FlatComponent implements OnInit {
         console.log('New Flat details added...'); console.log(model);
         this.getList();
         this.model = new Flat(); // reset the fields associated to model
+        this.totalRecords++;
       })
       .catch((error: any) => {
         let jerror = error.json();
@@ -86,6 +87,7 @@ export class FlatComponent implements OnInit {
         this.models = this.models.filter((models, i) => {
           return models[i] !== model;
         });
+        this.totalRecords--;
       });
   }
 

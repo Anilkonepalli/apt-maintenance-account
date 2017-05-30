@@ -1,4 +1,125 @@
-<div *ngIf="model">
+<div *ngIf="model" class="container">
+
+	<h2>{{ title }}</h2>
+
+	<form (ngSubmit)="save()" #detailForm="ngForm" class="grid-form">
+		<fieldset>
+			<legend>{{ recordId }}</legend>
+
+				<div data-row-span="2">
+					<div data-field-span="1">
+						<label for="crud">Operations</label>
+						<input
+							type="checkbox"
+							id="opCreate"
+							required
+							[checked]="canCreate"
+							(change)="canCreate = !canCreate"
+							name="crud"> Create
+
+						<input
+							type="checkbox"
+							id="opRead"
+							[checked]="canRead"
+							(change)="canRead = !canRead"
+							name="crud"> Read
+
+						<input
+							type="checkbox"
+							id="opUpdate"
+							[checked]="canUpdate"
+							(change)="canUpdate = !canUpdate"
+							name="crud"> Update
+
+						<input
+							type="checkbox"
+							id="opDelete"
+							[checked]="canDelete"
+							(change)="canDelete = !canDelete"
+							name="crud"> Delete
+
+							<!--div
+								[hidden]="crud.valid || crud.pristine"
+								class="alert alert-danger"
+								>Operations are required</div-->
+					</div>
+
+					<div data-field-span="1">
+						<label for="moduleResource">Resource</label>
+						<select
+							id="moduleResource"
+							required
+							[(ngModel)]="model.resource"
+							name="moduleResource"
+							#moduleResource="ngModel"
+							title="Module Resource Name">
+							<option
+								*ngFor="let resource of resources"
+								[value]="resource"
+							 >{{resource}}</option>
+						</select>
+					</div>
+
+				</div>
+
+				<div data-row-span="1">
+					<div data-field-span="1">
+						<label for="condition">Conditions</label>
+						<input
+							type="text"
+							id="condition"
+							[(ngModel)]="model.condition"
+							name="condition"
+							#condition="ngModel"
+							placeholder="<conditional script here>"
+							title="Short condition on Role">
+					</div>
+				</div>
+
+				<div data-row-span="1">
+					<div data-field-span="1">
+						<label for="desc">Description</label>
+						<input
+							type="text"
+							id="desc"
+							required
+							[(ngModel)]="model.description"
+							name="desc"
+							#desc="ngModel"
+							placeholder="<a short description here>"
+							title="Short description on Permission">
+						<div
+							[hidden]="desc.valid || desc.pristine"
+							class="alert alert-danger"
+							>Description is required</div>
+					</div>
+				</div>
+
+		</fieldset>
+
+		<br />
+
+		<button
+			type="submit"
+			class="btn btn-success"
+			[disabled]="!detailForm.form.valid"
+			[hidden]="hideSave"
+			title="Save changes made"
+			><i class="fa fa-floppy-o" aria-hidden="true"></i> Save</button>
+
+		<button
+			type="button"
+			class="btn btn-link"
+			(click)="gotoList()"
+			title="Cancel changes made"
+			><i class="fa fa-times" aria-hidden="true"></i> Cancel</button>
+
+	</form>
+
+</div>
+
+
+<!--div *ngIf="model">
 	<h2 *ngIf="editMode">{{modelName}} Details</h2>
 	<h2 *ngIf="!editMode">Add {{modelName}}</h2>
 
@@ -11,4 +132,4 @@
 		<button (click)="gotoList()">Cancel</button>
 		<button (click)="save()">Save</button>
 	</p>
-</div>
+</div-->
