@@ -16,18 +16,30 @@
 			<option
 				*ngFor="let amodel of attachedStream | async"
 				value={{amodel.id}}
+				(click)="onaSelect()"
 			>{{amodel.operations}} on {{amodel.resource}} with {{amodel.condition?'condition':'no condition'}}</option>
 		</select>
-		<button class="dbutton" (click)="detach()" title="Revoke Permissions">>></button>
+		<button
+			class="dbutton"
+			(click)="detach()"
+			title="Revoke Permissions"
+			[disabled]="!canDetach"
+			>>></button>
 
 		<label class="dlabel">Available Permissions</label>
 		<select class="dselect" size="20" multiple [(ngModel)]="dIds">
 			<option
 				*ngFor="let dmodel of detachedStream | async"
 				value={{dmodel.id}}
+				(click)="ondSelect()"
 			>{{dmodel.operations}} on {{dmodel.resource}} with {{dmodel.condition?'condition':'no condition'}}</option>
 		</select>
-		<button class="abutton"(click)="attach()" title="Grant Permissions"><<</button>
+		<button
+			class="abutton"
+			(click)="attach()"
+			title="Grant Permissions"
+			[disabled]="!canAttach"
+			><<</button>
 
 		<button class="homeButton" (click)="goHome()" title="Return to Home page"><i class="fa fa-home" aria-hidden="true"></i> Home</button>
 </div>

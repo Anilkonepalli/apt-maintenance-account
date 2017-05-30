@@ -34,6 +34,8 @@ export class RolePermissionComponent implements OnInit {
   lId: number;       // selected left model
   aIds: Array<number>;  // ids of selected attached models
   dIds: Array<number>;  // ids of selected detached models
+  canDetach: boolean = false;
+  canAttach: boolean = false;
 
   constructor(
     private service: RolePermissionService,
@@ -67,12 +69,20 @@ export class RolePermissionComponent implements OnInit {
         return null;
       });
   }
-
+  onaSelect(): void {
+    this.canDetach = this.lId && this.aIds && this.aIds.length > 0;
+    console.log('Status on DButton: ' + this.canDetach);
+  }
+  ondSelect(): void {
+    this.canAttach = this.lId && this.dIds && this.dIds.length > 0;
+    console.log('Status on AButton: ' + this.canAttach);
+  }
   attach() {
     this.detachedStream.subscribe(dmodel => {
       let dIdNums = this.dIds.map(each => +each); // convert string id into integer
       let dmodels = dmodel.filter(each => !dIdNums.includes(each.id));
       this.detachedStream = Observable.of(dmodels);
+      this.canAttach = false;
 
       let dIdsNew = dmodels.map(dmodel => dmodel.id); // collect aIds of new amodels
       this.updateAttachedModelsExcluding(dIdsNew);
@@ -84,6 +94,7 @@ export class RolePermissionComponent implements OnInit {
       let aIdsNums = this.aIds.map(each => +each); // convert string id into integer
       let amodels = amodel.filter(each => !aIdsNums.includes(each.id)); // filter out selected amodels
       this.attachedStream = Observable.of(amodels); // update attached stream after filtering
+      this.canDetach = false;
 
       let aIdsNew = amodels.map(amodel => amodel.id); // collect aIds of new amodels
       this.updateDetachedModelsExcluding(aIdsNew); // now, dmodels = rmodels - amodels

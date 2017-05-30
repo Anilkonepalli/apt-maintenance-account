@@ -15,15 +15,30 @@
 			<option
 				*ngFor="let amodel of attachedStream | async"
 				value={{amodel.id}}
+				(click)="onaSelect()"
 			>{{amodel.first_name}}-{{amodel.last_name}}</option>
 		</select>
-		<button class="dbutton" (click)="detach()" title="Detach Residents">>></button>
+		<button
+			class="dbutton"
+			(click)="detach()"
+			title="Detach Residents"
+			[disabled]="!canDetach"
+			>>></button>
 
 		<label class="dlabel">Available Residents</label>
 		<select class="dselect" size="20" multiple [(ngModel)]="dIds">
-			<option *ngFor="let dmodel of detachedStream | async" value={{dmodel.id}}>{{dmodel.first_name}}-{{dmodel.last_name}}</option>
+			<option
+				*ngFor="let dmodel of detachedStream | async"
+				value={{dmodel.id}}
+				(click)="ondSelect()"
+			>{{dmodel.first_name}}-{{dmodel.last_name}}</option>
 		</select>
-		<button class="abutton"(click)="attach()" title="Attach Residents"><<</button>
+		<button
+			class="abutton"
+			(click)="attach()"
+			title="Attach Residents"
+			[disabled]="!canAttach"
+			><<</button>
 
 		<button class="homeButton" (click)="goHome()" title="Return to Home page"><i class="fa fa-home" aria-hidden="true"></i> Home</button>
 </div>

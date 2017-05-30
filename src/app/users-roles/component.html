@@ -16,18 +16,30 @@
 			<option
 				*ngFor="let amodel of attachedStream | async"
 				value={{amodel.id}}
+				(click)="onaSelect()"
 			>{{amodel.name}}</option>
 		</select>
-		<button class="dbutton" (click)="detach()" title="Revoke Roles">>></button>
+		<button
+			class="dbutton"
+			(click)="detach()"
+			title="Revoke Roles"
+			[disabled]="!canDetach"
+			>>></button>
 
 		<label class="dlabel">Available Roles</label>
 		<select class="dselect" size="20" multiple [(ngModel)]="dIds">
 			<option
 				*ngFor="let dmodel of detachedStream | async"
 				value={{dmodel.id}}
+				(click)="ondSelect()"
 			>{{dmodel.name}}</option>
 		</select>
-		<button class="abutton"(click)="attach()" title="Grant Roles"><<</button>
+		<button
+			class="abutton"
+			(click)="attach()"
+			title="Grant Roles"
+			[disabled]="!canAttach"
+			><<</button>
 
 		<button class="homeButton" (click)="goHome()" title="Return to Home page"><i class="fa fa-home" aria-hidden="true"></i> Home</button>
 </div>
