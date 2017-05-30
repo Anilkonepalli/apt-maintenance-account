@@ -1,11 +1,63 @@
-<h2>Permissions</h2>
-<button (click)="add()">Add</button>
+<h2>List of Permissions</h2>
+
+<table summary="Permission list">
+	<caption>Permission list of XYZ Apartments</caption>
+	<thead>
+		<tr>
+			<th title="Permitted Operations" scope="col">Operations</th>
+			<th title="Resource Name" scope="col">Resource</th>
+			<th title="Conditions / constriaints" scope="col">Conditions</th>
+			<th title="Describe the permission" scope="col">Description</th>
+			<th title="View/Edit/Delete">Actions
+				<span>
+						<button
+							class="btn btn-link"
+							(click)="add()"
+							title="Add New Permission"
+						><i class="fa fa-plus" aria-hidden="true"></i></button>
+				</span>
+			</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr *ngFor="let model of models | async">
+			<th scope="row">{{ model.operations }}</th>
+			<td>{{ model.resource }}</td>
+			<td>{{ model.condition }}</td>
+			<td>{{ model.description }}</td>
+			<td>
+				<button
+					class="btn btn-link"
+					(click)="onSelect(model)"
+					title="View details"
+				><i class="fa fa-eye" aria-hidden="true"></i></button>
+				<button
+					class="btn btn-link"
+					(click)="delete(model); $event.stopPropagation()"
+					title="Delete record"
+				><i class="fa fa-trash" aria-hidden="true"></i></button>
+			</td>
+		</tr>
+	</tbody>
+	<tfoot>
+		<tr>
+			<th scope="row" colspan="4">Total Permissions</th>
+			<td colspan="1">{{totalPermissions}}</td>
+		</tr>
+	</tfoot>
+</table>
+
+
+<!--button (click)="add()">Add</button>
 <ul class="items">
 	<li *ngFor="let model of models | async"
 		[class.selected] = "isSelected(model)"
 		(click)="onSelect(model)">
 		<span class="badge">{{model.id}}</span>
-		<span>{{model.resource}}</span>
+		<span>{{ model.operations }}</span>
+		<span>{{ model.resource }}</span>
+		<span>{{ model.condition }}</span>
+		<span>{{ model.description }}</span>
 		<button class="delete" (click)="delete(model); $event.stopPropagation()">x</button>
 	</li>
-</ul>
+</ul-->
