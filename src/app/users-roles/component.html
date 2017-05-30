@@ -1,12 +1,47 @@
 <h2>Users-to-Roles</h2>
 
-<select size="5" [(ngModel)]="lId">
-	<option 
-		*ngFor="let lmodel of lstream | async" 
+<div class="list-to-list">
+
+		<label class="llabel">Users</label>
+		<select class="lselect" size="20" [(ngModel)]="lId">
+			<option
+				*ngFor="let lmodel of lstream | async"
+				value={{lmodel.id}}
+				(click)="onlSelect(lmodel)"
+			>{{lmodel.name}}</option>
+		</select>
+
+		<label class="alabel">Granted Roles</label>
+		<select class="aselect" size="20" multiple [(ngModel)]="aIds">
+			<option
+				*ngFor="let amodel of attachedStream | async"
+				value={{amodel.id}}
+			>{{amodel.name}}</option>
+		</select>
+		<button class="dbutton" (click)="detach()" title="Revoke Roles">>></button>
+
+		<label class="dlabel">Available Roles</label>
+		<select class="dselect" size="20" multiple [(ngModel)]="dIds">
+			<option
+				*ngFor="let dmodel of detachedStream | async"
+				value={{dmodel.id}}
+			>{{dmodel.name}}</option>
+		</select>
+		<button class="abutton"(click)="attach()" title="Grant Roles"><<</button>
+
+		<button class="homeButton" (click)="goHome()" title="Return to Home page"><i class="fa fa-home" aria-hidden="true"></i> Home</button>
+</div>
+
+
+
+
+<!--select size="5" [(ngModel)]="lId">
+	<option
+		*ngFor="let lmodel of lstream | async"
 		value={{lmodel.id}}
 		(click)="onlSelect(lmodel)"
 	>{{lmodel.name}}</option>
-	
+
 </select>
 
 <select size="5" multiple [(ngModel)]="aIds">
@@ -21,9 +56,4 @@
 </select>
 
 <button (click)="save()" title="Save changes">Save</button>
-<br>
----------------------------------------------------------------
-<br>
-selected_amodel_ids: {{aIds}}
-<br>
-selected_dmodel_ids: {{dIds}}
+<br-->
