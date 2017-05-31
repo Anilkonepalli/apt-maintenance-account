@@ -67,7 +67,7 @@ export class AccountListComponent implements OnInit {
       { id: 9, name: 'Category' },
     ];
 
-    this.optionsModel = [1, 2, 3, 4, 5, 6, 7, 8, 9]; // default columns shown
+    this.optionsModel = [1, 2, 3, 4, 5, 6, 7, 9]; // default columns shown
 
     this.mySettings = {
       enableSearch: false,
