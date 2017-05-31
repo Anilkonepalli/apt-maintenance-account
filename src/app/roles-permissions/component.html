@@ -8,6 +8,7 @@
 				*ngFor="let lmodel of lstream | async"
 				value={{lmodel.id}}
 				(click)="onlSelect(lmodel)"
+				title={{lmodel.description}}
 			>{{lmodel.name}}</option>
 		</select>
 
@@ -17,7 +18,8 @@
 				*ngFor="let amodel of attachedStream | async"
 				value={{amodel.id}}
 				(click)="onaSelect()"
-			>{{amodel.operations}} on {{amodel.resource}} with {{amodel.condition?'condition':'no condition'}}</option>
+				title={{amodel.description}}
+			>{{amodel.operations}} on {{amodel.resource}}</option>
 		</select>
 		<button
 			class="dbutton"
@@ -32,7 +34,8 @@
 				*ngFor="let dmodel of detachedStream | async"
 				value={{dmodel.id}}
 				(click)="ondSelect()"
-			>{{dmodel.operations}} on {{dmodel.resource}} with {{dmodel.condition?'condition':'no condition'}}</option>
+				title={{dmodel.description}}
+			>{{dmodel.operations}} on {{dmodel.resource}}</option>
 		</select>
 		<button
 			class="abutton"

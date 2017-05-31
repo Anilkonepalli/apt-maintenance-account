@@ -7,6 +7,7 @@
 				*ngFor="let lmodel of lstream | async"
 				value={{lmodel.id}}
 				(click)="onlSelect(lmodel)"
+				title={{lmodel.remarks}}
 			>{{lmodel.flat_number}}</option>
 		</select>
 
@@ -16,6 +17,7 @@
 				*ngFor="let amodel of attachedStream | async"
 				value={{amodel.id}}
 				(click)="onaSelect()"
+				title={{amodel.remarks}}
 			>{{amodel.first_name}}-{{amodel.last_name}}</option>
 		</select>
 		<button
@@ -31,6 +33,7 @@
 				*ngFor="let dmodel of detachedStream | async"
 				value={{dmodel.id}}
 				(click)="ondSelect()"
+				title={{dmodel.remarks}}
 			>{{dmodel.first_name}}-{{dmodel.last_name}}</option>
 		</select>
 		<button
