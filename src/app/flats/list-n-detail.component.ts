@@ -25,6 +25,7 @@ export class FlatComponent implements OnInit {
   models: Observable<Flat[]>;
   auth: Authorization;
   addAllowed: boolean = false;
+  deleteAllowed: boolean = false;
   private selectedId: number;
   model: Flat = new Flat();
   totalRecords: number = 0;
@@ -43,6 +44,7 @@ export class FlatComponent implements OnInit {
         console.log('Inside flats list component...'); console.log(auth);
         if (auth.permissions.length < 1) return []; // just return empty array if permission list is empty
         this.addAllowed = auth.allowsAdd();
+        this.deleteAllowed = auth.allowsDelete();
         this.auth = auth;
         this.getList();
         this.models.subscribe((models) => {

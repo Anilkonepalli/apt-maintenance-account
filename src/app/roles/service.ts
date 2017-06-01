@@ -3,6 +3,8 @@ import { Http, Headers } 	from '@angular/http';
 
 import { Role } 					from './model';
 import { Permission } 		from '../permissions/model';
+import { UserService } 		from '../users/service';
+import { Authorization } 	from '../authorization/model';
 
 import 'rxjs/add/operator/toPromise';
 
@@ -17,7 +19,10 @@ export class RoleService {
     'x-access-token': this.id_token
   });
 
-  constructor(private http: Http) { }
+  constructor(
+    private http: Http,
+    private userService: UserService
+  ) { }
 
   getList(): Promise<Role[]> {
     console.log('roles >> service . getList()...');
@@ -45,7 +50,10 @@ export class RoleService {
       .then(models => models.json() as Permission[])
       .catch(this.handleError);
   }
-
+  getAuthorization(): Promise<Authorization> {
+    console.log('get authorization for roles...');
+    return this.userService.getAuthorizationFor('roles');
+  }
   update(model: Role): Promise<Role> {
     const url = `${this.modelUrl}/${model.id}`;
     return this.http

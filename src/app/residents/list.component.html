@@ -7,11 +7,11 @@
 			<th title="First Name" scope="col">First Name</th>
 			<th title="Last Name" scope="col">Last Name</th>
 			<th title="Resident Type" scope="col">Type</th>
-			<th title="Delete" scope="col">Actions</th>
+			<th title="Delete" scope="col">{{deleteAllowed?'Actions':''}}</th>
 		</tr>
 	</thead>
 	<tbody>
-		<tr>
+		<tr [hidden]="!addAllowed">
 			<td>
 				<input
 					type="text"

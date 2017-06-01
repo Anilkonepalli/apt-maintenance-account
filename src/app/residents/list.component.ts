@@ -25,6 +25,7 @@ export class ResidentListComponent implements OnInit {
   models: Observable<Resident[]>;
   auth: Authorization;
   addAllowed: boolean = false;
+  deleteAllowed: boolean = false;
   private selectedId: number;
   first_name: string;
   last_name: string;
@@ -55,6 +56,7 @@ export class ResidentListComponent implements OnInit {
         console.log('Inside residents list component...'); console.log(auth);
         if (auth.permissions.length < 1) return []; // just return empty array if permission list is empty
         this.addAllowed = auth.allowsAdd();
+        this.deleteAllowed = auth.allowsDelete();
         this.auth = auth;
         this.getList();
 

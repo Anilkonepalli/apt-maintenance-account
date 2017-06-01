@@ -6,11 +6,11 @@
 		<tr>
 			<th title="Block Number" scope="col">Block No.</th>
 			<th title="Flat Number" scope="col">Flat No.</th>
-			<th title="Delete" scope="col">Actions</th>
+			<th title="Delete" scope="col">{{deleteAllowed?'Actions':''}}</th>
 		</tr>
 	</thead>
 	<tbody>
-		<tr>
+		<tr [hidden]="!addAllowed">
 			<td>
 				<input
 					type="text"
