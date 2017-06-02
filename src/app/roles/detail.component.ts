@@ -7,6 +7,7 @@ import { IMultiSelectOption,
 
 import { Role }															from './model';
 import { RoleService }											from './service';
+import { Authorization }										from '../authorization/model';
 
 import 'rxjs/add/operator/switchMap';
 
@@ -23,7 +24,10 @@ var detail_css_string = detail_css.toString();
 export class RoleDetailComponent implements OnInit {
   @Input() model: Role;
   modelName: string = 'Role';
+  auth: Authorization;
   editMode: boolean;
+  addAllowed: boolean = false;
+  editAllowed: boolean = false;
   title: string;
   recordId: string;
 
@@ -44,10 +48,17 @@ export class RoleDetailComponent implements OnInit {
 
     let self = this;
 
-    this.route.params
-      .switchMap(toGetModel)
-      .switchMap(toSetModel)
-      .subscribe(toInitializeDropdown);
+    this.service.getAuthorization()
+      .then(auth => {
+        this.auth = auth;
+        this.route.params
+          .switchMap(toGetModel)
+          .switchMap(toSetModel)
+          .subscribe(toInitializeDropdown);
+      })
+      .catch(err => {
+        console.log('Error in Role detail components > ngOnInit');
+      });
 
     function toGetModel(params: Params): Promise<Role> {
       return self.service.getMe(+params['id']);
@@ -75,12 +86,15 @@ export class RoleDetailComponent implements OnInit {
 
   }
   private editSettings() {
-    this.title = 'Edit ' + this.modelName + ' Details';
     this.recordId = 'ID - ' + this.model.id;
+    this.editAllowed = this.auth.allowsEdit();
+    this.title = this.editAllowed ? 'Edit ' : '';
+    this.title += this.modelName + ' Details';
   }
   private addSettings() {
     this.title = 'Add a new ' + this.modelName;
     this.recordId = 'ID - 0';
+    this.addAllowed = this.auth.allowsAdd();
   }
   private dropdownSettings(): IMultiSelectSettings {
     return {
