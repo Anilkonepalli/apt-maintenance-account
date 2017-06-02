@@ -5,5 +5,6 @@ export const MODULE = {
   USER: 'users',
   FLAT: 'flats',
   RESIDENT: 'residents',
-  ROLE: 'roles'
+  ROLE: 'roles',
+  PERMISSION: 'permissions'
 };

@@ -4,6 +4,7 @@ import { Observable }											from 'rxjs/Observable';
 
 import { Permission }											from './model';
 import { PermissionService }							from './service';
+import { Authorization }									from '../authorization/model';
 
 import 'rxjs/add/operator/switchMap';
 
@@ -21,6 +22,11 @@ var list_html_string = list_html.toString();
 export class PermissionListComponent implements OnInit {
 
   models: Observable<Permission[]>;
+  auth: Authorization;
+  addAllowed: boolean = false;
+  deleteAllowed: boolean = false;
+  viewAllowed: boolean = false;
+  editAllowed: boolean = false;
   totalRecords: number = 0;
   private selectedId: number;
 
@@ -31,14 +37,28 @@ export class PermissionListComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.models = this.route.params
-      .switchMap((params: Params) => {
-        this.selectedId = +params['id'];
-        return this.service.getList();
+
+    this.service.getAuthorization()
+      .then(auth => {
+        console.log('Inside permission list component...'); console.log(auth);
+        if (auth.permissions.length < 1) return []; // just return empty array if permission list is empty
+        this.addAllowed = auth.allowsAdd();
+        this.deleteAllowed = auth.allowsDelete();
+        this.viewAllowed = auth.allowsView();
+        this.editAllowed = auth.allowsEdit();
+        this.auth = auth;
+        this.getList();
       });
-    this.models.subscribe(models => {
-      this.totalRecords = models.length;
-    });
+
+    /*    this.models = this.route.params
+          .switchMap((params: Params) => {
+            this.selectedId = +params['id'];
+            return this.service.getList();
+          });
+        this.models.subscribe(models => {
+          this.totalRecords = models.length;
+        }); */
+
   }
 
   onSelect(model: Permission): void {
@@ -62,5 +82,16 @@ export class PermissionListComponent implements OnInit {
         });
         this.totalRecords--;
       });
+  }
+
+  private getList() {
+    this.models = this.route.params
+      .switchMap((params: Params) => {
+        this.selectedId = +params['id'];
+        return this.service.getList();
+      });
+    this.models.subscribe(models => {
+      this.totalRecords = models.length;
+    });
   }
 }
