@@ -1,19 +1,45 @@
-import { Component } from '@angular/core';
-import { Router } 		 from '@angular/router';
+import { Component, OnInit }    from '@angular/core';
+import { Router } 		          from '@angular/router';
 
-import { Logger }		   from './logger/default-log.service';
-import { AuthService } from './authentication/auth.service';
+import { Logger }		            from './logger/default-log.service';
+import { AuthService }          from './authentication/auth.service';
+import { Authorization }				from './authorization/model';
+import { AuthorizationService } from './authorization/service';
+import { Permission } 		      from './permissions/model';
 
 @Component({
   selector: 'nav-bar',
   templateUrl: 'navbar.component.html'
 })
-export class NavbarComponent {
+export class NavbarComponent implements OnInit {
 
-  constructor(public router: Router,
+  allPermissions: Permission[];
+
+  constructor(
+    public router: Router,
     public logger: Logger,
-    public authService: AuthService) { }
+    public authService: AuthService,
+    private authznService: AuthorizationService) { }
 
+  ngOnInit(): void {
+    this.initPerms();
+  }
+
+  private initPerms(): void {
+
+    if (!this.authService.isLoggedIn) {
+      console.log('User Is Not Logged In; so all permissions cannot be retrieved...');
+      return; // if user is not logged in, just return
+    } else {
+      console.log('Retrieving all permissions');
+    }
+
+    this.authznService.getAllPermissions()
+      .then((models: Permission[]) => {
+        this.allPermissions = models;
+        console.log('All Permissions...'); console.log(models);
+      });
+  }
   logout() {
     this.logger.info('Logging out of application @app.component...');
     this.logger.warn('A warning message...');
@@ -22,4 +48,5 @@ export class NavbarComponent {
     this.authService.logout();
     this.router.navigate(['/login']);
   }
+
 }

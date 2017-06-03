@@ -11,6 +11,7 @@ import { AppRoutingModule }      from './app-routing.module';
 
 import { SharedModule }          from './shared/shared.module';
 import { LoginRoutingModule }    from './authentication/login-routing.module';
+import { AuthorizationModule }   from './authorization/module';
 
 import { LoginComponent }        from './authentication/login.component';
 import { SignupComponent }       from './authentication/signup.component';
@@ -33,7 +34,8 @@ import { Logger }                from './logger/default-log.service';
     AppRoutingModule,
     LoginRoutingModule,
     SharedModule,
-    NgbModule.forRoot()
+    NgbModule.forRoot(),
+    AuthorizationModule
   ],
   declarations: [
     AppComponent,
