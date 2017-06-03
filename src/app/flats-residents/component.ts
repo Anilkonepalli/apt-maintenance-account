@@ -4,7 +4,7 @@ import { Observable }											from 'rxjs/Observable';
 
 import { Flat }														from '../flats/model';
 import { Resident }											  from '../residents/model';
-
+import { Authorization }									from '../authorization/model';
 import { FlatResidentService }					  from './service';
 
 import 'rxjs/add/operator/switchMap';
@@ -36,6 +36,9 @@ export class FlatResidentComponent implements OnInit {
   dIds: Array<number>;  // ids of selected detached models
   canDetach: boolean = false;
   canAttach: boolean = false;
+  auth: Authorization;
+  //viewAllowed: boolean = false;
+  editAllowed: boolean = false;
 
   constructor(
     private service: FlatResidentService,
@@ -45,6 +48,23 @@ export class FlatResidentComponent implements OnInit {
 
   ngOnInit(): void {
     console.log('Inside flats-residents component ngOnInit()...');
+
+    this.service.getAuthorization()
+      .then(auth => {
+        console.log('Inside flats list component...'); console.log(auth);
+        if (auth.permissions.length < 1) return []; // just return empty array if permission list is empty
+        //this.viewAllowed = auth.allowsView();
+        this.editAllowed = auth.allowsEdit();
+        this.auth = auth;
+        this.initStreams();
+      });
+  }
+
+  /**
+   * Initializes Streams
+   * @type {[type]}
+   */
+  private initStreams(): void {
     this.lstream = this.route.params
       .switchMap((params: Params) => {
         return this.service.getlmodels();

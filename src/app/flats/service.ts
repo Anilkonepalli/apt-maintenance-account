@@ -12,89 +12,94 @@ import 'rxjs/add/operator/toPromise';
 @Injectable()
 export class FlatService {
 
-    private modelUrl = process.env.API_URL + '/api/flats';
-    private id_token = localStorage.getItem('id_token');
-    private headers = new Headers({
-        'Content-Type': 'application/json',
-        'x-access-token': this.id_token
-    });
+  private modelUrl = process.env.API_URL + '/api/flats';
+  private id_token = localStorage.getItem('id_token');
+  private headers = new Headers({
+    'Content-Type': 'application/json',
+    'x-access-token': this.id_token
+  });
 
-    constructor(
-        private http: Http,
-        private userService: UserService
-    ) { }
+  constructor(
+    private http: Http,
+    private userService: UserService
+  ) { }
 
-    getList(): Promise<Flat[]> {
-        return this.http
-            .get(this.modelUrl, { headers: this.headers })
-            .toPromise()
-            .then(models => {
-                return models.json() as Flat[];
-            })
-            .catch(this.handleError)
-    }
+  getList(): Promise<Flat[]> {
+    return this.http
+      .get(this.modelUrl, { headers: this.headers })
+      .toPromise()
+      .then(models => {
+        return models.json() as Flat[];
+      })
+      .catch(this.handleError)
+  }
 
-    get(id: number): Promise<Flat> {
-        const url = this.modelUrl + '/' + id;
-        return this.http
-            .get(url, { headers: this.headers })
-            .toPromise()
-            .then(model => model.json() as Flat)
-            .catch(this.handleError);
-    }
+  get(id: number): Promise<Flat> {
+    const url = this.modelUrl + '/' + id;
+    return this.http
+      .get(url, { headers: this.headers })
+      .toPromise()
+      .then(model => model.json() as Flat)
+      .catch(this.handleError);
+  }
 
-    getAuthorization(): Promise<Authorization> {
-        return this.userService.getAuthorizationFor('flats');
-    }
+  getAuthorization(): Promise<Authorization> {
+    return this.userService.getAuthorizationFor('flats');
+  }
 
-    getMyResidents(id: number): Promise<Resident[]> {
-        const url = this.modelUrl + '/myresidents/' + id;
-        return this.http
-            .get(url, { headers: this.headers })
-            .toPromise()
-            .then(models => models.json() as Resident[])
-            .catch(this.handleError);
-    }
+  getAuthorizationFor(resource: string): Promise<Authorization> {
+    return this.userService.getAuthorizationFor(resource);
+  }
 
-    update(model: Flat): Promise<Flat> {
-        const url = `${this.modelUrl}/${model.id}`;
-        return this.http
-            .put(url, JSON.stringify(model), { headers: this.headers })
-            .toPromise()
-            .then(() => model)
-            .catch(this.handleError);
-    }
 
-    updateMyResidents(modelId: number, attachedIds: number[]): Promise<number> {
-        const url = `${this.modelUrl}/myresidents/${modelId}`;
-        let data = { 'myresidentsIds': attachedIds };
-        return this.http
-            .put(url, JSON.stringify(data), { headers: this.headers })
-            .toPromise()
-            .then(() => modelId)
-            .catch(this.handleError);
-    }
+  getMyResidents(id: number): Promise<Resident[]> {
+    const url = this.modelUrl + '/myresidents/' + id;
+    return this.http
+      .get(url, { headers: this.headers })
+      .toPromise()
+      .then(models => models.json() as Resident[])
+      .catch(this.handleError);
+  }
 
-    create(model: Flat): Promise<Flat> {
-        return this.http
-            .post(this.modelUrl, JSON.stringify(model), { headers: this.headers })
-            .toPromise()
-            .then(model => model.json().data)
-            .catch(this.handleError);
-    }
+  update(model: Flat): Promise<Flat> {
+    const url = `${this.modelUrl}/${model.id}`;
+    return this.http
+      .put(url, JSON.stringify(model), { headers: this.headers })
+      .toPromise()
+      .then(() => model)
+      .catch(this.handleError);
+  }
 
-    delete(id: number): Promise<void> {
-        const url = `${this.modelUrl}/${id}`;
-        return this.http
-            .delete(url, { headers: this.headers })
-            .toPromise()
-            .then(() => null)
-            .catch(this.handleError);
-    }
+  updateMyResidents(modelId: number, attachedIds: number[]): Promise<number> {
+    const url = `${this.modelUrl}/myresidents/${modelId}`;
+    let data = { 'myresidentsIds': attachedIds };
+    return this.http
+      .put(url, JSON.stringify(data), { headers: this.headers })
+      .toPromise()
+      .then(() => modelId)
+      .catch(this.handleError);
+  }
 
-    private handleError(error: any) {
-        return Promise.reject(error.message || error);
-    }
+  create(model: Flat): Promise<Flat> {
+    return this.http
+      .post(this.modelUrl, JSON.stringify(model), { headers: this.headers })
+      .toPromise()
+      .then(model => model.json().data)
+      .catch(this.handleError);
+  }
+
+  delete(id: number): Promise<void> {
+    const url = `${this.modelUrl}/${id}`;
+    return this.http
+      .delete(url, { headers: this.headers })
+      .toPromise()
+      .then(() => null)
+      .catch(this.handleError);
+  }
+
+  private handleError(error: any) {
+    return Promise.reject(error.message || error);
+  }
 
 
 }

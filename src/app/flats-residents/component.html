@@ -8,7 +8,7 @@
 				value={{lmodel.id}}
 				(click)="onlSelect(lmodel)"
 				title={{lmodel.remarks}}
-			>{{lmodel.flat_number}}</option>
+				>{{lmodel.flat_number}}</option>
 		</select>
 
 		<label class="alabel">Attached Residents</label>
@@ -18,13 +18,14 @@
 				value={{amodel.id}}
 				(click)="onaSelect()"
 				title={{amodel.remarks}}
-			>{{amodel.first_name}}-{{amodel.last_name}}</option>
+				>{{amodel.first_name}}-{{amodel.last_name}}</option>
 		</select>
 		<button
 			class="dbutton"
 			(click)="detach()"
 			title="Detach Residents"
 			[disabled]="!canDetach"
+			[hidden]="!editAllowed"
 			>>></button>
 
 		<label class="dlabel">Available Residents</label>
@@ -34,14 +35,19 @@
 				value={{dmodel.id}}
 				(click)="ondSelect()"
 				title={{dmodel.remarks}}
-			>{{dmodel.first_name}}-{{dmodel.last_name}}</option>
+				>{{dmodel.first_name}}-{{dmodel.last_name}}</option>
 		</select>
 		<button
 			class="abutton"
 			(click)="attach()"
 			title="Attach Residents"
 			[disabled]="!canAttach"
+			[hidden]="!editAllowed"
 			><<</button>
 
-		<button class="homeButton" (click)="goHome()" title="Return to Home page"><i class="fa fa-home" aria-hidden="true"></i> Home</button>
+		<button
+			class="homeButton"
+			(click)="goHome()"
+			title="Return to Home page"
+			><i class="fa fa-home" aria-hidden="true"></i> Home</button>
 </div>
