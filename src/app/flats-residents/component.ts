@@ -37,7 +37,6 @@ export class FlatResidentComponent implements OnInit {
   canDetach: boolean = false;
   canAttach: boolean = false;
   auth: Authorization;
-  //viewAllowed: boolean = false;
   editAllowed: boolean = false;
 
   constructor(
@@ -51,9 +50,8 @@ export class FlatResidentComponent implements OnInit {
 
     this.service.getAuthorization()
       .then(auth => {
-        console.log('Inside flats list component...'); console.log(auth);
+        console.log('Inside flats-residents list component...'); console.log(auth);
         if (auth.permissions.length < 1) return []; // just return empty array if permission list is empty
-        //this.viewAllowed = auth.allowsView();
         this.editAllowed = auth.allowsEdit();
         this.auth = auth;
         this.initStreams();

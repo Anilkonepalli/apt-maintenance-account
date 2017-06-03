@@ -50,12 +50,17 @@ export class RoleService {
       .then(models => models.json() as Permission[])
       .catch(this.handleError);
   }
+
   // Note: Get Authorization thorugh User Service approach is giving zone error
   // error occur at DependencyInjection of UserService in the constructor method;
   // so, method, from UserService, needed for authorization is pasted below with few modifications...
   getAuthorization(): Promise<Authorization> {
+    return this.getAuthorizationFor('roles');
+  }
+
+  getAuthorizationFor(moduleName: string): Promise<Authorization> {
     console.log('get authorization for roles...');
-    let moduleName = 'roles';
+    //let moduleName = 'roles';
     let url = this.userModelUrl + '/mypermissions/' + moduleName;
     console.log('Role service getAuthorization()...URL is ' + url);
     return this.http

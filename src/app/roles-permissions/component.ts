@@ -6,6 +6,7 @@ import { Role }														from '../roles/model';
 import { Permission }											from '../permissions/model';
 
 import { RolePermissionService }					from './service';
+import { Authorization }									from '../authorization/model';
 
 import 'rxjs/add/operator/switchMap';
 import * as _                             from 'lodash';
@@ -37,6 +38,9 @@ export class RolePermissionComponent implements OnInit {
   canDetach: boolean = false;
   canAttach: boolean = false;
 
+  auth: Authorization;
+  editAllowed: boolean = false;
+
   constructor(
     private service: RolePermissionService,
     private route: ActivatedRoute,
@@ -44,6 +48,18 @@ export class RolePermissionComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    console.log('Inside roles-permissions component ngOnInit()...');
+
+    this.service.getAuthorization()
+      .then(auth => {
+        console.log('Inside roles-permissions list component...'); console.log(auth);
+        if (auth.permissions.length < 1) return []; // just return empty array if permission list is empty
+        this.editAllowed = auth.allowsEdit();
+        this.auth = auth;
+        this.initStreams();
+      });
+  }
+  private initStreams(): void {
     this.lstream = this.route.params
       .switchMap((params: Params) => {
         return this.service.getlmodels();

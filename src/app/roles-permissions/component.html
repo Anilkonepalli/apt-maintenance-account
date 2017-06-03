@@ -26,6 +26,7 @@
 			(click)="detach()"
 			title="Revoke Permissions"
 			[disabled]="!canDetach"
+			[hidden]="!editAllowed"
 			>>></button>
 
 		<label class="dlabel">Available Permissions</label>
@@ -42,7 +43,12 @@
 			(click)="attach()"
 			title="Grant Permissions"
 			[disabled]="!canAttach"
+			[hidden]="!editAllowed"
 			><<</button>
 
-		<button class="homeButton" (click)="goHome()" title="Return to Home page"><i class="fa fa-home" aria-hidden="true"></i> Home</button>
+		<button
+			class="homeButton"
+			(click)="goHome()"
+			title="Return to Home page"
+			><i class="fa fa-home" aria-hidden="true"></i> Home</button>
 </div>
