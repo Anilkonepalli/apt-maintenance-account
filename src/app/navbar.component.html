@@ -1,6 +1,5 @@
 <!-- Menu before logging in -->
-<nav *ngIf="! isLoggedIn()" class="navbar navbar-toggleable-md navbar-light bg-faded">
-<!--nav *ngIf="!authService.isLoggedIn" class="navbar navbar-toggleable-md navbar-light bg-faded"-->
+<nav *ngIf="!authService.isLoggedIn" class="navbar navbar-toggleable-md navbar-light bg-faded">
 
 	<button
 		class="navbar-toggler navbar-toggler-right"
@@ -36,8 +35,7 @@
 </nav>
 
 <!-- Menu after logging in -->
-<nav *ngIf="isLoggedIn()" class="navbar navbar-toggleable-md navbar-light bg-faded">
-<!--nav *ngIf="authService.isLoggedIn" class="navbar navbar-toggleable-md navbar-light bg-faded"-->
+<nav *ngIf="authService.isLoggedIn" class="navbar navbar-toggleable-md navbar-light bg-faded">
 	<button
 		class="navbar-toggler navbar-toggler-right"
 		type="button"

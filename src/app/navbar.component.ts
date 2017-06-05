@@ -20,33 +20,7 @@ export class NavbarComponent {
     public logger: Logger,
     public authService: AuthService,
     private authznService: AuthorizationService) { }
-  /*
-    ngOnInit(): void {
-      if (this.authService.isLoggedIn) {
-        console.log('Retrieving all permissions');
-        this.initPerms();
-      } else {
-        console.log('User Is Not Logged In; so permissions are not retrieved yet...');
-      }
-    } */
 
-  initializePermissions() {
-
-    this.authznService.getAllPermissions()
-      .then((models: Permission[]) => {
-        this.allPermissions = models;
-        console.log('All Permissions...'); console.log(models);
-      });
-  }
-  isLoggedIn() {
-    console.log('navbar component ...' + this.authService.isLoggedIn);
-    if (this.authService.isLoggedIn
-      && this.allPermissions.length == 0) {
-      console.log('getting all permissions for navbar...');
-      this.initializePermissions();
-    }
-    return this.authService.isLoggedIn;
-  }
   logout() {
     this.logger.info('Logging out of application @app.component...');
     this.logger.warn('A warning message...');

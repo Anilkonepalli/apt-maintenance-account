@@ -11,6 +11,8 @@ import { Logger }		                    from '../logger/default-log.service';
 import { Message, ErrorMessage,
   InfoMessage, WarningMessage }       from '../shared';
 
+import { AuthorizationService }       from '../authorization/service';
+
 const contentHeaders = new Headers();
 contentHeaders.append('Accept', 'application/json');
 contentHeaders.append('Content-Type', 'application/json');
@@ -28,7 +30,10 @@ export class AuthService {
   // store the URL so we can redirect after logging in
   redirectUrl: string;
 
-  constructor(private http: Http, private logger: Logger) { }
+  constructor(
+    private http: Http,
+    private logger: Logger,
+    private authzn: AuthorizationService) { }
 
   login(event: String, email: String, password: String): Observable<object> {
     let data = JSON.stringify({ email, password });
@@ -46,6 +51,9 @@ export class AuthService {
         localStorage.setItem('userId', decodedJwt.id);
         this.isLoggedIn = true;
         this.message = new InfoMessage("Success", "log...");
+        console.log('before init...canAccess is ' + this.authzn.canAccess);
+        this.authzn.init(); // initialize after user logged in
+        console.log('after init....canAccess is ' + this.authzn.canAccess);
       },
       error => {
         this.isLoggedIn = false;
