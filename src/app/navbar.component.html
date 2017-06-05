@@ -97,30 +97,37 @@
 						<a
 							class="dropdown-item"
 							[routerLink]="['/residents']"
+							[hidden]="!authzn.allows['residents']"
 						><i class="fa fa-user-o" aria-hidden="true"></i> Residents</a>
 						<a
 							class="dropdown-item"
 							[routerLink]="['/flats-residents']"
+							[hidden]="!authzn.allows['flats-residents']"
 						><i class="fa fa-link" aria-hidden="true"></i> Flats-Residents</a>
 						<a
 							class="dropdown-item"
 							[routerLink]="['/roles']"
+							[hidden]="!authzn.allows['roles']"
 						><i class="fa fa-key" aria-hidden="true"></i> Roles</a>
 						<a
 							class="dropdown-item"
 							[routerLink]="['/permissions']"
+							[hidden]="!authzn.allows['permissions']"
 						><i class="fa fa-lock" aria-hidden="true"></i> Permissions</a>
 						<a
 							class="dropdown-item"
 							[routerLink]="['/roles-permissions']"
+							[hidden]="!authzn.allows['roles-permissions']"
 						><i class="fa fa-link" aria-hidden="true"></i> Roles-Permissions</a>
 						<a
 							class="dropdown-item"
 							[routerLink]="['/users']"
+							[hidden]="!authzn.allows['users']"
 						><i class="fa fa-users" aria-hidden="true"></i> Users</a>
 						<a
 							class="dropdown-item"
 							[routerLink]="['/users-roles']"
+							[hidden]="!authzn.allows['users-roles']"
 						><i class="fa fa-link" aria-hidden="true"></i> Users-Roles</a>
 		    	</div>
 		    </div>
