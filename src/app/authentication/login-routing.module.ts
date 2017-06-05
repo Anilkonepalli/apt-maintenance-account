@@ -4,22 +4,24 @@ import { AuthGuardService } 		from './auth-guard.service';
 import { AuthService } 				from './auth.service';
 import { LoginComponent } 			from './login.component';
 import { SocialLoginComponent } from './social/login.component';
+import { AuthorizationService } from '../authorization/service';
 
 const loginRoutes: Routes = [
-    { path: 'login', component: LoginComponent },
-    { path: 'sociallogin', component: SocialLoginComponent },
+  { path: 'login', component: LoginComponent },
+  { path: 'sociallogin', component: SocialLoginComponent },
 ];
 
 @NgModule({
-    imports: [
-        RouterModule.forChild(loginRoutes)
-    ],
-    exports: [
-        RouterModule
-    ],
-    providers: [
-        AuthGuardService,
-        AuthService
-    ]
+  imports: [
+    RouterModule.forChild(loginRoutes)
+  ],
+  exports: [
+    RouterModule
+  ],
+  providers: [
+    AuthGuardService,
+    AuthService,
+    AuthorizationService
+  ]
 })
 export class LoginRoutingModule { }

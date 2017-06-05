@@ -21,26 +21,38 @@ contentHeaders.append('Content-Type', 'application/json');
 
 @Injectable()
 export class AuthorizationService {
-  private modelUrl = process.env.API_URL + '/api/user/allpermissions';
-  private id_token = localStorage.getItem('id_token');
-  private userId = localStorage.getItem('userId');
-  private headers = new Headers({
-    'Content-Type': 'application/json',
-    'x-access-token': this.id_token
-  });
-  private canAccess = false;
+  private modelUrl = process.env.API_URL + '/api/users/allpermissions';
+  private permissions: Permission[];
+
+  // initialize on user logging in
+  private id_token: string;
+  private userId: string;
+  private headers: Headers;
+
 
   constructor(
     private http: Http,
     private logger: Logger) { }
 
+  /**
+   * init is called after user is logged-in in the Authentication Service
+   * @return none
+   */
   init() {
-    this.testFn();
-  }
 
-  testFn() {
-    console.log('Authorization >> TestFn()...');
-    this.canAccess = true;
+    this.id_token = localStorage.getItem('id_token');
+    this.userId = localStorage.getItem('userId');
+
+    this.headers = new Headers({
+      'Content-Type': 'application/json',
+      'x-access-token': this.id_token
+    });
+
+    this.getAllPermissions()
+      .then((models: Permission[]) => {
+        this.permissions = models;
+        console.log('All Permissions of logged in user...'); console.log(this.permissions);
+      });
   }
 
   getAllPermissions(): Promise<Permission[]> {

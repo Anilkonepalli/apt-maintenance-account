@@ -51,9 +51,7 @@ export class AuthService {
         localStorage.setItem('userId', decodedJwt.id);
         this.isLoggedIn = true;
         this.message = new InfoMessage("Success", "log...");
-        console.log('before init...canAccess is ' + this.authzn.canAccess);
         this.authzn.init(); // initialize after user logged in
-        console.log('after init....canAccess is ' + this.authzn.canAccess);
       },
       error => {
         this.isLoggedIn = false;
