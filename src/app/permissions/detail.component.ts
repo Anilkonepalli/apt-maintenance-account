@@ -28,7 +28,7 @@ export class PermissionDetailComponent implements OnInit {
   title: string;
   recordId: string;
   moduleKeys: string[] = Object.keys(MODULE);
-  resources: string[] = this.moduleKeys.map((key: string) => MODULE[key]); // collect MODULE values
+  resources: string[] = this.moduleKeys.map((key: string) => MODULE[key].name); // collect MODULE values
 
   // CRUD Operations
   canCreate: boolean;

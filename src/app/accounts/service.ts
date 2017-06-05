@@ -69,7 +69,7 @@ export class AccountService {
 
   getAuthorization(): Promise<Authorization> {
     //return this.userService.getAuthorizationFor('accounts');
-    return this.userService.getAuthorizationFor(MODULE.ACCOUNT);
+    return this.userService.getAuthorizationFor(MODULE.ACCOUNT.name);
   }
 
   update(model: Account): Promise<Account> {

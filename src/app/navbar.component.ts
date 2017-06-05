@@ -19,7 +19,7 @@ export class NavbarComponent {
     public router: Router,
     public logger: Logger,
     public authService: AuthService,
-    private authznService: AuthorizationService) { }
+    private authzn: AuthorizationService) { }
 
   logout() {
     this.logger.info('Logging out of application @app.component...');
