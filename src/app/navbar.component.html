@@ -4,32 +4,36 @@
 	<button
 		class="navbar-toggler navbar-toggler-right"
 		type="button"
+		(click)="isExpanded = !isExpanded"
 		data-toggle="collapse"
 		data-target="#navbarSupportedContent"
 		aria-controls="navbarSupportedContent"
-		aria-expanded="false"
+		[attr.aria-expanded]="!isExpanded"
 		aria-label="Toggle navigation">
 			<span class="navbar-toggler-icon"></span>
 	</button>
-	<a class="navbar-brand" href="#">Apt Maint</a>
+	<a class="navbar-brand" [routerLink]="['/home']">Apartment Maintenance</a>
 
-	<div class="collapse navbar-collapse" id="navbarSupportedContent">
-		<ul class="navbar-nav mr-auto">
-			<li class="nav-item" [routerLinkActive]="['active']">
-				<a class="nav-link" [routerLink]="['/home']"><i class="fa fa-home" aria-hidden="true"></i> Home</a>
-			</li>
-			<li class="nav-item" [routerLinkActive]="['active']">
-				<a class="nav-link" [routerLink]="['/about']"><i class="fa fa-info" aria-hidden="true"></i> About</a>
-			</li>
-		</ul>
-		<ul class="navbar-nav navbar-right">
-			<li class="nav-item pull-right" [routerLinkActive]="['active']">
-				<a class="nav-link" [routerLink]="['/login']"><i class="fa fa-sign-in" aria-hidden="true"></i> Login</a>
-			</li>
-			<li class="nav-item" [routerLinkActive]="['active']">
-				<a class="nav-link" [routerLink]="['/signup']"><i class="fa fa-pencil" aria-hidden="true"></i> Signup</a>
-			</li>
-		</ul>
+	<div
+		class="collapse navbar-collapse"
+		id="navbarSupportedContent"
+		[ngbCollapse]="!isExpanded">
+			<ul class="navbar-nav mr-auto">
+				<li class="nav-item" [routerLinkActive]="['active']">
+					<a class="nav-link" [routerLink]="['/home']"><i class="fa fa-home" aria-hidden="true"></i> Home</a>
+				</li>
+				<li class="nav-item" [routerLinkActive]="['active']">
+					<a class="nav-link" [routerLink]="['/about']"><i class="fa fa-info" aria-hidden="true"></i> About</a>
+				</li>
+			</ul>
+			<ul class="navbar-nav navbar-right">
+				<li class="nav-item pull-right" [routerLinkActive]="['active']">
+					<a class="nav-link" [routerLink]="['/login']"><i class="fa fa-sign-in" aria-hidden="true"></i> Login</a>
+				</li>
+				<li class="nav-item" [routerLinkActive]="['active']">
+					<a class="nav-link" [routerLink]="['/signup']"><i class="fa fa-pencil" aria-hidden="true"></i> Signup</a>
+				</li>
+			</ul>
 	</div>
 
 </nav>
@@ -39,125 +43,129 @@
 	<button
 		class="navbar-toggler navbar-toggler-right"
 		type="button"
+		(click)="isExpanded = !isExpanded"
 		data-toggle="collapse"
 		data-target="#navbarSupportedContent2"
 		aria-controls="navbarSupportedContent2"
-		aria-expanded="false"
+		[attr.aria-expanded]="!isExpanded"
 		aria-label="Toggle navigation">
 			<span class="navbar-toggler-icon"></span>
 	</button>
 	<a class="navbar-brand" href="#">Apt Maint</a>
 
-	<div class="collapse navbar-collapse" id="navbarSupportedContent2">
-		<ul class="navbar-nav mr-auto">
-			<li class="nav-item" [routerLinkActive]="['active']">
-				<a
-					class="nav-link"
-					[routerLink]="['/home']"
-				><i class="fa fa-home" aria-hidden="true"></i> Home</a>
-			</li>
-			<li class="nav-item" [routerLinkActive]="['active']">
-				<a
-					class="nav-link"
-					[routerLink]="['/about']"
-				><i class="fa fa-info" aria-hidden="true"></i> About</a>
-			</li>
-			<li class="nav-item dropdown" [routerLinkActive]="['active']">
-				<div ngbDropdown class="d-inline-block">
-		    	<button
-						class="btn btn-link"
-						id="dropdownBasic1"
-						ngbDropdownToggle
-					><i class="fa fa-book" aria-hidden="true"></i> Accounts</button>
-		    	<div class="dropdown-menu" aria-labelledby="dropdownBasic1">
-						<a
-							class="dropdown-item"
-							[routerLink]="['/accounts']"
-						><i class="fa fa-table" aria-hidden="true"></i> Full List</a>
-						<a
-							class="dropdown-item"
-							[routerLink]="['/accounts-periodic']"
-						><i class="fa fa-th-large" aria-hidden="true"></i> Monthly List</a>
-		    	</div>
-		    </div>
-		  </li>
-			<li class="nav-item dropdown" [routerLinkActive]="['active']" *ngIf="authzn.allowsAdminResources">
-				<div ngbDropdown class="d-inline-block">
-		    	<button
-						class="btn btn-link"
-						id="dropdownBasic2"
-						ngbDropdownToggle
-					><i class="fa fa-cog" aria-hidden="true"></i> Admin</button>
-		    	<div class="dropdown-menu" aria-labelledby="dropdownBasic2">
-						<a
-							class="dropdown-item"
-							[routerLink]="['/flats']"
-							[hidden]="!authzn.allows['flats']"
-						><i class="fa fa-building-o" aria-hidden="true"></i> Flats</a>
-						<a
-							class="dropdown-item"
-							[routerLink]="['/residents']"
-							[hidden]="!authzn.allows['residents']"
-						><i class="fa fa-user-o" aria-hidden="true"></i> Residents</a>
-						<a
-							class="dropdown-item"
-							[routerLink]="['/flats-residents']"
-							[hidden]="!authzn.allows['flats-residents']"
-						><i class="fa fa-link" aria-hidden="true"></i> Flats-Residents</a>
-						<a
-							class="dropdown-item"
-							[routerLink]="['/roles']"
-							[hidden]="!authzn.allows['roles']"
-						><i class="fa fa-key" aria-hidden="true"></i> Roles</a>
-						<a
-							class="dropdown-item"
-							[routerLink]="['/permissions']"
-							[hidden]="!authzn.allows['permissions']"
-						><i class="fa fa-lock" aria-hidden="true"></i> Permissions</a>
-						<a
-							class="dropdown-item"
-							[routerLink]="['/roles-permissions']"
-							[hidden]="!authzn.allows['roles-permissions']"
-						><i class="fa fa-link" aria-hidden="true"></i> Roles-Permissions</a>
-						<a
-							class="dropdown-item"
-							[routerLink]="['/users']"
-							[hidden]="!authzn.allows['users']"
-						><i class="fa fa-users" aria-hidden="true"></i> Users</a>
-						<a
-							class="dropdown-item"
-							[routerLink]="['/users-roles']"
-							[hidden]="!authzn.allows['users-roles']"
-						><i class="fa fa-link" aria-hidden="true"></i> Users-Roles</a>
-		    	</div>
-		    </div>
-		  </li>
-		</ul>
-		<ul class="navbar-nav navbar-right">
-			<li class="nav-item">
-				<div ngbDropdown class="d-inline-block">
-					<button
-						class="btn btn-link"
-						id="dropdownBasic3"
-						ngbDropdownToggle
-					><i class="fa fa-user" aria-hidden="true"></i> {{authService.loggedUser}}</button>
-					<div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownBasic3">
-						<div>
+	<div
+		class="collapse navbar-collapse"
+		id="navbarSupportedContent2"
+		[ngbCollapse]="!isExpanded">
+			<ul class="navbar-nav mr-auto">
+				<li class="nav-item" [routerLinkActive]="['active']">
+					<a
+						class="nav-link"
+						[routerLink]="['/home']"
+					><i class="fa fa-home" aria-hidden="true"></i> Home</a>
+				</li>
+				<li class="nav-item" [routerLinkActive]="['active']">
+					<a
+						class="nav-link"
+						[routerLink]="['/about']"
+					><i class="fa fa-info" aria-hidden="true"></i> About</a>
+				</li>
+				<li class="nav-item dropdown" [routerLinkActive]="['active']">
+					<div ngbDropdown class="d-inline-block">
+			    	<button
+							class="btn btn-link"
+							id="dropdownBasic1"
+							ngbDropdownToggle
+						><i class="fa fa-book" aria-hidden="true"></i> Accounts</button>
+			    	<div class="dropdown-menu" aria-labelledby="dropdownBasic1">
 							<a
-								class="nav-link"
-								(click)="userProfile()"
-							><i class="fa fa-user-o" aria-hidden="true"></i> Profile</a>
-						</div>
-						<div role="separator" class="dropdown-divider"></div>
-						<div>
+								class="dropdown-item"
+								[routerLink]="['/accounts']"
+							><i class="fa fa-table" aria-hidden="true"></i> Full List</a>
 							<a
-								class="nav-link"
-								(click)="logout()"
-							><i class="fa fa-sign-out" aria-hidden="true"></i> Logout</a>
+								class="dropdown-item"
+								[routerLink]="['/accounts-periodic']"
+							><i class="fa fa-th-large" aria-hidden="true"></i> Monthly List</a>
+			    	</div>
+			    </div>
+			  </li>
+				<li class="nav-item dropdown" [routerLinkActive]="['active']" *ngIf="authzn.allowsAdminResources">
+					<div ngbDropdown class="d-inline-block">
+			    	<button
+							class="btn btn-link"
+							id="dropdownBasic2"
+							ngbDropdownToggle
+						><i class="fa fa-cog" aria-hidden="true"></i> Settings</button>
+			    	<div class="dropdown-menu" aria-labelledby="dropdownBasic2">
+							<a
+								class="dropdown-item"
+								[routerLink]="['/flats']"
+								[hidden]="!authzn.allows['flats']"
+							><i class="fa fa-building-o" aria-hidden="true"></i> Flats</a>
+							<a
+								class="dropdown-item"
+								[routerLink]="['/residents']"
+								[hidden]="!authzn.allows['residents']"
+							><i class="fa fa-user-o" aria-hidden="true"></i> Residents</a>
+							<a
+								class="dropdown-item"
+								[routerLink]="['/flats-residents']"
+								[hidden]="!authzn.allows['flats-residents']"
+							><i class="fa fa-link" aria-hidden="true"></i> Flats-Residents</a>
+							<a
+								class="dropdown-item"
+								[routerLink]="['/roles']"
+								[hidden]="!authzn.allows['roles']"
+							><i class="fa fa-key" aria-hidden="true"></i> Roles</a>
+							<a
+								class="dropdown-item"
+								[routerLink]="['/permissions']"
+								[hidden]="!authzn.allows['permissions']"
+							><i class="fa fa-lock" aria-hidden="true"></i> Permissions</a>
+							<a
+								class="dropdown-item"
+								[routerLink]="['/roles-permissions']"
+								[hidden]="!authzn.allows['roles-permissions']"
+							><i class="fa fa-link" aria-hidden="true"></i> Roles-Permissions</a>
+							<a
+								class="dropdown-item"
+								[routerLink]="['/users']"
+								[hidden]="!authzn.allows['users']"
+							><i class="fa fa-users" aria-hidden="true"></i> Users</a>
+							<a
+								class="dropdown-item"
+								[routerLink]="['/users-roles']"
+								[hidden]="!authzn.allows['users-roles']"
+							><i class="fa fa-link" aria-hidden="true"></i> Users-Roles</a>
+			    	</div>
+			    </div>
+			  </li>
+			</ul>
+			<ul class="navbar-nav navbar-right">
+				<li class="nav-item">
+					<div ngbDropdown class="d-inline-block">
+						<button
+							class="btn btn-link"
+							id="dropdownBasic3"
+							ngbDropdownToggle
+						><i class="fa fa-user" aria-hidden="true"></i> {{authService.loggedUser}}</button>
+						<div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownBasic3">
+							<div>
+								<a
+									class="nav-link"
+									(click)="userProfile()"
+								><i class="fa fa-user-o" aria-hidden="true"></i> Profile</a>
+							</div>
+							<div role="separator" class="dropdown-divider"></div>
+							<div>
+								<a
+									class="nav-link"
+									(click)="logout()"
+								><i class="fa fa-sign-out" aria-hidden="true"></i> Logout</a>
+							</div>
 						</div>
 					</div>
-				</div>
-			</li>
-		</ul>
+				</li>
+			</ul>
 	</div>
 </nav>
