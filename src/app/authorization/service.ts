@@ -101,11 +101,10 @@ export class AuthorizationService {
       .get(url, { headers: this.headers })
       .toPromise()
       .then(models => {
+        console.log('All Permission models...'); console.log(models);
         let perms = models.json() as Permission[];
-        //if (perms.length < 1) alert('No permissions on ' + moduleName);
+        if (perms.length < 1) alert('No permissions available for the user ');
         console.log('Permissions are:...'); console.log(perms);
-        //let auth = new Authorization(perms, +this.userId);
-        //return auth;
         return perms;
       })
       .catch(this.handleError);
