@@ -67,7 +67,7 @@ export class AuthorizationService {
       .then((models: Permission[]) => {
         this.permissions = models;
         this.initAuths_n_allows();
-        // console.log('Authorizations are...'); console.log(this.allows);
+        console.log('Authorizations are...'); console.log(this.allows);
         this.initAllowsAdmin();
       });
 
@@ -78,7 +78,7 @@ export class AuthorizationService {
       let resourcePermissions = this.permissions
         .filter((eachPerm: Permission) =>
           eachPerm.resource === resource);
-      // console.log('Permission on Resource: ' + resource); console.log(resourcePermissions);
+      console.log('Permission on Resource: ' + resource); console.log(resourcePermissions);
       let authzn = new Authorization(resourcePermissions, +this.userId);
       this.auths[resource] = authzn; // sets authorization model
       this.allows[resource] = authzn.allowsAny(); // sets boolean value
