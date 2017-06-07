@@ -54,7 +54,10 @@ export class Authorization {
     let data;
     let evaluatedPerms = permissionsWithCondition.filter(perm => { // filter for permission that
       fn = new Function("data", perm.condition);				   // evaluates its condition to true
-      data = { userId: this.user, ownerId: owner };
+      data = {
+        user_id: this.user,
+        model: { owner_id: owner }
+      };
       return fn(data);
     });
     return evaluatedPerms.length > 0;
