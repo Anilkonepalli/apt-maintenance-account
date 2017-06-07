@@ -4,6 +4,7 @@
 	<caption>Residents of XYZ Apartments</caption>
 	<thead>
 		<tr>
+			<th title="User Name" scope="col">User Name</th>
 			<th title="First Name" scope="col">First Name</th>
 			<th title="Last Name" scope="col">Last Name</th>
 			<th title="Resident Type" scope="col">Type</th>
@@ -12,6 +13,23 @@
 	</thead>
 	<tbody>
 		<tr [hidden]="!addAllowed">
+			<td>
+				<select
+					class="form-control"
+					id="userNm"
+					required
+					[(ngModel)]="model.owner_id"
+					name="userNm"
+					#userNm="ngModel">
+					<option value="" disabled selected>
+						-- Select an user --
+					</option>
+					<option
+						*ngFor="let user of users"
+						[value]="user.id"
+					 >{{user.name}}</option>
+				</select>
+			</td>
 			<td>
 				<input
 					type="text"
@@ -50,21 +68,35 @@
 					class="btn btn-link"
 					(click)="save()"
 					title="Add New Resident"
-					[disabled]="!(model.first_name && model.is_a)"
+					[disabled]="!(model.first_name && model.is_a && model.owner_id)"
 					><i class="fa fa-plus" aria-hidden="true"></i></button>
 			</td>
 		</tr>
 		<tr *ngFor="let model of models | async">
+
 			<th scope="row" (click)="rowSelected($event, model)" *ngIf="!canEdit[model.id]">
-				{{ model.first_name }}
+				{{ userName(model.owner_id) }}
 			</th>
 			<th scope="row" *ngIf="canEdit[model.id]">
+				<select	[(ngModel)]="editModel.owner_id">
+					<option
+						*ngFor="let user of users"
+						[value]="user.id"
+					 >{{user.name}}</option>
+				</select>
+			</th>
+
+			<td scope="row" (click)="rowSelected($event, model)" *ngIf="!canEdit[model.id]">
+				{{ model.first_name }}
+			</td>
+			<td scope="row" *ngIf="canEdit[model.id]">
 				<input
 					type="text"
 					[(ngModel)]="editModel.first_name"
 					placeholder="<first name here>"
 				/>
-			</th>
+			</td>
+
 			<td (click)="rowSelected($event, model)" *ngIf="!canEdit[model.id]">
 				{{ model.last_name }}
 			</td>
@@ -75,6 +107,7 @@
 					placeholder="<last name here>"
 				/>
 			</td>
+
 			<td (click)="rowSelected($event, model)" *ngIf="!canEdit[model.id]">
 				{{ model.is_a }}
 			</td>
@@ -86,6 +119,7 @@
 					 >{{type}}</option>
 				</select>
 			</td>
+
 			<td>
 				<button
 					class="btn btn-link"
@@ -108,11 +142,14 @@
 					*ngIf="auth.allowsDelete(model.owner_id) && !canEdit[model.id]"
 				><i class="fa fa-trash" aria-hidden="true"></i></button>
 			</td>
+
 		</tr>
+
 	</tbody>
+
 	<tfoot>
 		<tr>
-			<th scope="row" colspan="3">Total Residents</th>
+			<th scope="row" colspan="4">Total Residents</th>
 			<td colspan="1">{{totalRecords}}</td>
 		</tr>
 	</tfoot>

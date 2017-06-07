@@ -6,6 +6,7 @@ import { Resident }										    from './model';
 import { ResidentService }							  from './service';
 import { Authorization }									from '../authorization/model';
 import { Logger }		                      from '../logger/default-log.service';
+import { User }                           from '../users/model';
 
 import 'rxjs/add/operator/switchMap';
 
@@ -13,7 +14,6 @@ var list_css = require('./list.component.css');
 var list_css_string = list_css.toString();
 var list_html = require('./list.component.html');
 var list_html_string = list_html.toString();
-
 
 @Component({
   selector: 'resident-list',
@@ -41,6 +41,7 @@ export class ResidentListComponent implements OnInit {
   ];
   canEdit: any = {};
   editModel: Resident;
+  users: User[];
 
   constructor(
     private service: ResidentService,
@@ -59,7 +60,7 @@ export class ResidentListComponent implements OnInit {
         this.deleteAllowed = auth.allowsDelete();
         this.auth = auth;
         this.getList();
-
+        this.getUsers();
         this.models.subscribe((models) => {
           // set total residents
           this.totalRecords = models.length;
@@ -105,6 +106,13 @@ export class ResidentListComponent implements OnInit {
       });
   }
 
+  private getUsers(): void {
+    this.service.getUsers()
+      .then((models: User[]) => {
+        this.users = models;
+        console.log('User List: '); console.log(this.users);
+      });
+  }
   public rowSelected(event: any, model: Resident) {
     console.log('Row clicked...' + model.id);
     console.log(event);
@@ -133,6 +141,7 @@ export class ResidentListComponent implements OnInit {
         modelWOChanges.first_name = model.first_name; // update the view with changes
         modelWOChanges.last_name = model.last_name;
         modelWOChanges.is_a = model.is_a;
+        modelWOChanges.owner_id = model.owner_id;
       })
       .catch((error: any) => {
         let jerror = error.json();
@@ -147,5 +156,9 @@ export class ResidentListComponent implements OnInit {
     console.log('Changed model...'); console.log(this.editModel);
     this.canEdit[model.id] = false;
     this.editModel = null;
+  }
+
+  public userName(ownerId: number) {
+    return ownerId ? this.users.find((each: User) => each.id == ownerId).name : 'admin';
   }
 }

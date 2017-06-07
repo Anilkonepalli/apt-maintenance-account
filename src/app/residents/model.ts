@@ -6,7 +6,7 @@ export class Resident {
     public last_name: string = '',
     public is_a: string = '',
     public remarks: string = '',
-    public owner_id: number = undefined
+    public owner_id: string = ''
   ) { }
 
   public clone() {
