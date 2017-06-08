@@ -33,6 +33,14 @@ export class Authorization {
       this.allowsEdit(owner) ||
       this.allowsDelete(owner);
   }
+
+  public allowsCRUD(owner: number = -1): boolean {
+    return this.allowsAdd() &&
+      this.allowsView(owner) &&
+      this.allowsEdit(owner) &&
+      this.allowsDelete(owner);
+  }
+
   private allows(action: string, owner: number): boolean {
 
     let permissions = this.permissions.filter(perm => { // find permissions with granted 'action'

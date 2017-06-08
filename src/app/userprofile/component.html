@@ -104,7 +104,7 @@
 			type="submit"
 			class="btn btn-success"
 			[disabled]="!detailForm.form.valid"
-			[hidden]="hideSave"
+			[hidden]="!allowsEdit"
 			title="Save changes made"
 			><i class="fa fa-floppy-o" aria-hidden="true"></i> Save</button>
 

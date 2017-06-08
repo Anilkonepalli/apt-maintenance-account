@@ -28,7 +28,7 @@ export class AuthorizationService {
   private resources: string[] = this.moduleKeys.map((key: string) => MODULE[key].name); // collect MODULE values
 
   // holds authorization model for each resources
-  private auths: any = {};
+  public auths: any = {};
 
   // holds boolean value for each resources indicating whether the module is accessbible or not
   public allows: any = {};

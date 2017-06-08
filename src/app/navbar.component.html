@@ -154,6 +154,7 @@
 								<a
 									class="nav-link"
 									[routerLink]="['userprofile']"
+									[hidden]="!authzn.allows['user-profile']"
 								><i class="fa fa-user-o" aria-hidden="true"></i> Profile</a>
 							</div>
 							<div role="separator" class="dropdown-divider"></div>

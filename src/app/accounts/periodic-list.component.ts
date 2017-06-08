@@ -31,7 +31,7 @@ export class PeriodicListComponent implements OnInit {
   monthlyMaintCharge = 600;
 
   models: Observable<Account[]>;
-  auth: Authorization;
+  authzn: Authorization;
 
   constructor(
     private service: AccountService,
@@ -41,15 +41,19 @@ export class PeriodicListComponent implements OnInit {
 
   ngOnInit(): void {
     this.service.getAuthorization()
-      .then(auth => {
-        this.auth = auth;
+      .then(authzn => {
+        this.authzn = authzn;
         this.models = this.route.params
           .switchMap((params: Params) => {
             return this.service.getPeriodicList(this.for_month, this.for_year);
           });
       });
   }
-  togglePaidStatus(event: any, model: Account) {
+  togglePaidStatus(event: any, model: Account): void {
+    if (!this.authzn.allowsCRUD()) {
+      alert('Permission Denied');
+      return;
+    }
     console.log('toggle paid status event: '); console.log(event);
     console.log('toggle paid status model: '); console.log(model);
     model.amount != this.monthlyMaintCharge

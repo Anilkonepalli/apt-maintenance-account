@@ -5,6 +5,10 @@ import { Location }													from '@angular/common';
 import { User }															from '../users/model';
 import { UserProfileService }								from './service';
 import { Logger }		                        from '../logger/default-log.service';
+import { MODULE }                       from '../shared/constants';
+
+import { Authorization }                    from '../authorization/model';
+import { AuthorizationService }             from '../authorization/service';
 
 import 'rxjs/add/operator/switchMap';
 
@@ -18,20 +22,25 @@ var profile_html_string = profile_html.toString();
 export class UserProfileComponent implements OnInit {
   @Input() model: User;
   title: string = 'Profile';
-  userId: string = localStorage.getItem('userId');
+  private userId: string = localStorage.getItem('userId');
+  private authzn: Authorization;
+  public allowsEdit: boolean = false;
 
   constructor(
     private service: UserProfileService,
     private route: ActivatedRoute,
     private router: Router,
     private location: Location,
-    private logger: Logger
+    private logger: Logger,
+    private authznService: AuthorizationService
   ) { }
 
   ngOnInit(): void {
     this.service.getUserFor(+this.userId)
       .then((model: User) => {
         this.model = model;
+        this.authzn = this.authznService.auths[MODULE.USER_PROFILE.name];
+        this.allowsEdit = this.authzn.allowsEdit(+this.userId);
       });
   }
 
