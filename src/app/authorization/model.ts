@@ -58,6 +58,7 @@ export class Authorization {
         user_id: this.user,
         model: { owner_id: owner }
       };
+      console.log('evaluate condition data...'); console.log('User ID: ' + this.user + ', owner_id: ' + owner);
       return fn(data);
     });
     return evaluatedPerms.length > 0;

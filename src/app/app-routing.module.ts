@@ -23,6 +23,7 @@ const appRoutes: Routes = [
   { path: 'residents', loadChildren: './residents/module#ResidentsModule', canActivate: [AuthGuardService] },
   { path: 'flats-residents', loadChildren: './flats-residents/module#FlatsResidentsModule', canActivate: [AuthGuardService] },
   { path: 'users', loadChildren: './users/module#UsersModule', canActivate: [AuthGuardService] },
+  { path: 'userprofile', loadChildren: './userprofile/module#UserProfileModule', canActivate: [AuthGuardService] },
   { path: 'roles', loadChildren: './roles/module#RolesModule', canActivate: [AuthGuardService] },
   { path: 'permissions', loadChildren: './permissions/module#PermissionsModule', canActivate: [AuthGuardService] },
   { path: 'roles-permissions', loadChildren: './roles-permissions/module#RolesPermissionsModule', canActivate: [AuthGuardService] },

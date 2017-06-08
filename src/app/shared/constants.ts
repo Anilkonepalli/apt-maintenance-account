@@ -9,19 +9,6 @@ export const MODULE = {
   PERMISSION: { name: 'permissions', isAdmin: true },
   FLAT_RESIDENT: { name: 'flats-residents', isAdmin: true },
   USER_ROLE: { name: 'users-roles', isAdmin: true },
-  ROLE_PERMISSION: { name: 'roles-permissions', isAdmin: true }
+  ROLE_PERMISSION: { name: 'roles-permissions', isAdmin: true },
+  USER_PROFILE: { name: 'user-profile', isAdmin: false }
 };
-
-/*
-export const MODULE = {
-  ACCOUNT: 'accounts',
-  USER: 'users',
-  FLAT: 'flats',
-  RESIDENT: 'residents',
-  ROLE: 'roles',
-  PERMISSION: 'permissions',
-  FLAT_RESIDENT: 'flats-residents',
-  USER_ROLE: 'users-roles',
-  ROLE_PERMISSION: 'roles-permissions'
-};
-*/

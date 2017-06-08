@@ -81,7 +81,7 @@ export class AuthorizationService {
       console.log('Permission on Resource: ' + resource); console.log(resourcePermissions);
       let authzn = new Authorization(resourcePermissions, +this.userId);
       this.auths[resource] = authzn; // sets authorization model
-      this.allows[resource] = authzn.allowsAny(); // sets boolean value
+      this.allows[resource] = authzn.allowsAny(+this.userId); // sets boolean value
     });
   }
 
