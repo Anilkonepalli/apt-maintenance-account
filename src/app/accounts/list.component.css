@@ -4,17 +4,38 @@ table {
   table-layout: fixed;
   width: 100%;
   border-collapse: collapse;
-  border: 3px solid purple;
+  border: 1px solid brown;
 }
 
 thead th:nth-child(1) {
-  width: 40%;
+  width: 15%;
 }
 thead th:nth-child(2) {
-  width: 40%;
+  width: 5%;
 }
 thead th:nth-child(3) {
-  width: 20%;
+  width: 15%;
+}
+thead th:nth-child(4) {
+  width: 5%;
+}
+thead th:nth-child(5) {
+  width: 5%;
+}
+thead th:nth-child(6) {
+  width: 5%;
+}
+thead th:nth-child(7) {
+  width: 10%;
+}
+thead th:nth-child(8) {
+  width: 10%;
+}
+thead th:nth-child(9) {
+  width: 15%;
+}
+thead th:nth-child(10) {
+  width: 15%;
 }
 th, td {
   padding: 20px;
@@ -27,7 +48,7 @@ html {
 thead th, tfoot th {
   /* font-family: 'Rock Salt', cursive;  */
   /* color: yellow; */
-  color: white;
+  color: black;
 }
 th {
   letter-spacing: 2px;
@@ -44,27 +65,28 @@ tfoot th {
 
 /* graphics */
 thead, tfoot {
-  background: url('http://localhost:8080/images/broom_images_1a.jpg');
-  color: white;
-  opacity: 0.8;
+  /* background: url('http://localhost:8080/images/broom_images_1a.jpg'); */
+  color: black;
+  opacity: 0.6;
 }
 thead th, tfoot th, tfoot td {
-  background: linear-gradient(to bottom, rgba(0,0,0,0.1), rgba(0,0,0,0.5));
+  /* background: linear-gradient(to bottom, rgba(0,0,0,0.1), rgba(0,0,0,0.5)); */
   /* border: 3px solid purple; */
-  border: 3px solid #c65001;
-  text-shadow: 1px 1px 1px black;
+  border: 1px solid #f2f2f2;
+  text-shadow: 1px 1px 1px #f2f2f2;
+  background-color: #d7d7d7;
 }
 tbody tr:nth-child(odd) {
   /* background-color: #ff33cc; */
-  background-color: #c65001;
+  background-color: #ffffff;
 }
 tbody tr:nth-child(even) {
   /* background-color: #e495e4; */
-  background-color: #f49b5f;
+  background-color: #f2f2f2;
 }
 tbody tr {
   background-image: url('http://localhost:8080/images/noise.png');
-  opacity: 0.8;
+  opacity: 0.6;
 }
 table {
   /* background-color: #ff33cc; */
