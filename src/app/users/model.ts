@@ -7,4 +7,13 @@ export class User {
     public email: string = '',
     public password: string = ''
   ) { }
+};
+
+export var SampleUser1 = {
+  id: 0,
+  name: 'test',
+  first_name: 'test',
+  last_name: 'user',
+  email: 'test@eastgate.in',
+  password: 'test12345'
 }
