@@ -4,7 +4,7 @@ table {
   table-layout: fixed;
   width: 100%;
   border-collapse: collapse;
-  border: 3px solid purple;
+  border: 3px solid rgba(219, 219, 4, 0.6);
 }
 
 thead th:nth-child(1) {
@@ -28,7 +28,7 @@ html {
   font-family: 'helveitca neue', helvetica, arial, sans-serif;
 }
 thead th, tfoot th {
-  font-family: 'Rock Salt', cursive;
+  /* font-family: 'Rock Salt', cursive; */
 }
 th {
   letter-spacing: 2px;
@@ -45,26 +45,30 @@ tfoot th {
 
 /* graphics */
 thead, tfoot {
-/*  background: url('http://localhost:8080/images/leopardskin.jpg'); */
+/*  background: url('http://localhost:8080/images/leopardskin.jpg');
   background: url('http://localhost:8080/images/people-talking.jpg');
-  color: white;
+  color: white; */
+  background-color: rgba(219, 219, 4, 0.99);
+  color: #fff;
 }
 thead th, tfoot th, tfoot td {
-  background: linear-gradient(to bottom, rgba(0,0,0,0.1), rgba(0,0,0,0.5));
+/*  background: linear-gradient(to bottom, rgba(0,0,0,0.1), rgba(0,0,0,0.5));
   border: 3px solid purple;
-  text-shadow: 1px 1px 1px black;
+  text-shadow: 1px 1px 1px black; */
 }
 tbody tr:nth-child(odd) {
-  background-color: #ff33cc;
+  /* background-color: #ff33cc; */
+  background-color: rgba(219, 219, 4, 0.3);
 }
 tbody tr:nth-child(even) {
-  background-color: #e495e4;
+  /* background-color: #e495e4; */
+  background-color: rgba(219, 219, 4, 0.1);
 }
 tbody tr {
   background-image: url('http://localhost:8080/images/noise.png');
 }
 table {
-  background-color: #ff33cc;
+/*  background-color: #ff33cc; */
 }
 
 /* caption */

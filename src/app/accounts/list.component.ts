@@ -43,6 +43,7 @@ export class AccountListComponent implements OnInit {
   mySettings: IMultiSelectSettings;
   myTexts: IMultiSelectTexts;
   months: Month[] = Month.all();
+  totalRecords: number = 0;
 
 
   constructor(
@@ -131,6 +132,9 @@ export class AccountListComponent implements OnInit {
             //return this.service.getList();
             return this.service.getListFor(this.fromDate, this.toDate);
           });
+        this.models.subscribe((records: Account[]) => {
+          this.totalRecords = records.length;
+        })
       });
   }
 
