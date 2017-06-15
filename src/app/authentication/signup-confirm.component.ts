@@ -7,13 +7,17 @@ import { Logger }                         from '../logger/default-log.service';
 
 import 'rxjs/add/operator/switchMap';
 
+var signup_html = require('./signup-confirm.component.html');
+var signup_html_string = signup_html.toString();
+
 @Component({
   selector: 'signup-confirm',
-  templateUrl: './signup-confirm.component.html'
+  template: signup_html_string
 })
 export class SignupConfirmComponent implements OnInit {
 
-  status: string = 'Sign up yet to be confirmed';
+  status: string = 'Unconfirmed';
+  message: string = 'Contact Admin User for confirming your signup!'
 
   constructor(
     private service: AuthService,
@@ -26,7 +30,8 @@ export class SignupConfirmComponent implements OnInit {
       .switchMap((params: Params) => this.service.confirmSignup(params['code']))
       .subscribe((model: any) => {
         console.log('confirmed user: ...'); console.log(model);
-        this.status = 'Sign up is now confirmed.  You may now login to the application.'
+        this.status = 'Confirmed';
+        this.message = 'You can now login to the application.'
       });
   }
 
