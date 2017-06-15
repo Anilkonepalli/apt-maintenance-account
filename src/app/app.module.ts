@@ -15,6 +15,10 @@ import { AuthorizationModule }   from './authorization/module';
 
 import { LoginComponent }        from './authentication/login.component';
 import { SignupComponent }       from './authentication/signup.component';
+import { SignupInfoComponent }   from './authentication/signup-info.component';
+import { SignupConfirmComponent } from './authentication/signup-confirm.component';
+import { SignupRoutingModule }   from './authentication/signup-routing.module';
+
 import { PageNotFoundComponent } from './not-found.component';
 
 import { SocialLoginComponent }  from './authentication/social/login.component';
@@ -33,6 +37,7 @@ import { Logger }                from './logger/default-log.service';
     FormsModule,
     AppRoutingModule,
     LoginRoutingModule,
+    SignupRoutingModule,
     SharedModule,
     NgbModule.forRoot(),
     AuthorizationModule
@@ -41,6 +46,8 @@ import { Logger }                from './logger/default-log.service';
     AppComponent,
     LoginComponent,
     SignupComponent,
+    SignupInfoComponent,
+    SignupConfirmComponent,
     HomeComponent,
     AboutComponent,
     PageNotFoundComponent,

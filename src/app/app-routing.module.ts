@@ -8,6 +8,7 @@ import { AboutComponent } 			   from './about.component';
 import { LoginComponent } 			   from './authentication/login.component';
 import { SocialLoginComponent }    from './authentication/social/login.component';
 import { SignupComponent } 			   from './authentication/signup.component';
+import { SignupInfoComponent }     from './authentication/signup-info.component';
 import { AuthGuardService } 		   from './authentication/auth-guard.service';
 
 const appRoutes: Routes = [
@@ -15,6 +16,7 @@ const appRoutes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'sociallogin', component: SocialLoginComponent },
   { path: 'signup', component: SignupComponent },
+  { path: 'signup-info', component: SignupInfoComponent },
   { path: 'home', component: HomeComponent },
   { path: 'about', component: AboutComponent },
   { path: 'accounts', loadChildren: './accounts/account-module#AccountsModule', canActivate: [AuthGuardService] },

@@ -113,4 +113,9 @@ export class AuthService {
     this.isLoggedIn = false;
     this.isSocialLoggedIn = false;
   }
+
+  confirmSignup(code: String) {
+    let url = process.env.API_URL + '/api/signup/' + code;
+    return this.http.put(url, { headers: contentHeaders });
+  }
 }
