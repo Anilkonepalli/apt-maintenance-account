@@ -49,8 +49,10 @@ export class SignupComponent {
       .subscribe(
       response => {
         this.logger.info('New User is saved ');
-        // alert('New User is saved!');
-        this.router.navigate(['/signup-info']);
+        let emailed = response.json().data.emailed;
+        this.logger.info('Is an email sent: ' + emailed);
+        let data = { emailed: emailed };
+        this.router.navigate(['/signup-info'], { queryParams: data });
       },
       error => {
         this.logger.error('Error in saving new user...'); this.logger.error(error.json());

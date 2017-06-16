@@ -1,9 +1,9 @@
 <div class="container signup-info">
 
-	<h1>Thanks for Sign up!</h1>
-	<p>
-		A verification message is sent to email id entered in the signup form.
-		Please refer that email and click the link in it to complete signup process.
+	<h1>Thanks for Signing up!</h1>
+	<p *ngIf="emailed">
+		A message is sent to email-id submitted in the signup form.
+		Please refer that email; click the link in it completes signup process.
 	</p>
 
 	<button (click)="gotoHome()">Back to Home</button>

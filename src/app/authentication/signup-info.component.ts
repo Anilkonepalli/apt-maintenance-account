@@ -1,5 +1,5 @@
-import { Component } 			from '@angular/core';
-import { Router } 				from '@angular/router';
+import { Component, OnInit } 			from '@angular/core';
+import { Router, ActivatedRoute } 				from '@angular/router';
 
 import { Logger }         from '../logger/default-log.service';
 
@@ -12,11 +12,20 @@ import { Logger }         from '../logger/default-log.service';
     }
   `]
 })
-export class SignupInfoComponent {
+export class SignupInfoComponent implements OnInit {
+
+  emailed: boolean = false;
 
   constructor(
+    private route: ActivatedRoute,
     private router: Router,
     private logger: Logger) { }
+
+  ngOnInit() {
+    this.route.queryParams.subscribe(params => {
+      this.emailed = params['emailed'];
+    });
+  }
 
   gotoHome() {
     this.router.navigate(['/home']);
