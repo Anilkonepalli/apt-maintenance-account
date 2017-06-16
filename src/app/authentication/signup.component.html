@@ -1,8 +1,8 @@
-<div class="container">
+<div class="container signup center-block">
 
-	<h1 class="col-md-6 col-md-offset-3">Signup</h1>
+	<h1>Signup</h1>
 
-	<form class="col-md-6 col-md-offset-3" #signupForm="ngForm" (submit)="saveNewUser(); signupForm.reset()">
+	<form #signupForm="ngForm" (submit)="saveNewUser(); signupForm.reset()">
 		<div class="form-group">
 			<label for="userName">User Name</label>
 			<input type="text" class="form-control" name="userName" required [(ngModel)]="user.name" #userName="ngModel" title="User Name for login purpose">

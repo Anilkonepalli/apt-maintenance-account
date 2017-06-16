@@ -14,15 +14,20 @@ contentHeaders.append('Content-Type', 'application/json');
 @Component({
   selector: 'signup',
   templateUrl: './signup.component.html',
-  styles: [
-    `.ng-valid[required] {
+  styles: [`
+    .signup {
+      width: 40%;
+    }
+
+    .ng-valid[required] {
 			border-left: 5px solid #42A948; /* green */
 		}
 
 		.ng-invalid {
 			border-left: 5px solid #a94442; /* red */
-		}`
-  ]
+		}
+
+  `]
 })
 export class SignupComponent {
 
@@ -44,7 +49,8 @@ export class SignupComponent {
       .subscribe(
       response => {
         this.logger.info('New User is saved ');
-        alert('New User is saved!');
+        // alert('New User is saved!');
+        this.router.navigate(['/signup-info']);
       },
       error => {
         this.logger.error('Error in saving new user...'); this.logger.error(error.json());
