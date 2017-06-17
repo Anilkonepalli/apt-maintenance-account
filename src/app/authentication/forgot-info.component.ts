@@ -4,15 +4,15 @@ import { Router, ActivatedRoute } 				from '@angular/router';
 import { Logger }         from '../logger/default-log.service';
 
 @Component({
-  selector: 'signup-info',
-  templateUrl: './signup-info.component.html',
+  selector: 'forgot-info',
+  templateUrl: './forgot-info.component.html',
   styles: [`
-    .signup-info {
+    .forgot-info {
       width: 40%;
     }
   `]
 })
-export class SignupInfoComponent implements OnInit {
+export class ForgotInfoComponent implements OnInit {
 
   emailed: boolean = false;
 

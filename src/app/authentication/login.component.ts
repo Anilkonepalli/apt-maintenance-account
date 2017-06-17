@@ -1,6 +1,6 @@
 import { Component } 				from '@angular/core';
 import { NgForm } 					from '@angular/forms';
-import { Router, NavigationExtras } from '@angular/router';
+import { Router, NavigationExtras, ActivatedRoute } from '@angular/router';
 
 import { AuthService } 				from './auth.service';
 import { Message }            from '../shared';
@@ -19,7 +19,10 @@ export class LoginComponent {
 
   message: Message = new Message();
 
-  constructor(public authService: AuthService, public router: Router) { }
+  constructor(
+    public authService: AuthService,
+    public route: ActivatedRoute,
+    public router: Router) { }
 
   login(event: String, email: String, password: String) {
 
@@ -55,7 +58,7 @@ export class LoginComponent {
   }
 
   forgot() {
-    this.router.navigate(['/forgot']);
+    this.router.navigate(['forgot'], { relativeTo: this.route });
   }
 
 }

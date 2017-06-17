@@ -13,16 +13,21 @@ import { SharedModule }          from './shared/shared.module';
 import { LoginRoutingModule }    from './authentication/login-routing.module';
 import { AuthorizationModule }   from './authorization/module';
 
-import { LoginComponent }        from './authentication/login.component';
+
 import { SignupComponent }       from './authentication/signup.component';
 import { SignupInfoComponent }   from './authentication/signup-info.component';
 import { SignupConfirmComponent } from './authentication/signup-confirm.component';
 import { SignupRoutingModule }   from './authentication/signup-routing.module';
+
+import { LoginComponent }        from './authentication/login.component';
+import { SocialLoginComponent }  from './authentication/social/login.component';
 import { ForgotPasswordComponent } from './authentication/forgot-password.component';
+import { ForgotInfoComponent } from './authentication/forgot-info.component';
+import { ResetPasswordComponent } from './authentication/reset-password.component';
 
 import { PageNotFoundComponent } from './not-found.component';
 
-import { SocialLoginComponent }  from './authentication/social/login.component';
+
 
 import { HomeComponent }         from './home.component';
 import { AboutComponent }        from './about.component';
@@ -50,6 +55,8 @@ import { Logger }                from './logger/default-log.service';
     SignupInfoComponent,
     SignupConfirmComponent,
     ForgotPasswordComponent,
+    ForgotInfoComponent,
+    ResetPasswordComponent,
     HomeComponent,
     AboutComponent,
     PageNotFoundComponent,

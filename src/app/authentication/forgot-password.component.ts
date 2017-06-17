@@ -1,5 +1,5 @@
 import { Component } 			from '@angular/core';
-import { Router } 				from '@angular/router';
+import { Router, ActivatedRoute } 				from '@angular/router';
 
 import { AuthService } 				from './auth.service';
 import { Logger }         from '../logger/default-log.service';
@@ -19,6 +19,7 @@ export class ForgotPasswordComponent {
 
   constructor(
     private authService: AuthService,
+    private route: ActivatedRoute,
     private router: Router,
     private logger: Logger) { }
 
@@ -30,15 +31,15 @@ export class ForgotPasswordComponent {
     this.authService.forgotPassword(event, email).subscribe(
       response => {
         this.logger.info('Forgot Password submitted successfully...');
-        let res = response.json();
-        console.log(res);
+        let emailed = response.json().data.emailed;
+        this.logger.info('Is an email sent: ' + emailed);
+        let data = { emailed: emailed };
+        this.router.navigate(['info'], { relativeTo: this.route, queryParams: data });
       },
       error => {
-        let err = error.json();
-        console.log(err);
+        this.logger.error('Error in saving new user...'); this.logger.error(error.json());
+        alert(error.json().data.message);
       });
-
-    this.router.navigate(['/login']);
   }
 
 }
