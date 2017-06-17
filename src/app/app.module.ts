@@ -18,6 +18,7 @@ import { SignupComponent }       from './authentication/signup.component';
 import { SignupInfoComponent }   from './authentication/signup-info.component';
 import { SignupConfirmComponent } from './authentication/signup-confirm.component';
 import { SignupRoutingModule }   from './authentication/signup-routing.module';
+import { ForgotPasswordComponent } from './authentication/forgot-password.component';
 
 import { PageNotFoundComponent } from './not-found.component';
 
@@ -48,6 +49,7 @@ import { Logger }                from './logger/default-log.service';
     SignupComponent,
     SignupInfoComponent,
     SignupConfirmComponent,
+    ForgotPasswordComponent,
     HomeComponent,
     AboutComponent,
     PageNotFoundComponent,

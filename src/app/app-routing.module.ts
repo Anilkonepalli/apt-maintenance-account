@@ -10,6 +10,7 @@ import { SocialLoginComponent }    from './authentication/social/login.component
 import { SignupComponent } 			   from './authentication/signup.component';
 import { SignupInfoComponent }     from './authentication/signup-info.component';
 import { SignupConfirmComponent }  from './authentication/signup-confirm.component';
+import { ForgotPasswordComponent } from './authentication/forgot-password.component';
 import { AuthGuardService } 		   from './authentication/auth-guard.service';
 
 const appRoutes: Routes = [
@@ -19,6 +20,7 @@ const appRoutes: Routes = [
   { path: 'signup', component: SignupComponent },
   { path: 'signup-info', component: SignupInfoComponent },
   { path: 'signup/:code', component: SignupConfirmComponent },
+  { path: 'forgot', component: ForgotPasswordComponent },
   { path: 'home', component: HomeComponent },
   { path: 'about', component: AboutComponent },
   { path: 'accounts', loadChildren: './accounts/account-module#AccountsModule', canActivate: [AuthGuardService] },

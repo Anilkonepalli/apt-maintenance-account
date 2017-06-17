@@ -118,4 +118,13 @@ export class AuthService {
     let url = process.env.API_URL + '/api/signup/' + code;
     return this.http.put(url, { headers: contentHeaders });
   }
+
+  forgotPassword(event: String, email: String): Observable<any> {
+    let data = JSON.stringify({ email });
+    let url = process.env.API_URL + '/api/login/forgot-password';
+
+    return this.http.post(url, data, { headers: contentHeaders });
+  }
+
+
 }
