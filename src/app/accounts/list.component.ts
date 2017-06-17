@@ -1,16 +1,17 @@
 import { Component, OnInit }							from '@angular/core';
 import { Router, ActivatedRoute, Params }	from '@angular/router';
 import { Observable }											from 'rxjs/Observable';
-import { IMultiSelectOption,
+import 'rxjs/add/operator/switchMap';
+import {
+  IMultiSelectOption,
   IMultiSelectSettings,
   IMultiSelectTexts}                      from 'angular-2-dropdown-multiselect';
 
 import { Account }												from './model';
-import { AccountService }									from './service';
 import { Authorization }									from '../authorization/model';
 import { Month }                          from '../shared';
 
-import 'rxjs/add/operator/switchMap';
+import { AccountService }									from './service';
 
 var list_css = require('./list.component.css');
 var list_css_string = list_css.toString();
@@ -44,7 +45,6 @@ export class AccountListComponent implements OnInit {
   myTexts: IMultiSelectTexts;
   months: Month[] = Month.all();
   totalRecords: number = 0;
-
 
   constructor(
     private service: AccountService,
@@ -137,12 +137,5 @@ export class AccountListComponent implements OnInit {
         })
       });
   }
-
-  /*
-    onChange($event: any) {
-      console.log($event);
-      console.log(this.optionsModel);
-    }
-  */
 
 }

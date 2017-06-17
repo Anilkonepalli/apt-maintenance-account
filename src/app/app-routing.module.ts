@@ -19,29 +19,110 @@ import { ResetPasswordComponent }  from './authentication/reset-password.compone
 import { AuthGuardService } 		   from './authentication/auth-guard.service';
 
 const appRoutes: Routes = [
-  { path: '', redirectTo: '/home', pathMatch: 'full' },
-  { path: 'login', component: LoginComponent },
-  { path: 'login/forgot', component: ForgotPasswordComponent },
-  { path: 'login/forgot/info', component: ForgotInfoComponent },
-  { path: 'login/reset/:token', component: ResetPasswordComponent },
-  { path: 'sociallogin', component: SocialLoginComponent },
-  { path: 'signup', component: SignupComponent },
-  { path: 'signup-info', component: SignupInfoComponent },
-  { path: 'signup/:code', component: SignupConfirmComponent },
-  { path: 'home', component: HomeComponent },
-  { path: 'about', component: AboutComponent },
-  { path: 'accounts', loadChildren: './accounts/account-module#AccountsModule', canActivate: [AuthGuardService] },
-  { path: 'accounts-periodic', loadChildren: './accounts/periodic-module#PeriodicModule', canActivate: [AuthGuardService] },
-  { path: 'flats', loadChildren: './flats/module#FlatsModule', canActivate: [AuthGuardService] },
-  { path: 'residents', loadChildren: './residents/module#ResidentsModule', canActivate: [AuthGuardService] },
-  { path: 'flats-residents', loadChildren: './flats-residents/module#FlatsResidentsModule', canActivate: [AuthGuardService] },
-  { path: 'users', loadChildren: './users/module#UsersModule', canActivate: [AuthGuardService] },
-  { path: 'userprofile', loadChildren: './userprofile/module#UserProfileModule', canActivate: [AuthGuardService] },
-  { path: 'roles', loadChildren: './roles/module#RolesModule', canActivate: [AuthGuardService] },
-  { path: 'permissions', loadChildren: './permissions/module#PermissionsModule', canActivate: [AuthGuardService] },
-  { path: 'roles-permissions', loadChildren: './roles-permissions/module#RolesPermissionsModule', canActivate: [AuthGuardService] },
-  { path: 'users-roles', loadChildren: './users-roles/module#UsersRolesModule', canActivate: [AuthGuardService] },
-  { path: '**', component: PageNotFoundComponent }
+  {
+    path: '',
+    redirectTo: '/home',
+    pathMatch: 'full'
+  },
+  {
+    path: 'login',
+    component: LoginComponent
+  },
+  {
+    path: 'login/forgot',
+    component: ForgotPasswordComponent
+  },
+  {
+    path: 'login/forgot/info',
+    component: ForgotInfoComponent
+  },
+  {
+    path: 'login/reset/:token',
+    component: ResetPasswordComponent
+  },
+  {
+    path: 'sociallogin',
+    component: SocialLoginComponent
+  },
+  {
+    path: 'signup',
+    component: SignupComponent
+  },
+  {
+    path: 'signup-info',
+    component: SignupInfoComponent
+  },
+  {
+    path: 'signup/:code',
+    component: SignupConfirmComponent
+  },
+  {
+    path: 'home',
+    component: HomeComponent
+  },
+  {
+    path: 'about',
+    component: AboutComponent
+  },
+  {
+    path: 'accounts',
+    loadChildren: './accounts/account-module#AccountsModule',
+    canActivate: [AuthGuardService]
+  },
+  {
+    path: 'accounts-periodic',
+    loadChildren: './accounts/periodic-module#PeriodicModule',
+    canActivate: [AuthGuardService]
+  },
+  {
+    path: 'flats',
+    loadChildren: './flats/module#FlatsModule',
+    canActivate: [AuthGuardService]
+  },
+  {
+    path: 'residents',
+    loadChildren: './residents/module#ResidentsModule',
+    canActivate: [AuthGuardService]
+  },
+  {
+    path: 'flats-residents',
+    loadChildren: './flats-residents/module#FlatsResidentsModule',
+    canActivate: [AuthGuardService]
+  },
+  {
+    path: 'users',
+    loadChildren: './users/module#UsersModule',
+    canActivate: [AuthGuardService]
+  },
+  {
+    path: 'userprofile',
+    loadChildren: './userprofile/module#UserProfileModule',
+    canActivate: [AuthGuardService]
+  },
+  {
+    path: 'roles',
+    loadChildren: './roles/module#RolesModule',
+    canActivate: [AuthGuardService]
+  },
+  {
+    path: 'permissions',
+    loadChildren: './permissions/module#PermissionsModule',
+    canActivate: [AuthGuardService]
+  },
+  {
+    path: 'roles-permissions',
+    loadChildren: './roles-permissions/module#RolesPermissionsModule',
+    canActivate: [AuthGuardService]
+  },
+  {
+    path: 'users-roles',
+    loadChildren: './users-roles/module#UsersRolesModule',
+    canActivate: [AuthGuardService]
+  },
+  {
+    path: '**',
+    component: PageNotFoundComponent
+  }
 ];
 
 @NgModule({

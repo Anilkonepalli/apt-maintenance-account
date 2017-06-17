@@ -20,10 +20,6 @@ import { AuthService } from './authentication/auth.service';
           <li>To ensure any time access to transactions in the maintenance account<br></li>
           <li>To enable transparency<br></li>
         </ul>
-    <!--h2 *ngIf="authService.isLoggedIn">Your JWT is:</h2>
-		<pre *ngIf="authService.isLoggedIn" class="jwt"><code>{{ jwt }}</code></pre>
-		<pre *ngIf="authService.isLoggedIn" class="jwt"><code>{{ decodedJwt | json }}</code></pre-->
-
 	`
 })
 export class HomeComponent implements OnInit {

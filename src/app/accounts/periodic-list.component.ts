@@ -1,17 +1,17 @@
-import { Component, OnInit }							from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute, Params }	from '@angular/router';
 import { Observable }											from 'rxjs/Observable';
+import 'rxjs/add/operator/switchMap';
+import * as _                             from 'lodash';
+
+import { Account }												from './model';
+import { Authorization }									from '../authorization/model';
+import { Flat }                           from '../flats/model';
 
 import { Month }                          from '../shared';
 
-import { Account }												from './model';
 import { AccountService }									from './service';
-import { Authorization }									from '../authorization/model';
-
-import { Flat }                           from '../flats/model';
-
-import 'rxjs/add/operator/switchMap';
-import * as _                             from 'lodash';
+import { Logger }		                      from '../logger/default-log.service';
 
 var periodic_list_css = require('./periodic-list.component.css');
 var periodic_list_css_string = periodic_list_css.toString();
@@ -36,7 +36,8 @@ export class PeriodicListComponent implements OnInit {
   constructor(
     private service: AccountService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private logger: Logger
   ) { }
 
   ngOnInit(): void {
@@ -54,8 +55,8 @@ export class PeriodicListComponent implements OnInit {
       alert('Permission Denied');
       return;
     }
-    console.log('toggle paid status event: '); console.log(event);
-    console.log('toggle paid status model: '); console.log(model);
+    this.logger.info('toggle paid status event: '); this.logger.info(event);
+    this.logger.info('toggle paid status model: '); this.logger.info(model);
     model.amount != this.monthlyMaintCharge
       ? this.addAccount(model)
       : this.removeAccount(model);
@@ -66,33 +67,33 @@ export class PeriodicListComponent implements OnInit {
     model.category = 'Monthly Maintenance';
     model.remarks = 'paid'
     this.service.create(model)
-      .then((acct) => console.log('Saved account'));
+      .then((acct) => this.logger.info('Saved account'));
   }
   removeAccount(model: Account) {
     model.amount = 0;
     if (model.id != 0) {
       this.service.delete(model.id)
-        .then((acct) => console.log('Account Deleted'));
+        .then((acct) => this.logger.info('Account Deleted'));
     }
     model.id = 0;
   }
   getPeriodicList(month: number, year: number) {
     this.service.getPeriodicList(month, year)
       .then((models) => {
-        console.log('new periodic list...'); console.log(models);
+        this.logger.info('new periodic list...'); this.logger.info(models);
         this.models = Observable.of(models);
       });
   }
   monthChanged(event: any) {
-    console.log('periodic list >> Month changed...'); console.log(event);
+    this.logger.info('periodic list >> Month changed...'); this.logger.info(event);
     this.getPeriodicList(this.for_month, this.for_year);
   }
   yearChanged(event: any) {
-    console.log('periodic list >> Year changed...'); console.log(event);
+    this.logger.info('periodic list >> Year changed...'); this.logger.info(event);
     this.getPeriodicList(this.for_month, this.for_year);
   }
   gotoPreviousMonth(event: any) {
-    console.log('periodic list >> gotoPreviousMonth...'); console.log(event);
+    this.logger.info('periodic list >> gotoPreviousMonth...'); this.logger.info(event);
     --this.for_month;
     if (this.for_month == 0) {
       this.for_month = 12;
@@ -101,7 +102,7 @@ export class PeriodicListComponent implements OnInit {
     this.getPeriodicList(this.for_month, this.for_year);
   }
   gotoNextMonth(event: any) {
-    console.log('periodic list >> gotoPreviousMonth...'); console.log(event);
+    this.logger.info('periodic list >> gotoPreviousMonth...'); this.logger.info(event);
     ++this.for_month;
     if (this.for_month == 13) {
       this.for_month = 1;

@@ -13,7 +13,7 @@ import { Permission } 		      from './permissions/model';
 })
 export class NavbarComponent {
 
-  allPermissions: Permission[] = [];
+  // allPermissions: Permission[] = [];
 
   constructor(
     public router: Router,
@@ -22,9 +22,9 @@ export class NavbarComponent {
     private authzn: AuthorizationService) { }
 
   logout() {
-    this.logger.info('Logging out of application @app.component...');
-    this.logger.warn('A warning message...');
-    this.logger.error('An error message...');
+    // this.logger.info('Logging out of application @app.component...');
+    // this.logger.warn('A warning message...');
+    // this.logger.error('An error message...');
 
     this.authService.logout();
     this.router.navigate(['/login']);

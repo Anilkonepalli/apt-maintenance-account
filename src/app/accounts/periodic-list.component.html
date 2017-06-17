@@ -62,12 +62,7 @@
     	<li *ngFor="let model of models | async" class="box" role="button" (click)="togglePaidStatus($event, model)">
     			<div class="flat-number">{{ model.flat_number }}</div>
           <div class="payment">
-            <!--input
-              type="checkbox"
-              [checked]="model.amount==monthlyMaintCharge"
-              (change)="paid($event.target.checked, model)" /-->
             <span *ngIf="model.amount == monthlyMaintCharge">&#10004; Paid</span>
-            <!--span *ngIf="model.amount != monthlyMaintCharge">&#10008;</span-->
             </div>
             <div class="recorded-at" *ngIf="model.amount == monthlyMaintCharge">{{ model.recorded_at }}</div>
     	</li>

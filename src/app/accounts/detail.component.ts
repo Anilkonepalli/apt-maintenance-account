@@ -2,17 +2,18 @@ import { Component, Input, OnInit } 				from '@angular/core';
 import { FormBuilder, FormGroup }						from '@angular/forms';
 import { Router, ActivatedRoute, Params } 	from '@angular/router';
 import { Location }													from '@angular/common';
-
-import { Account }													from './model';
-import { AccountService }										from './service';
-import { Authorization }										from '../authorization/model';
-import { Flat }                             from '../flats/model';
-import { Resident }                         from '../residents/model';
-import { Month }                            from '../shared';
-
 import 'rxjs/add/operator/switchMap';
 import * as _                               from 'lodash';
 
+import { Account }													from './model';
+import { Authorization }										from '../authorization/model';
+import { Flat }                             from '../flats/model';
+import { Resident }                         from '../residents/model';
+
+import { Month }                            from '../shared';
+
+import { AccountService }										from './service';
+import { Logger }		                        from '../logger/default-log.service';
 
 var detail_html = require('./detail.component.html');
 var detail_html_string = detail_html.toString();
@@ -54,7 +55,8 @@ export class AccountDetailComponent implements OnInit {
     private service: AccountService,
     private route: ActivatedRoute,
     private router: Router,
-    private location: Location
+    private location: Location,
+    private logger: Logger
   ) { }
 
   ngOnInit(): void {
@@ -62,8 +64,6 @@ export class AccountDetailComponent implements OnInit {
     this.getFlatList();
     this.getResidentList();
 
-    // console.log('initializing accounts detail component...');
-    // console.log('get authorization...');
     this.service.getAuthorization()
       .then(auth => {
         this.auth = auth;
@@ -77,10 +77,9 @@ export class AccountDetailComponent implements OnInit {
               this.editMode = false;
               let today = new Date();
               let todayString = today.toISOString();
-              console.log('Today Date: ' + today); console.log('Today DateString: ' + todayString);
+              this.logger.info('Today Date: ' + today); console.log('Today DateString: ' + todayString);
               this.model.recorded_at = todayString.split('T')[0];
             }
-            // this.setRecordDate();
             let canEdit = this.auth.allowsEdit(model.owner_id) && this.editMode;
             let canAdd = this.auth.allowsAdd() && !this.editMode;
             this.hideSave = !(canEdit || canAdd);
@@ -92,58 +91,34 @@ export class AccountDetailComponent implements OnInit {
           });
       })
       .catch(err => {
-        console.log('Error in Accounts detail components > ngOnInit');
+        this.logger.error('Error in Accounts detail components > ngOnInit');
       });
-
-    /*
-        console.log('getFlatList...');
-        this.service.getFlatList()
-          .then(flats => {
-            console.log('Flat list: '); console.log(flats);
-            //this.flats = this.sortedFlats(flats);
-            this.flats = _.sortBy(flats, [function(obj: Flat) { return obj.flat_number; }]);
-          })
-          .catch(err => {
-            console.log('error in fetching flats inside Account Detail Component');
-          });
-
-        console.log('getResidentList...');
-        this.service.getResidentList()
-          .then(residents => {
-            console.log('Resident List: '); console.log(residents);
-            //this.residents = this.sortedResidents(residents);
-            this.residents = _.sortBy(residents, [function(obj: Resident) { return obj.first_name; }]);
-            this.residentsAll = this.residents;
-          })
-          .catch(err => {
-            console.log('error in retrieving residents in Account Detail Component');
-          });
-    */
 
   }
 
   private getFlatList() {
-    // console.log('getFlatList...');
+    this.logger.info('getFlatList...');
     this.service.getFlatList()
       .then(flats => {
-        // console.log('Flat list: '); console.log(flats);
+        this.logger.info('Flat list: ');
+        this.logger.info(flats);
         this.flats = _.sortBy(flats, [function(obj: Flat) { return obj.flat_number; }]);
       })
       .catch(err => {
-        console.log('error in fetching flats inside Account Detail Component');
+        this.logger.error('error in fetching flats inside Account Detail Component');
       });
   }
 
   private getResidentList() {
-    // console.log('getResidentList...');
+    this.logger.info('getResidentList...');
     this.service.getResidentList()
       .then(residents => {
-        //console.log('Resident List: '); console.log(residents);
+        this.logger.info('Resident List: ');
+        this.logger.info(residents);
         this.residentsAll = _.sortBy(residents, [function(obj: Resident) { return obj.first_name; }]);
-        // this.residentsAll = this.residents;
       })
       .catch(err => {
-        console.log('error in retrieving residents in Account Detail Component');
+        this.logger.error('error in retrieving residents in Account Detail Component');
       });
   }
 
@@ -162,7 +137,8 @@ export class AccountDetailComponent implements OnInit {
 
   private add(): void {
     this.model.owner_id = this.identifyOwnerId();
-    console.log('Adding New Account Details...'); console.log(this.model);
+    this.logger.error('Adding New Account Details...');
+    this.logger.error(this.model);
     this.service.create(this.model)
       .then((model) => {
         this.model = model;
@@ -192,43 +168,30 @@ export class AccountDetailComponent implements OnInit {
     }
     return 0; // default id
   }
-  /*
-    private setRecordDate(): void {
-      this.recordDate = this.model.recorded_at
-        ? new Date(this.model.recorded_at)
-        : new Date();
-    }
-  */
 
   onFlatNumberChange(event: any) {
-    //console.log('detail component >> onFlatNumberChange'); console.log(event);
+    this.logger.info('detail component >> onFlatNumberChange');
+    this.logger.info(event);
 
-    //console.log('Flat object id: '); console.log(flat.id);
     if (event === 'NA') {
       this.residents = this.residentsAll;
       return;
     }
     let flat = this.flats.find(flat => flat.flat_number === event);
+    this.logger.info('Flat object id: ');
+    this.logger.info(flat.id);
     this.updateResidentListFor(flat);
-    /*    this.service.getFlatResidents(flat.id)
-          .then(flatResidents => {
-            //console.log('FlatResidents are: '); console.log(flatResidents);
-            //this.residents = this.sortedResidents(flatResidents);
-            this.residents = _.sortBy(flatResidents, [function(obj: Resident) { return obj.first_name; }]);
-          })
-          .catch(err => {
-            console.log('error in retrieving flatResidents in Account Detail Component');
-          }); */
   }
 
   private updateResidentListFor(flat: Flat) {
     this.service.getFlatResidents(flat.id)
       .then(flatResidents => {
-        console.log('FlatResidents are: '); console.log(flatResidents);
+        this.logger.info('FlatResidents are: ');
+        this.logger.info(flatResidents);
         this.residents = _.sortBy(flatResidents, [function(obj: Resident) { return obj.first_name; }]);
       })
       .catch(err => {
-        console.log('error in retrieving flatResidents in Account Detail Component');
+        this.logger.error('error in retrieving flatResidents in Account Detail Component');
       });
   }
 
