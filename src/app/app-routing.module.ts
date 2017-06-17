@@ -5,13 +5,17 @@ import { PageNotFoundComponent } 	 from './not-found.component';
 
 import { HomeComponent } 			     from './home.component';
 import { AboutComponent } 			   from './about.component';
-import { LoginComponent } 			   from './authentication/login.component';
+
 import { SocialLoginComponent }    from './authentication/social/login.component';
 import { SignupComponent } 			   from './authentication/signup.component';
 import { SignupInfoComponent }     from './authentication/signup-info.component';
 import { SignupConfirmComponent }  from './authentication/signup-confirm.component';
+
+import { LoginComponent } 			   from './authentication/login.component';
 import { ForgotPasswordComponent } from './authentication/forgot-password.component';
 import { ForgotInfoComponent }     from './authentication/forgot-info.component';
+import { ResetPasswordComponent }  from './authentication/reset-password.component';
+
 import { AuthGuardService } 		   from './authentication/auth-guard.service';
 
 const appRoutes: Routes = [
@@ -19,6 +23,7 @@ const appRoutes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'login/forgot', component: ForgotPasswordComponent },
   { path: 'login/forgot/info', component: ForgotInfoComponent },
+  { path: 'login/reset/:token', component: ResetPasswordComponent },
   { path: 'sociallogin', component: SocialLoginComponent },
   { path: 'signup', component: SignupComponent },
   { path: 'signup-info', component: SignupInfoComponent },

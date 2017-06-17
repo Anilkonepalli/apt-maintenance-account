@@ -126,5 +126,10 @@ export class AuthService {
     return this.http.post(url, data, { headers: contentHeaders });
   }
 
-
+  resetPassword(token: string, password: string): Observable<any> {
+    console.log('Token: ' + token + ', Password: ' + password + ' are submitted...');
+    let data = JSON.stringify({ token: token, resetpassword: password });
+    let url = process.env.API_URL + '/api/login/reset-password';
+    return this.http.post(url, data, { headers: contentHeaders });
+  }
 }
