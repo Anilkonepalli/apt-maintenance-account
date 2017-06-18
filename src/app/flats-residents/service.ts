@@ -1,19 +1,23 @@
-import { Injectable } 				from '@angular/core';
+import { Injectable } 				    from '@angular/core';
 import 'rxjs/add/operator/toPromise';
 
-import { Flat } 							from '../flats/model';
-import { Resident } 				  from '../residents/model';
-import { Authorization } 	    from '../authorization/model';
+import { Flat } 							    from '../flats/model';
+import { Resident } 				      from '../residents/model';
+import { Authorization } 	        from '../authorization/model';
 
-import { FlatService } 				from '../flats/service';
-import { ResidentService } 	  from '../residents/service';
+import { MODULE }                 from '../shared/constants';
+
+import { FlatService } 				    from '../flats/service';
+import { ResidentService } 	      from '../residents/service';
+import { AuthorizationService }   from '../authorization/service';
 
 @Injectable()
 export class FlatResidentService {
 
   constructor(
     private lservice: FlatService,
-    private rservice: ResidentService
+    private rservice: ResidentService,
+    private authzn: AuthorizationService
   ) { }
 
   getlmodels(): Promise<Flat[]> {
@@ -32,8 +36,14 @@ export class FlatResidentService {
     return this.lservice.updateMyResidents(lId, ids);
   }
 
-  getAuthorization(): Promise<Authorization> {
-    return this.lservice.getAuthorizationFor('flats-residents');
+  getAuthzn(): Authorization {
+    return this.authzn.get(MODULE.FLAT_RESIDENT.name);
   }
+
+  /*
+    getAuthorization(): Promise<Authorization> {
+      return this.lservice.getAuthorizationFor('flats-residents');
+    }
+  */
 
 }

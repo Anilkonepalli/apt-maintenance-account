@@ -44,7 +44,7 @@
 					class="delete1 btn btn-link"
 					(click)="delete(model); $event.stopPropagation()"
 					title="Delete record"
-					*ngIf="auth.allowsDelete(model.owner_id)"
+					*ngIf="authzn.allowsDelete(model.owner_id)"
 				><i class="fa fa-trash" aria-hidden="true"></i></button>
 			</td>
 		</tr>

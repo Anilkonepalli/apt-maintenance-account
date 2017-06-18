@@ -22,9 +22,9 @@ export class UserRoleComponent implements OnInit {
   //                     |   AttachedStream   |  DetachedStream (or Available List)) |
   //----------------------------------------------------------------------------------
 
-  lstream: Observable<User[]>;  // stream on left side models
-  attachedStream: Observable<Role[]>;
-  detachedStream: Observable<Role[]>;
+  lstream: Observable<User[]> = Observable.of([]);  // stream on left side models
+  attachedStream: Observable<Role[]> = Observable.of([]);
+  detachedStream: Observable<Role[]> = Observable.of([]);
   rstream: Observable<Role[]>; // rstream holds right side models (attached + detached)
 
   lId: number;       // selected left model
@@ -32,7 +32,7 @@ export class UserRoleComponent implements OnInit {
   dIds: Array<number>;  // ids of selected detached models
   canDetach: boolean = false;
   canAttach: boolean = false;
-  auth: Authorization;
+  authzn: Authorization;
   editAllowed: boolean = false;
 
   constructor(
@@ -44,16 +44,28 @@ export class UserRoleComponent implements OnInit {
 
   ngOnInit(): void {
     this.logger.info('Inside users-roles component ngOnInit()...');
-
-    this.service.getAuthorization()
-      .then(auth => {
-        this.logger.info('Inside users-roles component...'); this.logger.info(auth);
-        if (auth.permissions.length < 1) return []; // just return empty array if permission list is empty
-        this.editAllowed = auth.allowsEdit();
-        this.auth = auth;
-        this.initStreams();
-      });
+    this.authzn = this.service.getAuthzn();
+    this.logger.info('Inside users-roles component...'); this.logger.info(this.authzn);
+    if (this.authzn.permissions.length < 1) return; // just return if permission list is empty
+    this.editAllowed = this.authzn.allowsEdit();
+    this.initStreams();
   }
+
+  /*
+    ngOnInit(): void {
+      this.logger.info('Inside users-roles component ngOnInit()...');
+
+      this.service.getAuthorization()
+        .then(auth => {
+          this.logger.info('Inside users-roles component...'); this.logger.info(auth);
+          if (auth.permissions.length < 1) return []; // just return empty array if permission list is empty
+          this.editAllowed = auth.allowsEdit();
+          this.auth = auth;
+          this.initStreams();
+        });
+    }
+  */
+
   initStreams() {
     this.lstream = this.route.params
       .switchMap((params: Params) => {

@@ -24,13 +24,13 @@
 					class="view1 btn btn-link"
 					(click)="onSelect(model)"
 					title="View details"
-					*ngIf="auth.allowsView(model.id)"
+					*ngIf="authzn.allowsView(model.id)"
 				><i class="fa fa-eye" aria-hidden="true"></i></button>
 				<button
 					class="delete1 btn btn-link"
 					(click)="delete(model); $event.stopPropagation()"
 					title="Delete record"
-					*ngIf="auth.allowsDelete(model.id)"
+					*ngIf="authzn.allowsDelete(model.id)"
 				><i class="fa fa-trash" aria-hidden="true"></i></button>
 			</td>
 		</tr>

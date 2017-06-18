@@ -1,12 +1,15 @@
-import { Injectable } 															from '@angular/core';
-import { Http, Headers } 	                          from '@angular/http';
+import { Injectable } 						from '@angular/core';
+import { Http, Headers } 	        from '@angular/http';
 import 'rxjs/add/operator/toPromise';
 
-import { Flat } 																	  from './model';
-import { Resident } 															  from '../residents/model';
-import { Authorization } 														from '../authorization/model';
+import { Flat } 									from './model';
+import { Resident } 							from '../residents/model';
+import { Authorization } 					from '../authorization/model';
 
-import { UserService } 															from '../users/service';
+import { MODULE }                 from '../shared/constants';
+
+import { AuthorizationService }   from '../authorization/service';
+// import { UserService } 						from '../users/service';
 
 @Injectable()
 export class FlatService {
@@ -20,7 +23,8 @@ export class FlatService {
 
   constructor(
     private http: Http,
-    private userService: UserService
+    //    private userService: UserService
+    private authzn: AuthorizationService
   ) { }
 
   getList(): Promise<Flat[]> {
@@ -42,14 +46,18 @@ export class FlatService {
       .catch(this.handleError);
   }
 
-  getAuthorization(): Promise<Authorization> {
-    return this.userService.getAuthorizationFor('flats');
+  getAuthzn(): Authorization {
+    return this.authzn.get(MODULE.FLAT.name);
   }
+  /*
+    getAuthorization(): Promise<Authorization> {
+      return this.userService.getAuthorizationFor('flats');
+    }
 
-  getAuthorizationFor(resource: string): Promise<Authorization> {
-    return this.userService.getAuthorizationFor(resource);
-  }
-
+    getAuthorizationFor(resource: string): Promise<Authorization> {
+      return this.userService.getAuthorizationFor(resource);
+    }
+  */
   getMyResidents(id: number): Promise<Resident[]> {
     const url = this.modelUrl + '/myresidents/' + id;
     return this.http

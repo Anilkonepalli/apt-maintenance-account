@@ -139,7 +139,7 @@
 					class="delete1 btn btn-link"
 					(click)="delete(model, models); $event.stopPropagation()"
 					title="Delete Resident"
-					*ngIf="auth.allowsDelete(model.owner_id) && !canEdit[model.id]"
+					*ngIf="authzn.allowsDelete(model.owner_id) && !canEdit[model.id]"
 				><i class="fa fa-trash" aria-hidden="true"></i></button>
 			</td>
 

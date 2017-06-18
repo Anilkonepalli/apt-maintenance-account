@@ -6,11 +6,8 @@ import 'rxjs/add/operator/switchMap';
 import { Authorization }                    from '../authorization/model';
 import { User }															from '../users/model';
 
-import { MODULE }                           from '../shared/constants';
-
 import { UserProfileService }								from './service';
 import { Logger }		                        from '../logger/default-log.service';
-import { AuthorizationService }             from '../authorization/service';
 
 @Component({
   selector: 'userprofile',
@@ -28,15 +25,14 @@ export class UserProfileComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private location: Location,
-    private logger: Logger,
-    private authznService: AuthorizationService
+    private logger: Logger
   ) { }
 
   ngOnInit(): void {
     this.service.getUserFor(+this.userId)
       .then((model: User) => {
         this.model = model;
-        this.authzn = this.authznService.auths[MODULE.USER_PROFILE.name];
+        this.authzn = this.service.getAuthzn();
         this.allowsEdit = this.authzn.allowsEdit(+this.userId);
       });
   }

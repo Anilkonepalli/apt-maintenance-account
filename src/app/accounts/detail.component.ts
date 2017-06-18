@@ -24,7 +24,7 @@ export class AccountDetailComponent implements OnInit {
   recordDate: string = '2017-04-11';
   editMode: boolean = true;
   modelName: string = 'Account';
-  auth: Authorization;
+  authzn: Authorization;
   hideSave: boolean = true;
   flats: Flat[];
   months: Month[] = Month.all();
@@ -57,38 +57,69 @@ export class AccountDetailComponent implements OnInit {
 
     this.getFlatList();
     this.getResidentList();
-
-    this.service.getAuthorization()
-      .then(auth => {
-        this.auth = auth;
-        this.route.params
-          .switchMap((params: Params) => this.service.get(+params['id']))
-          .subscribe((model: Account) => {
-            this.model = model;
-            if (model.id) {
-              this.editMode = true;
-            } else {
-              this.editMode = false;
-              let today = new Date();
-              let todayString = today.toISOString();
-              this.logger.info('Today Date: ' + today); console.log('Today DateString: ' + todayString);
-              this.model.recorded_at = todayString.split('T')[0];
-            }
-            let canEdit = this.auth.allowsEdit(model.owner_id) && this.editMode;
-            let canAdd = this.auth.allowsAdd() && !this.editMode;
-            this.hideSave = !(canEdit || canAdd);
-            this.recordId = this.editMode ? 'ID - ' + this.model.id : 'ID - 0';
-            if (this.model.flat_number) {
-              let flat = this.flats.find(flat => flat.flat_number === this.model.flat_number);
-              this.updateResidentListFor(flat);
-            }
-          });
-      })
-      .catch(err => {
-        this.logger.error('Error in Accounts detail components > ngOnInit');
+    this.authzn = this.service.getAuthzn();
+    this.route.params
+      .switchMap((params: Params) => this.service.get(+params['id']))
+      .subscribe((model: Account) => {
+        this.model = model;
+        if (model.id) {
+          this.editMode = true;
+        } else {
+          this.editMode = false;
+          let today = new Date();
+          let todayString = today.toISOString();
+          this.logger.info('Today Date: ' + today); console.log('Today DateString: ' + todayString);
+          this.model.recorded_at = todayString.split('T')[0];
+        }
+        let canEdit = this.authzn.allowsEdit(model.owner_id) && this.editMode;
+        let canAdd = this.authzn.allowsAdd() && !this.editMode;
+        this.hideSave = !(canEdit || canAdd);
+        this.recordId = this.editMode ? 'ID - ' + this.model.id : 'ID - 0';
+        if (this.model.flat_number) {
+          let flat = this.flats.find(flat => flat.flat_number === this.model.flat_number);
+          this.updateResidentListFor(flat);
+        }
       });
-
   }
+
+
+  /*
+    ngOnInit(): void {
+
+      this.getFlatList();
+      this.getResidentList();
+
+      this.service.getAuthorization()
+        .then(auth => {
+          this.auth = auth;
+          this.route.params
+            .switchMap((params: Params) => this.service.get(+params['id']))
+            .subscribe((model: Account) => {
+              this.model = model;
+              if (model.id) {
+                this.editMode = true;
+              } else {
+                this.editMode = false;
+                let today = new Date();
+                let todayString = today.toISOString();
+                this.logger.info('Today Date: ' + today); console.log('Today DateString: ' + todayString);
+                this.model.recorded_at = todayString.split('T')[0];
+              }
+              let canEdit = this.auth.allowsEdit(model.owner_id) && this.editMode;
+              let canAdd = this.auth.allowsAdd() && !this.editMode;
+              this.hideSave = !(canEdit || canAdd);
+              this.recordId = this.editMode ? 'ID - ' + this.model.id : 'ID - 0';
+              if (this.model.flat_number) {
+                let flat = this.flats.find(flat => flat.flat_number === this.model.flat_number);
+                this.updateResidentListFor(flat);
+              }
+            });
+        })
+        .catch(err => {
+          this.logger.error('Error in Accounts detail components > ngOnInit');
+        });
+    }
+  */
 
   private getFlatList() {
     this.logger.info('getFlatList...');

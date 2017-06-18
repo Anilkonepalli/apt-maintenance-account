@@ -17,8 +17,8 @@ import { Logger }		                      from '../logger/default-log.service';
 })
 export class ResidentListComponent implements OnInit {
 
-  models: Observable<Resident[]>;
-  auth: Authorization;
+  models: Observable<Resident[]> = Observable.of([]);
+  authzn: Authorization;
   addAllowed: boolean = false;
   deleteAllowed: boolean = false;
   private selectedId: number;
@@ -45,27 +45,48 @@ export class ResidentListComponent implements OnInit {
     private logger: Logger
   ) { }
 
-  ngOnInit(): void {
 
-    this.service.getAuthorization()
-      .then(auth => {
-        this.logger.info('Inside residents list component...'); this.logger.info(auth);
-        if (auth.permissions.length < 1) return []; // just return empty array if permission list is empty
-        this.addAllowed = auth.allowsAdd();
-        this.deleteAllowed = auth.allowsDelete();
-        this.auth = auth;
-        this.getList();
-        this.getUsers();
-        this.models.subscribe((models) => {
-          // set total residents
-          this.totalRecords = models.length;
-          // set edit flag on each model; false by default
-          models.forEach((each) => {
-            this.canEdit[each.id] = false;
+  ngOnInit(): void {
+    this.authzn = this.service.getAuthzn();
+    this.logger.info('Inside residents list component...'); this.logger.info(this.authzn);
+    if (this.authzn.permissions.length < 1) return; // just return if permission list is empty
+    this.addAllowed = this.authzn.allowsAdd();
+    this.deleteAllowed = this.authzn.allowsDelete();
+    this.getList();
+    this.getUsers();
+    this.models.subscribe((models) => {
+      // set total residents
+      this.totalRecords = models.length;
+      // set edit flag on each model; false by default
+      models.forEach((each) => {
+        this.canEdit[each.id] = false;
+      });
+    });
+  }
+
+
+  /*
+    ngOnInit(): void {
+      this.service.getAuthorization()
+        .then(auth => {
+          this.logger.info('Inside residents list component...'); this.logger.info(auth);
+          if (auth.permissions.length < 1) return []; // just return empty array if permission list is empty
+          this.addAllowed = auth.allowsAdd();
+          this.deleteAllowed = auth.allowsDelete();
+          this.auth = auth;
+          this.getList();
+          this.getUsers();
+          this.models.subscribe((models) => {
+            // set total residents
+            this.totalRecords = models.length;
+            // set edit flag on each model; false by default
+            models.forEach((each) => {
+              this.canEdit[each.id] = false;
+            });
           });
         });
-      });
-  }
+    }
+  */
 
   save(): void {
     this.logger.info('Save new Resident Details...');

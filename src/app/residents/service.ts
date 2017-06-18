@@ -1,15 +1,17 @@
-import { Injectable } 								from '@angular/core';
-import { Http, Headers } 	            from '@angular/http';
+import { Injectable } 						from '@angular/core';
+import { Http, Headers } 	        from '@angular/http';
 import 'rxjs/add/operator/toPromise';
 
-import { Resident } 									from './model';
-import { Permission } 								from '../permissions/model';
+import { Resident } 							from './model';
+import { Permission } 						from '../permissions/model';
 
-import { Authorization } 							from '../authorization/model';
-import { User }                       from '../users/model';
+import { Authorization } 					from '../authorization/model';
+import { User }                   from '../users/model';
 
-import { UserService } 								from '../users/service';
+import { MODULE }                 from '../shared/constants';
 
+import { UserService } 						from '../users/service';
+import { AuthorizationService }   from '../authorization/service';
 
 @Injectable()
 export class ResidentService {
@@ -23,7 +25,8 @@ export class ResidentService {
 
   constructor(
     private http: Http,
-    private userService: UserService
+    private userService: UserService,
+    private authzn: AuthorizationService
   ) { }
 
   getList(): Promise<Resident[]> {
@@ -45,10 +48,15 @@ export class ResidentService {
       .catch(this.handleError);
   }
 
-  getAuthorization(): Promise<Authorization> {
-    return this.userService.getAuthorizationFor('residents');
+  getAuthzn(): Authorization {
+    return this.authzn.get(MODULE.RESIDENT.name);
   }
 
+  /*
+    getAuthorization(): Promise<Authorization> {
+      return this.userService.getAuthorizationFor('residents');
+    }
+  */
   getUsers(): Promise<User[]> {
     return this.userService.getList();
   }

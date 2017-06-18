@@ -22,7 +22,7 @@ export class FlatResidentComponent implements OnInit {
   //                     |   AttachedStream   |  DetachedStream (or Available List)) |
   //----------------------------------------------------------------------------------
 
-  lstream: Observable<Flat[]>;  // stream on left side models
+  lstream: Observable<Flat[]> = Observable.of([]);  // stream on left side models
   attachedStream: Observable<Resident[]>;
   detachedStream: Observable<Resident[]>;
   rstream: Observable<Resident[]>; // rstream holds right side models (attached + detached)
@@ -32,7 +32,7 @@ export class FlatResidentComponent implements OnInit {
   dIds: Array<number>;  // ids of selected detached models
   canDetach: boolean = false;
   canAttach: boolean = false;
-  auth: Authorization;
+  authzn: Authorization;
   editAllowed: boolean = false;
 
   constructor(
@@ -44,16 +44,27 @@ export class FlatResidentComponent implements OnInit {
 
   ngOnInit(): void {
     this.logger.info('Inside flats-residents component ngOnInit()...');
-
-    this.service.getAuthorization()
-      .then(auth => {
-        this.logger.info('Inside flats-residents list component...'); this.logger.info(auth);
-        if (auth.permissions.length < 1) return []; // just return empty array if permission list is empty
-        this.editAllowed = auth.allowsEdit();
-        this.auth = auth;
-        this.initStreams();
-      });
+    this.authzn = this.service.getAuthzn();
+    this.logger.info('Inside flats-residents list component...'); this.logger.info(this.authzn);
+    if (this.authzn.permissions.length < 1) return; // just return if permission list is empty
+    this.editAllowed = this.authzn.allowsEdit();
+    this.initStreams();
   }
+
+  /*
+    ngOnInit(): void {
+      this.logger.info('Inside flats-residents component ngOnInit()...');
+
+      this.service.getAuthorization()
+        .then(auth => {
+          this.logger.info('Inside flats-residents list component...'); this.logger.info(auth);
+          if (auth.permissions.length < 1) return []; // just return empty array if permission list is empty
+          this.editAllowed = auth.allowsEdit();
+          this.auth = auth;
+          this.initStreams();
+        });
+    }
+  */
 
   /**
    * Initializes Streams

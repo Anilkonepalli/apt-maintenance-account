@@ -29,7 +29,7 @@ export class AuthorizationService {
   private resources: string[] = this.moduleKeys.map((key: string) => MODULE[key].name); // collect MODULE values
 
   // holds authorization model for each resources
-  public auths: any = {};
+  private authzns: any = {};
 
   // holds boolean value for each resources indicating whether the module is accessbible or not
   public allows: any = {};
@@ -66,20 +66,20 @@ export class AuthorizationService {
     this.getAllPermissions()
       .then((models: Permission[]) => {
         this.permissions = models;
-        this.initAuths_n_allows();
+        this.initAuthzns_n_allows();
         this.logger.info('Authorizations are...'); this.logger.info(this.allows);
         this.initAllowsAdmin();
       });
   }
 
-  initAuths_n_allows() {
+  initAuthzns_n_allows() {
     this.resources.forEach((resource: string) => {
       let resourcePermissions = this.permissions
         .filter((eachPerm: Permission) =>
           eachPerm.resource === resource);
       this.logger.info('Permission on Resource: ' + resource); this.logger.info(resourcePermissions);
       let authzn = new Authorization(resourcePermissions, +this.userId);
-      this.auths[resource] = authzn; // sets authorization model
+      this.authzns[resource] = authzn; // sets authorization model
       this.allows[resource] = authzn.allowsAny(+this.userId); // sets boolean value
     });
   }
@@ -106,6 +106,14 @@ export class AuthorizationService {
         return perms;
       })
       .catch(this.handleError);
+  }
+
+  /**
+   * Answers Authorization for the given resource
+   * @type {[type]}
+   */
+  public get(resource: string): Authorization {
+    return this.authzns[resource];
   }
 
   private handleError(error: any) {

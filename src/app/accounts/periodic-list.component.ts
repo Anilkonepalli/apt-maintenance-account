@@ -36,15 +36,26 @@ export class PeriodicListComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.service.getAuthorization()
-      .then(authzn => {
-        this.authzn = authzn;
-        this.models = this.route.params
-          .switchMap((params: Params) => {
-            return this.service.getPeriodicList(this.for_month, this.for_year);
-          });
+    this.authzn = this.service.getAuthzn();
+    this.models = this.route.params
+      .switchMap((params: Params) => {
+        return this.service.getPeriodicList(this.for_month, this.for_year);
       });
   }
+
+  /*
+      ngOnInit(): void {
+        this.service.getAuthorization()
+          .then(authzn => {
+            this.authzn = authzn;
+            this.models = this.route.params
+              .switchMap((params: Params) => {
+                return this.service.getPeriodicList(this.for_month, this.for_year);
+              });
+          });
+      }
+  */
+
   togglePaidStatus(event: any, model: Account): void {
     if (!this.authzn.allowsCRUD()) {
       alert('Permission Denied');

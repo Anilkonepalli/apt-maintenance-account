@@ -1,9 +1,14 @@
-import { Injectable } 		from '@angular/core';
-import { Http, Headers } 	from '@angular/http';
-import { Observable } 		from 'rxjs/Observable';
+import { Injectable } 		      from '@angular/core';
+import { Http, Headers } 	      from '@angular/http';
+import { Observable } 		      from 'rxjs/Observable';
 import 'rxjs/add/operator/toPromise';
 
-import { User } 					from '../users/model';
+import { User } 					      from '../users/model';
+import { Authorization }        from '../authorization/model';
+
+import { MODULE }               from '../shared/constants';
+
+import { AuthorizationService } from '../authorization/service';
 
 @Injectable()
 export class UserProfileService {
@@ -16,7 +21,9 @@ export class UserProfileService {
     'x-access-token': this.id_token
   });
 
-  constructor(private http: Http) { }
+  constructor(
+    private http: Http,
+    private authzn: AuthorizationService) { }
 
   getUserFor(id: number): Promise<User> {
     const url = this.modelUrl + '/' + id;
@@ -34,6 +41,10 @@ export class UserProfileService {
       .toPromise()
       .then(() => model)
       .catch(this.handleError);
+  }
+
+  getAuthzn() {
+    return this.authzn.get(MODULE.USER_PROFILE.name);
   }
 
   private handleError(error: any) {

@@ -16,8 +16,8 @@ import { Logger }		                      from '../logger/default-log.service';
 })
 export class FlatComponent implements OnInit {
 
-  models: Observable<Flat[]>;
-  auth: Authorization;
+  models: Observable<Flat[]> = Observable.of([]);
+  authzn: Authorization;
   addAllowed: boolean = false;
   deleteAllowed: boolean = false;
   private selectedId: number;
@@ -32,34 +32,49 @@ export class FlatComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-
-    this.service.getAuthorization()
-      .then(auth => {
-        this.logger.info('Inside flats list component...'); this.logger.info(auth);
-        if (auth.permissions.length < 1) return []; // just return empty array if permission list is empty
-        this.addAllowed = auth.allowsAdd();
-        this.deleteAllowed = auth.allowsDelete();
-        this.auth = auth;
-        this.getList();
-        this.models.subscribe((models) => {
-          this.totalRecords = models.length;
-        });
-      });
+    this.authzn = this.service.getAuthzn();
+    this.logger.info('Inside flats list component...'); this.logger.info(this.authzn);
+    if (this.authzn.permissions.length < 1) return; // just return if permission list is empty
+    this.addAllowed = this.authzn.allowsAdd();
+    this.deleteAllowed = this.authzn.allowsDelete();
+    this.getList();
+    this.models.subscribe((models) => {
+      this.totalRecords = models.length;
+    });
   }
 
+
   /*
-    onSelect(model: Flat): void {
-      this.router.navigate(['/flats', model.id]);
+    ngOnInit(): void {
+
+      this.service.getAuthorization()
+        .then(auth => {
+          this.logger.info('Inside flats list component...'); this.logger.info(auth);
+          if (auth.permissions.length < 1) return []; // just return empty array if permission list is empty
+          this.addAllowed = auth.allowsAdd();
+          this.deleteAllowed = auth.allowsDelete();
+          this.auth = auth;
+          this.getList();
+          this.models.subscribe((models) => {
+            this.totalRecords = models.length;
+          });
+        });
     }
 
-    isSelected(model: Flat) {
-      return model ? model.id === this.selectedId : false;
-    }
 
-    add(): void {
-      this.router.navigate(['/flats', 0]); // 0 represent new account
-    }
-  */
+      onSelect(model: Flat): void {
+        this.router.navigate(['/flats', model.id]);
+      }
+
+      isSelected(model: Flat) {
+        return model ? model.id === this.selectedId : false;
+      }
+
+      add(): void {
+        this.router.navigate(['/flats', 0]); // 0 represent new account
+      }
+    */
+
   save(): void {
     this.logger.info('Save new Flat Details...');
     this.service.create(this.model)

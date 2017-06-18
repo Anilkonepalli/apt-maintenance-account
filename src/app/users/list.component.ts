@@ -16,7 +16,7 @@ import { UserService }										from './service';
 export class UserListComponent implements OnInit {
 
   models: Observable<User[]>;
-  auth: Authorization;
+  authzn: Authorization;
   addAllowed: boolean = false;
   private selectedId: number;
   totalRecords: number = 0;
@@ -54,20 +54,36 @@ export class UserListComponent implements OnInit {
       });
   }
 
-  private getList(): void {
-    this.service.getAuthorization()
-      .then(auth => {
-        this.addAllowed = auth.allowsAdd();
-        this.auth = auth;
-        this.models = this.route.params
-          .switchMap((params: Params) => {
-            this.selectedId = +params['id'];
-            return this.service.getList();
+  /*
+    private getList(): void {
+      this.service.getAuthorization()
+        .then(auth => {
+          this.addAllowed = auth.allowsAdd();
+          this.auth = auth;
+          this.models = this.route.params
+            .switchMap((params: Params) => {
+              this.selectedId = +params['id'];
+              return this.service.getList();
+            });
+          this.models.subscribe((models) => {
+            this.totalRecords = models.length; // sets total users
           });
-        this.models.subscribe((models) => {
-          this.totalRecords = models.length; // sets total users
         });
+    }
+  */
+
+  private getList(): void {
+    this.authzn = this.service.getAuthzn();
+    this.addAllowed = this.authzn.allowsAdd();
+    this.models = this.route.params
+      .switchMap((params: Params) => {
+        this.selectedId = +params['id'];
+        return this.service.getList();
       });
+    this.models.subscribe((models) => {
+      this.totalRecords = models.length; // sets total users
+    });
   }
+
 
 }

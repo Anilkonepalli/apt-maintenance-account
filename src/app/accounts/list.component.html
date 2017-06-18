@@ -70,13 +70,13 @@
 					class="view1 btn btn-link"
 					(click)="onSelect(model)"
 					title="View details"
-					*ngIf="auth.allowsView(model.owner_id)"
+					*ngIf="authzn.allowsView(model.owner_id)"
 				><i class="fa fa-eye" aria-hidden="true"></i></button>
 				<button
 					class="delete1 btn btn-link"
 					(click)="delete(model); $event.stopPropagation()"
 					title="Delete record"
-					*ngIf="auth.allowsDelete(model.owner_id)"
+					*ngIf="authzn.allowsDelete(model.owner_id)"
 				><i class="fa fa-trash" aria-hidden="true"></i></button>
 			</td>
 		</tr>
