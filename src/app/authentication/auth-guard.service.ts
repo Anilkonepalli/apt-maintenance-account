@@ -31,7 +31,6 @@ export class AuthGuardService implements CanActivate {
   }
 
   canLoad(route: Route): boolean {
-
     let url = `/${route.path}`;
     this.logger.info('auth-guard.service >> canActivate() ...for url: ' + url);
     return this.checkLogin(url);

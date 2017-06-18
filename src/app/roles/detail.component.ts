@@ -20,7 +20,7 @@ import { Logger }                           from '../logger/default-log.service'
 export class RoleDetailComponent implements OnInit {
   @Input() model: Role;
   modelName: string = 'Role';
-  auth: Authorization;
+  authzn: Authorization;
   editMode: boolean;
   addAllowed: boolean = false;
   editAllowed: boolean = false;
@@ -42,20 +42,12 @@ export class RoleDetailComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-
     let self = this;
-
-    this.service.getAuthorization()
-      .then(auth => {
-        this.auth = auth;
-        this.route.params
-          .switchMap(toGetModel)
-          .switchMap(toSetModel)
-          .subscribe(toInitializeDropdown);
-      })
-      .catch(err => {
-        this.logger.error('Error in Role detail components > ngOnInit');
-      });
+    this.authzn = this.service.getAuthzn();
+    this.route.params
+      .switchMap(toGetModel)
+      .switchMap(toSetModel)
+      .subscribe(toInitializeDropdown);
 
     function toGetModel(params: Params): Promise<Role> {
       return self.service.getMe(+params['id']);
@@ -84,14 +76,14 @@ export class RoleDetailComponent implements OnInit {
   }
   private editSettings() {
     this.recordId = 'ID - ' + this.model.id;
-    this.editAllowed = this.auth.allowsEdit();
+    this.editAllowed = this.authzn.allowsEdit();
     this.title = this.editAllowed ? 'Edit ' : '';
     this.title += this.modelName + ' Details';
   }
   private addSettings() {
     this.title = 'Add a new ' + this.modelName;
     this.recordId = 'ID - 0';
-    this.addAllowed = this.auth.allowsAdd();
+    this.addAllowed = this.authzn.allowsAdd();
   }
   private dropdownSettings(): IMultiSelectSettings {
     return {

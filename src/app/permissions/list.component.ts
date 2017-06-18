@@ -16,8 +16,8 @@ import { Logger }                         from '../logger/default-log.service';
 })
 export class PermissionListComponent implements OnInit {
 
-  models: Observable<Permission[]>;
-  auth: Authorization;
+  models: Observable<Permission[]> = Observable.of([]);
+  authzn: Authorization;
   addAllowed: boolean = false;
   deleteAllowed: boolean = false;
   viewAllowed: boolean = false;
@@ -33,19 +33,14 @@ export class PermissionListComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-
-    this.service.getAuthorization()
-      .then(auth => {
-        this.logger.info('Inside permission list component...'); this.logger.info(auth);
-        if (auth.permissions.length < 1) return []; // just return empty array if permission list is empty
-        this.addAllowed = auth.allowsAdd();
-        this.deleteAllowed = auth.allowsDelete();
-        this.viewAllowed = auth.allowsView();
-        this.editAllowed = auth.allowsEdit();
-        this.auth = auth;
-        this.getList();
-      });
-
+    this.authzn = this.service.getAuthzn();
+    this.logger.info('Inside permission list component...'); this.logger.info(this.authzn);
+    if (this.authzn.permissions.length < 1) return; // just return if permission list is empty
+    this.addAllowed = this.authzn.allowsAdd();
+    this.deleteAllowed = this.authzn.allowsDelete();
+    this.viewAllowed = this.authzn.allowsView();
+    this.editAllowed = this.authzn.allowsEdit();
+    this.getList();
   }
 
   onSelect(model: Permission): void {

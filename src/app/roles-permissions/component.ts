@@ -33,7 +33,7 @@ export class RolePermissionComponent implements OnInit {
   canDetach: boolean = false;
   canAttach: boolean = false;
 
-  auth: Authorization;
+  authzn: Authorization;
   editAllowed: boolean = false;
 
   constructor(
@@ -45,15 +45,11 @@ export class RolePermissionComponent implements OnInit {
 
   ngOnInit(): void {
     this.logger.info('Inside roles-permissions component ngOnInit()...');
-
-    this.service.getAuthorization()
-      .then(auth => {
-        this.logger.info('Inside roles-permissions list component...'); this.logger.info(auth);
-        if (auth.permissions.length < 1) return []; // just return empty array if permission list is empty
-        this.editAllowed = auth.allowsEdit();
-        this.auth = auth;
-        this.initStreams();
-      });
+    this.authzn = this.service.getAuthzn();
+    this.logger.info('Inside roles-permissions list component...'); this.logger.info(this.authzn);
+    if (this.authzn.permissions.length < 1) return; // just return if permission list is empty
+    this.editAllowed = this.authzn.allowsEdit();
+    this.initStreams();
   }
   private initStreams(): void {
     this.lstream = this.route.params

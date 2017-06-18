@@ -40,10 +40,4 @@ export class FlatResidentService {
     return this.authzn.get(MODULE.FLAT_RESIDENT.name);
   }
 
-  /*
-    getAuthorization(): Promise<Authorization> {
-      return this.lservice.getAuthorizationFor('flats-residents');
-    }
-  */
-
 }

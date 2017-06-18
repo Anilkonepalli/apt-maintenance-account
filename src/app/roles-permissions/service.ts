@@ -5,6 +5,9 @@ import { Role } 							from '../roles/model';
 import { Permission } 				from '../permissions/model';
 import { Authorization } 	    from '../authorization/model';
 
+import { MODULE }                 from '../shared/constants';
+
+import { AuthorizationService }   from '../authorization/service';
 import { RoleService } 				from '../roles/service';
 import { PermissionService } 	from '../permissions/service';
 
@@ -13,7 +16,8 @@ export class RolePermissionService {
 
   constructor(
     private lservice: RoleService,
-    private rservice: PermissionService
+    private rservice: PermissionService,
+    private authzn: AuthorizationService
   ) { }
 
   getlmodels(): Promise<Role[]> {
@@ -32,8 +36,8 @@ export class RolePermissionService {
     return this.lservice.updateMyPermissions(lId, ids);
   }
 
-  getAuthorization(): Promise<Authorization> {
-    return this.lservice.getAuthorizationFor('roles-permissions');
+  getAuthzn(): Authorization {
+    return this.authzn.get(MODULE.ROLE_PERMISSION.name);
   }
 
 }

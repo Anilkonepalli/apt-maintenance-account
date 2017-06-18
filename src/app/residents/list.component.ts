@@ -64,30 +64,6 @@ export class ResidentListComponent implements OnInit {
     });
   }
 
-
-  /*
-    ngOnInit(): void {
-      this.service.getAuthorization()
-        .then(auth => {
-          this.logger.info('Inside residents list component...'); this.logger.info(auth);
-          if (auth.permissions.length < 1) return []; // just return empty array if permission list is empty
-          this.addAllowed = auth.allowsAdd();
-          this.deleteAllowed = auth.allowsDelete();
-          this.auth = auth;
-          this.getList();
-          this.getUsers();
-          this.models.subscribe((models) => {
-            // set total residents
-            this.totalRecords = models.length;
-            // set edit flag on each model; false by default
-            models.forEach((each) => {
-              this.canEdit[each.id] = false;
-            });
-          });
-        });
-    }
-  */
-
   save(): void {
     this.logger.info('Save new Resident Details...');
     this.service.create(this.model)

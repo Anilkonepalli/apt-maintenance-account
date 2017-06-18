@@ -43,38 +43,6 @@ export class FlatComponent implements OnInit {
     });
   }
 
-
-  /*
-    ngOnInit(): void {
-
-      this.service.getAuthorization()
-        .then(auth => {
-          this.logger.info('Inside flats list component...'); this.logger.info(auth);
-          if (auth.permissions.length < 1) return []; // just return empty array if permission list is empty
-          this.addAllowed = auth.allowsAdd();
-          this.deleteAllowed = auth.allowsDelete();
-          this.auth = auth;
-          this.getList();
-          this.models.subscribe((models) => {
-            this.totalRecords = models.length;
-          });
-        });
-    }
-
-
-      onSelect(model: Flat): void {
-        this.router.navigate(['/flats', model.id]);
-      }
-
-      isSelected(model: Flat) {
-        return model ? model.id === this.selectedId : false;
-      }
-
-      add(): void {
-        this.router.navigate(['/flats', 0]); // 0 represent new account
-      }
-    */
-
   save(): void {
     this.logger.info('Save new Flat Details...');
     this.service.create(this.model)

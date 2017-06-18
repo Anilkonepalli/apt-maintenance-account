@@ -115,26 +115,6 @@ export class AccountListComponent implements OnInit {
     this.fromDate = new Date(year, month, 1)
   }
 
-  /*
-    public getList() {
-      this.service.getAuthorization()
-        .then(auth => {
-          this.addAllowed = auth.allowsAdd();
-          this.auth = auth;
-
-          this.models = this.route.params
-            .switchMap((params: Params) => {
-              this.selectedId = +params['id'];
-              //return this.service.getList();
-              return this.service.getListFor(this.fromDate, this.toDate);
-            });
-          this.models.subscribe((records: Account[]) => {
-            this.totalRecords = records.length;
-          })
-        });
-    }
-  */
-
   public getList() {
     this.authzn = this.service.getAuthzn()
     this.addAllowed = this.authzn.allowsAdd();

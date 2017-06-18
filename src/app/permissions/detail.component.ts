@@ -19,7 +19,7 @@ import { Logger }                           from '../logger/default-log.service'
 export class PermissionDetailComponent implements OnInit {
   @Input() model: Permission;
   modelName: string = 'Permission';
-  auth: Authorization;
+  authzn: Authorization;
   editMode: boolean = true;
   addAllowed: boolean = false;
   editAllowed: boolean = false;
@@ -43,19 +43,11 @@ export class PermissionDetailComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-
     let self = this;
-
-    this.service.getAuthorization()
-      .then(auth => {
-        this.auth = auth;
-        this.route.params
-          .switchMap(toGetModel)
-          .subscribe(toSetModel);
-      })
-      .catch(err => {
-        this.logger.error('Error in Permission detail components > ngOnInit');
-      });
+    this.authzn = this.service.getAuthzn();
+    this.route.params
+      .switchMap(toGetModel)
+      .subscribe(toSetModel);
 
     function toGetModel(params: Params): Promise<Permission> {
       return self.service.get(+params['id']);
@@ -65,11 +57,11 @@ export class PermissionDetailComponent implements OnInit {
       self.editMode = model.id > 0;
       self.editMode ? self.editSettings() : self.addSettings();
     }
-
   }
+
   private editSettings() {
     this.recordId = 'ID - ' + this.model.id;
-    this.editAllowed = this.auth.allowsEdit();
+    this.editAllowed = this.authzn.allowsEdit();
     this.title = this.editAllowed ? 'Edit ' : '';
     this.title += this.modelName + ' Details';
     this.crudSettings(); // apply CRUD data of the model
@@ -77,7 +69,7 @@ export class PermissionDetailComponent implements OnInit {
   private addSettings() {
     this.title = 'Add a new ' + this.modelName;
     this.recordId = 'ID - 0';
-    this.addAllowed = this.auth.allowsAdd();
+    this.addAllowed = this.authzn.allowsAdd();
   }
 
   private crudSettings() {

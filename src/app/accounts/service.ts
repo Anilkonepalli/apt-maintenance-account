@@ -15,7 +15,6 @@ import { Resident }               from '../residents/model';
 
 import { MODULE }                 from '../shared/constants';
 
-// import { UserService } 						from '../users/service';
 import { FlatService }            from '../flats/service';
 import { ResidentService }        from '../residents/service';
 import { AuthorizationService }   from '../authorization/service';
@@ -33,7 +32,6 @@ export class AccountService {
 
   constructor(
     private http: Http,
-    //  private userService: UserService,
     private flatService: FlatService,
     private residentService: ResidentService,
     private authzn: AuthorizationService,
@@ -74,11 +72,6 @@ export class AccountService {
     return this.authzn.get(MODULE.ACCOUNT.name);
   }
 
-  /*
-    getAuthorization(): Promise<Authorization> {
-      return this.userService.getAuthorizationFor(MODULE.ACCOUNT.name);
-    }
-  */
   update(model: Account): Promise<Account> {
     const url = `${this.modelUrl}/${model.id}`;
     return this.http

@@ -9,7 +9,6 @@ import { Authorization } 					from '../authorization/model';
 import { MODULE }                 from '../shared/constants';
 
 import { AuthorizationService }   from '../authorization/service';
-// import { UserService } 						from '../users/service';
 
 @Injectable()
 export class FlatService {
@@ -23,7 +22,6 @@ export class FlatService {
 
   constructor(
     private http: Http,
-    //    private userService: UserService
     private authzn: AuthorizationService
   ) { }
 
@@ -49,15 +47,7 @@ export class FlatService {
   getAuthzn(): Authorization {
     return this.authzn.get(MODULE.FLAT.name);
   }
-  /*
-    getAuthorization(): Promise<Authorization> {
-      return this.userService.getAuthorizationFor('flats');
-    }
 
-    getAuthorizationFor(resource: string): Promise<Authorization> {
-      return this.userService.getAuthorizationFor(resource);
-    }
-  */
   getMyResidents(id: number): Promise<Resident[]> {
     const url = this.modelUrl + '/myresidents/' + id;
     return this.http

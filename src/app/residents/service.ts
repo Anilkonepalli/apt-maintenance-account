@@ -52,11 +52,6 @@ export class ResidentService {
     return this.authzn.get(MODULE.RESIDENT.name);
   }
 
-  /*
-    getAuthorization(): Promise<Authorization> {
-      return this.userService.getAuthorizationFor('residents');
-    }
-  */
   getUsers(): Promise<User[]> {
     return this.userService.getList();
   }
