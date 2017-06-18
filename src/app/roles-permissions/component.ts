@@ -11,15 +11,10 @@ import { Authorization }									from '../authorization/model';
 import { RolePermissionService }					from './service';
 import { Logger }                         from '../logger/default-log.service';
 
-var list_css = require('./component.css');
-var list_css_string = list_css.toString();
-var list_html = require('./component.html');
-var list_html_string = list_html.toString();
-
 @Component({
   selector: 'role-permission',
-  styles: [list_css_string],
-  templateUrl: list_html_string
+  templateUrl: './component.html',
+  styleUrls: ['./component.css']
 })
 export class RolePermissionComponent implements OnInit {
   //------------------------------------------------------------------------------

@@ -15,15 +15,9 @@ import { Month }                            from '../shared';
 import { AccountService }										from './service';
 import { Logger }		                        from '../logger/default-log.service';
 
-var detail_html = require('./detail.component.html');
-var detail_html_string = detail_html.toString();
-var detail_css = require('./detail.component.css');
-var detail_css_string = detail_css.toString();
-
 @Component({
   selector: 'account-detail',
-  template: detail_html_string,
-  styles: [detail_css_string],
+  templateUrl: './detail.component.html'
 })
 export class AccountDetailComponent implements OnInit {
   @Input() model: Account;

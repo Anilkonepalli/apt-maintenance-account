@@ -9,15 +9,10 @@ import { Authorization }									from '../authorization/model';
 import { RoleService }										from './service';
 import { Logger }                         from '../logger/default-log.service';
 
-var list_css = require('./list.component.css');
-var list_css_string = list_css.toString();
-var list_html = require('./list.component.html');
-var list_html_string = list_html.toString();
-
 @Component({
   selector: 'role-list',
-  styles: [list_css_string],
-  templateUrl: list_html_string
+  templateUrl: './list.component.html',
+  styleUrls: ['./list.component.css']
 })
 export class RoleListComponent implements OnInit {
 

@@ -31,16 +31,21 @@ module.exports = {
         test: /\.(png|jpe?g|gif|svg|woff|woff2|ttf|eot|ico)$/,
         loader: 'file?name=assets/[name].[hash].[ext]'
       },
-/*      {
+      { // this rule will only be used for any vendors
         test: /\.css$/,
-        exclude: helpers.root('src', 'app'),
-        loader: ExtractTextPlugin.extract({fallbackLoader: 'style-loader', loader:'css-loader?sourceMap'})
-      }, */
+        loaders: ['style-loader', 'css-loader'],
+        include: [/node_modules/]
+      },
       {
+        test: /\.css$/,
+        loaders: ['to-string-loader', 'css-loader'],
+        exclude: [/node_modules/] // add this line so we ignore css coming from node_modules
+      },
+/*      {
         test: /\.css$/,
         include: helpers.root('src', 'app'),
         loader: 'css-loader'
-      },
+      }, */
       {
         test: /\.json$/,
         exclude: helpers.root('node_modules'),

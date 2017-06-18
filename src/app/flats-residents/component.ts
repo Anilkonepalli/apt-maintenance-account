@@ -9,17 +9,12 @@ import { Resident }											  from '../residents/model';
 import { Authorization }									from '../authorization/model';
 
 import { FlatResidentService }					  from './service';
-import { Logger }	                      from '../logger/default-log.service';
-
-var list_css = require('./component.css');
-var list_css_string = list_css.toString();
-var list_html = require('./component.html');
-var list_html_string = list_html.toString();
+import { Logger }	                        from '../logger/default-log.service';
 
 @Component({
   selector: 'flat-resident',
-  styles: [list_css_string],
-  templateUrl: list_html_string
+  templateUrl: './component.html',
+  styleUrls: ['./component.css']
 })
 export class FlatResidentComponent implements OnInit {
   //----------------------------------------------------------------------------------

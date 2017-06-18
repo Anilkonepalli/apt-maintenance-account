@@ -13,15 +13,10 @@ import { Month }                          from '../shared';
 import { AccountService }									from './service';
 import { Logger }		                      from '../logger/default-log.service';
 
-var periodic_list_css = require('./periodic-list.component.css');
-var periodic_list_css_string = periodic_list_css.toString();
-var periodic_list_html = require('./periodic-list.component.html');
-var periodic_list_html_string = periodic_list_html.toString();
-
 @Component({
   selector: 'account-periodic-list',
-  styles: [periodic_list_css_string],
-  templateUrl: periodic_list_html_string
+  templateUrl: './periodic-list.component.html',
+  styleUrls: ['./periodic-list.component.css']
 })
 export class PeriodicListComponent implements OnInit {
   months: Month[] = Month.all();

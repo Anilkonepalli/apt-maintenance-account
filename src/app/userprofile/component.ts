@@ -12,12 +12,9 @@ import { UserProfileService }								from './service';
 import { Logger }		                        from '../logger/default-log.service';
 import { AuthorizationService }             from '../authorization/service';
 
-var profile_html = require('./component.html');
-var profile_html_string = profile_html.toString();
-
 @Component({
   selector: 'userprofile',
-  templateUrl: profile_html_string
+  templateUrl: './component.html'
 })
 export class UserProfileComponent implements OnInit {
   @Input() model: User;
