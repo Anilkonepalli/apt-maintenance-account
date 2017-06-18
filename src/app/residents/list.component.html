@@ -154,32 +154,3 @@
 		</tr>
 	</tfoot>
 </table>
-
-
-
-<hr />
-
-<!--div *ngIf="addAllowed">
-<button (click)="add()">Add</button>
-</div>
-
-<!--ul class="items">
-	<li *ngFor="let model of models | async"
-		[class.selected] = "isSelected(model)"
-		(click)="onSelect(model)">
-			<span class="badge1">{{model.id}}</span>
-			<span>{{model.first_name}}</span>
-			<span>{{model.last_name}}</span>
-			<!--span>{{model.is_a}}</span- ->
-			<button
-				class="view1"
-				(click)="onSelect(model)"
-				*ngIf="auth.allowsView(model.owner_id)"
-			>View</button>
-			<button
-				class="delete1"
-				(click)="delete(model); $event.stopPropagation()"
-				*ngIf="auth.allowsDelete(model.owner_id)"
-			>Del</button>
-	</li>
-</ul-->

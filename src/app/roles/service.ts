@@ -1,12 +1,12 @@
 import { Injectable } 		from '@angular/core';
 import { Http, Headers } 	from '@angular/http';
+import 'rxjs/add/operator/toPromise';
 
 import { Role } 					from './model';
 import { Permission } 		from '../permissions/model';
 import { Authorization } 	from '../authorization/model';
 
-import 'rxjs/add/operator/toPromise';
-
+import { Logger }         from '../logger/default-log.service';
 
 @Injectable()
 export class RoleService {
@@ -21,11 +21,12 @@ export class RoleService {
   });
 
   constructor(
-    private http: Http
+    private http: Http,
+    private logger: Logger
   ) { }
 
   getList(): Promise<Role[]> {
-    console.log('roles >> service . getList()...');
+    this.logger.info('roles >> service . getList()...');
     return this.http
       .get(this.modelUrl, { headers: this.headers })
       .toPromise()
@@ -59,17 +60,16 @@ export class RoleService {
   }
 
   getAuthorizationFor(moduleName: string): Promise<Authorization> {
-    console.log('get authorization for roles...');
-    //let moduleName = 'roles';
+    this.logger.info('get authorization for roles...');
     let url = this.userModelUrl + '/mypermissions/' + moduleName;
-    console.log('Role service getAuthorization()...URL is ' + url);
+    this.logger.info('Role service getAuthorization()...URL is ' + url);
     return this.http
       .get(url, { headers: this.headers })
       .toPromise()
       .then(models => {
         let perms = models.json() as Permission[];
         if (perms.length < 1) alert('No permissions on ' + moduleName);
-        console.log('Permissions are:...'); console.log(perms);
+        this.logger.info('Permissions are:...'); this.logger.info(perms);
         let auth = new Authorization(perms, +this.userId);
         return auth;
       })

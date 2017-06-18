@@ -1,12 +1,10 @@
 import { NgModule }								from '@angular/core';
 import { RouterModule, Routes }		from '@angular/router';
 
-import { ResidentListComponent }		from './list.component';
-//import { ResidentDetailComponent }	from './detail.component';
+import { ResidentListComponent }	from './list.component';
 
 const flatsRoutes: Routes = [
   { path: '', component: ResidentListComponent },
-  //    { path: ':id', component: ResidentDetailComponent }
 ];
 
 @NgModule({

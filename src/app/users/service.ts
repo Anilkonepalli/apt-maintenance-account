@@ -1,13 +1,14 @@
 import { Injectable } 		from '@angular/core';
 import { Http, Headers } 	from '@angular/http';
 import { Observable } 		from 'rxjs/Observable';
+import 'rxjs/add/operator/toPromise';
 
 import { User } 					from './model';
 import { Role } 					from '../roles/model';
 import { Permission } 		from '../permissions/model';
 import { Authorization } 	from '../authorization/model';
 
-import 'rxjs/add/operator/toPromise';
+import { Logger }         from '../logger/default-log.service';
 
 @Injectable()
 export class UserService {
@@ -20,7 +21,9 @@ export class UserService {
     'x-access-token': this.id_token
   });
 
-  constructor(private http: Http) { }
+  constructor(
+    private http: Http,
+    private logger: Logger) { }
 
   getList(): Promise<User[]> {
     return this.http
@@ -52,14 +55,14 @@ export class UserService {
   }
   getAuthorizationFor(moduleName: string): Promise<Authorization> {
     let url = this.modelUrl + '/mypermissions/' + moduleName;
-    console.log('User.getAuthorizationFor( ' + moduleName + ' )...URL is ' + url);
+    this.logger.info('User.getAuthorizationFor( ' + moduleName + ' )...URL is ' + url);
     return this.http
       .get(url, { headers: this.headers })
       .toPromise()
       .then(models => {
         let perms = models.json() as Permission[];
         if (perms.length < 1) alert('No permissions on ' + moduleName);
-        console.log('Permissions are:...'); console.log(perms);
+        this.logger.info('Permissions are:...'); this.logger.info(perms);
         let auth = new Authorization(perms, +this.userId);
         return auth;
       })

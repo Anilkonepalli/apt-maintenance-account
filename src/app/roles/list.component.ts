@@ -1,18 +1,18 @@
 import { Component, OnInit }							from '@angular/core';
 import { Router, ActivatedRoute, Params }	from '@angular/router';
 import { Observable }											from 'rxjs/Observable';
+import 'rxjs/add/operator/switchMap';
 
 import { Role }														from './model';
-import { RoleService }										from './service';
 import { Authorization }									from '../authorization/model';
 
-import 'rxjs/add/operator/switchMap';
+import { RoleService }										from './service';
+import { Logger }                         from '../logger/default-log.service';
 
 var list_css = require('./list.component.css');
 var list_css_string = list_css.toString();
 var list_html = require('./list.component.html');
 var list_html_string = list_html.toString();
-
 
 @Component({
   selector: 'role-list',
@@ -33,13 +33,14 @@ export class RoleListComponent implements OnInit {
   constructor(
     private service: RoleService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private logger: Logger
   ) { }
 
   ngOnInit(): void {
     this.service.getAuthorization()
       .then(auth => {
-        console.log('Inside role list component...'); console.log(auth);
+        this.logger.info('Inside role list component...'); this.logger.info(auth);
         if (auth.permissions.length < 1) return []; // just return empty array if permission list is empty
         this.addAllowed = auth.allowsAdd();
         this.deleteAllowed = auth.allowsDelete();
@@ -48,14 +49,6 @@ export class RoleListComponent implements OnInit {
         this.auth = auth;
         this.getList();
       });
-    /*    this.models = this.route.params
-          .switchMap((params: Params) => {
-            this.selectedId = +params['id'];
-            return this.service.getList();
-          });
-        this.models.subscribe(models => {
-          this.totalRecords = models.length;
-        }); */
   }
 
   onSelect(model: Role): void {

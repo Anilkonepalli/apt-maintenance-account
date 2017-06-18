@@ -1,12 +1,12 @@
 import { Component, Input, OnInit } 				from '@angular/core';
 import { Router, ActivatedRoute, Params } 	from '@angular/router';
 import { Location }													from '@angular/common';
+import 'rxjs/add/operator/switchMap';
 
 import { User }															from './model';
+
 import { UserService }											from './service';
 import { Logger }		                        from '../logger/default-log.service';
-
-import 'rxjs/add/operator/switchMap';
 
 var detail_html = require('./detail.component.html');
 var detail_html_string = detail_html.toString();

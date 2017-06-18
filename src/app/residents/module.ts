@@ -3,14 +3,14 @@ import { CommonModule }						from '@angular/common';
 import { FormsModule }						from '@angular/forms';
 import { HttpModule }							from '@angular/http';
 
-import { ResidentListComponent }		  from './list.component';
-//import { ResidentDetailComponent }    from './detail.component';
+import { SharedModule }           from '../shared/shared.module';
+import { ResidentsRoutingModule }	from './routing.module';
 
-import { ResidentService }					  from './service';
-import { ResidentsRoutingModule }	    from './routing.module';
+import { ResidentListComponent }	from './list.component';
 
-import { UserService } 						    from '../users/service';
-import { SharedModule }               from '../shared/shared.module';
+import { ResidentService }				from './service';
+import { UserService } 						from '../users/service';
+
 
 @NgModule({
   imports: [
@@ -22,7 +22,6 @@ import { SharedModule }               from '../shared/shared.module';
   ],
   declarations: [
     ResidentListComponent,
-    //        ResidentDetailComponent
   ],
   providers: [
     ResidentService,

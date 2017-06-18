@@ -2,18 +2,19 @@ import { Injectable } 				          from '@angular/core';
 import { Observable } 				          from 'rxjs/Observable';
 import { Http, Headers, Response }      from '@angular/http';
 import { JwtHelper } 				            from 'angular2-jwt';
-
+import 'rxjs/add/operator/toPromise';
 import 'rxjs/add/observable/of';
 import 'rxjs/add/operator/do';
 import 'rxjs/add/operator/delay';
+
 import { Permission } 		              from '../permissions/model';
-import { Logger }		                    from '../logger/default-log.service';
+import { Authorization }                from './model';
+
 import { Message, ErrorMessage,
   InfoMessage, WarningMessage }         from '../shared';
 import { MODULE }                       from '../shared/constants';
-import { Authorization }                from './model';
 
-import 'rxjs/add/operator/toPromise';
+import { Logger }		                    from '../logger/default-log.service';
 
 
 @Injectable()
@@ -54,7 +55,6 @@ export class AuthorizationService {
    * @return none
    */
   init() {
-
     this.id_token = localStorage.getItem('id_token');
     this.userId = localStorage.getItem('userId');
 
@@ -67,10 +67,9 @@ export class AuthorizationService {
       .then((models: Permission[]) => {
         this.permissions = models;
         this.initAuths_n_allows();
-        console.log('Authorizations are...'); console.log(this.allows);
+        this.logger.info('Authorizations are...'); this.logger.info(this.allows);
         this.initAllowsAdmin();
       });
-
   }
 
   initAuths_n_allows() {
@@ -78,7 +77,7 @@ export class AuthorizationService {
       let resourcePermissions = this.permissions
         .filter((eachPerm: Permission) =>
           eachPerm.resource === resource);
-      console.log('Permission on Resource: ' + resource); console.log(resourcePermissions);
+      this.logger.info('Permission on Resource: ' + resource); this.logger.info(resourcePermissions);
       let authzn = new Authorization(resourcePermissions, +this.userId);
       this.auths[resource] = authzn; // sets authorization model
       this.allows[resource] = authzn.allowsAny(+this.userId); // sets boolean value
@@ -87,24 +86,23 @@ export class AuthorizationService {
 
   initAllowsAdmin() {
     let disallowedList = this.adminResources.filter((each: string) => !this.allows[each]);
-    console.log('Disallowed List length: ' + disallowedList.length + '; AdminResources Length: ' + this.adminResources.length);
+    this.logger.info('Disallowed List length: ' + disallowedList.length + '; AdminResources Length: ' + this.adminResources.length);
     this.allowsAdminResources = disallowedList.length < this.adminResources.length;
   }
 
-
   getAllPermissions(): Promise<Permission[]> {
-    console.log('get all permissions of user...');
+    this.logger.info('get all permissions of user...');
 
     let url = this.modelUrl;
-    console.log('Authorization service getAllPermissions()...URL is ' + url);
+    this.logger.info('Authorization service getAllPermissions()...URL is ' + url);
     return this.http
       .get(url, { headers: this.headers })
       .toPromise()
       .then(models => {
-        console.log('All Permission models...'); console.log(models);
+        this.logger.info('All Permission models...'); this.logger.info(models);
         let perms = models.json() as Permission[];
         if (perms.length < 1) alert('No permissions available for the user ');
-        console.log('Permissions are:...'); console.log(perms);
+        this.logger.info('Permissions are:...'); this.logger.info(perms);
         return perms;
       })
       .catch(this.handleError);

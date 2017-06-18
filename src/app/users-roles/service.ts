@@ -1,14 +1,12 @@
-import { Injectable } 	from '@angular/core';
-
-import { Role } 				from '../roles/model';
-import { RoleService } 	from '../roles/service';
-
-import { User } 				from '../users/model';
-import { UserService } 	from '../users/service';
-import { Authorization } 	    from '../authorization/model';
-
+import { Injectable } 	              from '@angular/core';
 import 'rxjs/add/operator/toPromise';
 
+import { Role } 				              from '../roles/model';
+import { User } 				              from '../users/model';
+import { Authorization } 	            from '../authorization/model';
+
+import { RoleService } 	              from '../roles/service';
+import { UserService } 	              from '../users/service';
 
 @Injectable()
 export class UserRoleService {

@@ -1,14 +1,14 @@
 import { Component, OnInit }							from '@angular/core';
 import { Router, ActivatedRoute, Params }	from '@angular/router';
 import { Observable }											from 'rxjs/Observable';
+import 'rxjs/add/operator/switchMap';
 
 import { Resident }										    from './model';
-import { ResidentService }							  from './service';
-import { Authorization }									from '../authorization/model';
-import { Logger }		                      from '../logger/default-log.service';
 import { User }                           from '../users/model';
+import { Authorization }									from '../authorization/model';
 
-import 'rxjs/add/operator/switchMap';
+import { ResidentService }							  from './service';
+import { Logger }		                      from '../logger/default-log.service';
 
 var list_css = require('./list.component.css');
 var list_css_string = list_css.toString();
@@ -54,7 +54,7 @@ export class ResidentListComponent implements OnInit {
 
     this.service.getAuthorization()
       .then(auth => {
-        console.log('Inside residents list component...'); console.log(auth);
+        this.logger.info('Inside residents list component...'); this.logger.info(auth);
         if (auth.permissions.length < 1) return []; // just return empty array if permission list is empty
         this.addAllowed = auth.allowsAdd();
         this.deleteAllowed = auth.allowsDelete();
@@ -73,10 +73,10 @@ export class ResidentListComponent implements OnInit {
   }
 
   save(): void {
-    console.log('Save new Resident Details...');
+    this.logger.info('Save new Resident Details...');
     this.service.create(this.model)
       .then((model) => {
-        console.log('New Resident added...'); console.log(model);
+        this.logger.info('New Resident added...'); this.logger.info(model);
         this.totalRecords++;
         this.models = this.models.do(res => { }); // just resets the models
         this.model = new Resident(); // reset the fields associated to model
@@ -92,7 +92,7 @@ export class ResidentListComponent implements OnInit {
     this.service
       .delete(model.id)
       .then(() => {
-        console.log('Models on delete...'); console.log(models);
+        this.logger.info('Models on delete...'); this.logger.info(models);
         this.models = this.models.do(res => { }); // just resets the models
         this.totalRecords--;
       });
@@ -110,12 +110,13 @@ export class ResidentListComponent implements OnInit {
     this.service.getUsers()
       .then((models: User[]) => {
         this.users = models;
-        console.log('User List: '); console.log(this.users);
+        this.logger.info('User List: '); this.logger.info(this.users);
       });
   }
+
   public rowSelected(event: any, model: Resident) {
-    console.log('Row clicked...' + model.id);
-    console.log(event);
+    this.logger.info('Row clicked...' + model.id);
+    this.logger.info(event);
 
     // disable previous edits, if any
     if (this.editModel) {
@@ -129,7 +130,7 @@ export class ResidentListComponent implements OnInit {
 
   public saveChanges(modelWChanges: Resident, modelWOChanges: Resident) {
 
-    console.log('Save Changes...' + modelWChanges.id); console.log(modelWChanges);
+    this.logger.info('Save Changes...' + modelWChanges.id); this.logger.info(modelWChanges);
 
     // disable edit mode
     this.canEdit[modelWChanges.id] = false;
@@ -152,8 +153,8 @@ export class ResidentListComponent implements OnInit {
   }
 
   public cancelChanges(model: Resident) {
-    console.log('Cancel changes...' + model.id);
-    console.log('Changed model...'); console.log(this.editModel);
+    this.logger.info('Cancel changes...' + model.id);
+    this.logger.info('Changed model...'); this.logger.info(this.editModel);
     this.canEdit[model.id] = false;
     this.editModel = null;
   }
@@ -161,4 +162,5 @@ export class ResidentListComponent implements OnInit {
   public userName(ownerId: number) {
     return ownerId ? this.users.find((each: User) => each.id == ownerId).name : 'admin';
   }
+
 }

@@ -1,13 +1,14 @@
-import { Injectable } 															from '@angular/core';
-import { Http, Headers } 	                          from '@angular/http';
-
-import { Resident } 															  from './model';
-import { Permission } 															from '../permissions/model';
-import { UserService } 															from '../users/service';
-import { Authorization } 														from '../authorization/model';
-import { User }             from '../users/model';
-
+import { Injectable } 								from '@angular/core';
+import { Http, Headers } 	            from '@angular/http';
 import 'rxjs/add/operator/toPromise';
+
+import { Resident } 									from './model';
+import { Permission } 								from '../permissions/model';
+
+import { Authorization } 							from '../authorization/model';
+import { User }                       from '../users/model';
+
+import { UserService } 								from '../users/service';
 
 
 @Injectable()

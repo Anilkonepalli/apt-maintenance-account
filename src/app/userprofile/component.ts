@@ -1,16 +1,16 @@
 import { Component, Input, OnInit } 				from '@angular/core';
 import { Router, ActivatedRoute, Params } 	from '@angular/router';
 import { Location }													from '@angular/common';
-
-import { User }															from '../users/model';
-import { UserProfileService }								from './service';
-import { Logger }		                        from '../logger/default-log.service';
-import { MODULE }                       from '../shared/constants';
+import 'rxjs/add/operator/switchMap';
 
 import { Authorization }                    from '../authorization/model';
-import { AuthorizationService }             from '../authorization/service';
+import { User }															from '../users/model';
 
-import 'rxjs/add/operator/switchMap';
+import { MODULE }                           from '../shared/constants';
+
+import { UserProfileService }								from './service';
+import { Logger }		                        from '../logger/default-log.service';
+import { AuthorizationService }             from '../authorization/service';
 
 var profile_html = require('./component.html');
 var profile_html_string = profile_html.toString();

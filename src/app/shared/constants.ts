@@ -1,7 +1,7 @@
 'use strict';
 
 export const MODULE = {
-  ACCOUNT: { name: 'accounts', isAdmin: false },
+  ACCOUNT: { name: 'accounts', isAdmin: false }, // isAdmin indicates whether it is visible only to Admin user
   USER: { name: 'users', isAdmin: true },
   FLAT: { name: 'flats', isAdmin: true },
   RESIDENT: { name: 'residents', isAdmin: true },

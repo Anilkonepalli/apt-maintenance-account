@@ -1,14 +1,15 @@
 import { Component, OnInit }							from '@angular/core';
 import { Router, ActivatedRoute, Params }	from '@angular/router';
 import { Observable }											from 'rxjs/Observable';
+import 'rxjs/add/operator/switchMap';
+import * as _                             from 'lodash';
 
 import { Flat }														from '../flats/model';
 import { Resident }											  from '../residents/model';
 import { Authorization }									from '../authorization/model';
-import { FlatResidentService }					  from './service';
 
-import 'rxjs/add/operator/switchMap';
-import * as _                               from 'lodash';
+import { FlatResidentService }					  from './service';
+import { Logger }	                      from '../logger/default-log.service';
 
 var list_css = require('./component.css');
 var list_css_string = list_css.toString();
@@ -42,15 +43,16 @@ export class FlatResidentComponent implements OnInit {
   constructor(
     private service: FlatResidentService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private logger: Logger
   ) { }
 
   ngOnInit(): void {
-    console.log('Inside flats-residents component ngOnInit()...');
+    this.logger.info('Inside flats-residents component ngOnInit()...');
 
     this.service.getAuthorization()
       .then(auth => {
-        console.log('Inside flats-residents list component...'); console.log(auth);
+        this.logger.info('Inside flats-residents list component...'); this.logger.info(auth);
         if (auth.permissions.length < 1) return []; // just return empty array if permission list is empty
         this.editAllowed = auth.allowsEdit();
         this.auth = auth;
@@ -88,14 +90,17 @@ export class FlatResidentComponent implements OnInit {
         return null;
       });
   }
+
   onaSelect(): void {
     this.canDetach = this.lId && this.aIds && this.aIds.length > 0;
-    console.log('Status on DButton: ' + this.canDetach);
+    this.logger.info('Status on DButton: ' + this.canDetach);
   }
+
   ondSelect(): void {
     this.canAttach = this.lId && this.dIds && this.dIds.length > 0;
-    console.log('Status on AButton: ' + this.canAttach);
+    this.logger.info('Status on AButton: ' + this.canAttach);
   }
+
   attach() {
     this.detachedStream.subscribe(dmodel => {
       let dIdNums = this.dIds.map(each => +each); // convert string id into integer
@@ -119,6 +124,7 @@ export class FlatResidentComponent implements OnInit {
       this.updateDetachedModelsExcluding(aIdsNew); // now, dmodels = rmodels - amodels
     });
   }
+
   goHome() {
     this.router.navigate(['/home']);
   }

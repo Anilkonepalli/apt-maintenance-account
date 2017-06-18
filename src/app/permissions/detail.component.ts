@@ -1,12 +1,15 @@
 import { Component, Input, OnInit } 				from '@angular/core';
 import { Router, ActivatedRoute, Params } 	from '@angular/router';
 import { Location }													from '@angular/common';
+import 'rxjs/add/operator/switchMap';
 
 import { Permission }												from './model';
-import { PermissionService }								from './service';
-import { MODULE }                           from '../shared/constants';
 import { Authorization }										from '../authorization/model';
-import 'rxjs/add/operator/switchMap';
+
+import { MODULE }                           from '../shared/constants';
+
+import { PermissionService }								from './service';
+import { Logger }                           from '../logger/default-log.service';
 
 var detail_html = require('./detail.component.html');
 var detail_html_string = detail_html.toString();
@@ -40,7 +43,8 @@ export class PermissionDetailComponent implements OnInit {
     private service: PermissionService,
     private route: ActivatedRoute,
     private router: Router,
-    private location: Location
+    private location: Location,
+    private logger: Logger
   ) { }
 
   ngOnInit(): void {
@@ -55,7 +59,7 @@ export class PermissionDetailComponent implements OnInit {
           .subscribe(toSetModel);
       })
       .catch(err => {
-        console.log('Error in Permission detail components > ngOnInit');
+        this.logger.error('Error in Permission detail components > ngOnInit');
       });
 
     function toGetModel(params: Params): Promise<Permission> {
@@ -81,33 +85,13 @@ export class PermissionDetailComponent implements OnInit {
     this.addAllowed = this.auth.allowsAdd();
   }
 
-  /*
-    ngOnInit(): void {
-      let self = this;
-      self.route.params
-        .switchMap((params: Params) => this.service.get(+params['id']))
-        .subscribe((model: Permission) => {
-          self.model = model;
-          self.editMode = model.id > 0;
-          self.editMode ? self.editSettings() : self.addSettings();
-        });
-    }
-    private editSettings() {
-      this.title = 'Edit ' + this.modelName + ' Details';
-      this.recordId = 'ID - ' + this.model.id;
-      this.crudSettings(); // apply CRUD data of the model
-    }
-    private addSettings() {
-      this.title = 'Add a new ' + this.modelName;
-      this.recordId = 'ID - 0';
-    }
-*/
   private crudSettings() {
     this.canCreate = this.model.operations.includes('C');
     this.canRead = this.model.operations.includes('R');
     this.canUpdate = this.model.operations.includes('U');
     this.canDelete = this.model.operations.includes('D');
   }
+
   private crudString() {
     let result = '';
     result += this.canCreate ? 'C' : '';
@@ -116,7 +100,6 @@ export class PermissionDetailComponent implements OnInit {
     result += this.canDelete ? 'D' : '';
     return result;
   }
-
 
   goBack(): void {
     this.location.back();
@@ -133,7 +116,7 @@ export class PermissionDetailComponent implements OnInit {
 
   private add(): void {
     this.model.operations = this.crudString();
-    console.log('New Permission to be saved...'); console.log(this.model);
+    this.logger.info('New Permission to be saved...'); this.logger.info(this.model);
     this.service.create(this.model)
       .then((model: Permission) => {
         this.model = model;
@@ -146,4 +129,5 @@ export class PermissionDetailComponent implements OnInit {
     this.service.update(this.model)
       .then(() => this.goBack());
   }
+
 }

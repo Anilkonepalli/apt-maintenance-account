@@ -4,12 +4,13 @@ import { Location }													from '@angular/common';
 import { IMultiSelectOption,
   IMultiSelectSettings,
   IMultiSelectTexts}                        from 'angular-2-dropdown-multiselect';
+import 'rxjs/add/operator/switchMap';
 
 import { Role }															from './model';
-import { RoleService }											from './service';
 import { Authorization }										from '../authorization/model';
 
-import 'rxjs/add/operator/switchMap';
+import { RoleService }											from './service';
+import { Logger }                           from '../logger/default-log.service';
 
 var detail_html = require('./detail.component.html');
 var detail_html_string = detail_html.toString();
@@ -41,7 +42,8 @@ export class RoleDetailComponent implements OnInit {
     private service: RoleService,
     private route: ActivatedRoute,
     private router: Router,
-    private location: Location
+    private location: Location,
+    private logger: Logger
   ) { }
 
   ngOnInit(): void {
@@ -57,7 +59,7 @@ export class RoleDetailComponent implements OnInit {
           .subscribe(toInitializeDropdown);
       })
       .catch(err => {
-        console.log('Error in Role detail components > ngOnInit');
+        this.logger.error('Error in Role detail components > ngOnInit');
       });
 
     function toGetModel(params: Params): Promise<Role> {

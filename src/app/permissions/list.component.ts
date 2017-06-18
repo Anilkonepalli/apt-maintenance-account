@@ -1,18 +1,18 @@
 import { Component, OnInit }							from '@angular/core';
 import { Router, ActivatedRoute, Params }	from '@angular/router';
 import { Observable }											from 'rxjs/Observable';
+import 'rxjs/add/operator/switchMap';
 
 import { Permission }											from './model';
-import { PermissionService }							from './service';
 import { Authorization }									from '../authorization/model';
 
-import 'rxjs/add/operator/switchMap';
+import { PermissionService }							from './service';
+import { Logger }                         from '../logger/default-log.service';
 
 var list_css = require('./list.component.css');
 var list_css_string = list_css.toString();
 var list_html = require('./list.component.html');
 var list_html_string = list_html.toString();
-
 
 @Component({
   selector: 'permission-list',
@@ -33,14 +33,15 @@ export class PermissionListComponent implements OnInit {
   constructor(
     private service: PermissionService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private logger: Logger
   ) { }
 
   ngOnInit(): void {
 
     this.service.getAuthorization()
       .then(auth => {
-        console.log('Inside permission list component...'); console.log(auth);
+        this.logger.info('Inside permission list component...'); this.logger.info(auth);
         if (auth.permissions.length < 1) return []; // just return empty array if permission list is empty
         this.addAllowed = auth.allowsAdd();
         this.deleteAllowed = auth.allowsDelete();
@@ -49,15 +50,6 @@ export class PermissionListComponent implements OnInit {
         this.auth = auth;
         this.getList();
       });
-
-    /*    this.models = this.route.params
-          .switchMap((params: Params) => {
-            this.selectedId = +params['id'];
-            return this.service.getList();
-          });
-        this.models.subscribe(models => {
-          this.totalRecords = models.length;
-        }); */
 
   }
 
@@ -94,4 +86,5 @@ export class PermissionListComponent implements OnInit {
       this.totalRecords = models.length;
     });
   }
+
 }

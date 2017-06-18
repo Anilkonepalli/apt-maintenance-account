@@ -1,7 +1,11 @@
-import { Permission } from '../permissions/model';
+import { Permission }        from '../permissions/model';
+
+import { ILogger }	         from '../logger/default-log.service';
+import { ConsoleLogService } from '../logger/log.service';
 
 export class Authorization {
   public owner: number = 0; // 0 means no owner
+  public logger: ILogger = new ConsoleLogService();
 
   constructor(
     public permissions: Permission[],
@@ -66,7 +70,7 @@ export class Authorization {
         user_id: this.user,
         model: { owner_id: owner }
       };
-      console.log('evaluate condition data...'); console.log('User ID: ' + this.user + ', owner_id: ' + owner);
+      this.logger.info('evaluate condition data...'); this.logger.info('User ID: ' + this.user + ', owner_id: ' + owner);
       return fn(data);
     });
     return evaluatedPerms.length > 0;

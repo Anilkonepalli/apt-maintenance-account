@@ -1,19 +1,18 @@
 import { Component, OnInit }							from '@angular/core';
 import { Router, ActivatedRoute, Params }	from '@angular/router';
 import { Observable }											from 'rxjs/Observable';
+import 'rxjs/add/operator/switchMap';
 
 import { Flat }												    from './model';
-import { FlatService }									  from './service';
 import { Authorization }									from '../authorization/model';
-import { Logger }		                      from '../logger/default-log.service';
 
-import 'rxjs/add/operator/switchMap';
+import { FlatService }									  from './service';
+import { Logger }		                      from '../logger/default-log.service';
 
 var list_css = require('./list-n-detail.component.css');
 var list_css_string = list_css.toString();
 var list_html = require('./list-n-detail.component.html');
 var list_html_string = list_html.toString();
-
 
 @Component({
   selector: 'flats',
@@ -41,7 +40,7 @@ export class FlatComponent implements OnInit {
 
     this.service.getAuthorization()
       .then(auth => {
-        console.log('Inside flats list component...'); console.log(auth);
+        this.logger.info('Inside flats list component...'); this.logger.info(auth);
         if (auth.permissions.length < 1) return []; // just return empty array if permission list is empty
         this.addAllowed = auth.allowsAdd();
         this.deleteAllowed = auth.allowsDelete();
@@ -67,10 +66,10 @@ export class FlatComponent implements OnInit {
     }
   */
   save(): void {
-    console.log('Save new Flat Details...');
+    this.logger.info('Save new Flat Details...');
     this.service.create(this.model)
       .then((model) => {
-        console.log('New Flat details added...'); console.log(model);
+        this.logger.info('New Flat details added...'); this.logger.info(model);
         this.getList();
         this.model = new Flat(); // reset the fields associated to model
         this.totalRecords++;

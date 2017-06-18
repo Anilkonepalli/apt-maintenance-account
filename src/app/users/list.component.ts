@@ -1,18 +1,17 @@
 import { Component, OnInit }							from '@angular/core';
 import { Router, ActivatedRoute, Params }	from '@angular/router';
 import { Observable }											from 'rxjs/Observable';
+import 'rxjs/add/operator/switchMap';
 
 import { User }														from './model';
-import { UserService }										from './service';
 import { Authorization }									from '../authorization/model';
 
-import 'rxjs/add/operator/switchMap';
+import { UserService }										from './service';
 
 var list_css = require('./list.component.css');
 var list_css_string = list_css.toString();
 var list_html = require('./list.component.html');
 var list_html_string = list_html.toString();
-
 
 @Component({
   selector: 'user-list',
@@ -55,18 +54,12 @@ export class UserListComponent implements OnInit {
     this.service
       .delete(model.id)
       .then(() => {
-        /*
-                // filter out the deleted model from models
-                this.models = this.models.filter((models, i) => {
-                  return models[i] !== model;
-                }); */
         this.models = this.models.do(res => { }); // just resets the models
         this.totalRecords--;
       });
   }
 
   private getList(): void {
-
     this.service.getAuthorization()
       .then(auth => {
         this.addAllowed = auth.allowsAdd();
@@ -81,4 +74,5 @@ export class UserListComponent implements OnInit {
         });
       });
   }
+
 }

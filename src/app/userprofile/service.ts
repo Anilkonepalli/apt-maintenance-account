@@ -1,10 +1,9 @@
 import { Injectable } 		from '@angular/core';
 import { Http, Headers } 	from '@angular/http';
 import { Observable } 		from 'rxjs/Observable';
+import 'rxjs/add/operator/toPromise';
 
 import { User } 					from '../users/model';
-
-import 'rxjs/add/operator/toPromise';
 
 @Injectable()
 export class UserProfileService {

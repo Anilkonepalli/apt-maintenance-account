@@ -1,13 +1,12 @@
 import { Injectable } 															from '@angular/core';
 import { Http, Headers } 	                          from '@angular/http';
+import 'rxjs/add/operator/toPromise';
 
 import { Flat } 																	  from './model';
 import { Resident } 															  from '../residents/model';
-import { UserService } 															from '../users/service';
 import { Authorization } 														from '../authorization/model';
 
-import 'rxjs/add/operator/toPromise';
-
+import { UserService } 															from '../users/service';
 
 @Injectable()
 export class FlatService {
@@ -50,7 +49,6 @@ export class FlatService {
   getAuthorizationFor(resource: string): Promise<Authorization> {
     return this.userService.getAuthorizationFor(resource);
   }
-
 
   getMyResidents(id: number): Promise<Resident[]> {
     const url = this.modelUrl + '/myresidents/' + id;
@@ -100,6 +98,5 @@ export class FlatService {
   private handleError(error: any) {
     return Promise.reject(error.message || error);
   }
-
 
 }

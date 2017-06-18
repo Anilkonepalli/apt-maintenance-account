@@ -1,13 +1,12 @@
 import { Injectable } 				from '@angular/core';
+import 'rxjs/add/operator/toPromise';
 
 import { Flat } 							from '../flats/model';
-import { FlatService } 				from '../flats/service';
-
 import { Resident } 				  from '../residents/model';
-import { ResidentService } 	  from '../residents/service';
 import { Authorization } 	    from '../authorization/model';
 
-import 'rxjs/add/operator/toPromise';
+import { FlatService } 				from '../flats/service';
+import { ResidentService } 	  from '../residents/service';
 
 @Injectable()
 export class FlatResidentService {

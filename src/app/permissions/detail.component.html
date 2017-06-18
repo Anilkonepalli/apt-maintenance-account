@@ -38,10 +38,6 @@
 							(change)="canDelete = !canDelete"
 							name="crud"> Delete
 
-							<!--div
-								[hidden]="crud.valid || crud.pristine"
-								class="alert alert-danger"
-								>Operations are required</div-->
 					</div>
 
 					<div data-field-span="1">
@@ -117,19 +113,3 @@
 	</form>
 
 </div>
-
-
-<!--div *ngIf="model">
-	<h2 *ngIf="editMode">{{modelName}} Details</h2>
-	<h2 *ngIf="!editMode">Add {{modelName}}</h2>
-
-	<div *ngIf="editMode"><label>id: </label>{{model.id}}</div>
-	<div>
-		<label>Resource: </label>
-		<input [(ngModel)]="model.resource" placeholder="Resource" />
-	</div>
-	<p>
-		<button (click)="gotoList()">Cancel</button>
-		<button (click)="save()">Save</button>
-	</p>
-</div-->
