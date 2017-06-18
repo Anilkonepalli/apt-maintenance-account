@@ -1,15 +1,15 @@
 import { NgModule } 				from '@angular/core';
 import { RouterModule, Routes } 	from '@angular/router';
 
-import { AuthGuardService } 		from './auth-guard.service';
-import { AuthService } 				from './auth.service';
-import { AuthorizationService } from '../authorization/service';
-
 import { LoginComponent } 			from './login.component';
 import { SocialLoginComponent } from './social/login.component';
 import { ForgotPasswordComponent } from './forgot-password.component';
 import { ForgotInfoComponent } from './forgot-info.component';
 import { ResetPasswordComponent } from './reset-password.component';
+
+import { AuthGuardService } 		from './auth-guard.service';
+import { AuthService } 				from './auth.service';
+import { AuthorizationService } from '../authorization/service';
 
 const loginRoutes: Routes = [
   { path: 'login', component: LoginComponent },

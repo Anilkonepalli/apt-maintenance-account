@@ -1,22 +1,21 @@
-import { Injectable } 				          from '@angular/core';
-import { Observable } 				          from 'rxjs/Observable';
-import { Http, Headers, Response }      from '@angular/http';
-import { JwtHelper } 				            from 'angular2-jwt';
+import { Injectable } 				        from '@angular/core';
+import { Observable } 				        from 'rxjs/Observable';
+import { Http, Headers, Response }    from '@angular/http';
+import { JwtHelper } 				          from 'angular2-jwt';
 
 import 'rxjs/add/observable/of';
 import 'rxjs/add/operator/do';
 import 'rxjs/add/operator/delay';
 
-import { Logger }		                    from '../logger/default-log.service';
 import { Message, ErrorMessage,
   InfoMessage, WarningMessage }       from '../shared';
 
 import { AuthorizationService }       from '../authorization/service';
+import { Logger }		                  from '../logger/default-log.service';
 
 const contentHeaders = new Headers();
 contentHeaders.append('Accept', 'application/json');
 contentHeaders.append('Content-Type', 'application/json');
-
 
 @Injectable()
 export class AuthService {
@@ -43,10 +42,10 @@ export class AuthService {
       response => {
         this.logger.info('Logged In successfully...');
         let res = response.json();
-        console.log(res);
+        this.logger.info(res);
         localStorage.setItem('id_token', res.id_token);
         let decodedJwt = res.id_token && this.JwtHelper.decodeToken(res.id_token);
-        console.log('Decoded JWT...'); console.log(decodedJwt);
+        this.logger.info('Decoded JWT...'); this.logger.info(decodedJwt);
         this.loggedUser = decodedJwt.first_name || decodedJwt.email.split('@')[0];
         localStorage.setItem('userId', decodedJwt.id);
         this.isLoggedIn = true;
@@ -84,7 +83,7 @@ export class AuthService {
       response => {
         this.logger.info('Logged In successfully...');
         let res = response.json();
-        console.log('Response ...'); console.log(res);
+        this.logger.info('Response ...'); this.logger.info(res);
         localStorage.setItem('id_token', res.id_token);
         let decodedJwt = res.id_token && this.JwtHelper.decodeToken(res.id_token);
         localStorage.setItem('userId', decodedJwt.id);
@@ -127,7 +126,7 @@ export class AuthService {
   }
 
   resetPassword(token: string, password: string): Observable<any> {
-    console.log('Token: ' + token + ', Password: ' + password + ' are submitted...');
+    this.logger.info('Token: ' + token + ', Password: ' + password + ' are submitted...');
     let data = JSON.stringify({ token: token, resetpassword: password });
     let url = process.env.API_URL + '/api/login/reset-password';
     return this.http.post(url, data, { headers: contentHeaders });

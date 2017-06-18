@@ -1,14 +1,11 @@
 import { Component, OnInit }              from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
-
-import { AuthService } 				            from './auth.service';
-import { User } 	                        from '../users/model';
-import { Logger }                         from '../logger/default-log.service';
-
 import 'rxjs/add/operator/switchMap';
 
-// var signup_html = require('./signup-confirm.component.html');
-// var signup_html_string = signup_html.toString();
+import { User } 	                        from '../users/model';
+
+import { AuthService } 				            from './auth.service';
+import { Logger }                         from '../logger/default-log.service';
 
 @Component({
   selector: 'signup-confirm',
@@ -43,14 +40,14 @@ export class SignupConfirmComponent implements OnInit {
       .switchMap((params: Params) => this.service.confirmSignup(params['code']))
       .subscribe(
       response => {
-        console.log('confirmed user: ...'); console.log(response.json());
+        this.logger.info('confirmed user: ...'); this.logger.info(response.json());
         this.message = response.json().data.message;
         this.confirmed = true;
       },
       error => {
-        console.log('Error: '); console.log(error);
-        console.log('Error in json'); console.log(error.json());
-        console.log('Error message: '); console.log(error.json().data.message);
+        this.logger.error('Error: '); this.logger.error(error);
+        this.logger.error('Error in json'); this.logger.error(error.json());
+        this.logger.error('Error message: '); this.logger.error(error.json().data.message);
         this.message = error.json().data.message;
         this.confirmed = false;
       }

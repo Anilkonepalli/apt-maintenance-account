@@ -1,15 +1,15 @@
-import { Component } 			from '@angular/core';
-import { NgForm } 				from '@angular/forms';
-import { Http, Headers } 	from '@angular/http';
-import { Router } 				from '@angular/router';
+import { Component } 			    from '@angular/core';
+import { NgForm } 				    from '@angular/forms';
+import { Http, Headers } 	    from '@angular/http';
+import { Router } 				    from '@angular/router';
 
 import { User, SampleUser1 } 	from '../users/model';
-import { Logger }         from '../logger/default-log.service';
+
+import { Logger }             from '../logger/default-log.service';
 
 const contentHeaders = new Headers();
 contentHeaders.append('Accept', 'application/json');
 contentHeaders.append('Content-Type', 'application/json');
-
 
 @Component({
   selector: 'signup',
@@ -18,15 +18,12 @@ contentHeaders.append('Content-Type', 'application/json');
     .signup {
       width: 40%;
     }
-
     .ng-valid[required] {
 			border-left: 5px solid #42A948; /* green */
 		}
-
 		.ng-invalid {
 			border-left: 5px solid #a94442; /* red */
 		}
-
   `]
 })
 export class SignupComponent {

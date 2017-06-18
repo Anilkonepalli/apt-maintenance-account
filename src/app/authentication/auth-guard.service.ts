@@ -1,4 +1,4 @@
-import { Injectable      } 			from '@angular/core';
+import { Injectable } from '@angular/core';
 import { Router,
   CanActivate,
   ActivatedRouteSnapshot,
@@ -6,19 +6,23 @@ import { Router,
   CanActivateChild,
   NavigationExtras,
   CanLoad,
-  Route 			 } 							from '@angular/router';
+  Route 			 } 							  from '@angular/router';
 import { tokenNotExpired } 			from 'angular2-jwt';
-import { AuthService     } 			from './auth.service';
 
+import { AuthService     } 			from './auth.service';
+import { Logger }		            from '../logger/default-log.service';
 
 @Injectable()
 export class AuthGuardService implements CanActivate {
 
-  constructor(private authService: AuthService, private router: Router) { }
+  constructor(
+    private authService: AuthService,
+    private router: Router,
+    private logger: Logger) { }
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
     let url: string = state.url;
-    console.log('auth-guard.service >> canActivate() ...for url: ' + url);
+    this.logger.info('auth-guard.service >> canActivate() ...for url: ' + url);
     return this.checkLogin(url);
   }
 
@@ -29,14 +33,15 @@ export class AuthGuardService implements CanActivate {
   canLoad(route: Route): boolean {
 
     let url = `/${route.path}`;
-    console.log('auth-guard.service >> canActivate() ...for url: ' + url);
+    this.logger.info('auth-guard.service >> canActivate() ...for url: ' + url);
     return this.checkLogin(url);
   }
 
   checkLogin(url: string): boolean {
-    console.log('Auth service loggedIn status: ' + this.authService.isLoggedIn);
+    this.logger.info('Auth service loggedIn status: ' + this.authService.isLoggedIn);
     if (this.authService.isLoggedIn) { return true; }
-    console.log('Auth service is NOT logged in...');
+    this.logger.info('Auth service is NOT logged in...');
+
     // Store the attempted URL for redirecting
     this.authService.redirectUrl = url;
 
@@ -51,7 +56,7 @@ export class AuthGuardService implements CanActivate {
     };
 
     // Navigate to the login page with extras
-    console.log('auth-guard.service >> checkLogin() navigate to login page...');
+    this.logger.info('auth-guard.service >> checkLogin() navigate to login page...');
     this.router.navigate(['/login'], navigationExtras);
     return false;
   }

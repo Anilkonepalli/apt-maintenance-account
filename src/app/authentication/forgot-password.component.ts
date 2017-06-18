@@ -1,8 +1,8 @@
-import { Component } 			from '@angular/core';
-import { Router, ActivatedRoute } 				from '@angular/router';
+import { Component } 			        from '@angular/core';
+import { Router, ActivatedRoute } from '@angular/router';
 
-import { AuthService } 				from './auth.service';
-import { Logger }         from '../logger/default-log.service';
+import { AuthService } 				    from './auth.service';
+import { Logger }                 from '../logger/default-log.service';
 
 @Component({
   selector: 'forgot-password',

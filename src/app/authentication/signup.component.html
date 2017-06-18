@@ -5,32 +5,86 @@
 	<form #signupForm="ngForm" (submit)="saveNewUser(); signupForm.reset()">
 		<div class="form-group">
 			<label for="userName">User Name</label>
-			<input type="text" class="form-control" name="userName" required [(ngModel)]="user.name" #userName="ngModel" title="User Name for login purpose">
-			<div [hidden]="userName.valid || userName.pristine" class="alert alert-danger">User Name is required</div>
+			<input
+				type="text"
+				class="form-control"
+				name="userName"
+				required
+				[(ngModel)]="user.name"
+				#userName="ngModel"
+				title="User Name for login purpose">
+			<div
+				[hidden]="userName.valid || userName.pristine"
+				class="alert alert-danger"
+				>User Name is required</div>
 		</div>
 		<div class="form-group">
 			<label for="firstName">First Name</label>
-			<input type="text" class="form-control" name="firstName" required [(ngModel)]="user.first_name" #firstName="ngModel">
-			<div [hidden]="firstName.valid || firstName.pristine" class="alert alert-danger">First Name is required</div>
+			<input
+				type="text"
+				class="form-control"
+				name="firstName"
+				required
+				[(ngModel)]="user.first_name"
+				#firstName="ngModel">
+			<div
+				[hidden]="firstName.valid || firstName.pristine"
+				class="alert alert-danger"
+				>First Name is required</div>
 		</div>
 		<div class="form-group">
 			<label for="lastName">Last Name</label>
-			<input type="text" class="form-control" name="lastName" required [(ngModel)]="user.last_name" #lastName="ngModel">
-			<div [hidden]="lastName.valid || lastName.pristine" class="alert alert-danger">Last name is required</div>
+			<input
+				type="text"
+				class="form-control"
+				name="lastName"
+				required
+				[(ngModel)]="user.last_name"
+				#lastName="ngModel">
+			<div
+				[hidden]="lastName.valid || lastName.pristine"
+				class="alert alert-danger"
+				>Last name is required</div>
 		</div>
 		<div class="form-group">
 			<label for="email">E-mail</label>
-			<input type="email" class="form-control" name="email" required [(ngModel)]="user.email" #email="ngModel">
-			<div [hidden]="email.valid || email.pristine" class="alert alert-danger">E-mail is required</div>
+			<input
+				type="email"
+				class="form-control"
+				name="email"
+				required
+				[(ngModel)]="user.email"
+				#email="ngModel">
+			<div
+				[hidden]="email.valid || email.pristine"
+				class="alert alert-danger"
+				>E-mail is required</div>
 		</div>
 		<div class="form-group">
 			<label for="password">Password</label>
-			<input type="password" class="form-control" name="password" required [(ngModel)]="user.password" #password="ngModel">
-			<div [hidden]="password.valid || password.pristine" class="alert alert-danger">Password is required</div>
+			<input
+				type="password"
+				class="form-control"
+				name="password"
+				required
+				[(ngModel)]="user.password"
+				#password="ngModel">
+			<div
+				[hidden]="password.valid || password.pristine"
+				class="alert alert-danger"
+				>Password is required</div>
 		</div>
 		<div class="form-group">
-			<button type="submit" class="btn btn-default" [disabled]="!signupForm.form.valid"><i class="fa fa-check" aria-hidden="true"></i> Add User</button>
-			<button type="button" class="btn btn-link" (click)="cancel()"><i class="fa fa-times" aria-hidden="true"></i> Cancel</button>
+			<button
+				type="submit"
+				class="btn btn-default"
+				[disabled]="!signupForm.form.valid"
+				><i class="fa fa-check" aria-hidden="true"></i> Add User</button>
+			<button
+				type="button"
+				class="btn btn-link"
+				(click)="cancel()"
+				><i class="fa fa-times" aria-hidden="true"></i> Cancel</button>
 		</div>
 		<social-login></social-login>
 	</form>

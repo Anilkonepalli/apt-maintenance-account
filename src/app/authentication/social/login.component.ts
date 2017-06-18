@@ -1,9 +1,10 @@
 import { Component }                from '@angular/core';
 import { Router, NavigationExtras } from '@angular/router';
 
+import { Message }                  from '../../shared';
+
 import { Logger }		                from '../../logger/default-log.service';
 import { AuthService }              from '../auth.service';
-import { Message }                  from '../../shared';
 
 
 declare const hello: any;
