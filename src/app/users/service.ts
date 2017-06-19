@@ -59,27 +59,6 @@ export class UserService {
     return this.authzn.get(MODULE.USER.name);
   }
 
-  /*
-    getAuthorization(): Promise<Authorization> {
-      return this.getAuthorizationFor('users');
-    }
-    getAuthorizationFor(moduleName: string): Promise<Authorization> {
-      let url = this.modelUrl + '/mypermissions/' + moduleName;
-      this.logger.info('User.getAuthorizationFor( ' + moduleName + ' )...URL is ' + url);
-      return this.http
-        .get(url, { headers: this.headers })
-        .toPromise()
-        .then(models => {
-          let perms = models.json() as Permission[];
-          if (perms.length < 1) alert('No permissions on ' + moduleName);
-          this.logger.info('Permissions are:...'); this.logger.info(perms);
-          let auth = new Authorization(perms, +this.userId);
-          return auth;
-        })
-        .catch(this.handleError);
-    }
-  */
-
   update(model: User): Promise<User> {
     const url = `${this.modelUrl}/${model.id}`;
     return this.http
