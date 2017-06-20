@@ -1,7 +1,7 @@
 export class Account {
 
   constructor(
-    public id: number = undefined,
+    public id: number = 0,
     public item: string = '',
     public flat_number: string = '',
     public for_month: number = 0,

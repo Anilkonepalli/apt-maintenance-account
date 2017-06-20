@@ -62,6 +62,7 @@ export class AccountDetailComponent implements OnInit {
       .switchMap((params: Params) => this.service.get(+params['id']))
       .subscribe((model: Account) => {
         this.model = model;
+        this.logger.info('MODEL while initializing...'); this.logger.info(model);
         if (model.id) {
           this.editMode = true;
         } else {
@@ -124,8 +125,8 @@ export class AccountDetailComponent implements OnInit {
   }
 
   private add(): void {
-    this.logger.error('Accounts > details component > add()...');
-    this.logger.error(this.model);
+    this.logger.info('Accounts > details component > add()...');
+    this.logger.info(this.model);
     this.model.owner_id = this.identifyOwnerId();
     this.service.create(this.model)
       .then((model) => {
@@ -155,9 +156,10 @@ export class AccountDetailComponent implements OnInit {
   }
 
   private identifyOwnerId(): number {
-    if (!this.model.flat_number) { // no flat number selected
+    if (!this.model.flat_number) { // no flat number selected or it is empty
       return 0; // 0 means admin user
     }
+    this.logger.info('Flat number is: ' + this.model.flat_number);
     if (this.model.name) { // name is available
       return +this.residents
         .find(each => each.first_name === this.model.name).owner_id;
@@ -174,6 +176,7 @@ export class AccountDetailComponent implements OnInit {
 
     if (event === 'NA') {
       this.residents = this.residentsAll;
+      this.model.flat_number = '';
       return;
     }
     let flat = this.flats.find(flat => flat.flat_number === event);
