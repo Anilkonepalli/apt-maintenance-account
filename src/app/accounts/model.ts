@@ -13,7 +13,7 @@ export class Account {
     public category: string = '',
     public recorded_at: string = '',
     public remarks: string = '',
-    public owner_id: number = undefined
+    public owner_id: number = 0   // 0 for admin user
   ) { }
 
   clone() {

@@ -96,15 +96,17 @@ export class AccountDetailComponent implements OnInit {
   }
 
   private getResidentList() {
-    this.logger.info('getResidentList...');
+    this.logger.info('Accounts module > detail component > getResidentList()...');
     this.service.getResidentList()
       .then(residents => {
         this.logger.info('Resident List: ');
         this.logger.info(residents);
         this.residentsAll = _.sortBy(residents, [function(obj: Resident) { return obj.first_name; }]);
       })
-      .catch(err => {
-        this.logger.error('error in retrieving residents in Account Detail Component');
+      .catch(error => {
+        let jerror = error.json();
+        this.logger.error(jerror.data.message);
+        alert(jerror.data.message);
       });
   }
 
@@ -122,23 +124,34 @@ export class AccountDetailComponent implements OnInit {
   }
 
   private add(): void {
-    this.model.owner_id = this.identifyOwnerId();
-    this.logger.error('Adding New Account Details...');
+    this.logger.error('Accounts > details component > add()...');
     this.logger.error(this.model);
+    this.model.owner_id = this.identifyOwnerId();
     this.service.create(this.model)
       .then((model) => {
         this.model = model;
         this.gotoList();
+      })
+      .catch((error: any) => {
+        let jerror = error.json();
+        this.logger.error(jerror.data.message);
+        alert(jerror.data.message);
       });
   }
 
   private update(): void {
+    this.logger.info('Accounts module > detail component...update(..) ');
     let newOwnerId = this.identifyOwnerId();
     if (newOwnerId !== this.model.owner_id) {
       this.model.owner_id = newOwnerId;
     }
     this.service.update(this.model)
-      .then(() => this.goBack());
+      .then(() => this.goBack())
+      .catch((error: any) => {
+        let jerror = error.json();
+        this.logger.error(jerror.data.message);
+        alert(jerror.data.message);
+      });
   }
 
   private identifyOwnerId(): number {
