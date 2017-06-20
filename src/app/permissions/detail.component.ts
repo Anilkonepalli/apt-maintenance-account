@@ -108,13 +108,23 @@ export class PermissionDetailComponent implements OnInit {
       .then((model: Permission) => {
         this.model = model;
         this.gotoList();
+      })
+      .catch((error: any) => {
+        let jerror = error.json();
+        this.logger.error('Permission module > detail component...add()' + jerror.data.message);
+        alert(jerror.data.message);
       });
   }
 
   private update(): void {
     this.model.operations = this.crudString();
     this.service.update(this.model)
-      .then(() => this.goBack());
+      .then(() => this.goBack())
+      .catch((error: any) => {
+        let jerror = error.json();
+        this.logger.error('Permission module > detail component...update()' + jerror.data.message);
+        alert(jerror.data.message);
+      });
   }
 
 }

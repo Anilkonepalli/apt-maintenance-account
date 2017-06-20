@@ -128,6 +128,11 @@ export class RoleDetailComponent implements OnInit {
       .then((model) => {
         this.model = model;
         this.gotoList();
+      })
+      .catch((error: any) => {
+        let jerror = error.json();
+        this.logger.error('Role module > detail component...add()' + jerror.data.message);
+        alert(jerror.data.message);
       });
   }
 
@@ -137,7 +142,12 @@ export class RoleDetailComponent implements OnInit {
       this.model.inherits = selOp;
     }
     this.service.update(this.model)
-      .then(() => this.goBack());
+      .then(() => this.goBack())
+      .catch((error: any) => {
+        let jerror = error.json();
+        this.logger.error('Role module > detail component...update()' + jerror.data.message);
+        alert(jerror.data.message);
+      });
   }
 
   // name of the inherited options are combined into one string but comma separated
