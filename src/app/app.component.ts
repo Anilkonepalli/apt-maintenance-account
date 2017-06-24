@@ -1,5 +1,5 @@
-import { Component, Injector } 	 from '@angular/core';
-import { APP_CONFIG_TOKEN } from './config/app.config';
+import { Component, Injector } 	from '@angular/core';
+import { APP_CONFIG_TOKEN }     from './config/app.config';
 
 @Component({
   selector: 'app',

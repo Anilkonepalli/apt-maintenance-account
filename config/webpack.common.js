@@ -41,16 +41,20 @@ module.exports = {
         loaders: ['to-string-loader', 'css-loader'],
         exclude: [/node_modules/] // add this line so we ignore css coming from node_modules
       },
+      {
+        test: /\.json$/,
+        use: 'json-loader'
+      }
 /*      {
         test: /\.css$/,
         include: helpers.root('src', 'app'),
         loader: 'css-loader'
       }, */
-      {
+/*      {
         test: /\.json$/,
         exclude: helpers.root('node_modules'),
         loader: 'file?name=config/[name].[hash].[ext]'
-      }
+      }  */
     ]
   },
 
