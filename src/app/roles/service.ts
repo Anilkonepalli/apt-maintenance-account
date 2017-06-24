@@ -1,4 +1,4 @@
-import { Injectable } 		        from '@angular/core';
+import { Injectable, Injector }   from '@angular/core';
 import { Http, Headers } 	        from '@angular/http';
 import 'rxjs/add/operator/toPromise';
 
@@ -6,6 +6,7 @@ import { Role } 					        from './model';
 import { Permission } 		        from '../permissions/model';
 import { Authorization } 	        from '../authorization/model';
 
+import { APP_CONFIG_TOKEN }       from '../config/app.config';
 import { MODULE }                 from '../shared/constants';
 
 import { AuthorizationService }   from '../authorization/service';
@@ -14,7 +15,8 @@ import { Logger }                 from '../logger/default-log.service';
 @Injectable()
 export class RoleService {
 
-  private modelUrl = process.env.API_URL + '/api/roles';
+  // private modelUrl = process.env.API_URL + '/api/roles';
+  private modelUrl: string;
   private userModelUrl = process.env.API_URL + '/api/users';
   private userId = localStorage.getItem('userId');
   private id_token = localStorage.getItem('id_token');
@@ -22,12 +24,17 @@ export class RoleService {
     'Content-Type': 'application/json',
     'x-access-token': this.id_token
   });
+  private config: any;
 
   constructor(
     private http: Http,
     private authzn: AuthorizationService,
-    private logger: Logger
-  ) { }
+    private logger: Logger,
+    private injector: Injector
+  ) {
+    this.config = this.injector.get(APP_CONFIG_TOKEN);
+    this.modelUrl = this.config.API_URL + '/api/roles';
+  }
 
   getList(): Promise<Role[]> {
     this.logger.info('roles >> service . getList()...');

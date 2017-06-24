@@ -1,7 +1,8 @@
-import { Injectable } 				          from '@angular/core';
+import { Injectable, Injector }         from '@angular/core';
 import { Observable } 				          from 'rxjs/Observable';
 import { Http, Headers, Response }      from '@angular/http';
 import { JwtHelper } 				            from 'angular2-jwt';
+
 import 'rxjs/add/operator/toPromise';
 import 'rxjs/add/observable/of';
 import 'rxjs/add/operator/do';
@@ -12,6 +13,7 @@ import { Authorization }                from './model';
 
 import { Message, ErrorMessage,
   InfoMessage, WarningMessage }         from '../shared';
+import { APP_CONFIG_TOKEN }             from '../config/app.config';
 import { MODULE }                       from '../shared/constants';
 
 import { Logger }		                    from '../logger/default-log.service';
@@ -19,7 +21,8 @@ import { Logger }		                    from '../logger/default-log.service';
 
 @Injectable()
 export class AuthorizationService {
-  private modelUrl = process.env.API_URL + '/api/users/allpermissions';
+  private modelUrl: string;
+  // private modelUrl = process.env.API_URL + '/api/users/allpermissions';
   private permissions: Permission[];
 
   // available module keys are collected
@@ -44,11 +47,15 @@ export class AuthorizationService {
   private id_token: string;
   private userId: string;
   private headers: Headers;
-
+  private config: any;
 
   constructor(
     private http: Http,
-    private logger: Logger) { }
+    private logger: Logger,
+    private injector: Injector) {
+    this.config = this.injector.get(APP_CONFIG_TOKEN);
+    this.modelUrl = this.config.API_URL + '/api/users/allpermissions';
+  }
 
   /**
    * init is called after user is logged-in and it called in the Authentication Service

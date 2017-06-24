@@ -5,6 +5,11 @@ import { FormsModule }           from '@angular/forms';
 import { NgbModule }             from '@ng-bootstrap/ng-bootstrap';
 
 import { AppComponent }          from './app.component';
+import {
+  IAppConfig,
+  APP_CONFIG_TOKEN,
+  appConfig              }       from './config/app.config';
+
 import { NavbarComponent }       from './navbar.component';
 import { FooterComponent }       from './app-footer.component';
 import { AppRoutingModule }      from './app-routing.module';
@@ -31,7 +36,6 @@ import { AboutComponent }        from './about.component';
 
 import { ConsoleLogService }     from './logger/log.service';
 import { Logger }                from './logger/default-log.service';
-
 
 @NgModule({
   imports: [
@@ -62,7 +66,8 @@ import { Logger }                from './logger/default-log.service';
     NavbarComponent
   ],
   providers: [
-    { provide: Logger, useClass: ConsoleLogService }
+    { provide: Logger, useClass: ConsoleLogService },
+    { provide: APP_CONFIG_TOKEN, useValue: appConfig }
   ],
   bootstrap: [
     AppComponent

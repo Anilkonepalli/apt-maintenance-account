@@ -1,6 +1,6 @@
 {
   "name": "apt-maintenance-account",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "Apartment Maintenance Account Tracking Application",
   "scripts": {
     "start": "webpack-dev-server --inline --progress",

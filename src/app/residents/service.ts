@@ -1,4 +1,4 @@
-import { Injectable } 						from '@angular/core';
+import { Injectable, Injector }	  from '@angular/core';
 import { Http, Headers } 	        from '@angular/http';
 import 'rxjs/add/operator/toPromise';
 
@@ -8,6 +8,7 @@ import { Permission } 						from '../permissions/model';
 import { Authorization } 					from '../authorization/model';
 import { User }                   from '../users/model';
 
+import { APP_CONFIG_TOKEN }       from '../config/app.config';
 import { MODULE }                 from '../shared/constants';
 
 import { UserService } 						from '../users/service';
@@ -16,18 +17,24 @@ import { AuthorizationService }   from '../authorization/service';
 @Injectable()
 export class ResidentService {
 
-  private modelUrl = process.env.API_URL + '/api/residents';
+  // private modelUrl = process.env.API_URL + '/api/residents';
+  private modelUrl: string;
   private id_token = localStorage.getItem('id_token');
   private headers = new Headers({
     'Content-Type': 'application/json',
     'x-access-token': this.id_token
   });
+  private config: any;
 
   constructor(
     private http: Http,
     private userService: UserService,
-    private authzn: AuthorizationService
-  ) { }
+    private authzn: AuthorizationService,
+    private injector: Injector
+  ) {
+    this.config = this.injector.get(APP_CONFIG_TOKEN);
+    this.modelUrl = this.config.API_URL + '/api/residents';
+  }
 
   getList(): Promise<Resident[]> {
     return this.http

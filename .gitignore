@@ -3,3 +3,4 @@
 *.tar.gz
 npm-debug.log
 .env
+/dist/

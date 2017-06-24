@@ -1,4 +1,4 @@
-import { Injectable } 				        from '@angular/core';
+import { Injectable, Injector }       from '@angular/core';
 import { Observable } 				        from 'rxjs/Observable';
 import { Http, Headers, Response }    from '@angular/http';
 import { JwtHelper } 				          from 'angular2-jwt';
@@ -9,6 +9,8 @@ import 'rxjs/add/operator/delay';
 
 import { Message, ErrorMessage,
   InfoMessage, WarningMessage }       from '../shared';
+
+import { APP_CONFIG_TOKEN }           from '../config/app.config';
 
 import { AuthorizationService }       from '../authorization/service';
 import { Logger }		                  from '../logger/default-log.service';
@@ -25,6 +27,7 @@ export class AuthService {
   isSocialLoggedIn: boolean = false;
   JwtHelper = new JwtHelper();
   message: Message;
+  config: any;
 
   // store the URL so we can redirect after logging in
   redirectUrl: string;
@@ -32,11 +35,17 @@ export class AuthService {
   constructor(
     private http: Http,
     private logger: Logger,
-    private authzn: AuthorizationService) { }
+    private authzn: AuthorizationService,
+    private injector: Injector) {
+    this.config = this.injector.get(APP_CONFIG_TOKEN);
+  }
 
   login(event: String, email: String, password: String): Observable<object> {
     let data = JSON.stringify({ email, password });
-    let url = process.env.API_URL + '/api/login';
+    // let url = process.env.API_URL + '/api/login';
+    // console.log('Process.env.API_URL: '); console.log(process.env.API_URL);
+
+    let url = this.config.API_URL + '/api/login';
 
     this.http.post(url, data, { headers: contentHeaders }).subscribe(
       response => {
@@ -77,7 +86,8 @@ export class AuthService {
 
   loginToAppUsing(network: String, socialToken: String): Observable<object> {
     let data = JSON.stringify({ network: network, socialToken: socialToken });
-    let url = process.env.API_URL + '/api/sociallogin';
+    // let url = process.env.API_URL + '/api/sociallogin';
+    let url = this.config.API_URL + '/api/sociallogin';
 
     this.http.post(url, data, { headers: contentHeaders }).subscribe(
       response => {
@@ -114,21 +124,23 @@ export class AuthService {
   }
 
   confirmSignup(code: String) {
-    let url = process.env.API_URL + '/api/signup/' + code;
+    // let url = process.env.API_URL + '/api/signup/' + code;
+    let url = this.config.API_URL + '/api/signup/' + code;
     return this.http.put(url, { headers: contentHeaders });
   }
 
   forgotPassword(event: String, email: String): Observable<any> {
     let data = JSON.stringify({ email });
-    let url = process.env.API_URL + '/api/login/forgot-password';
-
+    // let url = process.env.API_URL + '/api/login/forgot-password';
+    let url = this.config.API_URL + '/api/login/forgot-password';
     return this.http.post(url, data, { headers: contentHeaders });
   }
 
   resetPassword(token: string, password: string): Observable<any> {
     this.logger.info('Token: ' + token + ', Password: ' + password + ' are submitted...');
     let data = JSON.stringify({ token: token, resetpassword: password });
-    let url = process.env.API_URL + '/api/login/reset-password';
+    // let url = process.env.API_URL + '/api/login/reset-password';
+    let url = this.config.API_URL + '/api/login/reset-password';
     return this.http.post(url, data, { headers: contentHeaders });
   }
 }

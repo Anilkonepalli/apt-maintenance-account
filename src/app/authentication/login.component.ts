@@ -38,7 +38,8 @@ export class LoginComponent {
         // Set our navigation extras object
         // that passes on our global query params and fragment
         let navigationExtras: NavigationExtras = {
-          preserveQueryParams: true,
+          //preserveQueryParams: true,
+          queryParamsHandling: "merge", // "merge", "preserve", "default or /"
           preserveFragment: true
         };
 

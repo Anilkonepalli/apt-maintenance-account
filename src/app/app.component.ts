@@ -1,13 +1,16 @@
-import { Component } 	 from '@angular/core';
-
-var app_css = require('./app.component.css');
-var app_css_string = app_css.toString();
+import { Component, Injector } 	 from '@angular/core';
+import { APP_CONFIG_TOKEN } from './config/app.config';
 
 @Component({
   selector: 'app',
   templateUrl: './app.component.html',
-  styles: [app_css_string]
+  styles: ['./app.component.css']
 })
 export class AppComponent {
   brand = 'ABC Apartments';
+  constructor(injector: Injector) {
+    const config = injector.get(APP_CONFIG_TOKEN);
+    console.log('Config Name: ' + config.name);
+    console.log('Config API_URL: ' + config.API_URL);
+  }
 }
