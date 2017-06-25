@@ -17,7 +17,8 @@ export class RoleService {
 
   // private modelUrl = process.env.API_URL + '/api/roles';
   private modelUrl: string;
-  private userModelUrl = process.env.API_URL + '/api/users';
+  // private userModelUrl = process.env.API_URL + '/api/users';
+  private userModelUrl: string;
   private userId = localStorage.getItem('userId');
   private id_token = localStorage.getItem('id_token');
   private headers = new Headers({
@@ -34,6 +35,7 @@ export class RoleService {
   ) {
     this.config = this.injector.get(APP_CONFIG_TOKEN);
     this.modelUrl = this.config.API_URL + '/api/roles';
+    this.userModelUrl = this.config.API_URL + '/api/users';
   }
 
   getList(): Promise<Role[]> {
