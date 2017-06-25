@@ -3,7 +3,7 @@ import { Component, Injector, InjectionToken } 	from '@angular/core';
 
 
 /*******************************************************************************
-    App Config Setup
+    App Config Setup - Only Defined Here
 *******************************************************************************/
 export interface IAppConfig {
   name: string;
@@ -12,7 +12,7 @@ export interface IAppConfig {
 // define a token or key
 export let APP_CONFIG_TOKEN = new InjectionToken<IAppConfig>('app.config');
 
-// define value to the above token or key
+// get value to the above token or key from external file
 export let appConfig: IAppConfig = require('../../config/app.json');
 /******************************************************************************/
 
@@ -23,9 +23,13 @@ export let appConfig: IAppConfig = require('../../config/app.json');
 })
 export class AppComponent {
   brand = 'ABC Apartments';
-  constructor(injector: Injector) {  // Usage of App Config
+  /*****************************************************************************
+      App Config Usage - For Illustration Purpose only - Use it Across Application
+  *****************************************************************************/
+  constructor(injector: Injector) {
     const config = injector.get(APP_CONFIG_TOKEN);
     console.log('Config Name: ' + config.name);
     console.log('Config API_URL: ' + config.API_URL);
   }
+  /****************************************************************************/
 }

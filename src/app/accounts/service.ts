@@ -13,7 +13,7 @@ import { Authorization } 					from '../authorization/model';
 import { Flat }                   from '../flats/model';
 import { Resident }               from '../residents/model';
 
-import { APP_CONFIG_TOKEN }       from '../config/app.config';
+import { APP_CONFIG_TOKEN }       from '../app.component';
 import { MODULE }                 from '../shared/constants';
 
 import { FlatService }            from '../flats/service';

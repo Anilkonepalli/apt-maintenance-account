@@ -8,7 +8,7 @@ import { Permission } 						from '../permissions/model';
 import { Authorization } 					from '../authorization/model';
 import { User }                   from '../users/model';
 
-import { APP_CONFIG_TOKEN }       from '../config/app.config';
+import { APP_CONFIG_TOKEN }       from '../app.component';
 import { MODULE }                 from '../shared/constants';
 
 import { UserService } 						from '../users/service';

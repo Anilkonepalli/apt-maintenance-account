@@ -5,7 +5,7 @@ import 'rxjs/add/operator/toPromise';
 import { Permission } 		        from './model';
 import { Authorization } 	        from '../authorization/model';
 
-import { APP_CONFIG_TOKEN }       from '../config/app.config';
+import { APP_CONFIG_TOKEN }       from '../app.component';
 import { MODULE }                 from '../shared/constants';
 
 import { AuthorizationService }   from '../authorization/service';

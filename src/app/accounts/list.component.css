@@ -104,3 +104,7 @@ caption {
   text-align: right;
   letter-spacing: 1px;
 }
+
+.fa-trash {
+  color: red;
+}

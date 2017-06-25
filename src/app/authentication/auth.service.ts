@@ -10,7 +10,7 @@ import 'rxjs/add/operator/delay';
 import { Message, ErrorMessage,
   InfoMessage, WarningMessage }       from '../shared';
 
-import { APP_CONFIG_TOKEN }           from '../config/app.config';
+import { APP_CONFIG_TOKEN }           from '../app.component';
 
 import { AuthorizationService }       from '../authorization/service';
 import { Logger }		                  from '../logger/default-log.service';
