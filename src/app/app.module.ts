@@ -4,11 +4,10 @@ import { HttpModule }	              from '@angular/http';
 import { FormsModule }              from '@angular/forms';
 import { NgbModule }                from '@ng-bootstrap/ng-bootstrap';
 
-import { AppComponent }             from './app.component';
-import {
+import { AppComponent,
   IAppConfig,
   APP_CONFIG_TOKEN,
-  appConfig              }          from './config/app.config';
+  appConfig }                       from './app.component';
 
 import { NavbarComponent }          from './navbar.component';
 import { FooterComponent }          from './app-footer.component';
