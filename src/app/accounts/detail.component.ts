@@ -17,7 +17,8 @@ import { Logger }		                        from '../logger/default-log.service';
 
 @Component({
   selector: 'account-detail',
-  templateUrl: './detail.component.html'
+  templateUrl: './detail.component.html',
+  styleUrls: ['../../gridforms.css']
 })
 export class AccountDetailComponent implements OnInit {
   @Input() model: Account;
@@ -78,7 +79,9 @@ export class AccountDetailComponent implements OnInit {
         this.recordId = this.editMode ? 'ID - ' + this.model.id : 'ID - 0';
         if (this.model.flat_number) {
           let flat = this.flats.find(flat => flat.flat_number === this.model.flat_number);
-          this.updateResidentListFor(flat);
+          if (flat) { // if flat is found, then update resident list
+            this.updateResidentListFor(flat);
+          }
         }
       });
   }

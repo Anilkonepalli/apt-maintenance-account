@@ -14,7 +14,7 @@ import { Logger }                           from '../logger/default-log.service'
 @Component({
   selector: 'permission-detail',
   templateUrl: './detail.component.html',
-  styleUrls: ['./detail.component.css'],
+  styleUrls: ['./detail.component.css', '../../gridforms.css'],
 })
 export class PermissionDetailComponent implements OnInit {
   @Input() model: Permission;
