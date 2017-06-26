@@ -21,7 +21,7 @@ interface IColumn {
 @Component({
   selector: 'account-list',
   templateUrl: './list.component.html',
-  styleUrls: ['./list.component.css', '../../gridforms.css']
+  styleUrls: ['./list.component.css']
 })
 export class AccountListComponent implements OnInit {
 

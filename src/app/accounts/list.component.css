@@ -88,7 +88,7 @@ tbody tr:nth-child(even) {
 }
 tbody tr {
   /* background-image: url('http://localhost:8080/images/noise.png'); */
-  background-image: url('/images/noise.png');
+  background-image: url('../../assets/noise.png');
   opacity: 0.6;
 }
 table {

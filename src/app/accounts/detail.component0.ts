@@ -54,10 +54,36 @@ export class AccountDetailComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-
-    this.getFlatList();
-    this.getResidentList();
     this.authzn = this.service.getAuthzn();
+    this.getFlatList()
+      .then(this.getResidentList)
+      .then(this.initDetailParams)
+      .catch(this.handleError);
+  }
+
+  private getFlatList() {
+    this.logger.info('getFlatList...');
+    return this.service.getFlatList();
+  }
+
+  private getResidentList(flats) {
+    // first process the response from previous call on flat List
+    this.logger.info('Flat list: ');
+    this.logger.info(flats);
+    this.flats = _.sortBy(flats, [function(obj: Flat) { return obj.flat_number; }]);
+
+    // now, call resident list
+    this.logger.info('Accounts module > detail component > getResidentList()...');
+    return this.service.getResidentList();
+  }
+
+  private initDetailParams(residents) {
+    // first process the response from previous call on resident list
+    this.logger.info('Resident List: ');
+    this.logger.info(residents);
+    this.residentsAll = _.sortBy(residents, [function(obj: Resident) { return obj.first_name; }]);
+
+    // now, initialize other parameters in detail component
     this.route.params
       .switchMap((params: Params) => this.service.get(+params['id']))
       .subscribe((model: Account) => {
@@ -85,32 +111,11 @@ export class AccountDetailComponent implements OnInit {
       });
   }
 
-  private getFlatList() {
-    this.logger.info('getFlatList...');
-    this.service.getFlatList()
-      .then(flats => {
-        this.logger.info('Flat list: ');
-        this.logger.info(flats);
-        this.flats = _.sortBy(flats, [function(obj: Flat) { return obj.flat_number; }]);
-      })
-      .catch(err => {
-        this.logger.error('error in fetching flats inside Account Detail Component');
-      });
-  }
-
-  private getResidentList() {
-    this.logger.info('Accounts module > detail component > getResidentList()...');
-    this.service.getResidentList()
-      .then(residents => {
-        this.logger.info('Resident List: ');
-        this.logger.info(residents);
-        this.residentsAll = _.sortBy(residents, [function(obj: Resident) { return obj.first_name; }]);
-      })
-      .catch(error => {
-        let jerror = error.json();
-        this.logger.error(jerror.data.message);
-        alert(jerror.data.message);
-      });
+  private handleError(err) {
+    // handle any errors that occur in the service chain
+    let jerror = err.json();
+    this.logger.error(jerror.data.message);
+    alert(jerror.data.message);
   }
 
   goBack(): void {
