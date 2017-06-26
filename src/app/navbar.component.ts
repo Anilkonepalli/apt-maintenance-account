@@ -1,4 +1,4 @@
-import { Component }    from '@angular/core';
+import { Component }            from '@angular/core';
 import { Router } 		          from '@angular/router';
 
 import { Logger }		            from './logger/default-log.service';
@@ -12,8 +12,6 @@ import { Permission } 		      from './permissions/model';
   templateUrl: 'navbar.component.html'
 })
 export class NavbarComponent {
-
-  // allPermissions: Permission[] = [];
 
   constructor(
     public router: Router,

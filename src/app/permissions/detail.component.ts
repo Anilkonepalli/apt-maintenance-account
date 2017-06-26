@@ -26,7 +26,9 @@ export class PermissionDetailComponent implements OnInit {
   title: string;
   recordId: string;
   moduleKeys: string[] = Object.keys(MODULE);
-  resources: string[] = this.moduleKeys.map((key: string) => MODULE[key].name); // collect MODULE values
+  resources: string[] = this.moduleKeys.map( // collect MODULE values
+    (key: string) => MODULE[key].name
+  );
 
   // CRUD Operations
   canCreate: boolean;
@@ -66,6 +68,7 @@ export class PermissionDetailComponent implements OnInit {
     this.title += this.modelName + ' Details';
     this.crudSettings(); // apply CRUD data of the model
   }
+
   private addSettings() {
     this.title = 'Add a new ' + this.modelName;
     this.recordId = 'ID - 0';

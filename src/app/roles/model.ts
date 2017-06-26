@@ -1,5 +1,4 @@
 export class Role {
-
   constructor(
     public id: number = undefined,
     public name: string = '',
@@ -7,5 +6,4 @@ export class Role {
     public inherits: string = '',
     public owner_id: number = undefined
   ) { }
-
 }

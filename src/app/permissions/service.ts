@@ -49,29 +49,6 @@ export class PermissionService {
     return this.authzn.get(MODULE.PERMISSION.name);
   }
 
-  /*
-    // Note: Get Authorization thorugh User Service approach is giving zone error
-    // error occur at DependencyInjection of UserService in the constructor method;
-    // so, method, from UserService, needed for authorization is pasted below with few modifications...
-    getAuthorization(): Promise<Authorization> {
-      this.logger.info('get authorization for roles...');
-      let moduleName = 'permissions';
-      let url = this.userModelUrl + '/mypermissions/' + moduleName;
-      this.logger.info('Permission service getAuthorization()...URL is ' + url);
-      return this.http
-        .get(url, { headers: this.headers })
-        .toPromise()
-        .then(models => {
-          let perms = models.json() as Permission[];
-          if (perms.length < 1) alert('No permissions on ' + moduleName);
-          this.logger.info('Permissions are:...'); this.logger.info(perms);
-          let auth = new Authorization(perms, +this.userId);
-          return auth;
-        })
-        .catch(this.handleError);
-    }
-  */
-
   update(model: Permission): Promise<Permission> {
     const url = `${this.modelUrl}/${model.id}`;
     return this.http

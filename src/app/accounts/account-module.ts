@@ -31,8 +31,6 @@ import { ResidentService }           from '../residents/service';
     UserService,
     FlatService,
     ResidentService
-    //ActivatedRoute,
-    //Router
   ]
 })
 export class AccountsModule { }

@@ -33,8 +33,8 @@ export class SignupComponent {
     private router: Router,
     private logger: Logger) { }
 
-  //user = new User();
-  user = SampleUser1;
+  user = new User();
+  // user = SampleUser1;
 
   saveNewUser() {
     let data = JSON.stringify(this.user);

@@ -74,17 +74,20 @@ export class RoleDetailComponent implements OnInit {
     }
 
   }
+
   private editSettings() {
     this.recordId = 'ID - ' + this.model.id;
     this.editAllowed = this.authzn.allowsEdit();
     this.title = this.editAllowed ? 'Edit ' : '';
     this.title += this.modelName + ' Details';
   }
+
   private addSettings() {
     this.title = 'Add a new ' + this.modelName;
     this.recordId = 'ID - 0';
     this.addAllowed = this.authzn.allowsAdd();
   }
+
   private dropdownSettings(): IMultiSelectSettings {
     return {
       enableSearch: false,
@@ -97,6 +100,7 @@ export class RoleDetailComponent implements OnInit {
       fixedTitle: false
     };
   }
+
   private dropdownTexts(): IMultiSelectTexts {
     return {
       checkAll: 'Select All',

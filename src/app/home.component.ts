@@ -1,9 +1,9 @@
 import { Component, Host, OnInit } from '@angular/core';
-import { JwtHelper } 		   from 'angular2-jwt';
+import { JwtHelper } 		           from 'angular2-jwt';
 
-import { AppComponent } 	 from './app.component';
-import { Logger }		   from './logger/default-log.service';
-import { AuthService } from './authentication/auth.service';
+import { AppComponent } 	         from './app.component';
+import { Logger }		               from './logger/default-log.service';
+import { AuthService }             from './authentication/auth.service';
 
 @Component({
   selector: 'home',

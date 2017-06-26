@@ -3,7 +3,6 @@
   color: #fff;
   border-radius: 5px;
   padding: 20px;
-/*  font-size: 150%; */
 }
 .box:nth-child(even) {
   background-color: #ccc;

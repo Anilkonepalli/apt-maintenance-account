@@ -27,9 +27,6 @@ th, td {
 html {
   font-family: 'helveitca neue', helvetica, arial, sans-serif;
 }
-thead th, tfoot th {
-  /* font-family: 'Rock Salt', cursive; */
-}
 th {
   letter-spacing: 2px;
 }
@@ -57,18 +54,13 @@ thead th, tfoot th, tfoot td {
   text-shadow: 1px 1px 1px black; */
 }
 tbody tr:nth-child(odd) {
-  /* background-color: #ff33cc; */
   background-color: rgba(219, 219, 4, 0.3);
 }
 tbody tr:nth-child(even) {
-  /* background-color: #e495e4; */
   background-color: rgba(219, 219, 4, 0.1);
 }
 tbody tr {
   background-image: url('../../assets/noise.png');
-}
-table {
-/*  background-color: #ff33cc; */
 }
 
 /* caption */

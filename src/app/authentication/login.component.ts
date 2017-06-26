@@ -1,10 +1,13 @@
-import { Component } 				from '@angular/core';
-import { NgForm } 					from '@angular/forms';
-import { Router, NavigationExtras, ActivatedRoute } from '@angular/router';
-
-import { AuthService } 				from './auth.service';
+import { Component } 				  from '@angular/core';
+import { NgForm } 					  from '@angular/forms';
+import {
+  Router,
+  NavigationExtras,
+  ActivatedRoute }            from '@angular/router';
 
 import { Message }            from '../shared';
+
+import { AuthService } 				from './auth.service';
 
 @Component({
   selector: 'login',
@@ -38,7 +41,6 @@ export class LoginComponent {
         // Set our navigation extras object
         // that passes on our global query params and fragment
         let navigationExtras: NavigationExtras = {
-          //preserveQueryParams: true,
           queryParamsHandling: "merge", // "merge", "preserve", "default or /"
           preserveFragment: true
         };

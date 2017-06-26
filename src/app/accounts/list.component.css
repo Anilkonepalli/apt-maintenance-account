@@ -46,8 +46,6 @@ html {
   font-family: 'helveitca neue', helvetica, arial, sans-serif;
 }
 thead th, tfoot th {
-  /* font-family: 'Rock Salt', cursive;  */
-  /* color: yellow; */
   color: black;
 }
 th {
@@ -79,20 +77,14 @@ thead th, tfoot th, tfoot td {
   color: #fff;
 }
 tbody tr:nth-child(odd) {
-  /* background-color: #ff33cc; */
   background-color: rgba(0, 95, 107, 0.3);
 }
 tbody tr:nth-child(even) {
-  /* background-color: #e495e4; */
   background-color: rgba(0, 95, 107, 0.1);
 }
 tbody tr {
-  /* background-image: url('http://localhost:8080/images/noise.png'); */
   background-image: url('../../assets/noise.png');
   opacity: 0.6;
-}
-table {
-  /* background-color: #ff33cc; */
 }
 
 /* caption */

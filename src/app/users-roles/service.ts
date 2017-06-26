@@ -31,13 +31,13 @@ export class UserRoleService {
   getAttachedModels(id: number): Promise<Role[]> { // get attached models for the selected item on left side
     return this.lservice.getRolesFor(id);
   }
+
   saveAttachedModels(lId: number, ids: number[]): Promise<number> {
     return this.lservice.updateRolesFor(lId, ids);
   }
-  /*  getAuthorization(): Promise<Authorization> {
-      return this.lservice.getAuthorizationFor('users-roles');
-    } */
+
   getAuthzn(): Authorization {
     return this.authzn.get(MODULE.ACCOUNT.name);
   }
+
 }

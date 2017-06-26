@@ -14,7 +14,8 @@ export class Authorization {
 
   public allowsAdd(): boolean {
     let perm = this.permissions.find(eachPerm => {
-      return eachPerm.operations.indexOf('C') >= 0; // find first permission that satisfies this condition
+      // find first permission that satisfies this condition
+      return eachPerm.operations.indexOf('C') >= 0;
     });
     return perm != undefined;
   }
@@ -47,19 +48,23 @@ export class Authorization {
 
   private allows(action: string, owner: number): boolean {
 
-    let permissions = this.permissions.filter(perm => { // find permissions with granted 'action'
+    let permissions = this.permissions.filter(perm => {
+      // find permissions with granted 'action'
       return perm.operations.indexOf(action) >= 0;
     });
     let pCount = permissions.length;
     if (pCount < 1) return false; // no permissions found
 
-    let permissionsWithCondition = permissions.filter(perm => { // find permissions with condition
+    let permissionsWithCondition = permissions.filter(perm => {
+      // find permissions with condition
       return perm.condition != null && perm.condition != '';
     });
     let pwcCount = permissionsWithCondition.length;
-    if (pwcCount < 1) return true; // permission(s) exist but ha(s|ve) no condition(s) with it
+    // if permission(s) exist but has no condition(s) with it, just return true
+    if (pwcCount < 1) return true;
 
-    if (pCount > pwcCount) return true; // permissions with no condition take higher precedence, hence return true
+    // permissions with no condition take higher precedence, hence return true
+    if (pCount > pwcCount) return true;
 
     // evaluate condition in each of the permissionsWithCondition
     let fn;
@@ -70,7 +75,8 @@ export class Authorization {
         user_id: this.user,
         model: { owner_id: owner }
       };
-      this.logger.info('evaluate condition data...'); this.logger.info('User ID: ' + this.user + ', owner_id: ' + owner);
+      this.logger.info('evaluate condition data...');
+      this.logger.info('User ID: ' + this.user + ', owner_id: ' + owner);
       return fn(data);
     });
     return evaluatedPerms.length > 0;
