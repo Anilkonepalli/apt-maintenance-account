@@ -1,41 +1,32 @@
-import { Injectable, Injector }   from '@angular/core';
+import { Injectable }             from '@angular/core';
 import { Http, Headers } 	        from '@angular/http';
 import 'rxjs/add/operator/toPromise';
 
 import { Permission } 		        from './model';
 import { Authorization } 	        from '../authorization/model';
 
-import { APP_CONFIG_TOKEN }       from '../app.component';
 import { MODULE }                 from '../shared/constants';
 
 import { AuthorizationService }   from '../authorization/service';
 import { Logger }                 from '../logger/default-log.service';
+import { environment }            from '../../environments/environment';
 
 @Injectable()
 export class PermissionService {
 
-  // private modelUrl = process.env.API_URL + '/api/permissions';
-  // private userModelUrl = process.env.API_URL + '/api/users';
-  private modelUrl: string;
-  private userModelUrl: string;
+  private modelUrl = environment.API_URL + '/api/permissions';
+  private userModelUrl = environment.API_URL + '/api/users';
   private userId = localStorage.getItem('userId');
   private id_token = localStorage.getItem('id_token');
   private headers = new Headers({
     'Content-Type': 'application/json',
     'x-access-token': this.id_token
   });
-  private config: any;
 
   constructor(
     private http: Http,
     private authzn: AuthorizationService,
-    private logger: Logger,
-    private injector: Injector) {
-    this.config = this.injector.get(APP_CONFIG_TOKEN);
-    this.modelUrl = this.config.API_URL + '/api/permissions';
-    this.userModelUrl = this.config.API_URL + '/api/users';
-
-  }
+    private logger: Logger) { }
 
   getList(): Promise<Permission[]> {
     return this.http

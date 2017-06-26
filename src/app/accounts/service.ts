@@ -1,4 +1,4 @@
-import { Injectable, Injector }		from '@angular/core';
+import { Injectable }		         from '@angular/core';
 import { Http, Headers, Response, RequestOptions, URLSearchParams }  from '@angular/http';
 import { Observable } 						from 'rxjs/Observable';
 import 'rxjs/add/observable/throw';
@@ -13,7 +13,6 @@ import { Authorization } 					from '../authorization/model';
 import { Flat }                   from '../flats/model';
 import { Resident }               from '../residents/model';
 
-import { APP_CONFIG_TOKEN }       from '../app.component';
 import { MODULE }                 from '../shared/constants';
 
 import { FlatService }            from '../flats/service';
@@ -21,13 +20,12 @@ import { ResidentService }        from '../residents/service';
 import { AuthorizationService }   from '../authorization/service';
 import { Logger }		              from '../logger/default-log.service';
 
+import { environment }            from '../../environments/environment';
+
 @Injectable()
 export class AccountService {
 
-  private config: any;
-  private modelUrl: string;
-  // private modelUrl = process.env.API_URL + '/api/maintenance-accounts';
-  // private modelUrl = this.config.API_URL + '/api/maintenance-accounts';
+  private modelUrl = environment.API_URL + '/api/maintenance-accounts';
   private id_token = localStorage.getItem('id_token');
   private headers = new Headers({
     'Content-Type': 'application/json',
@@ -39,12 +37,8 @@ export class AccountService {
     private flatService: FlatService,
     private residentService: ResidentService,
     private authzn: AuthorizationService,
-    private logger: Logger,
-    private injector: Injector
-  ) {
-    this.config = this.injector.get(APP_CONFIG_TOKEN);
-    this.modelUrl = this.config.API_URL + '/api/maintenance-accounts';
-  }
+    private logger: Logger
+  ) { }
 
   private extractData(res: Response) {
     if (res.status < 200 || res.status >= 300) {
@@ -126,8 +120,7 @@ export class AccountService {
     let params = new URLSearchParams();
     params.set('month', month.toString());
     params.set('year', year.toString());
-    // let url = process.env.API_URL + '/api/maintenance-accounts-periodic';
-    let url = this.config.API_URL + '/api/maintenance-accounts-periodic';
+    let url = environment.API_URL + '/api/maintenance-accounts-periodic';
     return this.http
       .get(url, { headers: this.headers, search: params })
       .toPromise()

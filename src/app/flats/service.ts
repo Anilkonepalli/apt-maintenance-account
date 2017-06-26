@@ -1,4 +1,4 @@
-import { Injectable, Injector }		from '@angular/core';
+import { Injectable }		          from '@angular/core';
 import { Http, Headers } 	        from '@angular/http';
 import 'rxjs/add/operator/toPromise';
 
@@ -6,29 +6,23 @@ import { Flat } 									from './model';
 import { Resident } 							from '../residents/model';
 import { Authorization } 					from '../authorization/model';
 
-import { APP_CONFIG_TOKEN }       from '../app.component';
 import { MODULE }                 from '../shared/constants';
 
 import { AuthorizationService }   from '../authorization/service';
+import { environment }            from '../../environments/environment';
 
 @Injectable()
 export class FlatService {
-  private modelUrl: string;
-  // private modelUrl = process.env.API_URL + '/api/flats';
+  private modelUrl = environment.API_URL + '/api/flats';
   private id_token = localStorage.getItem('id_token');
   private headers = new Headers({
     'Content-Type': 'application/json',
     'x-access-token': this.id_token
   });
-  private config: any;
 
   constructor(
     private http: Http,
-    private authzn: AuthorizationService,
-    private injector: Injector) {
-    this.config = this.injector.get(APP_CONFIG_TOKEN);
-    this.modelUrl = this.config.API_URL + '/api/flats';
-  }
+    private authzn: AuthorizationService) { }
 
   getList(): Promise<Flat[]> {
     return this.http

@@ -1,4 +1,4 @@
-import { Injectable, Injector } from '@angular/core';
+import { Injectable }           from '@angular/core';
 import { Http, Headers } 	      from '@angular/http';
 import { Observable } 		      from 'rxjs/Observable';
 import 'rxjs/add/operator/toPromise';
@@ -6,31 +6,25 @@ import 'rxjs/add/operator/toPromise';
 import { User } 					      from '../users/model';
 import { Authorization }        from '../authorization/model';
 
-import { APP_CONFIG_TOKEN }     from '../app.component';
 import { MODULE }               from '../shared/constants';
 
 import { AuthorizationService } from '../authorization/service';
+import { environment }          from '../../environments/environment';
 
 @Injectable()
 export class UserProfileService {
 
-  // private modelUrl = process.env.API_URL + '/api/userprofile';
-  private modelUrl: string;
+  private modelUrl = environment.API_URL + '/api/userprofile';
   private id_token = localStorage.getItem('id_token');
   private userId = localStorage.getItem('userId');
   private headers = new Headers({
     'Content-Type': 'application/json',
     'x-access-token': this.id_token
   });
-  private config: any;
 
   constructor(
     private http: Http,
-    private authzn: AuthorizationService,
-    private injector: Injector) {
-    this.config = this.injector.get(APP_CONFIG_TOKEN);
-    this.modelUrl = this.config.API_URL + '/api/userprofile';
-  }
+    private authzn: AuthorizationService) { }
 
   getUserFor(id: number): Promise<User> {
     const url = this.modelUrl + '/' + id;

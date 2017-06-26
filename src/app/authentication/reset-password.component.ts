@@ -35,7 +35,7 @@ export class ResetPasswordComponent {
     this.router.navigate(['/login']);
   }
 
-  resetPassword(event: string, pass1: string, pass2: string) {
+  resetPassword(event: string) {
 
     if (this.pass1 !== this.pass2) {
       alert('Passwords do not match');

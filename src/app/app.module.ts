@@ -4,10 +4,7 @@ import { HttpModule }	              from '@angular/http';
 import { FormsModule }              from '@angular/forms';
 import { NgbModule }                from '@ng-bootstrap/ng-bootstrap';
 
-import { AppComponent,
-  IAppConfig,
-  APP_CONFIG_TOKEN,
-  appConfig }                       from './app.component';
+import { AppComponent }             from './app.component';
 
 import { NavbarComponent }          from './navbar.component';
 import { FooterComponent }          from './app-footer.component';
@@ -65,8 +62,7 @@ import { Logger }                   from './logger/default-log.service';
     NavbarComponent
   ],
   providers: [
-    { provide: Logger, useClass: ConsoleLogService },
-    { provide: APP_CONFIG_TOKEN, useValue: appConfig }
+    { provide: Logger, useClass: ConsoleLogService }
   ],
   bootstrap: [
     AppComponent

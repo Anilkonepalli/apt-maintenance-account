@@ -51,21 +51,6 @@ export class UserRoleComponent implements OnInit {
     this.initStreams();
   }
 
-  /*
-    ngOnInit(): void {
-      this.logger.info('Inside users-roles component ngOnInit()...');
-
-      this.service.getAuthorization()
-        .then(auth => {
-          this.logger.info('Inside users-roles component...'); this.logger.info(auth);
-          if (auth.permissions.length < 1) return []; // just return empty array if permission list is empty
-          this.editAllowed = auth.allowsEdit();
-          this.auth = auth;
-          this.initStreams();
-        });
-    }
-  */
-
   initStreams() {
     this.lstream = this.route.params
       .switchMap((params: Params) => {
@@ -147,4 +132,7 @@ export class UserRoleComponent implements OnInit {
     });
   }
 
+  goHome() {
+    this.router.navigate(['/home']);
+  }
 }
