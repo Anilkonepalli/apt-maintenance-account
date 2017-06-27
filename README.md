@@ -7,7 +7,7 @@ A web application is developed with a target on Apartment Maintenance Account Ap
 
 ## Demo  
 For a demo of this application, please click [here](http://eastgate.in/apt-maint-acct-demo).  
-(A guest user id and password are preset and has read-only permissions; just click on Submit button)  
+(Note: For login, a guest user-id and password are pre-filled.  The guest has read-only permissions. On the login screen just click on Submit button)  
 
 ## Installations (for backend installations refer   [here](https://github.com/mohankumaranna/apt-maintenance-account-backend))  
 _Step 1:_  Clone or Download this front-end application into a folder  
