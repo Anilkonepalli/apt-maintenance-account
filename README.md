@@ -15,8 +15,8 @@ _Step 1:_  Clone or Download this front-end application into a folder.
 _Step 2:_  `npm install`.  
 _Step 3:_  Make necessary updates in the environment files, such as API_URL to /my-apt.  
 _Step 4:_  `ng build --prod -bh '/my-apt/'`. It creates 'dist' folder with deployable files.  
-_Step 5:_  Copy this 'dist' folder into your hosting site and rename it to 'my-apt' or whatever name selected in the previous step.  
-_Step 6:_  Go to host url, say http://www.myhost.com/my-apt.  It shows the home page of this application.  
+_Step 5:_  Copy this 'dist' folder into the hosting site and rename it to 'my-apt' or whatever name selected in the previous step.  
+_Step 6:_  On the browser, enter url, say http://www.myhost.com/my-apt.  It shows the home page of this application.  
 
 ## License  
 MIT  
