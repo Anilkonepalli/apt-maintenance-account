@@ -1,6 +1,6 @@
 {
   "name": "apt-maintenance-account",
-  "version": "0.0.1",
+  "version": "0.0.3",
   "description": "Apartment Maintenance Account Tracking Application",
   "license": "MIT",
   "scripts": {
@@ -11,7 +11,25 @@
     "lint": "ng lint",
     "e2e": "ng e2e"
   },
-  "private": true,
+  "private": false,
+  "keywords": [
+    "Apartment",
+    "Maintenance",
+    "Account",
+    "Angular",
+    "Angular2",
+    "Angular4",
+    "RBAC",
+    "Role based access control",
+    "JWT",
+    "JSON Web Token",
+    "NodeJS",
+    "bookshelf",
+    "knex"
+    "base",
+    "foundation"
+  ],
+  "author": "Mohankumar Anna <armk100@gmail.com>",
   "dependencies": {
     "@angular/animations": "^4.0.0",
     "@angular/common": "^4.0.0",
