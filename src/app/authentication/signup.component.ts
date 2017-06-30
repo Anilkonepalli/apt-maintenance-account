@@ -18,10 +18,10 @@ contentHeaders.append('Content-Type', 'application/json');
     .signup {
       width: 40%;
     }
-    .ng-valid[required] {
+    input.ng-valid[required] {
 			border-left: 5px solid #42A948; /* green */
 		}
-		.ng-invalid {
+		input.ng-invalid {
 			border-left: 5px solid #a94442; /* red */
 		}
   `]
