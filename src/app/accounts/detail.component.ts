@@ -21,7 +21,7 @@ import { Logger }		                        from '../logger/default-log.service';
 })
 export class AccountDetailComponent implements OnInit {
   @Input() model: Account;
-  recordDate: string = '2017-04-11';
+  // recordDate: string = '2017-04-11';
   editMode: boolean = true;
   modelName: string = 'Account';
   authzn: Authorization;
