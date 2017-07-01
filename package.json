@@ -1,6 +1,6 @@
 {
   "name": "apt-maintenance-account",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "Apartment Maintenance Account Tracking Application",
   "license": "MIT",
   "scripts": {
