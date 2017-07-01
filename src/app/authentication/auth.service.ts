@@ -7,6 +7,7 @@ import 'rxjs/add/observable/of';
 import 'rxjs/add/operator/do';
 import 'rxjs/add/operator/delay';
 
+import { User } 	                    from '../users/model';
 import { Message, ErrorMessage,
   InfoMessage, WarningMessage }       from '../shared';
 
@@ -34,6 +35,13 @@ export class AuthService {
     private http: Http,
     private logger: Logger,
     private authzn: AuthorizationService) { }
+
+  saveNewUser(user: User) {
+    let data = JSON.stringify(user);
+    let url = environment.API_URL + '/api/users';
+    return this.http
+      .post(url, data, { headers: contentHeaders });
+  }
 
   login(event: String, email: String, password: String): Observable<object> {
     let data = JSON.stringify({ email, password });
@@ -131,4 +139,5 @@ export class AuthService {
     let url = environment.API_URL + '/api/login/reset-password';
     return this.http.post(url, data, { headers: contentHeaders });
   }
+
 }
