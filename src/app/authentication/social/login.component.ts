@@ -1,5 +1,8 @@
-import { Component }              from '@angular/core';
-import { Router, ActivatedRoute, NavigationExtras } from '@angular/router';
+import { Component }                from '@angular/core';
+import {
+  Router,
+  ActivatedRoute,
+  NavigationExtras }                from '@angular/router';
 
 import { Message }                  from '../../shared';
 import { environment }              from '../../../environments/environment';
