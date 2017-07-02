@@ -24,7 +24,6 @@ export class AuthService {
 
   isLoggedIn: boolean = false;
   loggedUser: string = ''; // Logged User Name or email
-  isSocialLoggedIn: boolean = false;
   JwtHelper = new JwtHelper();
   message: Message;
 
@@ -59,7 +58,7 @@ export class AuthService {
         localStorage.setItem('userId', decodedJwt.id);
         this.isLoggedIn = true;
         this.message = new InfoMessage("Success", "log...");
-        this.authzn.init(); // initialize after user logged in
+        this.authzn.init(); // initialize a    this.isSocialLoggedIn = false;fter user logged in
       },
       error => {
         this.isLoggedIn = false;
@@ -73,6 +72,7 @@ export class AuthService {
         }
         this.message = new ErrorMessage("Failure", errMsg);
       });
+    console.log('check point 1');
     return Observable.of(this).delay(1000);
   }
 
@@ -85,6 +85,7 @@ export class AuthService {
   }
 
   loginToAppUsing(network: String, socialToken: String): Observable<object> {
+    this.logger.info('About to Login to App through social network...');
     let data = JSON.stringify({ network: network, socialToken: socialToken });
     let url = environment.API_URL + '/api/sociallogin';
 
@@ -97,12 +98,11 @@ export class AuthService {
         let decodedJwt = res.id_token && this.JwtHelper.decodeToken(res.id_token);
         localStorage.setItem('userId', decodedJwt.id);
         this.isLoggedIn = true;
-        this.isSocialLoggedIn = true;
         this.message = new InfoMessage("Success", "log...");
+        this.authzn.init(); // initialize after user logged in
       },
       error => {
         this.isLoggedIn = false;
-        this.isSocialLoggedIn = false;
 
         // ToDo: Use a remote logging infrastructure later
         let errMsg: string;
@@ -113,13 +113,13 @@ export class AuthService {
         }
         this.message = new ErrorMessage("Failure", errMsg);
       });
+    console.log('check point A');
     return Observable.of(this).delay(1000);
   }
 
   logoutFromApp(): void {  // for socially logged in user
     this.logger.info('Logged Out @auth.service...');
     this.isLoggedIn = false;
-    this.isSocialLoggedIn = false;
   }
 
   confirmSignup(code: String) {

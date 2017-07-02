@@ -11,19 +11,20 @@ import { FooterComponent }          from './app-footer.component';
 import { AppRoutingModule }         from './app-routing.module';
 
 import { SharedModule }             from './shared/shared.module';
-import { LoginRoutingModule }       from './authentication/login-routing.module';
+//import { LoginRoutingModule }       from './authentication/login-routing.module';
+import { AuthenticationModule }     from './authentication/module';
 import { AuthorizationModule }      from './authorization/module';
 
-import { SignupComponent }          from './authentication/signup.component';
-import { SignupInfoComponent }      from './authentication/signup-info.component';
-import { SignupConfirmComponent }   from './authentication/signup-confirm.component';
-import { SignupRoutingModule }      from './authentication/signup-routing.module';
+//import { SignupComponent }          from './authentication/signup.component';
+//import { SignupInfoComponent }      from './authentication/signup-info.component';
+//import { SignupConfirmComponent }   from './authentication/signup-confirm.component';
+//import { SignupRoutingModule }      from './authentication/signup-routing.module';
 
-import { LoginComponent }           from './authentication/login.component';
-import { SocialLoginComponent }     from './authentication/social/login.component';
-import { ForgotPasswordComponent }  from './authentication/forgot-password.component';
-import { ForgotInfoComponent }      from './authentication/forgot-info.component';
-import { ResetPasswordComponent }   from './authentication/reset-password.component';
+//import { LoginComponent }           from './authentication/login.component';
+//import { SocialLoginComponent }     from './authentication/social/login.component';
+//import { ForgotPasswordComponent }  from './authentication/forgot-password.component';
+//import { ForgotInfoComponent }      from './authentication/forgot-info.component';
+//import { ResetPasswordComponent }   from './authentication/reset-password.component';
 
 import { PageNotFoundComponent }    from './not-found.component';
 
@@ -39,25 +40,26 @@ import { Logger }                   from './logger/default-log.service';
     HttpModule,
     FormsModule,
     AppRoutingModule,
-    LoginRoutingModule,
-    SignupRoutingModule,
+    //LoginRoutingModule,
+    //SignupRoutingModule,
     SharedModule,
     NgbModule.forRoot(),
+    AuthenticationModule,
     AuthorizationModule
   ],
   declarations: [
     AppComponent,
-    LoginComponent,
-    SignupComponent,
-    SignupInfoComponent,
-    SignupConfirmComponent,
-    ForgotPasswordComponent,
-    ForgotInfoComponent,
-    ResetPasswordComponent,
+    //LoginComponent,
+    //SignupComponent,
+    //SignupInfoComponent,
+    //SignupConfirmComponent,
+    //ForgotPasswordComponent,
+    //ForgotInfoComponent,
+    //ResetPasswordComponent,
     HomeComponent,
     AboutComponent,
     PageNotFoundComponent,
-    SocialLoginComponent,
+    //SocialLoginComponent,
     FooterComponent,
     NavbarComponent
   ],

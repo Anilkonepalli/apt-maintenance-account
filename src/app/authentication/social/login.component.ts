@@ -1,7 +1,8 @@
-import { Component }                from '@angular/core';
-import { Router, NavigationExtras } from '@angular/router';
+import { Component }              from '@angular/core';
+import { Router, ActivatedRoute, NavigationExtras } from '@angular/router';
 
 import { Message }                  from '../../shared';
+import { environment }              from '../../../environments/environment';
 
 import { Logger }		                from '../../logger/default-log.service';
 import { AuthService }              from '../auth.service';
@@ -20,19 +21,28 @@ export class SocialLoginComponent {
   serverToken: String;
   message: Message = new Message();
 
-  constructor(public authService: AuthService, public router: Router, private logger: Logger) {
+  constructor(
+    public authService: AuthService,
+    public router: Router,
+    public route: ActivatedRoute,
+    private logger: Logger) {
     this.logger.info('constructor() called @SocialLoginComponent...');
-    hello.init({
-      facebook: '988055257994411',
-      google: '826489296470-t0a9so1jr2cmj0o8au92l6idpnscvcg7.apps.googleusercontent.com'
-    }, { scope: 'email' });
+    hello.init(
+      {
+        facebook: environment.facebook_id,
+        google: environment.google_id
+      },
+      {
+        scope: 'email'
+      }
+    );
   }
 
   login(network: string) {
-    this.logger.info('Social Login network: ' + network);
+    this.logger.info('Login through Social Network: ' + network);
     hello(network).login().then( // social login here
       () => { // social login is success
-        this.logger.info('You are signed into ' + network);
+        this.logger.info('You have signed in social network: ' + network);
         let authResponse = hello(network).getAuthResponse();
         this.loginToAppUsing(network, authResponse); // now login to Application using social response
       },
@@ -45,26 +55,30 @@ export class SocialLoginComponent {
   loginToAppUsing(network: String, authResponse: any) {
     // Save the social token
     let socialToken = authResponse.access_token;
-
+    this.logger.info('call authService...'); this.logger.info(this.authService);
     // Auth with our app server using the social token
     this.authService.loginToAppUsing(network, socialToken).subscribe(() => {
-
-      if (this.authService.isSocialLoggedIn) {
-
+      console.log('check point B');
+      if (this.authService.isLoggedIn) {
+        console.log('check point C');
         // Get the redirect URL from our auth service
         // If no redirect is set, use the default
+        console.log('Redirect Url: '); console.log(this.authService.redirectUrl);
         let redirect = this.authService.redirectUrl ? this.authService.redirectUrl : '/home';
-
+        console.log('Redirect is: ' + redirect);
         // Set our navigation extras object
         // that passes on our global query params and fragment
         let navigationExtras: NavigationExtras = {
-          preserveQueryParams: true,
+          // preserveQueryParams: true,
+          queryParamsHandling: "merge", // "merge", "preserve", "default or /"
           preserveFragment: true
         };
-        this.logger.info('Redirecting to: ...' + redirect);
+        console.log('Auth Service: '); console.log(this.authService);
         // Redirect the user
         this.router.navigate([redirect], navigationExtras);
       } else { // login failed
+        console.log('check point D');
+        this.logger.error('Social Login Failed!');
         this.message = this.authService.message;
       }
     });
