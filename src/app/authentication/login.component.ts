@@ -25,8 +25,6 @@ declare const hello: any;
 })
 export class LoginComponent {
   email: String;
-  socialToken: String;
-  serverToken: String;
   message: Message = new Message();
 
   constructor(
@@ -34,17 +32,7 @@ export class LoginComponent {
     public route: ActivatedRoute,
     public router: Router,
     public logger: Logger
-  ) {
-    hello.init(
-      {
-        facebook: environment.facebook_id,
-        google: environment.google_id
-      },
-      {
-        scope: 'email'
-      }
-    );
-  }
+  ) { }
 
   login(event: String, email: String, password: String) {
     let auth = this.authService;
@@ -83,27 +71,5 @@ export class LoginComponent {
   forgot() {
     this.router.navigate(['forgot'], { relativeTo: this.route });
   }
-
-  // SOCIAL LOGINS
-  /*
-    socialLogin(network: string) {
-      hello(network).login().then(
-        () => {
-          let authResponse = hello(network).getAuthResponse();
-          let socialToken = authResponse.access_token;
-          let auth = this.authService;
-          console.log('Auth Service before social login: '); console.log(this.authService);
-          auth.loginToAppUsing(network, socialToken).subscribe(() => {
-            console.log('Auth Service after social login: '); console.log(this.authService);
-            this.redirect(auth);
-          });
-        },
-        (err: any) => { // failure
-          this.logger.error(network + ' sign in error: ' + err.error.message);
-        }
-      );
-    }
-  */
-
 
 }

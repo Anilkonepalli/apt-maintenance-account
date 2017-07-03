@@ -1,11 +1,12 @@
 import { Component }            from '@angular/core';
 import { Router } 		          from '@angular/router';
 
+import { Authorization }				from './authorization/model';
+import { Permission } 		      from './permissions/model';
+
 import { Logger }		            from './logger/default-log.service';
 import { AuthService }          from './authentication/auth.service';
-import { Authorization }				from './authorization/model';
 import { AuthorizationService } from './authorization/service';
-import { Permission } 		      from './permissions/model';
 
 @Component({
   selector: 'nav-bar',
@@ -17,7 +18,8 @@ export class NavbarComponent {
     public router: Router,
     public logger: Logger,
     public authService: AuthService,
-    private authzn: AuthorizationService) { }
+    private authzn: AuthorizationService
+  ) { }
 
   logout() {
     // this.logger.info('Logging out of application @app.component...');

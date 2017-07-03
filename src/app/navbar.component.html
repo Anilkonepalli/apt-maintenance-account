@@ -54,7 +54,7 @@
 
 <!-- Menu after logging in -->
 <nav
-	*ngIf="authService.isLoggedIn" 
+	*ngIf="authService.isLoggedIn"
 	class="navbar navbar-toggleable-md navbar-light bg-faded">
 	<button
 		class="navbar-toggler navbar-toggler-right"
@@ -186,3 +186,9 @@
 			</ul>
 	</div>
 </nav>
+<div *ngIf="!authService.isLoggedIn">
+	Application is NOT Authenticated
+</div>
+<div *ngIf="authService.isLoggedIn">
+	Application is Authenticated
+</div>

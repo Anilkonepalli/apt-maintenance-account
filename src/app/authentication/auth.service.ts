@@ -28,7 +28,7 @@ export class AuthService {
   message: Message;
 
   // store the URL so we can redirect after logging in
-  redirectUrl: string;
+  redirectUrl: string = './about';
 
   constructor(
     private http: Http,
@@ -72,7 +72,6 @@ export class AuthService {
         }
         this.message = new ErrorMessage("Failure", errMsg);
       });
-    console.log('check point 1');
     return Observable.of(this).delay(1000);
   }
 
@@ -86,9 +85,8 @@ export class AuthService {
 
   loginToAppUsing(network: String, socialToken: String): Observable<object> {
     this.logger.info('About to Login to App through social network...');
-    let data = JSON.stringify({ network: network, socialToken: socialToken });
+    let data = JSON.stringify({ network, socialToken });
     let url = environment.API_URL + '/api/sociallogin';
-
     this.http.post(url, data, { headers: contentHeaders }).subscribe(
       response => {
         this.logger.info('Logged In successfully...');
@@ -98,12 +96,11 @@ export class AuthService {
         let decodedJwt = res.id_token && this.JwtHelper.decodeToken(res.id_token);
         localStorage.setItem('userId', decodedJwt.id);
         this.isLoggedIn = true;
-        this.message = new InfoMessage("Success", "log...");
-        this.authzn.init(); // initialize after user logged in
+        //this.message = new InfoMessage("Success", "log...");
+        //this.authzn.init(); // initialize after user logged in
       },
       error => {
         this.isLoggedIn = false;
-
         // ToDo: Use a remote logging infrastructure later
         let errMsg: string;
         if (error instanceof Response) {
@@ -113,7 +110,6 @@ export class AuthService {
         }
         this.message = new ErrorMessage("Failure", errMsg);
       });
-    console.log('check point A');
     return Observable.of(this).delay(1000);
   }
 

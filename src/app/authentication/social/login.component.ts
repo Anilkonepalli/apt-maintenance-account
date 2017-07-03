@@ -47,7 +47,10 @@ export class SocialLoginComponent {
       () => { // social login is success
         this.logger.info('You have signed in social network: ' + network);
         let authResponse = hello(network).getAuthResponse();
-        this.loginToAppUsing(network, authResponse); // now login to Application using social response
+        let socialToken = authResponse.access_token;
+        this.authService.loginToAppUsing(network, socialToken).subscribe(() => {
+          this.redirect(this.authService);
+        });
       },
       (err: any) => { // failure
         this.logger.error(network + ' sign in error: ' + err.error.message);
@@ -55,36 +58,23 @@ export class SocialLoginComponent {
     );
   }
 
-  loginToAppUsing(network: String, authResponse: any) {
-    // Save the social token
-    let socialToken = authResponse.access_token;
-    this.logger.info('call authService...'); this.logger.info(this.authService);
-    // Auth with our app server using the social token
-    this.authService.loginToAppUsing(network, socialToken).subscribe(() => {
-      console.log('check point B');
-      if (this.authService.isLoggedIn) {
-        console.log('check point C');
-        // Get the redirect URL from our auth service
-        // If no redirect is set, use the default
-        console.log('Redirect Url: '); console.log(this.authService.redirectUrl);
-        let redirect = this.authService.redirectUrl ? this.authService.redirectUrl : '/home';
-        console.log('Redirect is: ' + redirect);
-        // Set our navigation extras object
-        // that passes on our global query params and fragment
-        let navigationExtras: NavigationExtras = {
-          // preserveQueryParams: true,
-          queryParamsHandling: "merge", // "merge", "preserve", "default or /"
-          preserveFragment: true
-        };
-        console.log('Auth Service: '); console.log(this.authService);
-        // Redirect the user
-        this.router.navigate([redirect], navigationExtras);
-      } else { // login failed
-        console.log('check point D');
-        this.logger.error('Social Login Failed!');
-        this.message = this.authService.message;
-      }
-    });
+  redirect(auth: AuthService) {
+    if (auth.isLoggedIn) {
+      // Get the redirect URL from our auth service
+      // If no redirect is set, use the default
+      let redirect = auth.redirectUrl ? auth.redirectUrl : '/home';
+
+      // Set our navigation extras object
+      // that passes on our global query params and fragment
+      let navigationExtras: NavigationExtras = {
+        queryParamsHandling: "merge", // "merge", "preserve", "default or /"
+        preserveFragment: true
+      };
+      // Redirect the user
+      this.router.navigate([redirect], navigationExtras);
+    } else { // login failed
+      this.message = auth.message;
+    }
   }
 
 }
