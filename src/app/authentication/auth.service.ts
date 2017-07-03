@@ -28,7 +28,7 @@ export class AuthService {
   message: Message;
 
   // store the URL so we can redirect after logging in
-  redirectUrl: string = './about';
+  redirectUrl: string;
 
   constructor(
     private http: Http,
@@ -79,8 +79,6 @@ export class AuthService {
     this.logger.info('Logged Out @auth.service...');
     this.isLoggedIn = false;
     localStorage.removeItem('id_token'); // whenever isLoggedIn is set to false, remove id_token too!
-    // TODO: To fix menu related problem, reset jwt to an empty string in
-    // app component using parent child relationship
   }
 
   loginToAppUsing(network: String, socialToken: String): Observable<object> {
@@ -89,15 +87,15 @@ export class AuthService {
     let url = environment.API_URL + '/api/sociallogin';
     this.http.post(url, data, { headers: contentHeaders }).subscribe(
       response => {
-        this.logger.info('Logged In successfully...');
+        this.logger.info('Social Login success...');
         let res = response.json();
         this.logger.info('Response ...'); this.logger.info(res);
         localStorage.setItem('id_token', res.id_token);
         let decodedJwt = res.id_token && this.JwtHelper.decodeToken(res.id_token);
         localStorage.setItem('userId', decodedJwt.id);
         this.isLoggedIn = true;
-        //this.message = new InfoMessage("Success", "log...");
-        //this.authzn.init(); // initialize after user logged in
+        this.message = new InfoMessage("Success", "log...");
+        this.authzn.init(); // initialize after user logged in
       },
       error => {
         this.isLoggedIn = false;
