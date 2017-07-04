@@ -19,6 +19,7 @@ export class UserProfileComponent implements OnInit {
   private userId: string = localStorage.getItem('userId');
   private authzn: Authorization;
   public allowsEdit: boolean = false;
+  public isSocial: boolean = false; // is user logged into app through social network
 
   constructor(
     private service: UserProfileService,
@@ -32,6 +33,7 @@ export class UserProfileComponent implements OnInit {
     this.service.getUserFor(+this.userId)
       .then((model: User) => {
         this.model = model;
+        this.isSocial = model.social_network_id !== null;
         this.authzn = this.service.getAuthzn();
         this.allowsEdit = this.authzn.allowsEdit(+this.userId);
       });

@@ -61,10 +61,13 @@
 
 			<div data-row-span="2">
 				<div data-field-span="1">
-					<label for="eMail">email</label>
+					<label
+						for="eMail"
+						>email <i *ngIf="isSocial" class="text-warning">(Read-only)</i></label>
 					<input
 						type="email"
 						id="eMail"
+						[readonly]="isSocial"
 						required
 						[(ngModel)]="model.email"
 						name="eMail"
