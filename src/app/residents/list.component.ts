@@ -152,6 +152,7 @@ export class ResidentListComponent implements OnInit {
   }
 
   public userName(ownerId: number) {
+    // console.log('OwnerId: ' + ownerId);
     return ownerId ? this.users.find((each: User) => each.id == ownerId).name : 'admin';
   }
 
