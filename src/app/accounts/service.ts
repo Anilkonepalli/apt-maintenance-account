@@ -66,6 +66,11 @@ export class AccountService {
       .catch(this.handleError)
   }
 
+  getSummaryList(): Observable<any> {
+    let url = this.modelUrl + '/summary/list';
+    return this.http.get(url, { headers: this.headers });
+  }
+
   get(id: number): Promise<Account> {
     const url = this.modelUrl + '/' + id;
     return this.http
@@ -75,8 +80,10 @@ export class AccountService {
       .catch(this.handleError);
   }
 
-  getAuthzn(): Authorization {
-    return this.authzn.get(MODULE.ACCOUNT.name);
+  getAuthzn(res: string = ''): Authorization {
+    let resource = res ? res : 'ACCOUNT';
+    return this.authzn.get(MODULE[resource].name);
+    //return this.authzn.get(MODULE.ACCOUNT.name);
   }
 
   update(model: Account): Promise<Account> {

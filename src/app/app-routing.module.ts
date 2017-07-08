@@ -75,6 +75,11 @@ const appRoutes: Routes = [
     canActivate: [AuthGuardService]
   },
   {
+    path: 'account-summary',
+    loadChildren: './accounts/summary-module#SummaryModule',
+    canActivate: [AuthGuardService]
+  },
+  {
     path: 'flats',
     loadChildren: './flats/module#FlatsModule',
     canActivate: [AuthGuardService]

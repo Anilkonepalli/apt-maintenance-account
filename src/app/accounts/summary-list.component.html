@@ -1,0 +1,30 @@
+<h2>Account List</h2>
+
+<table class="table table-responsive">
+	<thead>
+		<tr>
+			<th title="Transaction Year">Year-Month</th>
+			<th title="Collected Amount">Collections</th>
+			<th title="Expenditure Amount">Expenses</th>
+			<th title="Difference between Collections and Expenditure">Difference</th>
+			<th title="Cumulative Difference">Cumulative Difference</th>
+		</tr>
+	</thead>
+	<tbody *ngIf="viewAllowed">
+		<tr *ngFor="let model of models">
+			<td>{{ model.yr_mo }}</td>
+			<td>{{ model.cr }}</td>
+			<td>{{ model.dr }}</td>
+			<td>{{ model.diff }}</td>
+			<td>{{ model.cumulativeDiff }}</td>
+		</tr>
+	</tbody>
+
+	<tfoot>
+		<tr>
+			<th scope="row" colspan="4">Total Records</th>
+			<td colspan="1">{{totalRecords}}</td>
+		</tr>
+	</tfoot>
+
+</table>
