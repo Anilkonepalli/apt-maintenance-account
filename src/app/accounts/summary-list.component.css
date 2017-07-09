@@ -4,7 +4,7 @@ table {
   table-layout: fixed;
   width: 100%;
   border-collapse: collapse;
-  border: 3px solid rgba(0, 95, 107, 0.6);
+  border: 3px solid rgba(51, 204, 51, 0.6);
 }
 
 thead th:nth-child(1) {
@@ -59,14 +59,14 @@ thead th, tfoot th, tfoot td {
   /* border: 1px solid #f2f2f2;
   text-shadow: 1px 1px 1px #f2f2f2;
   background-color: #d7d7d7; */
-  background-color: rgba(0, 95, 107, 0.99);
+  background-color: rgba(51, 204, 51, 0.99);
   color: #fff;
 }
 tbody tr:nth-child(odd) {
-  background-color: rgba(0, 95, 107, 0.3);
+  background-color: rgba(51, 204, 51, 0.3);
 }
 tbody tr:nth-child(even) {
-  background-color: rgba(0, 95, 107, 0.1);
+  background-color: rgba(51, 204, 51, 0.1);
 }
 tbody tr {
   background-image: url('../../assets/noise.png');
