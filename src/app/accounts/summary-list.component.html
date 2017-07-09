@@ -3,7 +3,7 @@
 <table class="table table-responsive">
 	<thead>
 		<tr>
-			<th title="Transaction Year">Year-Month</th>
+			<th title="Transaction Year" [class]="yrMoClass" (click)="changeSorting()">Year-Month</th>
 			<th title="Collected Amount">Collections</th>
 			<th title="Expenditure Amount">Expenses</th>
 			<th title="Difference between Collections and Expenditure">Difference</th>

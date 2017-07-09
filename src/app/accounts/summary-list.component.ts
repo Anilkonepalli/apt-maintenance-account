@@ -2,6 +2,7 @@ import { Component, OnInit }							from '@angular/core';
 import { Router, ActivatedRoute, Params }	from '@angular/router';
 import { Observable }											from 'rxjs/Observable';
 import 'rxjs/add/operator/switchMap';
+import * as _                             from 'lodash';
 
 import { Authorization }									from '../authorization/model';
 
@@ -27,6 +28,8 @@ export class SummaryListComponent implements OnInit {
   authzn: Authorization;
   totalRecords: number = 0;
   viewAllowed: boolean = false;
+  descending: boolean = false;
+  yrMoClass: string;
 
   constructor(
     private service: AccountService,
@@ -37,7 +40,9 @@ export class SummaryListComponent implements OnInit {
   ngOnInit(): void {
     this.getList();
   }
-
+  private setYrMoClass() {
+    this.yrMoClass = "sortable sort-" + this.descending;
+  }
   public getList() {
     this.authzn = this.service.getAuthzn('ACCOUNT_SUMMARY');
     this.viewAllowed = this.authzn.allowsView();
@@ -51,7 +56,16 @@ export class SummaryListComponent implements OnInit {
       this.models = response.json();
       console.log('Retrieved Summary List:....'); console.log(this.models);
       this.totalRecords = this.models.length;
+      this.changeSorting(); // called here, so that when summary screen
+      // opens up, list is shown in descending order
     });
   }
 
+  public changeSorting() {
+    this.descending = !this.descending;
+    this.setYrMoClass(); // as descending is modified, set yrMoClass again
+    let yr_mo_order = this.descending ? 'desc' : 'asc';
+    this.models = _.orderBy(this.models, ['yr_mo'], [yr_mo_order]);
+
+  }
 }
