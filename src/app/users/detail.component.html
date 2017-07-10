@@ -96,6 +96,60 @@
 				</div>
 			</div>
 
+			<div data-row-span="2">
+				<div data-field-span="1">
+					<label for="oEmails">Other email-ids</label>
+					<textarea
+						rows="2"
+						[(ngModel)]="otherEmails"
+						name="oEmails"
+						placeholder="example1@email.id, example2@email.id"
+						title="Other eMails of the user (separated by comma or in new line)"></textarea>
+				</div>
+				<div data-field-span="1">
+					<label for="cells">Mobile/Landline Numbers</label>
+					<textarea
+						rows="2"
+						[(ngModel)]="cellNumbers"
+						name="cells"
+						placeholder="eg: 9797097970, 044-27273030"
+						title="Mobile or Landline phone numbers (separated by comma or in newline)"></textarea>
+				</div>
+			</div>
+
+			<div data-row-span="2">
+				<div data-field-span="1">
+					<label for="twowheelers">Regn No. of 2-wheelers parked</label>
+					<textarea
+						rows="2"
+						[(ngModel)]="twoWheelers"
+						name="twowheelers"
+						placeholder="eg: TN 11 CY 1234, TN 01 AZ 9876"
+						title="Two wheeler registration numbers (separated by comma or in newline)"></textarea>
+				</div>
+				<div data-field-span="1">
+					<label for="fourwheelers">Regn No. of 4-Wheeler parked</label>
+					<textarea
+						rows="2"
+						[(ngModel)]="fourWheelers"
+						name="fourwheelers"
+						placeholder="eg: TN 22 A 4567, TN 02 BD 789"
+						title="Four wheeler registration numbers (separated by comma or in new line)"></textarea>
+				</div>
+			</div>
+
+			<div data-row-span="1">
+				<div data-field-span="1">
+					<label for="emergency">Emergency Contact Particulars</label>
+					<textarea
+						rows="2"
+						[(ngModel)]="emergencyContact"
+						name="emergency"
+						placeholder="In case of emergency, whom can be approached; his/her name, address, or phone numbers here"
+						title="Contact phone numbers in case of emergencies"></textarea>
+				</div>
+			</div>
+
 		</fieldset>
 
 		<br />
