@@ -44,6 +44,7 @@ export class UserDetailComponent implements OnInit {
       .switchMap((params: Params) => this.service.getUserFor(+params['id']))
       .subscribe((model: User) => {
         this.model = model;
+        this.logger.info('user model...'); this.logger.info(model);
         if (model.id) this.editMode = true;
         else this.editMode = false;
         this.userId = this.editMode ? 'ID - ' + this.model.id : 'ID - 0';
@@ -51,9 +52,17 @@ export class UserDetailComponent implements OnInit {
         let canEdit = this.authzn.allowsEdit(model.id) && this.editMode;
         let canAdd = this.authzn.allowsAdd() && !this.editMode;
         this.hideSave = !(canEdit || canAdd);
+        this.infos = this.infoObjFrom(model.infos);
       });
   }
-
+  private infoObjFrom(infos: Array<any>) {
+    let result = {};
+    infos.forEach(each => {
+      result[each.key] = each.value;
+    });
+    this.logger.info('infos now...'); this.logger.info(this.infos);
+    return result;
+  }
   goBack(): void {
     this.location.back();
   }
@@ -92,6 +101,24 @@ export class UserDetailComponent implements OnInit {
     });
     console.log('infos...'); console.log(result);
     return result;
+  }
+
+  private getModifiedInfos(): Array<any> {
+    let result = [];
+    let value;
+    let infosDb = this.infoObjFrom(this.model.infos);
+    let keysDb = Object.keys(infosDb);
+    let infosUi = this.infos;
+    let keysUi = Object.keys(infosUi);
+    keysUi.forEach(key => {
+      if (keysDb.includes(key)) { // key stored in earlier save
+        if (infosUi[key] !== infosDb[key]) // if modified
+          result.push({ key: key, value: infosUi[key] });
+      } else {
+        if (infosUi[key]) // if not null
+          result.push({ key: key, value: infosUi[key] });
+      }
+    });
   }
 
   private update(): void {
