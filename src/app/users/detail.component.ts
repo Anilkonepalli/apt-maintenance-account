@@ -22,6 +22,14 @@ export class UserDetailComponent implements OnInit {
   title: string = this.editMode ? this.modelName + ' details' : 'Add ' + this.modelName;
   userId: string;
   authzn: Authorization;
+  infos: any = {
+    flatNumber: null,
+    otherEmails: null,
+    cellNumbers: null,
+    twoWheelers: null,
+    fourWheelers: null,
+    emergencyContact: null
+  };
 
   constructor(
     private service: UserService,
@@ -61,16 +69,39 @@ export class UserDetailComponent implements OnInit {
 
   private add(): void {
     this.logger.info('Adding new user...');
+    let infos = this.getInfos();
+    if (infos.length > 0) this.model.infos = infos;
     this.service.create(this.model)
       .then((model) => {
         this.model = model;
         this.gotoList();
+      })
+      .catch((error: any) => {
+        let jerror = error.json();
+        this.logger.error(jerror.data.message);
+        alert(jerror.data.message);
       });
+  }
+
+  private getInfos(): Array<any> {
+    let result = [];
+    let value;
+    Object.keys(this.infos).forEach(key => {
+      value = this.infos[key];
+      if (value) result.push({ key: key, value: value });
+    });
+    console.log('infos...'); console.log(result);
+    return result;
   }
 
   private update(): void {
     this.service.update(this.model)
-      .then(() => this.goBack());
+      .then(() => this.goBack())
+      .catch((error: any) => {
+        let jerror = error.json();
+        this.logger.error(jerror.data.message);
+        alert(jerror.data.message);
+      });
   }
 
 }

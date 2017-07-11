@@ -6,7 +6,8 @@ export class User {
     public last_name: string = '',
     public email: string = '',
     public password: string = '',
-    public social_network_id: string = ''
+    public social_network_id: string = '',
+    public infos: Array<any> = []
   ) { }
 };
 
