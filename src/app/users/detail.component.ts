@@ -28,7 +28,8 @@ export class UserDetailComponent implements OnInit {
     cellNumbers: null,
     twoWheelers: null,
     fourWheelers: null,
-    emergencyContact: null
+    emergencyContact: null,
+    residentType: null
   };
 
   constructor(
@@ -45,14 +46,17 @@ export class UserDetailComponent implements OnInit {
       .subscribe((model: User) => {
         this.model = model;
         this.logger.info('user model...'); this.logger.info(model);
-        if (model.id) this.editMode = true;
-        else this.editMode = false;
+        if (model.id) {
+          this.editMode = true;
+          this.infos = this.infoObjFrom(model.infos);
+        } else {
+          this.editMode = false;
+        }
         this.userId = this.editMode ? 'ID - ' + this.model.id : 'ID - 0';
         this.authzn = this.service.getAuthzn();
         let canEdit = this.authzn.allowsEdit(model.id) && this.editMode;
         let canAdd = this.authzn.allowsAdd() && !this.editMode;
         this.hideSave = !(canEdit || canAdd);
-        this.infos = this.infoObjFrom(model.infos);
       });
   }
   private infoObjFrom(infos: Array<any>) {
@@ -92,6 +96,10 @@ export class UserDetailComponent implements OnInit {
       });
   }
 
+  /**
+   * Converts Info object into a key-value array
+   * @type {Array}
+   */
   private getInfos(): Array<any> {
     let result = [];
     let value;
@@ -103,9 +111,12 @@ export class UserDetailComponent implements OnInit {
     return result;
   }
 
+  /**
+   * Converts Info object into a key-value array
+   * @type {Array}
+   */
   private getModifiedInfos(): Array<any> {
     let result = [];
-    let value;
     let infosDb = this.infoObjFrom(this.model.infos);
     let keysDb = Object.keys(infosDb);
     let infosUi = this.infos;
@@ -119,9 +130,15 @@ export class UserDetailComponent implements OnInit {
           result.push({ key: key, value: infosUi[key] });
       }
     });
+    console.log('modified infos...'); console.log(result);
+    return result;
   }
 
   private update(): void {
+    this.logger.info('Updating user...');
+    let infos = this.getModifiedInfos();
+    if (infos.length > 0) this.model.infos = infos;
+    console.log('model to be updated...'); console.log(this.model);
     this.service.update(this.model)
       .then(() => this.goBack())
       .catch((error: any) => {

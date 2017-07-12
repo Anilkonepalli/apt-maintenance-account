@@ -4,7 +4,7 @@
 	<form (ngSubmit)="save()" #detailForm="ngForm" class="grid-form">
 		<fieldset>
 			<legend>{{userd}}</legend>
-				<div data-row-span="2">
+				<div data-row-span="1">
 					<div data-field-span="1">
 						<label for="userName">Username</label>
 						<input
@@ -21,7 +21,8 @@
 								class="alert alert-danger"
 								>Username is required</div>
 					</div>
-
+				</div>
+				<div data-row-span="2">
 					<div data-field-span="1">
 						<label for="flat-number">Flat / Apartment Number</label>
 						<input
@@ -29,10 +30,33 @@
 							id="flat-number"
 							[(ngModel)]="infos.flatNumber"
 							name="flat-number"
-							placeholder="If User is a Resident, enter their Flat or Apt number"
-							title="Flat or Apartment number user belongs to">
+							placeholder="<enter Flat number, if applicable>"
+							title="Flat or Apartment number, User residing at">
 					</div>
-			</div>
+
+					<div data-field-span="1">
+						<label for="resident-type">Resident Type</label>
+						<input
+							type="radio"
+							id="resident-type"
+							[(ngModel)]="infos.residentType"
+							name="resident-type"
+							value="owner"
+							title="Owner"> Owner
+						<input
+							type="radio"
+							[(ngModel)]="infos.residentType"
+							name="resident-type"
+							value="tenant"
+							title="Tenant"> Tenant
+						<input
+							type="radio"
+							[(ngModel)]="infos.residentType"
+							name="resident-type"
+							value="NA"
+							title="Tenant"> Not Applicable
+					</div>
+				</div>
 
 			<div data-row-span="2">
 				<div data-field-span="1">
