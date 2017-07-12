@@ -15,6 +15,7 @@ import { Logger }		                        from '../logger/default-log.service';
 })
 export class UserProfileComponent implements OnInit {
   @Input() model: User;
+  password: string = '';
   title: string = 'Profile';
   private userId: string = localStorage.getItem('userId');
   private authzn: Authorization;
@@ -44,8 +45,16 @@ export class UserProfileComponent implements OnInit {
   }
 
   save(): void {
+    this.model.password = this.password; // empty or modified password
     this.service.update(this.model)
-      .then(() => this.goBack());
+      .then(() => {
+        if (this.password) { // if password is modified, after update logout
+          // so that user can login with new password
+          this.service.logout();
+        } else {
+          this.goBack();
+        }
+      });
   }
 
 }

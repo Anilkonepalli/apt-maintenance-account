@@ -86,16 +86,11 @@
 					<input
 						type="password"
 						id="passWord"
-						required
-						[(ngModel)]="model.password"
+						[(ngModel)]="password"
 						name="passWord"
 						#passWord="ngModel"
-						placeholder="<password here>"
+						placeholder="<new password here>"
 						title="Password of the user">
-						<div
-							[hidden]="passWord.valid || passWord.pristine"
-							class="alert alert-danger"
-							>Password is required</div>
 				</div>
 			</div>
 

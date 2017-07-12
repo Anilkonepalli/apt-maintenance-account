@@ -1,5 +1,6 @@
 import { Injectable }           from '@angular/core';
 import { Http, Headers } 	      from '@angular/http';
+import { Router } 		          from '@angular/router';
 import { Observable } 		      from 'rxjs/Observable';
 import 'rxjs/add/operator/toPromise';
 
@@ -8,6 +9,7 @@ import { Authorization }        from '../authorization/model';
 
 import { MODULE }               from '../shared/constants';
 
+import { AuthService }          from '../authentication/auth.service';
 import { AuthorizationService } from '../authorization/service';
 import { environment }          from '../../environments/environment';
 
@@ -24,6 +26,8 @@ export class UserProfileService {
 
   constructor(
     private http: Http,
+    private router: Router,
+    private auth: AuthService,
     private authzn: AuthorizationService) { }
 
   getUserFor(id: number): Promise<User> {
@@ -46,6 +50,11 @@ export class UserProfileService {
 
   getAuthzn() {
     return this.authzn.get(MODULE.USER_PROFILE.name);
+  }
+
+  logout() {
+    this.auth.logout();
+    this.router.navigate(['/login']);
   }
 
   private handleError(error: any) {
