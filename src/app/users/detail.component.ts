@@ -19,9 +19,13 @@ export class UserDetailComponent implements OnInit {
   editMode: boolean = true;
   hideSave: boolean = true;
   modelName: string = 'User';
+  password: string = '';
   title: string = this.editMode ? this.modelName + ' details' : 'Add ' + this.modelName;
   userId: string;
   authzn: Authorization;
+  canAdd: boolean = false;
+  canEdit: boolean = false;
+
   infos: any = {
     flatNumber: null,
     otherEmails: null,
@@ -33,11 +37,11 @@ export class UserDetailComponent implements OnInit {
   };
 
   constructor(
-    private service: UserService,
-    private route: ActivatedRoute,
-    private router: Router,
-    private location: Location,
-    private logger: Logger
+    protected service: UserService,
+    protected route: ActivatedRoute,
+    protected router: Router,
+    protected location: Location,
+    protected logger: Logger
   ) { }
 
   ngOnInit(): void {
@@ -54,12 +58,12 @@ export class UserDetailComponent implements OnInit {
         }
         this.userId = this.editMode ? 'ID - ' + this.model.id : 'ID - 0';
         this.authzn = this.service.getAuthzn();
-        let canEdit = this.authzn.allowsEdit(model.id) && this.editMode;
-        let canAdd = this.authzn.allowsAdd() && !this.editMode;
-        this.hideSave = !(canEdit || canAdd);
+        this.canEdit = this.authzn.allowsEdit(model.id) && this.editMode;
+        this.canAdd = this.authzn.allowsAdd() && !this.editMode;
+        this.hideSave = !(this.canEdit || this.canAdd);
       });
   }
-  private infoObjFrom(infos: Array<any>) {
+  protected infoObjFrom(infos: Array<any>) {
     let result = {};
     infos.forEach(each => {
       result[each.key] = each.value;
@@ -77,10 +81,11 @@ export class UserDetailComponent implements OnInit {
   }
 
   save(): void {
+    this.model.password = this.password;
     this.editMode ? this.update() : this.add();
   }
 
-  private add(): void {
+  protected add(): void {
     this.logger.info('Adding new user...');
     let infos = this.getInfos();
     if (infos.length > 0) this.model.infos = infos;
@@ -100,7 +105,7 @@ export class UserDetailComponent implements OnInit {
    * Converts Info object into a key-value array
    * @type {Array}
    */
-  private getInfos(): Array<any> {
+  protected getInfos(): Array<any> {
     let result = [];
     let value;
     Object.keys(this.infos).forEach(key => {
@@ -115,7 +120,7 @@ export class UserDetailComponent implements OnInit {
    * Converts Info object into a key-value array
    * @type {Array}
    */
-  private getModifiedInfos(): Array<any> {
+  protected getModifiedInfos(): Array<any> {
     let result = [];
     let infosDb = this.infoObjFrom(this.model.infos);
     let keysDb = Object.keys(infosDb);
@@ -134,7 +139,7 @@ export class UserDetailComponent implements OnInit {
     return result;
   }
 
-  private update(): void {
+  protected update(): void {
     this.logger.info('Updating user...');
     let infos = this.getModifiedInfos();
     if (infos.length > 0) this.model.infos = infos;

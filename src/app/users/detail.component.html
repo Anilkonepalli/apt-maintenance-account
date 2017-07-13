@@ -115,19 +115,27 @@
 
 				<div data-field-span="1">
 					<label for="passWord">Password</label>
-					<input
+					<input *ngIf="canAdd"
 						type="password"
 						id="passWord"
 						required
-						[(ngModel)]="model.password"
+						[(ngModel)]="password"
 						name="passWord"
 						#passWord="ngModel"
-						placeholder="<password here>"
-						title="Password of the user">
-						<div
+						placeholder="<enter password here>"
+						title="Password is required">
+						<div *ngIf="canAdd"
 							[hidden]="passWord.valid || passWord.pristine"
 							class="alert alert-danger"
 							>Password is required</div>
+					<input *ngIf="canEdit"
+						type="password"
+						id="passWord"
+						[(ngModel)]="password"
+						name="passWord"
+						#passWord="ngModel"
+						placeholder="<modify password here>"
+						title="If needed, password can be modified here">
 				</div>
 			</div>
 
@@ -154,7 +162,7 @@
 
 			<div data-row-span="2">
 				<div data-field-span="1">
-					<label for="twowheelers">Regn No. of 2-wheelers parked</label>
+					<label for="twowheelers">Regn No. of 2-wheeler(s) parked</label>
 					<textarea
 						rows="2"
 						[(ngModel)]="infos.twoWheelers"
@@ -163,7 +171,7 @@
 						title="Resident's Two wheeler registration numbers (separated by comma or in newline)"></textarea>
 				</div>
 				<div data-field-span="1">
-					<label for="fourwheelers">Regn No. of 4-Wheeler parked</label>
+					<label for="fourwheelers">Regn No. of 4-Wheeler(s) parked</label>
 					<textarea
 						rows="2"
 						[(ngModel)]="infos.fourWheelers"

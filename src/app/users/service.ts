@@ -17,18 +17,18 @@ import { environment }          from '../../environments/environment';
 @Injectable()
 export class UserService {
 
-  private modelUrl = environment.API_URL + '/api/users';
-  private id_token = localStorage.getItem('id_token');
-  private userId = localStorage.getItem('userId');
-  private headers = new Headers({
+  protected modelUrl = environment.API_URL + '/api/users';
+  protected id_token = localStorage.getItem('id_token');
+  protected userId = localStorage.getItem('userId');
+  protected headers = new Headers({
     'Content-Type': 'application/json',
     'x-access-token': this.id_token
   });
 
   constructor(
-    private http: Http,
-    private logger: Logger,
-    private authzn: AuthorizationService) { }
+    protected http: Http,
+    protected logger: Logger,
+    protected authzn: AuthorizationService) { }
 
   getList(): Promise<User[]> {
     return this.http
@@ -40,6 +40,7 @@ export class UserService {
 
   getUserFor(id: number): Promise<User> {
     const url = this.modelUrl + '/' + id;
+    console.log('The URL to getUser...'); console.log(url);
     return this.http
       .get(url, { headers: this.headers })
       .toPromise()
@@ -96,7 +97,7 @@ export class UserService {
       .catch(this.handleError);
   }
 
-  private handleError(error: any) {
+  protected handleError(error: any) {
     return Promise.reject(error.message || error);
   }
 

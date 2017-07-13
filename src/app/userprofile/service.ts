@@ -9,56 +9,29 @@ import { Authorization }        from '../authorization/model';
 
 import { MODULE }               from '../shared/constants';
 
+import { UserService }          from '../users/service';
 import { AuthService }          from '../authentication/auth.service';
 import { AuthorizationService } from '../authorization/service';
+import { Logger }               from '../logger/default-log.service';
 import { environment }          from '../../environments/environment';
 
 @Injectable()
-export class UserProfileService {
+export class UserProfileService extends UserService {
 
-  private modelUrl = environment.API_URL + '/api/userprofile';
-  private id_token = localStorage.getItem('id_token');
-  private userId = localStorage.getItem('userId');
-  private headers = new Headers({
-    'Content-Type': 'application/json',
-    'x-access-token': this.id_token
-  });
+  protected modelUrl = environment.API_URL + '/api/userprofile';
 
   constructor(
-    private http: Http,
-    private router: Router,
-    private auth: AuthService,
-    private authzn: AuthorizationService) { }
-
-  getUserFor(id: number): Promise<User> {
-    const url = this.modelUrl + '/' + id;
-    return this.http
-      .get(url, { headers: this.headers })
-      .toPromise()
-      .then(model => model.json() as User)
-      .catch(this.handleError);
-  }
-
-  update(model: User): Promise<User> {
-    const url = `${this.modelUrl}/${model.id}`;
-    return this.http
-      .put(url, JSON.stringify(model), { headers: this.headers })
-      .toPromise()
-      .then(() => model)
-      .catch(this.handleError);
-  }
-
-  getAuthzn() {
-    return this.authzn.get(MODULE.USER_PROFILE.name);
+    protected http: Http,
+    protected logger: Logger,
+    protected router: Router,
+    protected auth: AuthService,
+    protected authzn: AuthorizationService) {
+    super(http, logger, authzn);
   }
 
   logout() {
     this.auth.logout();
     this.router.navigate(['/login']);
-  }
-
-  private handleError(error: any) {
-    return Promise.reject(error.message || error);
   }
 
 }
