@@ -35,7 +35,9 @@
 					</div>
 
 					<div data-field-span="1">
-						<label for="resident-type">Resident Type</label>
+						<label
+							for="resident-type"
+							>Resident Type <i *ngIf="!residentTypeSelected" class="notselected"><< Required</i></label>
 						<input
 							type="radio"
 							id="resident-type"

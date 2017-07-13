@@ -25,6 +25,7 @@ export class UserDetailComponent implements OnInit {
   authzn: Authorization;
   canAdd: boolean = false;
   canEdit: boolean = false;
+  residentTypeSelected: boolean = false;
 
   infos: any = {
     flatNumber: null,
@@ -53,6 +54,7 @@ export class UserDetailComponent implements OnInit {
         if (model.id) {
           this.editMode = true;
           this.infos = this.infoObjFrom(model.infos);
+          if (this.infos.residentType) this.residentTypeSelected = true;
         } else {
           this.editMode = false;
         }

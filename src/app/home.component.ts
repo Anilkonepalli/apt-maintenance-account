@@ -20,6 +20,8 @@ import { AuthService }             from './authentication/auth.service';
           <li>To ensure any time access to transactions in the maintenance account<br></li>
           <li>To enable transparency<br></li>
         </ul>
+      </div>
+    </div>
 	`
 })
 export class HomeComponent implements OnInit {

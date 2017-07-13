@@ -5,6 +5,7 @@ import {
   NavigationExtras,
   ActivatedRoute }      from '@angular/router';
 
+import { User } 	      from '../users/model';
 import { Message }      from '../shared';
 import { environment }  from '../../environments/environment';
 
@@ -26,6 +27,7 @@ declare const hello: any;
 export class LoginComponent {
   email: String;
   message: Message = new Message();
+  user: User;
 
   constructor(
     public authService: AuthService,
@@ -43,9 +45,19 @@ export class LoginComponent {
 
   redirect(auth: AuthService) {
     if (auth.isLoggedIn) {
+
+      console.log('User data: ...'); console.log(auth.user);
+      this.user = auth.user;
+      console.log(this.residentTypeExist());
+
       // Get the redirect URL from our auth service
       // If no redirect is set, use the default
-      let redirect = auth.redirectUrl ? auth.redirectUrl : '/home';
+      // let redirect = auth.redirectUrl ? auth.redirectUrl : '/home';
+      let redirect = '/home';
+      if (this.residentTypeExist())
+        redirect = auth.redirectUrl ? auth.redirectUrl : '/home';
+      else
+        redirect = '/userprofile';
 
       // Set our navigation extras object
       // that passes on our global query params and fragment
@@ -58,6 +70,16 @@ export class LoginComponent {
     } else { // login failed
       this.message = auth.message;
     }
+  }
+
+  exist(key: string): boolean {
+    let elemArray = [];
+    let infos = this.user.infos;
+    if (infos) elemArray = infos.filter(each => each.key === key);
+    return elemArray.length > 0;
+  }
+  residentTypeExist(): boolean {
+    return this.exist('residentType');
   }
 
   cancel() {

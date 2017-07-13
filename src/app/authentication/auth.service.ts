@@ -23,6 +23,7 @@ contentHeaders.append('Content-Type', 'application/json');
 export class AuthService {
 
   isLoggedIn: boolean = false;
+  user: User;
   loggedUser: string = ''; // Logged User Name or email
   JwtHelper = new JwtHelper();
   message: Message;
@@ -54,11 +55,12 @@ export class AuthService {
         localStorage.setItem('id_token', res.id_token);
         let decodedJwt = res.id_token && this.JwtHelper.decodeToken(res.id_token);
         this.logger.info('Decoded JWT...'); this.logger.info(decodedJwt);
+        this.user = decodedJwt;
         this.loggedUser = decodedJwt.first_name || decodedJwt.email.split('@')[0];
         localStorage.setItem('userId', decodedJwt.id);
         this.isLoggedIn = true;
         this.message = new InfoMessage("Success", "log...");
-        this.authzn.init(); // initialize a    this.isSocialLoggedIn = false;fter user logged in
+        this.authzn.init(); // initialize after user logged in
       },
       error => {
         this.isLoggedIn = false;

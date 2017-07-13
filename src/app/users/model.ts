@@ -9,6 +9,7 @@ export class User {
     public social_network_id: string = '',
     public infos: Array<any> = []
   ) { }
+
 };
 
 export var SampleUser1 = {
