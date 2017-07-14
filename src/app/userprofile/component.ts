@@ -36,6 +36,8 @@ export class UserProfileComponent extends UserDetailComponent {
       .then((model: User) => {
         this.model = model;
         console.log('User is: '); console.log(model);
+        this.infos = this.infoObjFrom(model.infos);
+        if (this.infos.residentType) this.residentTypeSelected = true;
         this.isSocial = model.social_network_id !== null;
         this.authzn = this.service.getAuthzn();
         this.canEdit = this.authzn.allowsEdit(model.id) && this.editMode;
