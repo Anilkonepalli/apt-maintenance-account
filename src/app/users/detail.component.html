@@ -108,11 +108,11 @@
 						#eMail="ngModel"
 						email
 						placeholder="<email id here>"
-						title="eMail of the user">
+						title="eMail ID of the User">
 						<div
 							[hidden]="eMail.valid || eMail.pristine"
 							class="alert alert-danger"
-							>eMail is required</div>
+							>eMail ID is required</div>
 				</div>
 
 				<div data-field-span="1">
@@ -149,7 +149,7 @@
 						[(ngModel)]="infos.otherEmails"
 						name="oEmails"
 						placeholder="example1@email.id, example2@email.id"
-						title="Other eMails of the user (separated by comma or in new line)"></textarea>
+						title="Other eMail IDs of the User"></textarea>
 				</div>
 				<div data-field-span="1">
 					<label for="cells">Mobile/Landline Numbers</label>
@@ -158,7 +158,7 @@
 						[(ngModel)]="infos.cellNumbers"
 						name="cells"
 						placeholder="eg: 9797097970, 044-27273030"
-						title="Mobile or Landline phone numbers (separated by comma or in newline)"></textarea>
+						title="Mobile or Landline Phone numbers of the User"></textarea>
 				</div>
 			</div>
 
@@ -170,7 +170,7 @@
 						[(ngModel)]="infos.twoWheelers"
 						name="twowheelers"
 						placeholder="eg: TN 11 CY 1234, TN 01 AZ 9876"
-						title="Resident's Two wheeler registration numbers (separated by comma or in newline)"></textarea>
+						title="Registration Number of Two Wheelers parked by the User"></textarea>
 				</div>
 				<div data-field-span="1">
 					<label for="fourwheelers">Regn No. of 4-Wheeler(s) parked</label>
@@ -179,7 +179,7 @@
 						[(ngModel)]="infos.fourWheelers"
 						name="fourwheelers"
 						placeholder="eg: TN 22 A 4567, TN 02 BD 789"
-						title="Resident's Four wheeler registration numbers (separated by comma or in new line)"></textarea>
+						title="Registration Number of Four Wheelers parked by the User"></textarea>
 				</div>
 			</div>
 
@@ -190,7 +190,7 @@
 						rows="2"
 						[(ngModel)]="infos.emergencyContact"
 						name="emergency"
-						placeholder="In case of emergency, whom can be approached; his/her name, address, or phone numbers here"
+						placeholder="In case of emergency, whom to approach (such as relatives, friends), enter their name, address, or phone numbers here"
 						title="Contact phone numbers in case of emergencies"></textarea>
 				</div>
 			</div>

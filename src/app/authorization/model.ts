@@ -79,7 +79,10 @@ export class Authorization {
       this.logger.info('User ID: ' + this.user + ', owner_id: ' + owner);
       return fn(data);
     });
-    return evaluatedPerms.length > 0;
+    let result = evaluatedPerms.length > 0;
+    this.logger.info('Evaluated to: ' + result);
+    // return evaluatedPerms.length > 0;
+    return result;
   }
 
 }

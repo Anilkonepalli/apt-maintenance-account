@@ -28,7 +28,9 @@ export class UserProfileService extends UserService {
     protected authzn: AuthorizationService) {
     super(http, logger, authzn);
   }
-
+  getAuthzn(): Authorization {
+    return this.authzn.get(MODULE.USER_PROFILE.name);
+  }
   logout() {
     this.auth.logout();
     this.router.navigate(['/login']);

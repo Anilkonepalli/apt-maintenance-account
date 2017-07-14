@@ -35,15 +35,17 @@ export class UserProfileComponent extends UserDetailComponent {
     this.service.getUserFor(+this.userId)
       .then((model: User) => {
         this.model = model;
-        console.log('User is: '); console.log(model);
+        // console.log('User is: '); console.log(model);
         this.infos = this.infoObjFrom(model.infos);
         if (this.infos.residentType) this.residentTypeSelected = true;
         this.isSocial = model.social_network_id !== null;
         this.authzn = this.service.getAuthzn();
-        this.canEdit = this.authzn.allowsEdit(model.id) && this.editMode;
-        this.canAdd = this.authzn.allowsAdd() && !this.editMode;
-        this.hideSave = !(this.canEdit || this.canAdd);
+        this.canEdit = this.authzn.allowsEdit(model.id);
+        this.hideSave = !this.canEdit;
       });
+  }
+  goBack(): void {
+    this.router.navigate(['/home']);
   }
 
   update(): void {
@@ -51,11 +53,11 @@ export class UserProfileComponent extends UserDetailComponent {
     this.logger.info('Updating user profile...');
     let infos = this.getModifiedInfos();
     if (infos.length > 0) this.model.infos = infos;
-    console.log('Updating User Profile...'); console.log(this.model);
+    // console.log('Updating User Profile...'); console.log(this.model);
     let passwordModified = this.password ? true : false;
     this.service.update(this.model)
       .then(() => {
-        console.log('password field now: '); console.log(passwordModified);
+        // console.log('password field now: '); console.log(passwordModified);
         if (passwordModified) {
           // if password is modified, after update, logout,
           // so that user can login with new password

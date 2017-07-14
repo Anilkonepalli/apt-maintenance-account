@@ -1,7 +1,7 @@
 {
   "name": "apt-maintenance-account",
   "version": "0.0.5",
-  "description": "Apartment Maintenance Account Tracking Application",
+  "description": "Apartment Maintenance Account Tracking Application - Client Side in Angular",
   "license": "MIT",
   "scripts": {
     "ng": "ng",
@@ -24,13 +24,13 @@
     "JWT",
     "JSON Web Token",
     "NodeJS",
-    "bookshelf",
-    "knex",
-    "angular 2 base",
-    "angular 4 base",
-    "complete app",
-    "full app",
-    "foundation"
+    "Bookshelf",
+    "Knex",
+    "Base App",
+    "Complete App",
+    "Full App",
+    "Skeleton App",
+    "Foundation App"
   ],
   "author": "Mohankumar Anna <armk100@gmail.com>",
   "dependencies": {

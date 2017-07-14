@@ -55,18 +55,19 @@ export class LoginComponent {
       // let redirect = auth.redirectUrl ? auth.redirectUrl : '/home';
       let redirect = '/home';
       if (this.residentTypeExist())
-        redirect = auth.redirectUrl ? auth.redirectUrl : '/home';
+        redirect = '/home';
       else
         redirect = '/userprofile';
-
-      // Set our navigation extras object
-      // that passes on our global query params and fragment
-      let navigationExtras: NavigationExtras = {
-        queryParamsHandling: "merge", // "merge", "preserve", "default or /"
-        preserveFragment: true
-      };
-      // Redirect the user
-      this.router.navigate([redirect], navigationExtras);
+      /*
+            // Set our navigation extras object
+            // that passes on our global query params and fragment
+            let navigationExtras: NavigationExtras = {
+              queryParamsHandling: "merge", // "merge", "preserve", "default or /"
+              preserveFragment: true
+            };
+            // Redirect the user
+            this.router.navigate([redirect], navigationExtras); */
+      this.router.navigate([redirect]);
     } else { // login failed
       this.message = auth.message;
     }
