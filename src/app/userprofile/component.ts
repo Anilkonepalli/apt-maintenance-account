@@ -47,7 +47,9 @@ export class UserProfileComponent extends UserDetailComponent {
   goBack(): void {
     this.router.navigate(['/home']);
   }
-
+  cancel(): void {
+    this.goBack();
+  }
   update(): void {
     // this.model.password = this.password; // empty or modified password
     this.logger.info('Updating user profile...');

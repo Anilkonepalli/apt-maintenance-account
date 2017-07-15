@@ -77,6 +77,10 @@ export class UserDetailComponent implements OnInit {
     this.location.back();
   }
 
+  cancel() {
+    this.gotoList();
+  }
+
   gotoList() {
     let modelId = this.model ? this.model.id : null;
     this.router.navigate(['/users', { id: modelId, foo: 'foo' }]);
