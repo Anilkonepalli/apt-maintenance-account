@@ -67,22 +67,53 @@ export class Authorization {
     if (pCount > pwcCount) return true;
 
     // evaluate condition in each of the permissionsWithCondition
-    let fn;
-    let data;
-    let evaluatedPerms = permissionsWithCondition.filter(perm => { // filter for permission that
-      fn = new Function("data", perm.condition);				   // evaluates its condition to true
-      data = {
+    let evaluatedPerms = permissionsWithCondition.filter(perm => {
+      let data = {
         user_id: this.user,
         model: { owner_id: owner }
       };
-      this.logger.info('evaluate condition data...');
-      this.logger.info('User ID: ' + this.user + ', owner_id: ' + owner);
-      return fn(data);
+      let utility = new Utility(perm.condition, data);
+      return utility.evaluate(); // returns boolean value
     });
+
     let result = evaluatedPerms.length > 0;
     this.logger.info('Evaluated to: ' + result);
-    // return evaluatedPerms.length > 0;
     return result;
   }
+
+}
+
+class Parser {
+  static getFunction(condition) {
+    return new Function("data", condition);
+  }
+}
+
+class Utility {
+  public dynamicFunction: Function;
+
+  constructor(
+    public condition: string,
+    public data: any
+  ) {
+    this.dynamicFunction = Parser.getFunction(condition);
+  }
+
+  evaluate() {
+    console.log('inside evalute(data)...');
+    return this.dynamicFunction();
+  }
+
+  userOwnAccounts() {
+    console.log('inside accountsOf()...');
+    return true; // just return true, as it is taken care at server side
+  }
+
+  userOwnRecord() {
+    return this.data.user_id === this.data.model.owner_id;
+  }
+
+  // return data.user_id === data.model.owner_id  <------ Don't delete it for a while
+
 
 }
