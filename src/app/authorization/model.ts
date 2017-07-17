@@ -66,12 +66,13 @@ export class Authorization {
     // permissions with no condition take higher precedence, hence return true
     if (pCount > pwcCount) return true;
 
+    let data = {
+      user_id: this.user,
+      model: { owner_id: owner }
+    };
+
     // evaluate condition in each of the permissionsWithCondition
     let evaluatedPerms = permissionsWithCondition.filter(perm => {
-      let data = {
-        user_id: this.user,
-        model: { owner_id: owner }
-      };
       let utility = new Utility(perm.condition, data);
       return utility.evaluate(); // returns boolean value
     });
@@ -85,7 +86,8 @@ export class Authorization {
 
 class Parser {
   static getFunction(condition) {
-    return new Function("data", condition);
+    let statement = 'return this.' + condition + '();';
+    return new Function(statement);
   }
 }
 
@@ -112,8 +114,5 @@ class Utility {
   userOwnRecord() {
     return this.data.user_id === this.data.model.owner_id;
   }
-
-  // return data.user_id === data.model.owner_id  <------ Don't delete it for a while
-
 
 }
