@@ -8,6 +8,8 @@
 			<th title="First Name" scope="col">First Name</th>
 			<th title="Last Name" scope="col">Last Name</th>
 			<th title="Resident Type" scope="col">Type</th>
+			<th title="Occupied On" scope="col">Occupied On</th>
+			<th title="Vacated On" scope="col">Vacated On</th>
 			<th title="Delete" scope="col">{{deleteAllowed?'Actions':''}}</th>
 		</tr>
 	</thead>
@@ -62,6 +64,20 @@
 							[value]="type"
 						 >{{type}}</option>
 					</select>
+			</td>
+			<td>
+				<input
+					type="date"
+					[(ngModel)]="model.occupied_on"
+					placeholder="<Occupy Date>"
+					#lastName="ngModel" />
+			</td>
+			<td>
+				<input
+					type="date"
+					[(ngModel)]="model.vacated_on"
+					placeholder="<Vacated date>"
+					#lastName="ngModel" />
 			</td>
 			<td>
 				<button
@@ -120,6 +136,29 @@
 				</select>
 			</td>
 
+			<td (click)="rowSelected($event, model)" *ngIf="!canEdit[model.id]">
+				{{ model.occupied_on }}
+			</td>
+			<td *ngIf="canEdit[model.id]">
+				<input
+					type="date"
+					[(ngModel)]="editModel.occupied_on"
+					placeholder="<Occupy Date>"
+				/>
+			</td>
+
+			<td (click)="rowSelected($event, model)" *ngIf="!canEdit[model.id]">
+				{{ model.vacated_on }}
+			</td>
+			<td *ngIf="canEdit[model.id]">
+				<input
+					type="date"
+					[(ngModel)]="editModel.vacated_on"
+					placeholder="<Vacated Date>"
+				/>
+			</td>
+
+
 			<td>
 				<button
 					class="btn btn-link"
@@ -149,7 +188,7 @@
 
 	<tfoot>
 		<tr>
-			<th scope="row" colspan="4">Total Residents</th>
+			<th scope="row" colspan="6">Total Residents</th>
 			<td colspan="1">{{totalRecords}}</td>
 		</tr>
 	</tfoot>
