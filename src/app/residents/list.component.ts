@@ -134,6 +134,8 @@ export class ResidentListComponent implements OnInit {
         modelWOChanges.first_name = model.first_name; // update the view with changes
         modelWOChanges.last_name = model.last_name;
         modelWOChanges.is_a = model.is_a;
+        modelWOChanges.occupied_on = model.occupied_on;
+        modelWOChanges.vacated_on = model.vacated_on;
         modelWOChanges.owner_id = model.owner_id;
       })
       .catch((error: any) => {

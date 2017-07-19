@@ -24,7 +24,7 @@
 					name="userNm"
 					#userNm="ngModel">
 					<option value="" disabled selected>
-						-- Select an user --
+						--Select User--
 					</option>
 					<option
 						*ngFor="let user of users"
@@ -57,7 +57,7 @@
 						name="isa"
 						#isa="ngModel">
 						<option value="" disabled selected>
-							-- Select a type --
+							-Type-
 						</option>
 						<option
 							*ngFor="let type of types"
@@ -143,6 +143,7 @@
 				<input
 					type="date"
 					[(ngModel)]="editModel.occupied_on"
+					value=""
 					placeholder="<Occupy Date>"
 				/>
 			</td>
