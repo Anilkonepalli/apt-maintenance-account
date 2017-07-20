@@ -1,5 +1,7 @@
 'use strict';
 
+// Module or Resource names
+
 export const MODULE = {
   ACCOUNT: { name: 'accounts', isAdmin: false }, // isAdmin indicates whether it is visible only to Admin user
   ACCOUNT_SUMMARY: { name: 'account-summary', isAdmin: false },
@@ -11,5 +13,6 @@ export const MODULE = {
   FLAT_RESIDENT: { name: 'flats-residents', isAdmin: true },
   USER_ROLE: { name: 'users-roles', isAdmin: true },
   ROLE_PERMISSION: { name: 'roles-permissions', isAdmin: true },
-  USER_PROFILE: { name: 'user-profile', isAdmin: false }
+  USER_PROFILE: { name: 'user-profile', isAdmin: false },
+  BALANCE: { name: 'balance', isAdmin: false }
 };

@@ -28,6 +28,7 @@ export class AccountListComponent implements OnInit {
   models: Observable<Account[]>;
   authzn: Authorization;
   addAllowed: boolean = false;
+  canViewBalance: boolean = true;
   selectedId: number;
   fromDate: Date;
   toDate: Date = new Date();
@@ -49,8 +50,24 @@ export class AccountListComponent implements OnInit {
 
   ngOnInit(): void {
     this.setFromDate();
+    this.initAuthzn();
     this.getList();
+    this.initMyOptions();
+    this.initMySettings();
+    this.initMyTexts();
+  }
 
+  initAuthzn() {
+    this.authzn = this.service.getAuthzn();
+    this.addAllowed = this.authzn.allowsAdd();
+
+    let balAuthzn = this.service.getAuthzn('BALANCE');
+    console.log('Bal Authzn...'); console.log(balAuthzn);
+    this.canViewBalance = balAuthzn.allowsView();
+    console.log('CanViewBal...'); console.log(this.canViewBalance);
+  }
+
+  initMyOptions() {
     this.myOptions = [
       { id: 1, name: 'Txn Date' },
       { id: 2, name: 'Flat#' },
@@ -59,12 +76,19 @@ export class AccountListComponent implements OnInit {
       { id: 5, name: 'Year' },
       { id: 6, name: 'Cr/Dr' },
       { id: 7, name: 'Amount' },
-      { id: 8, name: 'Balance' },
       { id: 9, name: 'Category' },
     ];
 
     this.optionsModel = [1, 2, 3, 4, 5, 6, 7, 9]; // default columns shown
 
+    if (this.canViewBalance) {
+      this.myOptions.push({ id: 8, name: 'Balance' });
+      this.optionsModel.push(8);
+    }
+
+  }
+
+  initMySettings() {
     this.mySettings = {
       enableSearch: false,
       checkedStyle: 'checkboxes', // available options: checkboxes, glyphicon, fontawesome
@@ -74,8 +98,10 @@ export class AccountListComponent implements OnInit {
       showCheckAll: true,
       showUncheckAll: true,
       fixedTitle: true
-    };
+    }
+  }
 
+  initMyTexts() {
     this.myTexts = {
       checkAll: 'Select All',
       uncheckAll: 'Unselect All',
@@ -116,9 +142,6 @@ export class AccountListComponent implements OnInit {
   }
 
   public getList() {
-    this.authzn = this.service.getAuthzn()
-    this.addAllowed = this.authzn.allowsAdd();
-
     this.models = this.route.params
       .switchMap((params: Params) => {
         this.selectedId = +params['id'];
