@@ -54,7 +54,6 @@ export class AccountDetailComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-
     this.getFlatList();
     this.getResidentList();
     this.authzn = this.service.getAuthzn();
@@ -62,29 +61,65 @@ export class AccountDetailComponent implements OnInit {
       .switchMap((params: Params) => this.service.get(+params['id']))
       .subscribe((model: Account) => {
         this.model = model;
-        this.logger.info('MODEL while initializing...'); this.logger.info(model);
-        if (model.id) {
-          this.editMode = true;
-        } else {
-          this.editMode = false;
-          let today = new Date();
-          let todayString = today.toISOString();
-          this.logger.info('Today Date: ' + today); console.log('Today DateString: ' + todayString);
-          this.model.recorded_at = todayString.split('T')[0];
-        }
-        let canEdit = this.authzn.allowsEdit(model.owner_id) && this.editMode;
-        let canAdd = this.authzn.allowsAdd() && !this.editMode;
-        this.hideSave = !(canEdit || canAdd);
-        this.recordId = this.editMode ? 'ID - ' + this.model.id : 'ID - 0';
-        if (this.model.flat_number) {
-          let flat = this.flats.find(flat => flat.flat_number === this.model.flat_number);
-          if (flat) { // if flat is found, then update resident list
-            this.updateResidentListFor(flat);
-          }
-        }
+        this.initParams();
       });
   }
 
+  initParams() {
+    this.logger.info('MODEL while initializing...'); this.logger.info(this.model);
+    if (this.model.id) {
+      this.editMode = true;
+    } else {
+      this.editMode = false;
+      let today = new Date();
+      let todayString = today.toISOString();
+      this.logger.info('Today Date: ' + today); console.log('Today DateString: ' + todayString);
+      this.model.recorded_at = todayString.split('T')[0];
+    }
+    let canEdit = this.authzn.allowsEdit(this.model.owner_id) && this.editMode;
+    let canAdd = this.authzn.allowsAdd() && !this.editMode;
+    this.hideSave = !(canEdit || canAdd);
+    this.recordId = this.editMode ? 'ID - ' + this.model.id : 'ID - 0';
+    if (this.model.flat_number) {
+      let flat = this.flats.find(flat => flat.flat_number === this.model.flat_number);
+      if (flat) { // if flat is found, then update resident list
+        this.updateResidentListFor(flat);
+      }
+    }
+  }
+
+  /*
+    ngOnInit(): void {
+      this.getFlatList();
+      this.getResidentList();
+      this.authzn = this.service.getAuthzn();
+      this.route.params
+        .switchMap((params: Params) => this.service.get(+params['id']))
+        .subscribe((model: Account) => {
+          this.model = model;
+          this.logger.info('MODEL while initializing...'); this.logger.info(model);
+          if (model.id) {
+            this.editMode = true;
+          } else {
+            this.editMode = false;
+            let today = new Date();
+            let todayString = today.toISOString();
+            this.logger.info('Today Date: ' + today); console.log('Today DateString: ' + todayString);
+            this.model.recorded_at = todayString.split('T')[0];
+          }
+          let canEdit = this.authzn.allowsEdit(model.owner_id) && this.editMode;
+          let canAdd = this.authzn.allowsAdd() && !this.editMode;
+          this.hideSave = !(canEdit || canAdd);
+          this.recordId = this.editMode ? 'ID - ' + this.model.id : 'ID - 0';
+          if (this.model.flat_number) {
+            let flat = this.flats.find(flat => flat.flat_number === this.model.flat_number);
+            if (flat) { // if flat is found, then update resident list
+              this.updateResidentListFor(flat);
+            }
+          }
+        });
+    }
+  */
   private getFlatList() {
     this.logger.info('getFlatList...');
     this.service.getFlatList()
@@ -112,6 +147,8 @@ export class AccountDetailComponent implements OnInit {
         alert(jerror.data.message);
       });
   }
+
+
 
   goBack(): void {
     this.location.back();
