@@ -11,6 +11,7 @@ import { Flat }                             from '../flats/model';
 import { Resident }                         from '../residents/model';
 
 import { Month }                            from '../shared';
+import { CATEGORIES }                       from '../shared/constants';
 
 import { AccountService }										from './service';
 import { Logger }		                        from '../logger/default-log.service';
@@ -21,7 +22,6 @@ import { Logger }		                        from '../logger/default-log.service';
 })
 export class AccountDetailComponent implements OnInit {
   @Input() model: Account;
-  // recordDate: string = '2017-04-11';
   editMode: boolean = true;
   modelName: string = 'Account';
   authzn: Authorization;
@@ -30,18 +30,7 @@ export class AccountDetailComponent implements OnInit {
   months: Month[] = Month.all();
   residents: Resident[];
   residentsAll: Resident[];
-  categories: string[] = [
-    'Monthly Maintenance',
-    'Sweeping',
-    'Garbage',
-    'Electrical',
-    'Plumbing',
-    'Septic Tank',
-    'Water Tank - Overhead',
-    'Water Tank - Sump',
-    'Major Maintenance',
-    'Others'
-  ];
+  categories: string[] = CATEGORIES;
   title: string = this.editMode ? this.modelName + ' details' : 'Add ' + this.modelName;
   recordId: string;
 
@@ -54,8 +43,6 @@ export class AccountDetailComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    //    this.getFlatList();
-    //    this.getResidentList();
     this.authzn = this.service.getAuthzn();
     this.route.params
       .switchMap((params: Params) => this.service.get(+params['id']))
@@ -111,69 +98,6 @@ export class AccountDetailComponent implements OnInit {
       });
 
   }
-
-  /*
-    ngOnInit(): void {
-      this.getFlatList();
-      this.getResidentList();
-      this.authzn = this.service.getAuthzn();
-      this.route.params
-        .switchMap((params: Params) => this.service.get(+params['id']))
-        .subscribe((model: Account) => {
-          this.model = model;
-          this.logger.info('MODEL while initializing...'); this.logger.info(model);
-          if (model.id) {
-            this.editMode = true;
-          } else {
-            this.editMode = false;
-            let today = new Date();
-            let todayString = today.toISOString();
-            this.logger.info('Today Date: ' + today); console.log('Today DateString: ' + todayString);
-            this.model.recorded_at = todayString.split('T')[0];
-          }
-          let canEdit = this.authzn.allowsEdit(model.owner_id) && this.editMode;
-          let canAdd = this.authzn.allowsAdd() && !this.editMode;
-          this.hideSave = !(canEdit || canAdd);
-          this.recordId = this.editMode ? 'ID - ' + this.model.id : 'ID - 0';
-          if (this.model.flat_number) {
-            let flat = this.flats.find(flat => flat.flat_number === this.model.flat_number);
-            if (flat) { // if flat is found, then update resident list
-              this.updateResidentListFor(flat);
-            }
-          }
-        });
-    }
-  */
-  /*
-    private getFlatList() {
-      this.logger.info('getFlatList...');
-      this.service.getFlatList()
-        .then(flats => {
-          this.logger.info('Flat list: ');
-          this.logger.info(flats);
-          this.flats = _.sortBy(flats, [function(obj: Flat) { return obj.flat_number; }]);
-        })
-        .catch(err => {
-          this.logger.error('error in fetching flats inside Account Detail Component');
-        });
-    }
-
-    private getResidentList() {
-      this.logger.info('Accounts module > detail component > getResidentList()...');
-      this.service.getResidentList()
-        .then(residents => {
-          this.logger.info('Resident List: ');
-          this.logger.info(residents);
-          this.residentsAll = _.sortBy(residents, [function(obj: Resident) { return obj.first_name; }]);
-        })
-        .catch(error => {
-          let jerror = error.json();
-          this.logger.error(jerror.data.message);
-          alert(jerror.data.message);
-        });
-    }
-
-  */
 
   goBack(): void {
     this.location.back();

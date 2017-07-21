@@ -16,3 +16,17 @@ export const MODULE = {
   USER_PROFILE: { name: 'user-profile', isAdmin: false },
   BALANCE: { name: 'balance', isAdmin: false }
 };
+
+export const CATEGORIES: string[] = [
+  'Electrical',
+  'Garbage',
+  'Monthly Maintenance',
+  'Major Maintenance',
+  'Plumbing',
+  'Seasonal Gift',
+  'Septic Tank',
+  'Sweeping',
+  'Water Tank - Overhead',
+  'Water Tank - Sump',
+  'Others'
+];
