@@ -128,11 +128,7 @@ export class AccountListComponent implements OnInit {
   delete(model: Account): void {
     this.service
       .delete(model.id)
-      .then(() => { // filter out the deleted account modelfrom account models
-        this.models = this.models.filter((models, i) => {
-          return models[i] !== model;
-        });
-      });
+      .then(() => this.getList()); // refresh the list
   }
 
   private setFromDate() {
