@@ -101,3 +101,7 @@ caption {
 .fa-trash {
   color: red;
 }
+
+input::placeholder, textarea::placeholder {
+  opacity: 0.3;
+}
