@@ -8,7 +8,7 @@ import { environment }  from '../environments/environment';
 })
 export class AppComponent {
 
-  brand = 'ABC Apartments';
+  brand = environment.brand;
 
   constructor() {
     console.log('Is Production Environment: ' + environment.production);

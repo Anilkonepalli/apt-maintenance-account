@@ -5,6 +5,7 @@ import 'rxjs/add/operator/switchMap';
 
 import { Flat }												    from './model';
 import { Authorization }									from '../authorization/model';
+import { environment }                    from '../../environments/environment';
 
 import { FlatService }									  from './service';
 import { Logger }		                      from '../logger/default-log.service';
@@ -23,6 +24,7 @@ export class FlatComponent implements OnInit {
   private selectedId: number;
   model: Flat = new Flat();
   totalRecords: number = 0;
+  caption: string = 'Flat List of ' + environment.brand;
 
   constructor(
     private service: FlatService,

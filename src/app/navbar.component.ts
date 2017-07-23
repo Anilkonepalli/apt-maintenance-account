@@ -3,6 +3,7 @@ import { Router } 		          from '@angular/router';
 
 import { Authorization }				from './authorization/model';
 import { Permission } 		      from './permissions/model';
+import { environment }          from '../environments/environment';
 
 import { Logger }		            from './logger/default-log.service';
 import { AuthService }          from './authentication/auth.service';
@@ -13,6 +14,7 @@ import { AuthorizationService } from './authorization/service';
   templateUrl: 'navbar.component.html'
 })
 export class NavbarComponent {
+  brand: string = environment.brand;
 
   constructor(
     public router: Router,

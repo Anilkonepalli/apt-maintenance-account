@@ -5,6 +5,7 @@ import 'rxjs/add/operator/switchMap';
 
 import { Role }														from './model';
 import { Authorization }									from '../authorization/model';
+import { environment }                    from '../../environments/environment';
 
 import { RoleService }										from './service';
 import { Logger }                         from '../logger/default-log.service';
@@ -24,6 +25,7 @@ export class RoleListComponent implements OnInit {
   editAllowed: boolean = false;
   totalRecords: number = 0;
   private selectedId: number;
+  caption: string = 'Role List of ' + environment.brand;
 
   constructor(
     private service: RoleService,

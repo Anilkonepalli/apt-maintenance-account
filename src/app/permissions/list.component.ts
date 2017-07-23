@@ -5,6 +5,7 @@ import 'rxjs/add/operator/switchMap';
 
 import { Permission }											from './model';
 import { Authorization }									from '../authorization/model';
+import { environment }                    from '../../environments/environment';
 
 import { PermissionService }							from './service';
 import { Logger }                         from '../logger/default-log.service';
@@ -24,6 +25,7 @@ export class PermissionListComponent implements OnInit {
   editAllowed: boolean = false;
   totalRecords: number = 0;
   private selectedId: number;
+  caption: string = 'Permission List of ' + environment.brand;
 
   constructor(
     private service: PermissionService,

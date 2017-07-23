@@ -6,6 +6,7 @@ import 'rxjs/add/operator/switchMap';
 import { Resident }										    from './model';
 import { User }                           from '../users/model';
 import { Authorization }									from '../authorization/model';
+import { environment }                    from '../../environments/environment';
 
 import { ResidentService }							  from './service';
 import { Logger }		                      from '../logger/default-log.service';
@@ -37,6 +38,7 @@ export class ResidentListComponent implements OnInit {
   canEdit: any = {};
   editModel: Resident;
   users: User[];
+  caption: string = 'Resident List of ' + environment.brand;
 
   constructor(
     private service: ResidentService,

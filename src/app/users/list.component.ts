@@ -5,6 +5,7 @@ import 'rxjs/add/operator/switchMap';
 
 import { User }														from './model';
 import { Authorization }									from '../authorization/model';
+import { environment }                    from '../../environments/environment';
 
 import { UserService }										from './service';
 
@@ -20,6 +21,7 @@ export class UserListComponent implements OnInit {
   addAllowed: boolean = false;
   private selectedId: number;
   totalRecords: number = 0;
+  caption: string = 'User List of ' + environment.brand;
 
   constructor(
     private service: UserService,
