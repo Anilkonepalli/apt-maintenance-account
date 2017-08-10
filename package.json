@@ -1,6 +1,6 @@
 {
   "name": "apt-maintenance-account",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Apartment Maintenance Account Tracking Application - Client Side in Angular",
   "license": "MIT",
   "scripts": {
